@@ -304,21 +304,6 @@ class Usuario extends Controllers
                         $arrAuth['id_usuario'] = $requestUser['id_usuario'];
                         $code = 200;
                         $arrResponse = array('status' => true, 'msg' => '¡Bienvenido al sistema!', 'auth' => $arrAuth);
-                        //Guardar en sesion si es necesario
-                        //$_SESSION['userData'] = $arrAuth;
-                        //Guardar en cookie si es necesario
-                        //setcookie("userData", json_encode($arrAuth))
-                        //Guardar en localStorage si es necesario (FrontEnd)
-                        //Grabar en el localStorage
-                        //localStorage.setItem("userData", JSON.stringify(arrAuth));
-                        //Grabar registo en tokens
-                        //$request = $this->model->getScopeAuth(CLIENT_ID,KEY_SECRET); 
-                        dep($arrAuth);
-                        $key = "grant_type=client_credentials";
-                        $tokenJWT = JWT::encode($arrAuth, $key, 'HS512');
-                        dep($tokenJWT);exit;
-                        //$insertToken = $this->model->setTokenDB($requestUser['id_usuario'], $tokenJWT,$arrAuth['expires_in']
-
                     } else {
                         $arrResponse = array('status' => false, 'msg' => 'Error de autenticación');
                         $code = 200;
