@@ -9,7 +9,7 @@
         public function home($params)
         {
             $data['page_tag'] = "Home";
-            $data['page_title'] = "Página principal - Abel OSH";
+            $data['page_title'] = "Página principal - Sistema de votos";
             $data['page_name'] = "home";
             $this->views->getView($this,"home",$data);
         }

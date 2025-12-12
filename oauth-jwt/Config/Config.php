@@ -11,8 +11,6 @@
 	const DB_PASSWORD = "";
 	const DB_CHARSET = "utf8";
 
-
-
-
+	const KEYJWT = "Sistema Elecciones";
 
 ?>
