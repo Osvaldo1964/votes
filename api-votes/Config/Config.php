@@ -1,0 +1,29 @@
+<?php
+
+    //define("BASE_URL","http://localhost/framework-abelosh/");
+    const BASE_URL = "http://api-votes.com/";
+
+    //Datos de conexión a Base de Datos
+	const CONNECTION = true;
+	const DB_HOST = "localhost";
+	const DB_NAME = "db-votes";
+	const DB_USER = "root";
+	const DB_PASSWORD = "";
+	const DB_CHARSET = "utf8";
+
+	const API_OAUTH_JWT = "http://oauth-jwt.com/oauthjwt/token";
+	const API_SET_TOKEN = "http://oauth-jwt.com/oauthjwt/token";
+
+	// Scope Sistema ventas
+	const CLIENT_JWT = 3;
+	const CLIENT_ID = "6cbcb6d052547e5d560e8b8bf55ea170a0ade8e96f0534d67be256c8a617204c-4a0eda2d71a149aeae2a7b79a639733c91c046adaf41b0e09b3f8bf17b555141";
+	const KEY_SECRET = "4a0eda2d71a149aeae2a7b79a639733c91c046adaf41b0e09b3f8bf17b555141-6cbcb6d052547e5d560e8b8bf55ea170a0ade8e96f0534d67be256c8a617204c";
+
+
+	
+
+
+
+
+
+?>
