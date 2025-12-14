@@ -1,3 +1,3 @@
-function openmodal(){
+function openModal(){
     $('#modalFormRol').modal('show');
 }

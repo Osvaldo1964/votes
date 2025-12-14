@@ -1,149 +1,80 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
-    <title><?= $data["page_tag"] ?></title>
-    <!-- Meta -->
+    <meta name="description" content="Sistema de votaciones">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="Globals APPS">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Osvaldo Villalobos">
-    <!-- Favicon icon -->
-    <link rel="icon" href="<?= media(); ?>/images/favicon.ico" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Mada:300,400,500,600,700" rel="stylesheet">
-    <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/bootstrap.min.css">
-    <!-- themify-icons line icon -->
-    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/icon/themify-icons/themify-icons.css">
-    <!-- ico font -->
-    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/icon/icofont/css/icofont.css">
-    <!-- flag icon framework css -->
-    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/pages/flag-icon/flag-icon.min.css">
-    <!-- Menu-Search css -->
-    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/pages/menu-search/css/component.css">
-    <!-- Style.css -->
+    <meta name="theme-color" content="#009688">
+    <link rel="shortcut icon" href="<?= media(); ?>/images/favicon.ico">
+    <title><?= $data["page_tag"] ?></title>
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.css">
     <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/style.css">
-
-    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/linearicons.css">
-    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/simple-line-icons.css">
-    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/ionicons.css">
-    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/jquery.mCustomScrollbar.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
-<body>
-    <!-- Pre-loader start -->
-    <div class="theme-loader">
-        <div class="ball-scale">
-            <div></div>
-        </div>
-    </div>
-    <!-- Pre-loader end -->
-
-    <div id="pcoded" class="pcoded">
-        <div class="pcoded-overlay-box"></div>
-        <div class="pcoded-container navbar-wrapper">
-
-            <nav class="navbar header-navbar pcoded-header">
-                <div class="navbar-wrapper">
-                    <div class="navbar-logo">
-                        <a class="mobile-menu" id="mobile-collapse" href="#!">
-                            <i class="ti-menu"></i>
-                        </a>
-                        <a href="index.html">
-                            <img class="img-fluid mt-1" src="<?= media(); ?>/images/logo.png" width="100" alt="Theme-Logo" />
-                        </a>
-                        <a class="mobile-options">
-                            <i class="ti-more"></i>
-                        </a>
+<body class="app sidebar-mini">
+    <!-- Navbar-->
+    <header class="app-header"><a class="app-header__logo" href="index.html"></a>
+        <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"><i class="fas fa-bars"></i></a>
+        <!-- Navbar Right Menu-->
+        <ul class="app-nav">
+            <!--Notification Menu-->
+            <li class="dropdown"><a class="app-nav__item" href="#" data-bs-toggle="dropdown" aria-label="Show notifications"><i class="bi bi-bell fs-5"></i></a>
+                <ul class="app-notification dropdown-menu dropdown-menu-right">
+                    <li class="app-notification__title">You have 4 new notifications.</li>
+                    <div class="app-notification__content">
+                        <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><i class="bi bi-envelope fs-4 text-primary"></i></span>
+                                <div>
+                                    <p class="app-notification__message">Lisa sent you a mail</p>
+                                    <p class="app-notification__meta">2 min ago</p>
+                                </div>
+                            </a></li>
+                        <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><i class="bi bi-exclamation-triangle fs-4 text-warning"></i></span>
+                                <div>
+                                    <p class="app-notification__message">Mail server not working</p>
+                                    <p class="app-notification__meta">5 min ago</p>
+                                </div>
+                            </a></li>
+                        <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><i class="bi bi-cash fs-4 text-success"></i></span>
+                                <div>
+                                    <p class="app-notification__message">Transaction complete</p>
+                                    <p class="app-notification__meta">2 days ago</p>
+                                </div>
+                            </a></li>
+                        <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><i class="bi bi-envelope fs-4 text-primary"></i></span>
+                                <div>
+                                    <p class="app-notification__message">Lisa sent you a mail</p>
+                                    <p class="app-notification__meta">2 min ago</p>
+                                </div>
+                            </a></li>
+                        <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><i class="bi bi-exclamation-triangle fs-4 text-warning"></i></span>
+                                <div>
+                                    <p class="app-notification__message">Mail server not working</p>
+                                    <p class="app-notification__meta">5 min ago</p>
+                                </div>
+                            </a></li>
+                        <li><a class="app-notification__item" href="javascript:;"><span class="app-notification__icon"><i class="bi bi-cash fs-4 text-success"></i></span>
+                                <div>
+                                    <p class="app-notification__message">Transaction complete</p>
+                                    <p class="app-notification__meta">2 days ago</p>
+                                </div>
+                            </a></li>
                     </div>
-                    <div class="navbar-container container-fluid">
-                        <div>
-                            <ul class="nav-left">
-                                <li>
-                                    <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
-                                </li>
-                                <li>
-                                    <a href="#!" onclick="javascript:toggleFullScreen()">
-                                        <i class="ti-fullscreen"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav-right">
-                                <li class="header-notification">
-                                    <a href="#!">
-                                        <i class="ti-bell"></i>
-                                        <span class="badge">5</span>
-                                    </a>
-                                    <ul class="show-notification">
-                                        <li>
-                                            <h6>Notifications</h6>
-                                            <label class="label label-danger">New</label>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center" src="<?= media(); ?>/images/user.png" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">John Doe</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center" src="<?= media(); ?>/images/user.png" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">Joseph William</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <img class="d-flex align-self-center" src="<?= media(); ?>/images/user.png" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">Sara Soudein</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="user-profile header-notification">
-                                    <a href="#!">
-                                        <img src="<?= media(); ?>/images/user.png" alt="User-Profile-Image">
-                                        <span>John Doe</span>
-                                        <i class="ti-angle-down"></i>
-                                    </a>
-                                    <ul class="show-notification profile-notification">
-                                        <li>
-                                            <a href="<?= base_url() ?>/opciones">
-                                                <i class="ti-settings"></i> Ajustes
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="user-profile.html">
-                                                <i class="ti-user"></i> Profile
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= base_url() ?>/logout">
-                                                <i class="ti-layout-sidebar-left"></i> Logout
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
-            <div class="pcoded-main-container">
-                <div class="pcoded-wrapper">
-            <?php require_once "nav_admin.php"; ?>
+                    <li class="app-notification__footer"><a href="#">See all notifications.</a></li>
+                </ul>
+            </li>
+            <!-- User Menu-->
+            <li class="dropdown"><a class="app-nav__item" href="#" data-bs-toggle="dropdown" aria-label="Open Profile Menu"><i class="bi bi-person fs-4"></i></a>
+                <ul class="dropdown-menu settings-menu dropdown-menu-right">
+                    <li><a class="dropdown-item" href="page-user.html"><i class="bi bi-gear me-2 fs-5"></i> Settings</a></li>
+                    <li><a class="dropdown-item" href="page-user.html"><i class="bi bi-person me-2 fs-5"></i> Profile</a></li>
+                    <li><a class="dropdown-item" href="page-login.html"><i class="bi bi-box-arrow-right me-2 fs-5"></i> Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </header>
+    <?php require_once "nav_admin.php"; ?>

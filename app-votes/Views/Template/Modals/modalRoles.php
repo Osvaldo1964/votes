@@ -1,65 +1,52 @@
 <!-- Vertically centered scrollable modal -->
-<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="modalFormRol">
+<div class="modal fade col-md-8" id="modalFormRol" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="titleModal">Nuevo Rol</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+      <div class="modal-header">
+        <h5 class="modal-title">Nuevo Rol</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!--begin::Horizontal Form-->
+        <div class="card card-warning card-outline mb-4">
+          <!--begin::Header-->
+          <!--end::Header-->
+          <!--begin::Form-->
+          <form id="formRol" name="formRol">
+            <!--begin::Body-->
+            <div class="card-body">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                <input type="text" class="form-control" id="txtNombre" name="txtNombre" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Descripción</span>
+                <textarea class="form-control" id="txtDescripcion" name="txtDescripcion" aria-label="With textarea"></textarea>
+              </div>
+
+              <!--begin::Col-->
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                <select class="form-select" id="listEstado" name="listEstado">
+                  <option selected>Seleccione...</option>
+                  <option value="1">Activo</option>
+                  <option value="2">Inactivo</option>
+                </select>
+              </div>
+              <!--end::Col-->
+            </div>
+            <!--end::Body-->
+            <!--begin::Footer-->
+            <div class="card-footer">
+              <button type="submit" class="btn btn-success">Guardar</button>
+              <button type="submit" class="btn btn-secondary float-end" data-dismiss="modal">Cancelar</button>
+            </div>
+            <!--end::Footer-->
+          </form>
+          <!--end::Form-->
         </div>
-        <div class="modal-body">
-            <form id="formRol" name="formRol">
-                <div class="form-group row">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="col">
-                    </div>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" placeholder="col-sm-4">
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="col">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="col">
-                    </div>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" placeholder="col-sm-6">
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="col">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" placeholder="col-sm-8">
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="col">
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="col">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="col">
-                    </div>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" placeholder="col-sm-10">
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="col">
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary" id="btnActionForm" onclick="submitFormRol(event);">
-                <span id="btnText">Guardar</span>
-            </button>
-        </div>
+        <!--end::Horizontal Form-->
+      </div>
     </div>
+  </div>
 </div>
