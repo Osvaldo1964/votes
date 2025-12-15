@@ -157,7 +157,6 @@
                     $key_secret = $_SERVER['PHP_AUTH_PW'];
                     
                     $request = $this->model->getScopeAuth($client_id,$key_secret); 
-                    dep($request);
 
                     if($request > 0){
                         $idScope = $request['id_scope'];

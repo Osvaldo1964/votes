@@ -299,6 +299,7 @@ class Usuario extends Controllers
                     $response = array('status' => false, 'msg' => 'El usuario o la contraseña es incorrecto.');
                 } else {
                     $tokenRequest = getTokenApi();
+
                     if ($tokenRequest['status']) {
                         $arrAuth = $tokenRequest['data'];
                         $arrAuth['id_usuario'] = $requestUser['id_usuario'];

@@ -1,6 +1,6 @@
 <?php
 
-    class rolesModel extends Mysql
+    class RolesModel extends Mysql
     {
         private $intIdCliente;
 		private $strIdentificacion;
@@ -19,7 +19,7 @@
             parent::__construct();
         }
 
-        public function setCliente(string $identificacion, string $nombres, string $apellidos, int $telefono, string $email, string $direccion, string $nit, string $nomfiscal, string $dirfiscal)
+        public function setRol(string $nombre, string $descricion, string $estado)
         {
             $this->strIdentificacion = $identificacion;
 			$this->strNombres = $nombres;

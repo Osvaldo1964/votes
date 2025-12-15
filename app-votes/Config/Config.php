@@ -18,9 +18,9 @@
 	const API_VALID_JWT = "http://oauth-jwt.com/oauthjwt/tokenValidate/";
 
 	// Scope Sistema ventas
-	const CLIENT_JWT = 3;
-	const CLIENT_ID = "6cbcb6d052547e5d560e8b8bf55ea170a0ade8e96f0534d67be256c8a617204c-4a0eda2d71a149aeae2a7b79a639733c91c046adaf41b0e09b3f8bf17b555141";
-	const KEY_SECRET = "4a0eda2d71a149aeae2a7b79a639733c91c046adaf41b0e09b3f8bf17b555141-6cbcb6d052547e5d560e8b8bf55ea170a0ade8e96f0534d67be256c8a617204c";
+	const CLIENT_JWT = 9;
+	const CLIENT_ID = "6cbcb6d052547e5d560e8b8bf55ea170a0ade8e96f0534d67be256c8a617204c-08d4a98d34bec82c9c12b022b4cc2a611df2eda9da2f25f85f386197bbd9321f";
+	const KEY_SECRET = "08d4a98d34bec82c9c12b022b4cc2a611df2eda9da2f25f85f386197bbd9321f-6cbcb6d052547e5d560e8b8bf55ea170a0ade8e96f0534d67be256c8a617204c";
 
 	//Deliminadores decimal y millar Ej. 24,1989.00
 	const SPD = "."; //Separador decimal

@@ -4,12 +4,12 @@ class Roles extends Controllers
 
     public function __construct()
     {
-        
+
         try {
             //================= Validar token ===================
             $arrHeaders = getallheaders();
             //dep($arrHeaders);exit;
-            $arrHeaders['Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6NCwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1hQGVtcHJlc2ExLmNvbSIsImlhdCI6MTc2NTc1NjEyMywiZXhwIjoxNzY1NzU5NzIzfQ.zyCETn0dGyn89uiRBucutDVomgewgliT7lYsxxxIcQgJBU6sPCuu-ksc1wW-nRGMku1Yk-btyyjwhpipyUm0wQ';
+            //$arrHeaders['Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6NCwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1hQGVtcHJlc2ExLmNvbSIsImlhdCI6MTc2NTc1NjEyMywiZXhwIjoxNzY1NzU5NzIzfQ.zyCETn0dGyn89uiRBucutDVomgewgliT7lYsxxxIcQgJBU6sPCuu-ksc1wW-nRGMku1Yk-btyyjwhpipyUm0wQ';
             $reesponse = fntAuthorization($arrHeaders);
             //====================================================
         } catch (\Throwable $e) {
@@ -58,11 +58,26 @@ class Roles extends Controllers
             $method = $_SERVER['REQUEST_METHOD'];
             $response = [];
             if ($method == "GET") {
-                $arrCuentas = $this->model->getRoles();
-                if (empty($arrCuentas)) {
+                $arrData = $this->model->getRoles();
+                if (empty($arrData)) {
                     $response = array('status' => false, 'msg' => 'No hay datos para mostrar', 'data' => "");
                 } else {
-                    $response = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrCuentas);
+                    for ($i = 0; $i < count($arrData); $i++) {
+                        if ($arrData[$i]['status_rol'] == 1) {
+                            $arrData[$i]['status_rol'] = '<span class="badge badge-success">Activo</span>';
+                        } else {
+                            $arrData[$i]['status_rol'] = '<span class="badge badge-danger">Inactivo</span>';
+                        }
+                        $btnView = '';
+                        $btnEdit = '';
+                        $btnDelete = '';
+                        $arrData[$i]['options'] = '<div class="text-center">
+                                                <button class="btn btn-info btn-sm btnPermisosRol" rl="'.$arrData[$i]['id_rol'].'" title="Ver Rol"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-primary btn-sm btnEditRol" rl="'.$arrData[$i]['id_rol'].'" title="Editar Rol"><i class="fas fa-pencil-alt"></i></button>
+                                                <button class="btn btn-danger btn-sm btnDelRol" rl="'.$arrData[$i]['id_rol'].'" title="Eliminar Rol"><i class="fas fa-trash-alt"></i></button>
+                                            </div>';
+                    }
+                    $response = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrData);
                 }
                 $code = 200;
             } else {
@@ -85,72 +100,37 @@ class Roles extends Controllers
             if ($method == "POST") {
                 $_POST = json_decode(file_get_contents('php://input'), true);
 
-                if (empty($_POST['clienteId']) or !is_numeric($_POST['clienteId'])) {
-                    $response = array('status' => false, 'msg' => 'El cliente es requerido');
+                if (empty($_POST['txtNombre']) or !is_numeric($_POST['txtNombre'])) {
+                    $response = array('status' => false, 'msg' => 'El nombre es requerido');
                     jsonResponse($response, 200);
                     die();
                 }
-                if (empty($_POST['productoId']) or !is_numeric($_POST['productoId'])) {
-                    $response = array('status' => false, 'msg' => 'El producto es requerido');
+                if (empty($_POST['txtDescripcion']) or !is_numeric($_POST['txtDescripcion'])) {
+                    $response = array('status' => false, 'msg' => 'La descripcion es requerida');
                     jsonResponse($response, 200);
                     die();
                 }
-                if (empty($_POST['frecuenciaId']) or !is_numeric($_POST['frecuenciaId'])) {
-                    $response = array('status' => false, 'msg' => 'La frecuencia es requerida');
+                if (empty($_POST['listStatus']) or !is_numeric($_POST['listStatus'])) {
+                    $response = array('status' => false, 'msg' => 'El estado es requerido');
                     jsonResponse($response, 200);
                     die();
                 }
-                if (empty($_POST['monto']) or !is_numeric($_POST['monto'])) {
-                    $response = array('status' => false, 'msg' => 'El monto es requerido');
-                    jsonResponse($response, 200);
-                    die();
-                }
-                if (empty($_POST['cuotas']) or !is_numeric($_POST['cuotas'])) {
-                    $response = array('status' => false, 'msg' => 'La cuota es requerida');
-                    jsonResponse($response, 200);
-                    die();
-                }
-                if (empty($_POST['monto_cuota']) or !is_numeric($_POST['monto_cuota'])) {
-                    $response = array('status' => false, 'msg' => 'El monto cuota es requerido');
-                    jsonResponse($response, 200);
-                    die();
-                }
-                if (empty($_POST['cargo']) or !is_numeric($_POST['cargo'])) {
-                    $response = array('status' => false, 'msg' => 'El cargo es requerido');
-                    jsonResponse($response, 200);
-                    die();
-                }
-                if (empty($_POST['saldo']) or !is_numeric($_POST['saldo'])) {
-                    $response = array('status' => false, 'msg' => 'El saldo es requerido');
-                    jsonResponse($response, 200);
-                    die();
-                }
+ 
+                $strNombre = strClean($_POST['txtNombre']);
+                $strDescript = strClean($_POST['txtDescripcion']);
+                $listEstado = strClean($_POST['listStatus']);
 
-                $intClienteId = strClean($_POST['clienteId']);
-                $intProductoId = strClean($_POST['productoId']);
-                $intFrecuenciaId = strClean($_POST['frecuenciaId']);
-                $strMonto = strClean($_POST['monto']);
-                $strCuotas = strClean($_POST['cuotas']);
-                $strMontoCuotas = strClean($_POST['monto_cuota']);
-                $strCargo = strClean($_POST['cargo']);
-                $strSaldo = strClean($_POST['saldo']);
-
-                $request = $this->model->setCuenta(
-                    $intClienteId,
-                    $intProductoId,
-                    $intFrecuenciaId,
-                    $strMonto,
-                    $strCuotas,
-                    $strMontoCuotas,
-                    $strCargo,
-                    $strSaldo
+                $request = $this->model->setRol(
+                    $strNombre,
+                    $strDescript,
+                    $listEstado
                 );
 
                 if (is_numeric($request) and $request > 0) {
-                    $arrCuenta = array('idContrado' => $request);
-                    $response = array('status' => true, 'msg' => 'Datos guardados correctamente', 'data' => $arrCuenta);
+                    $arrRoles = array('idContrado' => $request);
+                    $response = array('status' => true, 'msg' => 'Datos guardados correctamente', 'data' => $arrRoles);
                 } else {
-                    $response = array('status' => false, 'msg' => 'No es posible crear el contrato', 'msg_tecnito' => $request);
+                    $response = array('status' => false, 'msg' => 'No es posible crear el rol', 'msg_tecnico' => $request);
                 }
                 $code = 200;
             } else {

@@ -117,8 +117,6 @@ function fntAuthorization(array $arrHeaders)
             $token = $arrTokenBearer[1];
             try {
                 $arrPayload = JWT::decode($token, new Key(KEY_SECRET, 'HS512'));
-                dep($arrPayload);
-                exit;
             } catch (\Firebase\JWT\ExpiredException $e) {
                 $arrResponse = array('status' => false, 'msg' => $e->getMessage());
                 jsonResponse($arrResponse, 400);
@@ -136,6 +134,7 @@ function getTokenApi()
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
     curl_setopt($ch, CURLOPT_USERPWD, CLIENT_ID . ":" . KEY_SECRET);
+    
     $result = curl_exec($ch);
     $err = curl_error($ch);
 
