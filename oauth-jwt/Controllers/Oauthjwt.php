@@ -155,8 +155,9 @@
 
                     $client_id = $_SERVER['PHP_AUTH_USER'];
                     $key_secret = $_SERVER['PHP_AUTH_PW'];
-
+                    
                     $request = $this->model->getScopeAuth($client_id,$key_secret); 
+                    dep($request);
 
                     if($request > 0){
                         $idScope = $request['id_scope'];
@@ -168,7 +169,7 @@
                         // 1 H = 3600
                         // 1 D = 86,400
                         //$expires_in = $time + (60 * 60 * 24); //1 días ó 24 horas
-                        $expires_in = $time + (3600); // 1 hora
+                        $expires_in = $time + (60 * 60 * 24); // 1 hora
                         $arrPayLoad = array('id_sp' => $idScope,
                                         'scope' => $scope,
                                         'email' => $email,

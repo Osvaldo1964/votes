@@ -15,4 +15,8 @@ class Roles extends Controllers
         $data['page_title'] = "Roles de Usuario - Sistema de votos";
         $this->views->getView($this, "roles", $data);
     }
+
+    public function getRoles() {
+        
+    }
 }
