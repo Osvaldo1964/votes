@@ -4,7 +4,6 @@ class Roles extends Controllers
 
     public function __construct()
     {
-
         try {
             //================= Validar token ===================
             $arrHeaders = getallheaders();
@@ -76,7 +75,7 @@ class Roles extends Controllers
                         $btnEdit = '';
                         $btnDelete = '';
                         $arrData[$i]['options'] = '<div class="text-center">
-                                                <button class="btn btn-info btn-sm btnPermisosRol" rl="' . $arrData[$i]['id_rol'] . '" title="Ver Rol"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-info btn-sm btnPermisosRol" rl="' . $arrData[$i]['id_rol'] . '" title="Ver Rol"><i class="fas fa-key"></i></button>
                                                 <button class="btn btn-primary btn-sm btnEditRol" rl="' . $arrData[$i]['id_rol'] . '" title="Editar Rol"><i class="fas fa-pencil-alt"></i></button>
                                                 <button class="btn btn-danger btn-sm btnDelRol" rl="' . $arrData[$i]['id_rol'] . '" title="Eliminar Rol"><i class="fas fa-trash-alt"></i></button>
                                             </div>';
@@ -183,11 +182,13 @@ class Roles extends Controllers
                     jsonResponse($response, 400);
                     die();
                 }
-                $request = $this->model->deleteRol($idrol);
-                if ($request) {
+                $requestDelete = $this->model->deleteRol($idrol);
+                if ($requestDelete == "ok") {
                     $response = array('status' => true, 'msg' => 'Registro eliminado');
-                } else {
+                } elseif ($requestDelete == "exist") {
                     $response = array('status' => false, 'msg' => 'No es posible eliminar el registro');
+                } else {
+                    $response = array('status' => false, 'msg' => 'Error en la solicitud ' . $method);
                 }
                 $code = 200;
             } else {

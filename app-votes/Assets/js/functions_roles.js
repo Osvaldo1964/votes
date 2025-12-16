@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var apiUrl = "http://api-votes.com/roles/getRoles";
 
     // Usar 'DataTable' con D mayúscula es la convención moderna
-    var tableRoles = $('#tableRoles').DataTable({
+    tableRoles = $('#tableRoles').DataTable({
         "processing": true,     // Antes aProcessing
         "serverSide": false,    // ¡IMPORTANTE! (Ver explicación abajo)
         "language": {
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-$('#tableRoles').DataTable();
+//$('#tableRoles').DataTable();
 
 function openModal() {
     document.querySelector('#idRol').value = "";
@@ -197,7 +197,7 @@ function fntDelRol() {
                             var objData = JSON.parse(request.responseText);
                             if (objData.status) {
                                 swal("Eliminar!", objData.msg, "success");
-                                tableRoles.api().ajax.reload(function () {
+                                tableRoles.ajax.reload(function () {
                                     fntEditRol();
                                     fntDelRol();
                                     fntPermisos();
@@ -208,36 +208,104 @@ function fntDelRol() {
                         }
                     }
                 }
-
             });
-
         });
     });
 }
 
 function fntPermisos() {
     var btnPermisosRol = document.querySelectorAll(".btnPermisosRol");
+    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjU4OTk4NjYsImV4cCI6MTc2NTk4NjI2Nn0.w9TwtddPSKCEr1yzUsD0HzfYIhjszDyJZzFbrdF2BqxJXF9MdxmDrdS56qAv4_CRuyRrZqxV4PWppAAWkiZPjA";
+
     btnPermisosRol.forEach(function (btnPermisosRol) {
         btnPermisosRol.addEventListener('click', function () {
 
             var idrol = this.getAttribute("rl");
             var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = base_url + '/Permisos/getPermisosRol/' + idrol;
+            var ajaxUrl = 'http://api-votes.com/permisos/getPermisosRol/' + idrol;
+
             request.open("GET", ajaxUrl, true);
+            request.setRequestHeader('Authorization', 'Bearer ' + miToken);
+            request.setRequestHeader('Accept', 'application/json');
             request.send();
 
             request.onreadystatechange = function () {
                 if (request.readyState == 4 && request.status == 200) {
-                    document.querySelector('#contentAjax').innerHTML = request.responseText;
-                    $('.modalPermisos').modal('show');
-                    document.querySelector('#formPermisos').addEventListener('submit', fntSavePermisos, false);
+
+                    var objResponse = JSON.parse(request.responseText);
+
+                    if (objResponse.status == true) {
+                        var arrModulos = objResponse.data;
+                        var htmlTable = "";
+                        var no = 1; // Contador para la columna #
+
+                        arrModulos.forEach(function (modulo) {
+
+                            // 1. Validar si está chequeado o no
+                            var pR = modulo.permisos.r == 1 ? "checked" : "";
+                            var pW = modulo.permisos.w == 1 ? "checked" : "";
+                            var pU = modulo.permisos.u == 1 ? "checked" : "";
+                            var pD = modulo.permisos.d == 1 ? "checked" : "";
+
+                            htmlTable += '<tr>';
+
+                            // Columna #: Mostramos contador y guardamos ID modulo oculto
+                            htmlTable += '<td>' + no + '<input type="hidden" name="modulos[' + modulo.id_modulo + '][idmodulo]" value="' + modulo.id_modulo + '" required></td>';
+
+                            // Columna Nombre Módulo
+                            htmlTable += '<td>' + modulo.tittulo_modulo + '</td>';
+
+                            // --- Toggle VER (R) ---
+                            htmlTable += '<td><div class="toggle-flip"><label>';
+                            htmlTable += '<input type="checkbox" name="modulos[' + modulo.id_modulo + '][r]" ' + pR + '><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>';
+                            htmlTable += '</label></div></td>';
+
+                            // --- Toggle CREAR (W) ---
+                            htmlTable += '<td><div class="toggle-flip"><label>';
+                            htmlTable += '<input type="checkbox" name="modulos[' + modulo.id_modulo + '][w]" ' + pW + '><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>';
+                            htmlTable += '</label></div></td>';
+
+                            // --- Toggle ACTUALIZAR (U) ---
+                            htmlTable += '<td><div class="toggle-flip"><label>';
+                            htmlTable += '<input type="checkbox" name="modulos[' + modulo.id_modulo + '][u]" ' + pU + '><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>';
+                            htmlTable += '</label></div></td>';
+
+                            // --- Toggle ELIMINAR (D) ---
+                            htmlTable += '<td><div class="toggle-flip"><label>';
+                            htmlTable += '<input type="checkbox" name="modulos[' + modulo.id_modulo + '][d]" ' + pD + '><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>';
+                            htmlTable += '</label></div></td>';
+
+                            htmlTable += '</tr>';
+                            no++; // Aumentamos el contador
+                        });
+
+                        // 2. Inyectamos el HTML en el tbody limpio
+                        document.querySelector('#contentAjax').innerHTML = htmlTable;
+
+                        // 3. Asignamos el ID Rol al input hidden
+                        if (document.querySelector('#idrol')) {
+                            document.querySelector('#idrol').value = idrol;
+                        }
+
+                        // 4. Mostramos Modal
+                        $('.modalPermisos').modal('show');
+
+                        // 5. Asignar evento de guardado (quitando el anterior para no duplicar)
+                        var formPermisos = document.querySelector('#formPermisos');
+                        if (formPermisos) {
+                            formPermisos.removeEventListener('submit', fntSavePermisos); // Limpieza preventiva
+                            formPermisos.addEventListener('submit', fntSavePermisos, false);
+                        }
+
+                    } else {
+                        swal("Error", objResponse.msg, "error");
+                    }
                 }
             }
-
-
         });
     });
 }
+
 
 function fntSavePermisos(evnet) {
     evnet.preventDefault();

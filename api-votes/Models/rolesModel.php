@@ -18,6 +18,9 @@ class RolesModel extends Mysql
         $this->strNombre = $nombre;
         $this->strDescripcion = $descripcion;
         $this->intStatus = $estado;
+        if ($this->intStatus == 0) {
+            $this->intStatus = 1;
+        }
 
         $sql = "SELECT * FROM roles WHERE nombre_rol = ?";
         $arrParams = array($this->strNombre);
@@ -82,9 +85,20 @@ class RolesModel extends Mysql
     {
         // verificar si el rol está asignado a algún usuario
         $this->intIdRol = $idrol;
-        $sql = "UPDATE roles SET status_rol = ? WHERE id_rol = ? ";
-        $arrData = array("0", $this->intIdRol);
-        $request = $this->update($sql, $arrData);
-        return $request;
+        $sql = "SELECT * FROM usuarios WHERE rol_usuario = ?";
+        $arrParams = array($this->intIdRol);
+        $request = $this->select($sql, $arrParams);
+        if (empty($request)) {
+            $sql = "UPDATE roles SET status_rol = ? WHERE id_rol = ? ";
+            $arrData = array("0", $this->intIdRol);
+            $request = $this->update($sql, $arrData);
+            if ($request) {
+                return 'ok';
+            } else {
+                return 'error';
+            }
+        } else {
+            return 'exist';
+        }
     }
 }
