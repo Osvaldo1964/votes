@@ -100,7 +100,6 @@ function testEmail(string $email)
 
 function fntAuthorization(array $arrHeaders)
 {
-
     if (empty($arrHeaders['Authorization'])) {
         $response = array('status' => false, 'msg' => 'Autorización requerida');
         jsonResponse($response, 400);

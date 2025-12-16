@@ -20,24 +20,27 @@ class Roles extends Controllers
         parent::__construct();
     }
 
-    public function getRol($idcuenta)
+    public function getRol($idrol)
     {
         try {
             $method = $_SERVER['REQUEST_METHOD'];
             $response = [];
             if ($method == "GET") {
-                if (empty($idcuenta) or !is_numeric($idcuenta)) {
+                //================= Validar token ===================
+                $arrHeaders = getallheaders();
+                $reesponse = fntAuthorization($arrHeaders);
+                //====================================================
+
+                if (empty($idrol) or !is_numeric($idrol)) {
                     $response = array('status' => false, 'msg' => 'Error en los parametros');
                     jsonResponse($response, 400);
                     die();
                 }
-                $arrCuenta = $this->model->getCuenta($idcuenta);
-                if (empty($arrCuenta)) {
+                $arrRol = $this->model->getRol($idrol);
+                if (empty($arrRol)) {
                     $response = array('status' => false, 'msg' => 'Registro no encontrado');
                 } else {
-                    $arrMovimientos = $this->model->getMovimientos($idcuenta);
-                    $arrCuenta['movimientos'] = $arrMovimientos;
-                    $response = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrCuenta);
+                    $response = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrRol);
                 }
                 $code = 200;
             } else {
@@ -47,7 +50,8 @@ class Roles extends Controllers
             jsonResponse($response, $code);
             die();
         } catch (Exception $e) {
-            echo "Error en el proceso: " . $e->getMessage();
+            $arrResponse = array('status' => false, 'msg' => $e->getMessage());
+            jsonResponse($arrResponse, 400);
         }
         die();
     }
@@ -72,9 +76,9 @@ class Roles extends Controllers
                         $btnEdit = '';
                         $btnDelete = '';
                         $arrData[$i]['options'] = '<div class="text-center">
-                                                <button class="btn btn-info btn-sm btnPermisosRol" rl="'.$arrData[$i]['id_rol'].'" title="Ver Rol"><i class="fas fa-eye"></i></button>
-                                                <button class="btn btn-primary btn-sm btnEditRol" rl="'.$arrData[$i]['id_rol'].'" title="Editar Rol"><i class="fas fa-pencil-alt"></i></button>
-                                                <button class="btn btn-danger btn-sm btnDelRol" rl="'.$arrData[$i]['id_rol'].'" title="Eliminar Rol"><i class="fas fa-trash-alt"></i></button>
+                                                <button class="btn btn-info btn-sm btnPermisosRol" rl="' . $arrData[$i]['id_rol'] . '" title="Ver Rol"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-primary btn-sm btnEditRol" rl="' . $arrData[$i]['id_rol'] . '" title="Editar Rol"><i class="fas fa-pencil-alt"></i></button>
+                                                <button class="btn btn-danger btn-sm btnDelRol" rl="' . $arrData[$i]['id_rol'] . '" title="Eliminar Rol"><i class="fas fa-trash-alt"></i></button>
                                             </div>';
                     }
                     $response = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrData);
@@ -98,14 +102,14 @@ class Roles extends Controllers
             $method = $_SERVER['REQUEST_METHOD'];
             $response = [];
             if ($method == "POST") {
-                $_POST = json_decode(file_get_contents('php://input'), true);
+                //$_POST = json_decode(file_get_contents('php://input'), true);
 
-                if (empty($_POST['txtNombre']) or !is_numeric($_POST['txtNombre'])) {
-                    $response = array('status' => false, 'msg' => 'El nombre es requerido');
+                if (empty($_POST['txtNombre'])) {
+                    $response = array('status' => false, 'msg' => 'El nombre es cvcvcvcvrequerido');
                     jsonResponse($response, 200);
                     die();
                 }
-                if (empty($_POST['txtDescripcion']) or !is_numeric($_POST['txtDescripcion'])) {
+                if (empty($_POST['txtDescripcion'])) {
                     $response = array('status' => false, 'msg' => 'La descripcion es requerida');
                     jsonResponse($response, 200);
                     die();
@@ -115,22 +119,32 @@ class Roles extends Controllers
                     jsonResponse($response, 200);
                     die();
                 }
- 
+
+                $intIdRol = intval($_POST['idRol']);
                 $strNombre = strClean($_POST['txtNombre']);
                 $strDescript = strClean($_POST['txtDescripcion']);
                 $listEstado = strClean($_POST['listStatus']);
 
-                $request = $this->model->setRol(
-                    $strNombre,
-                    $strDescript,
-                    $listEstado
-                );
-
-                if (is_numeric($request) and $request > 0) {
-                    $arrRoles = array('idContrado' => $request);
-                    $response = array('status' => true, 'msg' => 'Datos guardados correctamente', 'data' => $arrRoles);
+                if ($intIdRol == 0) {
+                    // Crear
+                    $request_rol = $this->model->setRol($strNombre, $strDescript, $listEstado);
+                    $option = 1;
                 } else {
-                    $response = array('status' => false, 'msg' => 'No es posible crear el rol', 'msg_tecnico' => $request);
+                    // Actualizar
+                    $request_rol = $this->model->updateRol($intIdRol, $strNombre, $strDescript, $listEstado);
+                    $option = 2;
+                }
+
+                if ($request_rol > 0) {
+                    if ($option == 1) {
+                        $response = array('status' => true, 'msg' => 'Datos guardados correctamente', 'data' => $request_rol);
+                    } else {
+                        $response = array('status' => true, 'msg' => 'Datos actualizados correctamente.', 'data' => $request_rol);
+                    }
+                } else if ($request_rol == 'exist') {
+                    $response = array('status' => false, 'msg' => '¡Atención! El rol ya existe.');
+                } else {
+                    $response = array('status' => false, 'msg' => 'No es posible crear el rol', 'msg_tecnico' => $request_rol);
                 }
                 $code = 200;
             } else {
@@ -145,29 +159,31 @@ class Roles extends Controllers
         die();
     }
 
-    public function delRol($idusuario)
+    public function delRol($irol)
     {
         try {
             $method = $_SERVER['REQUEST_METHOD'];
             $response = [];
-            if ($method == "DELETE") {
+            if ($method == "PUT") {
                 //================= Validar token ===================
                 $arrHeaders = getallheaders();
                 $reesponse = fntAuthorization($arrHeaders);
                 //====================================================
-                if (empty($idusuario) or !is_numeric($idusuario)) {
+                $data = json_decode(file_get_contents("php://input"), true);
+                $idrol = $data['idrol'];
+                if (empty($idrol) or !is_numeric($idrol)) {
                     $response = array('status' => false, 'msg' => 'Error en los parametros');
                     jsonResponse($response, 400);
                     die();
                 }
 
-                $buscar_usuario = $this->model->getUsuario($idusuario);
-                if (empty($buscar_usuario)) {
-                    $response = array('status' => false, 'msg' => 'El usuario no existe o ya fue eliminado');
+                $buscar_rol = $this->model->getRol($idrol);
+                if (empty($buscar_rol)) {
+                    $response = array('status' => false, 'msg' => 'El rol no existe o ya fue eliminado');
                     jsonResponse($response, 400);
                     die();
                 }
-                $request = $this->model->deleteUsuario($idusuario);
+                $request = $this->model->deleteRol($idrol);
                 if ($request) {
                     $response = array('status' => true, 'msg' => 'Registro eliminado');
                 } else {

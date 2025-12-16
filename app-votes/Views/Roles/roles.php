@@ -20,7 +20,7 @@
             <div class="col-md-12">
               <div class="tile">
                 <div class="tile-body">
-                  <div class="table-responsive">
+                  <div class="table-responsive" style="overflow: hidden;">
                     <table class="table table-hover table-bordered" id="tableRoles">
                       <thead>
                         <tr>
