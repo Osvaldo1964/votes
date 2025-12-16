@@ -308,7 +308,7 @@ function fntPermisos() {
 
 
 function fntSavePermisos(evnet) {
-    evnet.preventDefault();
+    event.preventDefault();
     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     var ajaxUrl = base_url + '/Permisos/setPermisos';
     var formElement = document.querySelector("#formPermisos");
