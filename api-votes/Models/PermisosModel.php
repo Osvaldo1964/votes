@@ -31,8 +31,9 @@ class PermisosModel extends Mysql
 	public function deletePermisos(int $idrol)
 	{
 		$this->intRolid = $idrol;
-		$sql = "DELETE FROM permisos WHERE rolid = $this->intRolid";
-		$request = $this->delete($sql);
+		$sql = "DELETE FROM permisos WHERE rolid = ?";
+		$arrData = array($this->intRolid);
+		$request = $this->delete($sql, $arrData);
 		return $request;
 	}
 
@@ -44,7 +45,7 @@ class PermisosModel extends Mysql
 		$this->w = $w;
 		$this->u = $u;
 		$this->d = $d;
-		$query_insert = "INSERT INTO permisos(rolid,moduloid,r,w,u,d) VALUES(?,?,?,?,?,?)";
+		$query_insert = "INSERT INTO permisos(rol_permiso,modulo_permiso,r_permiso,w_permiso,u_permiso,d_permiso) VALUES(?,?,?,?,?,?)";
 		$arrData = array($this->intRolid, $this->intModuloid, $this->r, $this->w, $this->u, $this->d);
 		$request_insert = $this->insert($query_insert, $arrData);
 		return $request_insert;

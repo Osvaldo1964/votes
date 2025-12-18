@@ -1,12 +1,12 @@
-var tableRoles;
+var tableUsuarios;
 
 document.addEventListener('DOMContentLoaded', function () {
 
     var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwMDk0MzcsImV4cCI6MTc2NjA5NTgzN30.s8pRhBWGfx_ecPxedcC5yPbw_GsBwXHEICAwreUV4NX5rs8T-l27q4u-Jt71-fNJVBx3nwjlfbNAGLAq_gDwGQ"; // Tu token
-    var apiUrl = "http://api-votes.com/roles/getRoles";
+    var apiUrl = "http://api-votes.com/usuario/getUsers";
 
     // Usar 'DataTable' con D mayúscula es la convención moderna
-    tableRoles = $('#tableRoles').DataTable({
+    tableUsuarios = $('#tableUsuarios').DataTable({
         "processing": true,     // Antes aProcessing
         "serverSide": false,    // ¡IMPORTANTE! (Ver explicación abajo)
         "language": {
@@ -40,10 +40,13 @@ document.addEventListener('DOMContentLoaded', function () {
             "dataSrc": "data"
         }, // <--- Faltaba cerrar correctamente el objeto AJAX antes de 'columns'
         "columns": [
-            { "data": "id_rol" },
+            { "data": "id_usuario" },
+            { "data": "nombres_usuario" },
+            { "data": "apellidos_usuario" },
+            { "data": "telefono_usuario" },
+            { "data": "email_usuario" },
             { "data": "nombre_rol" },
-            { "data": "descript_rol" },
-            { "data": "status_rol" },
+            { "data": "estado_usuario" },
             { "data": "options" }
         ],
         "responsive": true,  // <--- Corregido (decía "resonsieve")
@@ -52,12 +55,12 @@ document.addEventListener('DOMContentLoaded', function () {
         "order": [[0, "desc"]]
     });
 
-    //NUEVO ROL
-    var formRol = document.querySelector("#formRol");
-    formRol.onsubmit = function (e) {
+    //NUEVO USUARIO
+    var formUsuario = document.querySelector("#formUsuario");
+    formUsuario.onsubmit = function (e) {
         e.preventDefault();
 
-        var intIdRol = document.querySelector('#idRol').value;
+        var intIdUsuario = document.querySelector('#idUsuario').value;
         var strNombre = document.querySelector('#txtNombre').value;
         var strDescripcion = document.querySelector('#txtDescripcion').value;
         var intStatus = document.querySelector('#listStatus').value;
@@ -95,36 +98,61 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-//$('#tableRoles').DataTable();
+function fntRolesUsuario() {
+    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwMDk0MzcsImV4cCI6MTc2NjA5NTgzN30.s8pRhBWGfx_ecPxedcC5yPbw_GsBwXHEICAwreUV4NX5rs8T-l27q4u-Jt71-fNJVBx3nwjlfbNAGLAq_gDwGQ"; // Tu token
+    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    var ajaxUrl = 'http://api-votes.com/roles/getRolesUsuario';
+    request.open("GET", ajaxUrl, true);
+    // --- AGREGO LOS HEADERS ---
+    request.setRequestHeader('Authorization', 'Bearer ' + miToken);
+    request.setRequestHeader('Accept', 'application/json');
+    // ----------------------------
+    request.send();
+    request.onreadystatechange = function () {
+        if (request.readyState == 4 && request.status == 200) {
+            var objData = JSON.parse(request.responseText);
+            if (objData.status) {
+                var data = objData.data;
+                var html = '';
+                data.forEach(function (item) {
+                    html += '<option value="' + item.id_rol + '">' + item.nombre_rol + '</option>';
+                });
+                document.querySelector('#listRoles').innerHTML = html;
+            } else {
+                swal("Error", objData.msg, "error");
+            }
+        }
+    }
+}
 
 function openModal() {
-    document.querySelector('#idRol').value = "";
+    document.querySelector('#idUsuario').value = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
     document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
     document.querySelector('#btnText').innerHTML = "Guardar";
-    document.querySelector('#titleModal').innerHTML = "Nuevo Rol";
-    document.querySelector("#formRol").reset();
-    $('#modalFormRol').modal('show');
+    document.querySelector('#titleModal').innerHTML = "Nuevo Usuario";
+    document.querySelector("#formUsuario").reset();
+    $('#modalFormUsuario').modal('show');
 }
 
 window.addEventListener('load', function () {
-    fntEditRol();
-    fntDelRol();
+    fntEditUsuario();
+    fntDelUsuario();
     fntPermisos();
 }, false);
 
-function fntEditRol() {
-    var btnEditRol = document.querySelectorAll(".btnEditRol");
+function fntEditUsuario() {
+    var btnEditUsuario = document.querySelectorAll(".btnEditUsuario");
     var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwMDk0MzcsImV4cCI6MTc2NjA5NTgzN30.s8pRhBWGfx_ecPxedcC5yPbw_GsBwXHEICAwreUV4NX5rs8T-l27q4u-Jt71-fNJVBx3nwjlfbNAGLAq_gDwGQ"; // Tu token
-    btnEditRol.forEach(function (btnEditRol) {
-        btnEditRol.addEventListener('click', function () {
+    btnEditUsuario.forEach(function (btnEditUsuario) {
+        btnEditUsuario.addEventListener('click', function () {
 
-            document.querySelector('#titleModal').innerHTML = "Actualizar Rol";
+            document.querySelector('#titleModal').innerHTML = "Actualizar Usuario";
             document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
             document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
             document.querySelector('#btnText').innerHTML = "Actualizar";
 
-            var idrol = this.getAttribute("rl");
+            var idUsuario = this.getAttribute("rl");
             var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             var ajaxUrl = 'http://api-votes.com/roles/getRol/' + idrol;
             request.open("GET", ajaxUrl, true);
@@ -164,15 +192,15 @@ function fntEditRol() {
     });
 }
 
-function fntDelRol() {
-    var btnDelRol = document.querySelectorAll(".btnDelRol");
+function fntDelUsuario() {
+    var btnDelUsuario = document.querySelectorAll(".btnDelUsuario");
     var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwMDk0MzcsImV4cCI6MTc2NjA5NTgzN30.s8pRhBWGfx_ecPxedcC5yPbw_GsBwXHEICAwreUV4NX5rs8T-l27q4u-Jt71-fNJVBx3nwjlfbNAGLAq_gDwGQ"; // Tu token
-    btnDelRol.forEach(function (btnDelRol) {
-        btnDelRol.addEventListener('click', function () {
-            var idrol = this.getAttribute("rl");
+    btnDelUsuario.forEach(function (btnDelUsuario) {
+        btnDelUsuario.addEventListener('click', function () {
+            var idusuario = this.getAttribute("us");
             swal({
-                title: "Eliminar Rol",
-                text: "¿Realmente quiere eliminar el Rol?",
+                title: "Eliminar Usuario",
+                text: "¿Realmente quiere eliminar el Usuario?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Si, eliminar!",
@@ -183,8 +211,8 @@ function fntDelRol() {
 
                 if (isConfirm) {
                     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-                    var ajaxUrl = 'http://api-votes.com/roles/delRol/';
-                    var jsonParams = JSON.stringify({ idrol: idrol });
+                    var ajaxUrl = 'http://api-votes.com/usuarios/delUsuario/';
+                    var jsonParams = JSON.stringify({ idusuario: idusuario });
                     request.open("PUT", ajaxUrl, true);
                     // --- AGREGO LOS HEADERS ---
                     request.setRequestHeader('Authorization', 'Bearer ' + miToken);

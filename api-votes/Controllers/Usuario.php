@@ -207,7 +207,7 @@ class Usuario extends Controllers
         die();
     }
 
-    public function usuarios()
+    public function getUsers()
     {
         try {
             $method = $_SERVER['REQUEST_METHOD'];
@@ -221,7 +221,22 @@ class Usuario extends Controllers
                 if (empty($arrData)) {
                     $response = array('status' => false, 'msg' => 'No hay datos para mostrar', 'data' => '');
                 } else {
-                    $response = array('status' => true, 'msg' => 'Datos encontrados ', 'data' =>  $arrData);
+                    for ($i = 0; $i < count($arrData); $i++) {
+                        if ($arrData[$i]['estado_usuario'] == 1) {
+                            $arrData[$i]['estado_usuario'] = '<span class="badge badge-success">Activo</span>';
+                        } else {
+                            $arrData[$i]['estado_usuario'] = '<span class="badge badge-danger">Inactivo</span>';
+                        }
+                        $btnView = '';
+                        $btnEdit = '';
+                        $btnDelete = '';
+                        $arrData[$i]['options'] = '<div class="text-center">
+                                                <button class="btn btn-info btn-sm btnPermisosRol" rl="' . $arrData[$i]['id_usuario'] . '" title="Ver Rol"><i class="fas fa-key"></i></button>
+                                                <button class="btn btn-primary btn-sm btnEditRol" rl="' . $arrData[$i]['id_usuario'] . '" title="Editar Rol"><i class="fas fa-pencil-alt"></i></button>
+                                                <button class="btn btn-danger btn-sm btnDelRol" rl="' . $arrData[$i]['id_usuario'] . '" title="Eliminar Rol"><i class="fas fa-trash-alt"></i></button>
+                                            </div>';
+                    }
+                    $response = array('status' => true, 'msg' => 'Datos encontrados ', 'data' => $arrData);
                 }
                 $code = 200;
             } else {
@@ -291,7 +306,7 @@ class Usuario extends Controllers
                     jsonResponse($response, 200);
                     die();
                 }
-                $strEmail  =  strClean($_POST['email_usuario']);
+                $strEmail = strClean($_POST['email_usuario']);
                 $strPassword = hash("SHA256", $_POST['password_usuario']);
                 $requestUser = $this->model->loginUser($strEmail, $strPassword);
 

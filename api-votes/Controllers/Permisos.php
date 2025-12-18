@@ -52,13 +52,13 @@ class Permisos extends Controllers
 						}
 					}
 				}
-				$arrPermisoRol['modulos'] = $arrModulos;
+				$arrPermisosRol['modulos'] = $arrModulos;
 
 
 				if (empty($arrModulos)) {
 					$response = array('status' => false, 'msg' => 'Registro no encontrado');
 				} else {
-					$response = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrPermisoRol['modulos']);
+					$response = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrPermisosRol['modulos']);
 				}
 				$code = 200;
 			} else {

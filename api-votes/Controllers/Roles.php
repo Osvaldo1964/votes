@@ -203,4 +203,32 @@ class Roles extends Controllers
         }
         die();
     }
+
+    public function getSelectRoles()
+    {
+        try {
+            $method = $_SERVER['REQUEST_METHOD'];
+            $response = [];
+            if ($method == "GET") {
+                $arrData = $this->model->getRoles();
+                if (count($arrData) > 0) {
+                    $response = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrData);
+                    $code = 200;
+                } else {
+                    $response = array('status' => false, 'msg' => 'No hay datos para mostrar', 'data' => "");
+                    $code = 400;
+                }
+            } else {
+                $response = array('status' => false, 'msg' => 'Error en la solicitud ' . $method);
+                $code = 400;
+            }
+            jsonResponse($response, $code);
+            die();
+        } catch (Exception $e) {
+            $arrResponse = array('status' => false, 'msg' => $e->getMessage());
+            jsonResponse($arrResponse, 400);
+        }
+        die();
+    }
+
 }
