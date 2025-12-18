@@ -31,7 +31,7 @@ class PermisosModel extends Mysql
 	public function deletePermisos(int $idrol)
 	{
 		$this->intRolid = $idrol;
-		$sql = "DELETE FROM permisos WHERE rolid = ?";
+		$sql = "DELETE FROM permisos WHERE rol_permiso = ?";
 		$arrData = array($this->intRolid);
 		$request = $this->delete($sql, $arrData);
 		return $request;

@@ -79,6 +79,7 @@ class Permisos extends Controllers
 		if ($_POST) {
 			$intIdrol = intval($_POST['idrol']);
 			$modulos = $_POST['modulos'];
+			dep($modulos);
 
 			$this->model->deletePermisos($intIdrol);
 			foreach ($modulos as $modulo) {

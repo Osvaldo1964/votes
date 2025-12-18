@@ -9,17 +9,6 @@ class Usuario extends Controllers
 
     public function __construct()
     {
-        /*
-            try {
-                //================= Validar token ===================
-                $arrHeaders = getallheaders();
-                $reesponse = fntAuthorization($arrHeaders);
-                //====================================================
-            } catch (\Throwable $e) {
-                $arrResponse = array('status' => false , 'msg' => $e->getMessage());
-                jsonResponse($arrResponse,400);
-                die();
-            }*/
         parent::__construct();
     }
 
@@ -61,67 +50,73 @@ class Usuario extends Controllers
         die();
     }
 
-    public function registro()
+    public function setUsuario()
     {
         try {
             $method = $_SERVER['REQUEST_METHOD'];
-            $response = [];
-            if ($method == "POST") {
-                //================= Validar token ===================
-                $arrHeaders = getallheaders();
-                $reesponse = fntAuthorization($arrHeaders);
-                //====================================================
-                $_POST = json_decode(file_get_contents('php://input'), true);
-
-                if (empty($_POST['nombres_usuario']) or !testString($_POST['nombres_usuario'])) {
-                    $response = array('status' => false, 'msg' => 'Error en los nombres');
-                    jsonResponse($response, 200);
-                    die();
-                }
-                if (empty($_POST['apellidos_usuario']) or !testString($_POST['apellidos_usuario'])) {
-                    $response = array('status' => false, 'msg' => 'Error en los apellidos');
-                    jsonResponse($response, 200);
-                    die();
-                }
-                if (empty($_POST['email_usuario']) or !testEmail($_POST['email_usuario'])) {
-                    $response = array('status' => false, 'msg' => 'Error en el email');
-                    jsonResponse($response, 200);
-                    die();
-                }
-                if (empty($_POST['password_usuario'])) {
-                    $response = array('status' => false, 'msg' => 'El password es requerido');
-                    jsonResponse($response, 200);
-                    die();
-                }
-
-                $strNombres = ucwords(strClean($_POST['nombres_usuario']));
-                $strApellidos = ucwords(strClean($_POST['apellidos_usuario']));
-                $strEmail = strClean($_POST['email_usuario']);
-                $strPassword = hash("SHA256", $_POST['password_usuario']);
-
-                $request = $this->model->setUser(
-                    $strNombres,
-                    $strApellidos,
-                    $strEmail,
-                    $strPassword
-                );
-                if ($request > 0) {
-                    $arrUser = array('id' => $request);
-                    $response = array('status' => true, 'msg' => 'Datos guardados correctamente', 'data' => $arrUser);
-                } else {
-                    $response = array('status' => false, 'msg' => 'El email ya existe');
-                }
-                $code = 200;
-            } else {
-                $response = array('status' => false, 'msg' => 'Error en la solicitud ' . $method);
-                $code = 400;
+            if ($method != "POST") {
+                jsonResponse(['status' => false, 'msg' => 'Método no permitido'], 405);
+                die();
             }
 
-            jsonResponse($response, $code);
+            // 1. Validar token
+            $arrHeaders = getallheaders();
+            $auth = fntAuthorization($arrHeaders); // Asegúrate de validar el resultado de $auth
+
+            // 2. CORRECCIÓN: No uses json_decode si envías FormData desde JS.
+            // PHP llena automáticamente la variable $_POST cuando usas FormData.
+            // Si quieres soportar ambos, podrías hacer un check, pero lo normal es:
+            if (empty($_POST)) {
+                $_POST = json_decode(file_get_contents('php://input'), true);
+            }
+
+            // 3. Validaciones
+            if (empty($_POST['txtNombre']) || !testString($_POST['txtNombre'])) {
+                jsonResponse(['status' => false, 'msg' => 'Error en los nombres'], 200);
+                die();
+            }
+            if (empty($_POST['txtApellido']) || !testString($_POST['txtApellido'])) {
+                jsonResponse(['status' => false, 'msg' => 'Error en los apellidos'], 200);
+                die();
+            }
+            if (empty($_POST['txtTelefono'])) {
+                jsonResponse(['status' => false, 'msg' => 'Error en el telefono'], 200);
+                die();
+            }
+            if (empty($_POST['txtEmail']) || !testString($_POST['txtEmail'])) {
+                jsonResponse(['status' => false, 'msg' => 'Error en el email'], 200);
+                die();
+            }
+            if (empty($_POST['txtPassword'])) {
+                jsonResponse(['status' => false, 'msg' => 'El password es requerido'], 200);
+                die();
+            }
+
+            // 4. Limpieza de datos
+            $strNombres = ucwords(strClean($_POST['txtNombre']));
+            $strApellidos = ucwords(strClean($_POST['txtApellido']));
+            $strTelefono = strClean($_POST['txtTelefono']);
+            $strEmail = strClean(strtolower($_POST['txtEmail']));
+            $intRolUsuario = intval($_POST['listRolid']);
+            $strPassword = hash("SHA256", $_POST['txtPassword']);
+
+            // 5. Llamada al modelo
+            $request = $this->model->setUser($strNombres, $strApellidos, $strTelefono, $strEmail, $strPassword, $intRolUsuario);
+            if ($request > 0) {
+                // Si es un número (ID), la inserción fue exitosa
+                $response = array('status' => true, 'msg' => 'Usuario registrado con éxito.');
+            } else if ($request == 'exist') {
+                // Si el modelo devolvió la palabra "exist"
+                $response = array('status' => false, 'msg' => '¡Atención! El email ya está registrado, intente con otro.');
+            } else {
+                // Si hubo un error técnico (devolvió 0 o false)
+                $response = array('status' => false, 'msg' => 'No es posible almacenar los datos en este momento.');
+            }
+            jsonResponse($response, 200);
             die();
+
         } catch (Exception $e) {
-            $arrResponse = array('status' => false, 'msg' => $e->getMessage());
-            jsonResponse($arrResponse, 400);
+            jsonResponse(['status' => false, 'msg' => $e->getMessage()], 500);
         }
         die();
     }

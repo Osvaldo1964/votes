@@ -2,7 +2,7 @@ var tableUsuarios;
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwMDk0MzcsImV4cCI6MTc2NjA5NTgzN30.s8pRhBWGfx_ecPxedcC5yPbw_GsBwXHEICAwreUV4NX5rs8T-l27q4u-Jt71-fNJVBx3nwjlfbNAGLAq_gDwGQ"; // Tu token
+    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwNzMxNTQsImV4cCI6MTc2NjE1OTU1NH0.t-uczLWgdgnB5xrfCvHPlwccB_RJqVKNoXMFn87wgLoPFuetKjfVOqns_b3eoeGle3Ox9WCOB97Lo1Fv2VCDcQ"; // Tu token
     var apiUrl = "http://api-votes.com/usuario/getUsers";
 
     // Usar 'DataTable' con D mayúscula es la convención moderna
@@ -60,36 +60,33 @@ document.addEventListener('DOMContentLoaded', function () {
     formUsuario.onsubmit = function (e) {
         e.preventDefault();
 
-        var intIdUsuario = document.querySelector('#idUsuario').value;
-        var strNombre = document.querySelector('#txtNombre').value;
-        var strDescripcion = document.querySelector('#txtDescripcion').value;
-        var intStatus = document.querySelector('#listStatus').value;
-        if (strNombre == '' || strDescripcion == '' || intStatus == '') {
-            swal("Atención", "Todos los campos son obligatorios.", "error");
-            return false;
-        }
         var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        var ajaxUrl = 'http://api-votes.com/roles/setRol';
-        var formData = new FormData(formRol);
+        var ajaxUrl = 'http://api-votes.com/usuario/setUsuario';
+        var formData = new FormData(formUsuario);
+
         request.open("POST", ajaxUrl, true);
-        // --- AGREGO LOS HEADERS ---
         request.setRequestHeader('Authorization', 'Bearer ' + miToken);
-        request.setRequestHeader('Accept', 'application/json');
-        // ----------------------------
         request.send(formData);
+
         request.onreadystatechange = function () {
             if (request.readyState == 4 && request.status == 200) {
-
                 var objData = JSON.parse(request.responseText);
+
                 if (objData.status) {
-                    $('#modalFormRol').modal("hide");
-                    formRol.reset();
-                    swal("Roles de usuario", objData.msg, "success");
-                    tableRoles.ajax.reload(function () {
-                        fntEditRol();
-                        fntDelRol();
-                        fntPermisos();
-                    });
+                    // 1. Cerrar el modal correcto
+                    $('#modalFormUsuario').modal("hide");
+
+                    // 2. Limpiar el formulario para la próxima vez
+                    formUsuario.reset();
+
+                    swal("Usuarios", objData.msg, "success");
+
+                    if (tableUsuarios) {
+                        tableUsuarios.ajax.reload(function () {
+                            fntEditUsuario();
+                            fntDelUsuario();
+                        }, false);
+                    }
                 } else {
                     swal("Error", objData.msg, "error");
                 }
@@ -98,33 +95,53 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+var btnNuevo = document.querySelector('#btnNuevoUsuario'); // Cambia el ID según tu HTML
+
+if (btnNuevo) {
+    btnNuevo.addEventListener('click', function () {
+        // Primero cargamos los datos de los roles
+        fntRolesUsuario();
+        // Luego abrimos el modal (si usas Bootstrap)
+        $('#modalFormUsuario').modal('show');
+    }, false);
+}
+
 function fntRolesUsuario() {
-    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwMDk0MzcsImV4cCI6MTc2NjA5NTgzN30.s8pRhBWGfx_ecPxedcC5yPbw_GsBwXHEICAwreUV4NX5rs8T-l27q4u-Jt71-fNJVBx3nwjlfbNAGLAq_gDwGQ"; // Tu token
+    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwNzMxNTQsImV4cCI6MTc2NjE1OTU1NH0.t-uczLWgdgnB5xrfCvHPlwccB_RJqVKNoXMFn87wgLoPFuetKjfVOqns_b3eoeGle3Ox9WCOB97Lo1Fv2VCDcQ";
     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl = 'http://api-votes.com/roles/getRolesUsuario';
+    var ajaxUrl = 'http://api-votes.com/roles/getSelectRoles';
+
     request.open("GET", ajaxUrl, true);
-    // --- AGREGO LOS HEADERS ---
     request.setRequestHeader('Authorization', 'Bearer ' + miToken);
     request.setRequestHeader('Accept', 'application/json');
-    // ----------------------------
     request.send();
+
     request.onreadystatechange = function () {
         if (request.readyState == 4 && request.status == 200) {
             var objData = JSON.parse(request.responseText);
+
             if (objData.status) {
+                // Iniciamos con una opción vacía para forzar al usuario a elegir
+                var html = '<option value="" selected disabled>Seleccione un Rol</option>';
                 var data = objData.data;
-                var html = '';
+
                 data.forEach(function (item) {
                     html += '<option value="' + item.id_rol + '">' + item.nombre_rol + '</option>';
                 });
-                document.querySelector('#listRoles').innerHTML = html;
+
+                // Inyectamos en el select
+                document.querySelector('#listRolid').innerHTML = html;
+                $('#listRolid').selectpicker('refresh');
+
+                // Si usas alguna librería como Select2 o bootstrap-select, debes refrescarlo aquí:
+                // $('#listRoles').selectpicker('refresh'); 
+
             } else {
-                swal("Error", objData.msg, "error");
+                swal("Error", "No se pudieron cargar los roles", "error");
             }
         }
     }
 }
-
 function openModal() {
     document.querySelector('#idUsuario').value = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
@@ -143,7 +160,7 @@ window.addEventListener('load', function () {
 
 function fntEditUsuario() {
     var btnEditUsuario = document.querySelectorAll(".btnEditUsuario");
-    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwMDk0MzcsImV4cCI6MTc2NjA5NTgzN30.s8pRhBWGfx_ecPxedcC5yPbw_GsBwXHEICAwreUV4NX5rs8T-l27q4u-Jt71-fNJVBx3nwjlfbNAGLAq_gDwGQ"; // Tu token
+    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwNzMxNTQsImV4cCI6MTc2NjE1OTU1NH0.t-uczLWgdgnB5xrfCvHPlwccB_RJqVKNoXMFn87wgLoPFuetKjfVOqns_b3eoeGle3Ox9WCOB97Lo1Fv2VCDcQ"; // Tu token
     btnEditUsuario.forEach(function (btnEditUsuario) {
         btnEditUsuario.addEventListener('click', function () {
 

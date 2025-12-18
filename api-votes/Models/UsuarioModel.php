@@ -5,8 +5,10 @@ class UsuarioModel extends Mysql
     private $intIdUsuario;
     private $strNombres;
     private $strApellidos;
+    private $strTelefono;
     private $strEmail;
     private $strPassword;
+    private $intRolUsuario;
 
     public function __construct()
     {
@@ -27,28 +29,34 @@ class UsuarioModel extends Mysql
         return $request;
     }
 
-    public function setUser(string $nombres, string $apellidos, string $email, string $password)
+    public function setUser(string $nombres, string $apellidos, string $telefono, string $email, string $password, int $rolusuario)
     {
         $this->strNombres = $nombres;
         $this->strApellidos = $apellidos;
+        $this->strTelefono = $telefono;
         $this->strEmail = $email;
         $this->strPassword = $password;
+        $this->intRolUsuario = $rolusuario;
 
-        $sql = "SELECT email_usuario FROM usuarios WHERE email_usuario = '$this->strEmail' AND estado_usuario != 0";
-        $request = $this->select_all($sql);
+        $sql = "SELECT email_usuario FROM usuarios WHERE email_usuario = '{$this->strEmail}' AND estado_usuario != 0";
+
         if (empty($request)) {
-            $sql_insert = "INSERT INTO usuarios(nombres_usuario,apellidos_usuario,email_usuario,password_usuario)
-                                VALUES(:nom,:ape,:email,:pass)";
+            $sql_insert = "INSERT INTO usuarios(nombres_usuario, apellidos_usuario, telefono_usuario, email_usuario, password_usuario,rol_usuario)
+                       VALUES(?, ?, ?, ?, ?, ?)";
+
             $arrData = array(
-                ":nom" => $this->strNombres,
-                ":ape" => $this->strApellidos,
-                ":email" => $this->strEmail,
-                ":pass" => $this->strPassword
+                $this->strNombres,
+                $this->strApellidos,
+                $this->strTelefono,
+                $this->strEmail,
+                $this->strPassword,
+                $this->intRolUsuario
             );
+
             $request_insert = $this->insert($sql_insert, $arrData);
             return $request_insert;
         } else {
-            return false;
+            return "exist";
         }
     }
 
@@ -60,12 +68,13 @@ class UsuarioModel extends Mysql
         $this->strEmail = $email;
         $this->strPassword = $password;
 
-        $sql = "SELECT email FROM usuario WHERE 
-                    (email = :email AND id_usuario != :id ) AND
-                    status != 0";
-        $arrData = array(":email" => $this->strEmail, ":id" => $this->intIdUsuario);
-        $request_usuario = $this->select($sql, $arrData);
-        if (empty($request_usuario)) {
+        $sql = "SELECT email_usuario FROM usuarios WHERE email_usuario = ? AND estado_usuario != 0";
+
+        // Pasamos el valor en un arreglo como segundo parámetro
+        $arrParams = array($this->strEmail);
+        $request = $this->select_all($sql, $arrParams);
+
+        if (empty($request)) {
             if ($this->strPassword == "") {
                 $sql = "UPDATE usuario SET nombre = :nom, apellido = :ape, email = :email
                     WHERE id_usuario = :id ";

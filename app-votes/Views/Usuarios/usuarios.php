@@ -6,7 +6,7 @@ getModal('modalUsuarios', $data);
     <div class="app-title">
         <div>
             <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
-                <button class="btn btn-primary" type="button" onclick="openModal();"><i class="fas fa-plus-circle"></i>
+                <button class="btn btn-primary" id="btnNuevoUsuario" type="button"><i class="fas fa-plus-circle"></i>
                     Nuevo</button>
             </h1>
         </div>
