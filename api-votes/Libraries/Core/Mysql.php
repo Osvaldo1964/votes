@@ -34,7 +34,29 @@ class Mysql extends Conexion
         }
     }
 
-    //Devuelve todos los registros
+    //Devuelve todos los regist
+    public function select_all_prepare(string $query, array $arrData)
+    {
+        try {
+            $this->strquery = $query;
+            // Preparamos la consulta
+            $execute = $this->conexion->prepare($this->strquery);
+            // Ejecutamos pasando el array de parámetros
+            $resExecute = $execute->execute($arrData);
+
+            if ($resExecute) {
+                $request = $execute->fetchAll(PDO::FETCH_ASSOC);
+            } else {
+                $request = [];
+            }
+
+            $execute->closeCursor();
+            return $request;
+        } catch (Exception $e) {
+            $response = "Error: " . $e->getMessage();
+            return $response;
+        }
+    }
     public function select_all(string $query)
     {
         try {

@@ -9,6 +9,7 @@ class UsuarioModel extends Mysql
     private $strEmail;
     private $strPassword;
     private $intRolUsuario;
+    private $intStatus;
 
     public function __construct()
     {
@@ -39,7 +40,7 @@ class UsuarioModel extends Mysql
 
         $sql = "SELECT email_usuario FROM usuarios WHERE email_usuario = '{$this->strEmail}' AND estado_usuario != 0";
 
-        if (!empty($request)) {
+        if (empty($request)) {
             $sql_insert = "INSERT INTO usuarios(nombres_usuario, apellidos_usuario, telefono_usuario, email_usuario, password_usuario,rol_usuario)
                        VALUES(?, ?, ?, ?, ?, ?)";
 
@@ -60,48 +61,57 @@ class UsuarioModel extends Mysql
         return $return;
     }
 
-    public function putUser(int $idusuario, string $nombres, string $apellidos, string $email, string $password)
+    public function putUser(int $idusuario, string $nombres, string $apellidos, string $telefono, string $email, string $password, int $rolusuario, int $status)
     {
         $this->intIdUsuario = $idusuario;
         $this->strNombres = $nombres;
         $this->strApellidos = $apellidos;
+        $this->strTelefono = $telefono; // Faltaba asignar
         $this->strEmail = $email;
         $this->strPassword = $password;
+        $this->intRolUsuario = $rolusuario;
+        $this->intStatus = $status;
 
-        $sql = "SELECT email_usuario FROM usuarios WHERE email_usuario = ? AND estado_usuario != 0";
-
-        // Pasamos el valor en un arreglo como segundo parámetro
-        $arrParams = array($this->strEmail);
-        $request = $this->select_all($sql, $arrParams);
+        // 1. Validar si el email ya existe en OTRO usuario
+        $sql = "SELECT * FROM usuarios WHERE email_usuario = ? AND id_usuario != ? AND estado_usuario != 0";
+        $arrParams = array($this->strEmail, $this->intIdUsuario);
+        $request = $this->select_all_prepare($sql, $arrParams); // Usa una función que acepte parámetros
 
         if (empty($request)) {
             if ($this->strPassword == "") {
-                $sql = "UPDATE usuario SET nombre = :nom, apellido = :ape, email = :email
-                    WHERE id_usuario = :id ";
+                // UPDATE sin contraseña
+                $sql = "UPDATE usuarios SET nombres_usuario = ?, apellidos_usuario = ?, telefono_usuario = ?, email_usuario = ?, rol_usuario = ?, estado_usuario = ? 
+                    WHERE id_usuario = ?";
                 $arrData = array(
-                    ":nom" => $this->strNombres,
-                    ":ape" => $this->strApellidos,
-                    ":email" => $this->strEmail,
-                    ":id" => $this->intIdUsuario
+                    $this->strNombres,
+                    $this->strApellidos,
+                    $this->strTelefono,
+                    $this->strEmail,
+                    $this->intRolUsuario,
+                    $this->intStatus,
+                    $this->intIdUsuario
                 );
-
             } else {
-                $sql = "UPDATE usuario SET nombre = :nom, apellido = :ape, email = :email, password = :pass
-                    WHERE id_usuario = :id ";
+                // UPDATE con contraseña
+                $sql = "UPDATE usuarios SET nombres_usuario = ?, apellidos_usuario = ?, telefono_usuario = ?, email_usuario = ?, password_usuario = ?, rol_usuario = ?, estado_usuario = ? 
+                    WHERE id_usuario = ?";
                 $arrData = array(
-                    ":nom" => $this->strNombres,
-                    ":ape" => $this->strApellidos,
-                    ":email" => $this->strEmail,
-                    ":pass" => $this->strPassword,
-                    ":id" => $this->intIdUsuario
+                    $this->strNombres,
+                    $this->strApellidos,
+                    $this->strTelefono,
+                    $this->strEmail,
+                    $this->strPassword,
+                    $this->intRolUsuario,
+                    $this->intStatus,
+                    $this->intIdUsuario
                 );
             }
+
             $request = $this->update($sql, $arrData);
             return $request;
         } else {
-            return false;
+            return "exist";
         }
-
     }
 
     public function getUsuarios()

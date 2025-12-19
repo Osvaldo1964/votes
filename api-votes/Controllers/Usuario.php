@@ -63,13 +63,9 @@ class Usuario extends Controllers
             $arrHeaders = getallheaders();
             $auth = fntAuthorization($arrHeaders); // Asegúrate de validar el resultado de $auth
 
-            // 2. CORRECCIÓN: No uses json_decode si envías FormData desde JS.
-            // PHP llena automáticamente la variable $_POST cuando usas FormData.
-            // Si quieres soportar ambos, podrías hacer un check, pero lo normal es:
             if (empty($_POST)) {
                 $_POST = json_decode(file_get_contents('php://input'), true);
             }
-
             // 3. Validaciones
             if (empty($_POST['txtNombre']) || !testString($_POST['txtNombre'])) {
                 jsonResponse(['status' => false, 'msg' => 'Error en los nombres'], 200);
@@ -87,30 +83,34 @@ class Usuario extends Controllers
                 jsonResponse(['status' => false, 'msg' => 'Error en el email'], 200);
                 die();
             }
-            if (empty($_POST['txtPassword'])) {
-                jsonResponse(['status' => false, 'msg' => 'El password es requerido'], 200);
-                die();
-            }
-
             // 4. Limpieza de datos
+            $idusuario = intval($_POST['idUsuario']);
             $strNombres = ucwords(strClean($_POST['txtNombre']));
             $strApellidos = ucwords(strClean($_POST['txtApellido']));
             $strTelefono = strClean($_POST['txtTelefono']);
             $strEmail = strClean(strtolower($_POST['txtEmail']));
             $intRolUsuario = intval($_POST['listRolid']);
-            $strPassword = hash("SHA256", $_POST['txtPassword']);
+            $intStatus = intval($_POST['listStatus']);
 
-            // 5. Llamada al modelo
-            $request = $this->model->setUser($strNombres, $strApellidos, $strTelefono, $strEmail, $strPassword, $intRolUsuario);
-
-            if ($request === 'exist') {
-                // Primero verificamos el caso específico del string "exist"
-                $response = array('status' => false, 'msg' => '¡Atención! El email ya está registrado.');
-            } elseif (is_numeric($request) && $request > 0) {
-                // Verificamos que sea un número y mayor a 0 (ID de inserción)
-                $response = array('status' => true, 'msg' => 'Usuario registrado con éxito.');
+            if ($idusuario == 0) {
+                $option = 1;
+                $strPassword = empty($_POST['txtPassword']) ? hash("SHA256", passGenerator()) : hash("SHA256", $_POST['txtPassword']);
+                $request = $this->model->setUser($strNombres, $strApellidos, $strTelefono, $strEmail, $strPassword, $intRolUsuario, $intStatus);
             } else {
-                // Cualquier otro caso (0, false, null)
+                $option = 2;
+                $strPassword = empty($_POST['txtPassword']) ? "" : hash("SHA256", $_POST['txtPassword']);
+                $request = $this->model->putUser($idusuario, $strNombres, $strApellidos, $strTelefono, $strEmail, $strPassword, $intRolUsuario, $intStatus);
+            }
+
+            if ($request > 0) {
+                if ($option == 1) {
+                    $response = array('status' => true, 'msg' => 'Usuario registrado con éxito.');
+                } else {
+                    $response = array('status' => true, 'msg' => 'Usuario actualizado con éxito.');
+                }
+            } else if ($request === 'exist') {
+                $response = array('status' => false, 'msg' => '¡Atención! El email ya está registrado.');
+            } else {
                 $response = array('status' => false, 'msg' => 'No es posible almacenar los datos en este momento.');
             }
             jsonResponse($response, 200);
@@ -122,7 +122,7 @@ class Usuario extends Controllers
         die();
     }
 
-    public function actualizar($idusuario)
+    public function updateUser($idusuario)
     {
         try {
             $method = $_SERVER['REQUEST_METHOD'];
@@ -140,26 +140,32 @@ class Usuario extends Controllers
                     die();
                 }
 
-                if (empty($data['nombres']) or !testString($data['nombres'])) {
+                if (empty($data['txtNombre']) or !testString($data['txtNombre'])) {
                     $response = array('status' => false, 'msg' => 'Error en los nombres');
                     jsonResponse($response, 200);
                     die();
                 }
-                if (empty($data['apellidos']) or !testString($data['apellidos'])) {
+                if (empty($data['txtApellido']) or !testString($data['txtApellido'])) {
                     $response = array('status' => false, 'msg' => 'Error en los apellidos');
                     jsonResponse($response, 200);
                     die();
                 }
-                if (empty($data['email']) or !testEmail($data['email'])) {
+                if (empty($data['txtTelefono'])) {
+                    $response = array('status' => false, 'msg' => 'Error en el telefono');
+                    jsonResponse($response, 200);
+                    die();
+                }
+                if (empty($data['txtEmail']) or !testEmail($data['txtEmail'])) {
                     $response = array('status' => false, 'msg' => 'Error en el email');
                     jsonResponse($response, 200);
                     die();
                 }
 
-                $strNombres = ucwords(strClean($data['nombres']));
-                $strApellidos = ucwords(strClean($data['apellidos']));
-                $strEmail = strClean($data['email']);
-                $strPassword = !empty($data['password']) ? hash("SHA256", $data['password']) : "";
+                $strNombres = ucwords(strClean($data['txtNombre']));
+                $strApellidos = ucwords(strClean($data['txtApellido']));
+                $strTelefono = strClean($data['txtTelefono']);
+                $strEmail = strClean($data['txtEmail']);
+                $strPassword = !empty($data['txtPassword']) ? hash("SHA256", $data['txtPassword']) : "";
 
                 $buscar_usuario = $this->model->getUsuario($idusuario);
                 if (empty($buscar_usuario)) {
