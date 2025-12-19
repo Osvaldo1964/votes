@@ -264,6 +264,7 @@ class Usuario extends Controllers
                 $arrHeaders = getallheaders();
                 $reesponse = fntAuthorization($arrHeaders);
                 //====================================================
+
                 if (empty($idusuario) or !is_numeric($idusuario)) {
                     $response = array('status' => false, 'msg' => 'Error en los parametros');
                     jsonResponse($response, 400);

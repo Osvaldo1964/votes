@@ -13,6 +13,7 @@ class Usuarios extends Controllers
         $data['page_tag'] = "Usuarios";
         $data['page_title'] = "Usuarios - Sistema de votos";
         $data['page_name'] = "usuarios";
+        $data['page_functions_js'] = "functions_usuarios.js";
         $this->views->getView($this, "usuarios", $data);
     }
 }
