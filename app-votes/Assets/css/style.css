@@ -1,9 +1,10 @@
 .app-sidebar__user-avatar {
-    width: 48px;
-    background: gray;
-    padding: 6px;
+	width: 48px;
+	background: gray;
+	padding: 6px;
 }
-.app-sidebar__toggle{
+
+.app-sidebar__toggle {
 	display: -webkit-flex;
 	display: -moz-flex;
 	display: -ms-flex;
@@ -13,17 +14,22 @@
 	align-items: center;
 	font-size: 15pt;
 }
-.app-sidebar__toggle::before{
+
+.app-sidebar__toggle::before {
 	display: none;
 }
-.headerRegister{
+
+.headerRegister,
+.header-primary {
 	background: #009688;
 	color: #FFF;
 }
-.headerUpdate{
+
+.headerUpdate {
 	background: #007bff;
 	color: #FFF;
 }
-.notBlock{
+
+.notBlock {
 	display: none;
 }

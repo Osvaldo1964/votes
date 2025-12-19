@@ -18,12 +18,10 @@ class UsuarioModel extends Mysql
     public function getUsuario(int $idusuario)
     {
         $this->intIdUsuario = $idusuario;
-        $sql = "SELECT id_usuario,
-							nombre,
-							apellido,
-							email,
-							DATE_FORMAT(datecreated, '%d-%m-%Y') as fechaRegistro
-							FROM usuario WHERE id_usuario = :iduser AND status != :status ";
+        $sql = "SELECT u.id_usuario,u.nombres_usuario,u.apellidos_usuario,u.telefono_usuario,u.email_usuario,u.rol_usuario,u.estado_usuario,r.nombre_rol
+							FROM usuarios u
+                            INNER JOIN roles r ON u.rol_usuario = r.id_rol
+                            WHERE u.id_usuario = :iduser AND u.estado_usuario != :status ";
         $arrData = array(":iduser" => $this->intIdUsuario, ":status" => 0);
         $request = $this->select($sql, $arrData);
         return $request;
@@ -37,10 +35,11 @@ class UsuarioModel extends Mysql
         $this->strEmail = $email;
         $this->strPassword = $password;
         $this->intRolUsuario = $rolusuario;
+        $return = 0;
 
         $sql = "SELECT email_usuario FROM usuarios WHERE email_usuario = '{$this->strEmail}' AND estado_usuario != 0";
 
-        if (empty($request)) {
+        if (!empty($request)) {
             $sql_insert = "INSERT INTO usuarios(nombres_usuario, apellidos_usuario, telefono_usuario, email_usuario, password_usuario,rol_usuario)
                        VALUES(?, ?, ?, ?, ?, ?)";
 
@@ -54,10 +53,11 @@ class UsuarioModel extends Mysql
             );
 
             $request_insert = $this->insert($sql_insert, $arrData);
-            return $request_insert;
+            $return = $request_insert;
         } else {
-            return "exist";
+            $return = 'exist';
         }
+        return $return;
     }
 
     public function putUser(int $idusuario, string $nombres, string $apellidos, string $email, string $password)
@@ -107,9 +107,7 @@ class UsuarioModel extends Mysql
     public function getUsuarios()
     {
         $sql = "SELECT u.id_usuario, u.nombres_usuario, u.apellidos_usuario,
-                            u.telefono_usuario, u.email_usuario,u.rol_usuario,r.nombre_rol,
-                            DATE_FORMAT(u.datecreated_usuario, '%d-%m-%Y') as fechaRegistro,
-                            u.estado_usuario
+                            u.telefono_usuario, u.email_usuario,u.rol_usuario,u.estado_usuario,r.nombre_rol
 							FROM usuarios u 
                             inner join roles r on u.rol_usuario = r.id_rol
                             WHERE u.estado_usuario != 0 ORDER BY u.id_usuario DESC ";
@@ -117,10 +115,10 @@ class UsuarioModel extends Mysql
         return $request;
     }
 
-    public function deleteUsuario($idusuario)
+    public function delUser($idusuario)
     {
         $this->intIdUsuario = $idusuario;
-        $sql = "UPDATE usuario SET status = :estado WHERE id_usuario = :id ";
+        $sql = "UPDATE usuarios SET estado_usuario = :estado WHERE id_usuario = :id ";
         $arrData = array(":estado" => 0, ":id" => $this->intIdUsuario);
         $request = $this->update($sql, $arrData);
         return $request;
@@ -139,9 +137,7 @@ class UsuarioModel extends Mysql
         );
         $request = $this->select($sql, $arrData);
         return $request;
-
     }
-
 }
 
 ?>

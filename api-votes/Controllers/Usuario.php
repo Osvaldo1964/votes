@@ -12,7 +12,7 @@ class Usuario extends Controllers
         parent::__construct();
     }
 
-    public function usuario($idusuario)
+    public function getUsuario($idusuario)
     {
         try {
             $method = $_SERVER['REQUEST_METHOD'];
@@ -102,14 +102,15 @@ class Usuario extends Controllers
 
             // 5. Llamada al modelo
             $request = $this->model->setUser($strNombres, $strApellidos, $strTelefono, $strEmail, $strPassword, $intRolUsuario);
-            if ($request > 0) {
-                // Si es un número (ID), la inserción fue exitosa
+
+            if ($request === 'exist') {
+                // Primero verificamos el caso específico del string "exist"
+                $response = array('status' => false, 'msg' => '¡Atención! El email ya está registrado.');
+            } elseif (is_numeric($request) && $request > 0) {
+                // Verificamos que sea un número y mayor a 0 (ID de inserción)
                 $response = array('status' => true, 'msg' => 'Usuario registrado con éxito.');
-            } else if ($request == 'exist') {
-                // Si el modelo devolvió la palabra "exist"
-                $response = array('status' => false, 'msg' => '¡Atención! El email ya está registrado, intente con otro.');
             } else {
-                // Si hubo un error técnico (devolvió 0 o false)
+                // Cualquier otro caso (0, false, null)
                 $response = array('status' => false, 'msg' => 'No es posible almacenar los datos en este momento.');
             }
             jsonResponse($response, 200);
@@ -226,9 +227,9 @@ class Usuario extends Controllers
                         $btnEdit = '';
                         $btnDelete = '';
                         $arrData[$i]['options'] = '<div class="text-center">
-                                                <button class="btn btn-info btn-sm btnPermisosRol" rl="' . $arrData[$i]['id_usuario'] . '" title="Ver Rol"><i class="fas fa-key"></i></button>
-                                                <button class="btn btn-primary btn-sm btnEditRol" rl="' . $arrData[$i]['id_usuario'] . '" title="Editar Rol"><i class="fas fa-pencil-alt"></i></button>
-                                                <button class="btn btn-danger btn-sm btnDelRol" rl="' . $arrData[$i]['id_usuario'] . '" title="Eliminar Rol"><i class="fas fa-trash-alt"></i></button>
+                                                <button class="btn btn-info btn-sm btnViewUsuario" us="' . $arrData[$i]['id_usuario'] . '" title="Ver Usuario"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-primary btn-sm btnEditUsuario" us="' . $arrData[$i]['id_usuario'] . '" title="Editar Usuario"><i class="fas fa-pencil-alt"></i></button>
+                                                <button class="btn btn-danger btn-sm btnDelUsuario" us="' . $arrData[$i]['id_usuario'] . '" title="Eliminar Usuario"><i class="fas fa-trash-alt"></i></button>
                                             </div>';
                     }
                     $response = array('status' => true, 'msg' => 'Datos encontrados ', 'data' => $arrData);
@@ -247,12 +248,12 @@ class Usuario extends Controllers
         die();
     }
 
-    public function eliminar($idusuario)
+    public function delUsuario($idusuario)
     {
         try {
             $method = $_SERVER['REQUEST_METHOD'];
             $response = [];
-            if ($method == "DELETE") {
+            if ($method == "PUT") {
                 //================= Validar token ===================
                 $arrHeaders = getallheaders();
                 $reesponse = fntAuthorization($arrHeaders);
@@ -269,7 +270,7 @@ class Usuario extends Controllers
                     jsonResponse($response, 400);
                     die();
                 }
-                $request = $this->model->deleteUsuario($idusuario);
+                $request = $this->model->delUser($idusuario);
                 if ($request) {
                     $response = array('status' => true, 'msg' => 'Registro eliminado');
                 } else {

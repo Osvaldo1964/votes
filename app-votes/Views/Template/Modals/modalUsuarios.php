@@ -85,10 +85,6 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td>Identificación:</td>
-                            <td id="celIdentificacion">654654654</td>
-                        </tr>
-                        <tr>
                             <td>Nombres:</td>
                             <td id="celNombre">Jacob</td>
                         </tr>
@@ -111,10 +107,6 @@
                         <tr>
                             <td>Estado:</td>
                             <td id="celEstado">Larry</td>
-                        </tr>
-                        <tr>
-                            <td>Fecha registro:</td>
-                            <td id="celFechaRegistro">Larry</td>
                         </tr>
                     </tbody>
                 </table>

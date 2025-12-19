@@ -2,7 +2,7 @@ var tableUsuarios;
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwNzMxNTQsImV4cCI6MTc2NjE1OTU1NH0.t-uczLWgdgnB5xrfCvHPlwccB_RJqVKNoXMFn87wgLoPFuetKjfVOqns_b3eoeGle3Ox9WCOB97Lo1Fv2VCDcQ"; // Tu token
+    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwOTYyNDgsImV4cCI6MTc2NjE4MjY0OH0.emJM6JJz-KAXMY6xsxGhJN9rntsd5BCt_sdIqOiR63ecL9dzxcIL3QUJd0zKTYJKpPXfAXuVzSULy43iF8sXzg"; // Tu token
     var apiUrl = "http://api-votes.com/usuario/getUsers";
 
     // Usar 'DataTable' con D mayúscula es la convención moderna
@@ -106,8 +106,27 @@ if (btnNuevo) {
     }, false);
 }
 
+document.addEventListener('click', function (e) {
+    if (e.target && (e.target.classList.contains('btnViewUsuario') || e.target.closest('.btnViewUsuario'))) {
+        // Obtenemos el atributo 'us' que ya tienes en el botón
+        const btn = e.target.closest('.btnViewUsuario');
+        const idUsuario = btn.getAttribute('us');
+        fntViewUsuario(idUsuario);
+    }
+});
+
+document.addEventListener('click', function (e) {
+    if (e.target && (e.target.classList.contains('btnDelUsuario') || e.target.closest('.btnDelUsuario'))) {
+        // Obtenemos el atributo 'us' que ya tienes en el botón
+        const btn = e.target.closest('.btnDelUsuario');
+        const idUsuario = btn.getAttribute('us');
+        alert(idUsuario);
+        fntDelUsuario(idUsuario);
+    }
+});
+
 function fntRolesUsuario() {
-    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwNzMxNTQsImV4cCI6MTc2NjE1OTU1NH0.t-uczLWgdgnB5xrfCvHPlwccB_RJqVKNoXMFn87wgLoPFuetKjfVOqns_b3eoeGle3Ox9WCOB97Lo1Fv2VCDcQ";
+    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwOTYyNDgsImV4cCI6MTc2NjE4MjY0OH0.emJM6JJz-KAXMY6xsxGhJN9rntsd5BCt_sdIqOiR63ecL9dzxcIL3QUJd0zKTYJKpPXfAXuVzSULy43iF8sXzg";
     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     var ajaxUrl = 'http://api-votes.com/roles/getSelectRoles';
 
@@ -121,23 +140,57 @@ function fntRolesUsuario() {
             var objData = JSON.parse(request.responseText);
 
             if (objData.status) {
-                // Iniciamos con una opción vacía para forzar al usuario a elegir
-                var html = '<option value="" selected disabled>Seleccione un Rol</option>';
+                var html = '<option value="">Seleccione un Rol</option>';
                 var data = objData.data;
 
                 data.forEach(function (item) {
                     html += '<option value="' + item.id_rol + '">' + item.nombre_rol + '</option>';
                 });
 
-                // Inyectamos en el select
-                document.querySelector('#listRolid').innerHTML = html;
-                $('#listRolid').selectpicker('refresh');
+                // 1. Inyectar el HTML
+                $('#listRolid').html(html);
 
-                // Si usas alguna librería como Select2 o bootstrap-select, debes refrescarlo aquí:
-                // $('#listRoles').selectpicker('refresh'); 
+                // 2. LA CLAVE: Destruir y volver a inicializar
+                $('#listRolid').selectpicker('destroy'); // Elimina la estructura vieja
+                $('#listRolid').selectpicker();          // Crea la estructura nueva con el HTML actual
+
+                // 3. Forzar selección del primero y refrescar
+                $('#listRolid').val('');
+                $('#listRolid').selectpicker('refresh');
 
             } else {
                 swal("Error", "No se pudieron cargar los roles", "error");
+            }
+        }
+    }
+}
+
+function fntViewUsuario(idPersona) {
+    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwOTYyNDgsImV4cCI6MTc2NjE4MjY0OH0.emJM6JJz-KAXMY6xsxGhJN9rntsd5BCt_sdIqOiR63ecL9dzxcIL3QUJd0zKTYJKpPXfAXuVzSULy43iF8sXzg"; // Idealmente obtenido de localStorage
+    var ajaxUrl = 'http://api-votes.com/usuario/getUsuario/' + idPersona;
+    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+
+    request.open("GET", ajaxUrl, true);
+    request.setRequestHeader('Authorization', 'Bearer ' + miToken);
+    request.send();
+
+    request.onreadystatechange = function () {
+        if (request.readyState == 4 && request.status == 200) {
+            var objData = JSON.parse(request.responseText);
+
+            if (objData.status) {
+                document.querySelector('#celNombre').innerHTML = objData.data.nombres_usuario;
+                document.querySelector('#celApellido').innerHTML = objData.data.apellidos_usuario;
+                document.querySelector('#celTelefono').innerHTML = objData.data.telefono_usuario;
+                document.querySelector('#celEmail').innerHTML = objData.data.email_usuario;
+                document.querySelector('#celTipoUsuario').innerHTML = objData.data.nombre_rol;
+                var estado = objData.data.estado_usuario == 1
+                    ? '<span class="badge badge-success">Activo</span>'
+                    : '<span class="badge badge-danger">Inactivo</span>';
+                document.querySelector('#celEstado').innerHTML = estado;
+                $('#modalViewUser').modal('show');
+            } else {
+                swal("Error", objData.msg, "error");
             }
         }
     }
@@ -155,12 +208,11 @@ function openModal() {
 window.addEventListener('load', function () {
     fntEditUsuario();
     fntDelUsuario();
-    fntPermisos();
 }, false);
 
 function fntEditUsuario() {
     var btnEditUsuario = document.querySelectorAll(".btnEditUsuario");
-    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwNzMxNTQsImV4cCI6MTc2NjE1OTU1NH0.t-uczLWgdgnB5xrfCvHPlwccB_RJqVKNoXMFn87wgLoPFuetKjfVOqns_b3eoeGle3Ox9WCOB97Lo1Fv2VCDcQ"; // Tu token
+    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwOTYyNDgsImV4cCI6MTc2NjE4MjY0OH0.emJM6JJz-KAXMY6xsxGhJN9rntsd5BCt_sdIqOiR63ecL9dzxcIL3QUJd0zKTYJKpPXfAXuVzSULy43iF8sXzg"; // Tu token
     btnEditUsuario.forEach(function (btnEditUsuario) {
         btnEditUsuario.addEventListener('click', function () {
 
@@ -169,9 +221,9 @@ function fntEditUsuario() {
             document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
             document.querySelector('#btnText').innerHTML = "Actualizar";
 
-            var idUsuario = this.getAttribute("rl");
+            var idUsuario = this.getAttribute("us");
             var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = 'http://api-votes.com/roles/getRol/' + idrol;
+            var ajaxUrl = 'http://api-votes.com/usuarios/getUsuario/' + idUsuario;
             request.open("GET", ajaxUrl, true);
             // --- AGREGO LOS HEADERS ---
             request.setRequestHeader('Authorization', 'Bearer ' + miToken);
@@ -209,12 +261,11 @@ function fntEditUsuario() {
     });
 }
 
-function fntDelUsuario() {
+function fntDelUsuario(idusuario) {
     var btnDelUsuario = document.querySelectorAll(".btnDelUsuario");
-    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwMDk0MzcsImV4cCI6MTc2NjA5NTgzN30.s8pRhBWGfx_ecPxedcC5yPbw_GsBwXHEICAwreUV4NX5rs8T-l27q4u-Jt71-fNJVBx3nwjlfbNAGLAq_gDwGQ"; // Tu token
+    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwOTYyNDgsImV4cCI6MTc2NjE4MjY0OH0.emJM6JJz-KAXMY6xsxGhJN9rntsd5BCt_sdIqOiR63ecL9dzxcIL3QUJd0zKTYJKpPXfAXuVzSULy43iF8sXzg"; // Tu token
     btnDelUsuario.forEach(function (btnDelUsuario) {
         btnDelUsuario.addEventListener('click', function () {
-            var idusuario = this.getAttribute("us");
             swal({
                 title: "Eliminar Usuario",
                 text: "¿Realmente quiere eliminar el Usuario?",
@@ -228,14 +279,14 @@ function fntDelUsuario() {
 
                 if (isConfirm) {
                     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-                    var ajaxUrl = 'http://api-votes.com/usuarios/delUsuario/';
-                    var jsonParams = JSON.stringify({ idusuario: idusuario });
+                    var ajaxUrl = 'http://api-votes.com/usuario/delUsuario/' + idusuario;
+
                     request.open("PUT", ajaxUrl, true);
                     // --- AGREGO LOS HEADERS ---
                     request.setRequestHeader('Authorization', 'Bearer ' + miToken);
                     request.setRequestHeader('Accept', 'application/json');
                     // ----------------------------
-                    request.send(jsonParams);
+                    request.send();
                     request.onreadystatechange = function () {
                         if (request.readyState == 4 && request.status == 200) {
                             var objData = JSON.parse(request.responseText);
@@ -244,7 +295,6 @@ function fntDelUsuario() {
                                 tableRoles.ajax.reload(function () {
                                     fntEditRol();
                                     fntDelRol();
-                                    fntPermisos();
                                 });
                             } else {
                                 swal("Atención!", objData.msg, "error");
@@ -255,122 +305,4 @@ function fntDelUsuario() {
             });
         });
     });
-}
-
-function fntPermisos() {
-    var btnPermisosRol = document.querySelectorAll(".btnPermisosRol");
-    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwMDk0MzcsImV4cCI6MTc2NjA5NTgzN30.s8pRhBWGfx_ecPxedcC5yPbw_GsBwXHEICAwreUV4NX5rs8T-l27q4u-Jt71-fNJVBx3nwjlfbNAGLAq_gDwGQ";
-
-    btnPermisosRol.forEach(function (btnPermisosRol) {
-        btnPermisosRol.addEventListener('click', function () {
-
-            var idrol = this.getAttribute("rl");
-            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = 'http://api-votes.com/permisos/getPermisosRol/' + idrol;
-
-            request.open("GET", ajaxUrl, true);
-            request.setRequestHeader('Authorization', 'Bearer ' + miToken);
-            request.setRequestHeader('Accept', 'application/json');
-            request.send();
-
-            request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-
-                    var objResponse = JSON.parse(request.responseText);
-
-                    if (objResponse.status == true) {
-                        var arrModulos = objResponse.data;
-                        var htmlTable = "";
-                        var no = 1; // Contador para la columna #
-
-                        arrModulos.forEach(function (modulo) {
-
-                            // 1. Validar si está chequeado o no
-                            var pR = modulo.permisos.r == 1 ? "checked" : "";
-                            var pW = modulo.permisos.w == 1 ? "checked" : "";
-                            var pU = modulo.permisos.u == 1 ? "checked" : "";
-                            var pD = modulo.permisos.d == 1 ? "checked" : "";
-
-                            htmlTable += '<tr>';
-
-                            // Columna #: Mostramos contador y guardamos ID modulo oculto
-                            htmlTable += '<td>' + no + '<input type="hidden" name="modulos[' + modulo.id_modulo + '][idmodulo]" value="' + modulo.id_modulo + '" required></td>';
-
-                            // Columna Nombre Módulo
-                            htmlTable += '<td>' + modulo.tittulo_modulo + '</td>';
-
-                            // --- Toggle VER (R) ---
-                            htmlTable += '<td><div class="toggle-flip"><label>';
-                            htmlTable += '<input type="checkbox" name="modulos[' + modulo.id_modulo + '][r]" ' + pR + '><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>';
-                            htmlTable += '</label></div></td>';
-
-                            // --- Toggle CREAR (W) ---
-                            htmlTable += '<td><div class="toggle-flip"><label>';
-                            htmlTable += '<input type="checkbox" name="modulos[' + modulo.id_modulo + '][w]" ' + pW + '><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>';
-                            htmlTable += '</label></div></td>';
-
-                            // --- Toggle ACTUALIZAR (U) ---
-                            htmlTable += '<td><div class="toggle-flip"><label>';
-                            htmlTable += '<input type="checkbox" name="modulos[' + modulo.id_modulo + '][u]" ' + pU + '><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>';
-                            htmlTable += '</label></div></td>';
-
-                            // --- Toggle ELIMINAR (D) ---
-                            htmlTable += '<td><div class="toggle-flip"><label>';
-                            htmlTable += '<input type="checkbox" name="modulos[' + modulo.id_modulo + '][d]" ' + pD + '><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>';
-                            htmlTable += '</label></div></td>';
-
-                            htmlTable += '</tr>';
-                            no++; // Aumentamos el contador
-                        });
-
-                        // 2. Inyectamos el HTML en el tbody limpio
-                        document.querySelector('#contentAjax').innerHTML = htmlTable;
-
-                        // 3. Asignamos el ID Rol al input hidden
-                        if (document.querySelector('#idrol')) {
-                            document.querySelector('#idrol').value = idrol;
-                        }
-
-                        // 4. Mostramos Modal
-                        $('.modalPermisos').modal('show');
-
-                        // 5. Asignar evento de guardado (quitando el anterior para no duplicar)
-                        var formPermisos = document.querySelector('#formPermisos');
-                        if (formPermisos) {
-                            formPermisos.removeEventListener('submit', fntSavePermisos); // Limpieza preventiva
-                            formPermisos.addEventListener('submit', fntSavePermisos, false);
-                        }
-
-                    } else {
-                        swal("Error", objResponse.msg, "error");
-                    }
-                }
-            }
-        });
-    });
-}
-
-function fntSavePermisos(event) {
-    //event.preventDefault();
-    var miToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYwMDk0MzcsImV4cCI6MTc2NjA5NTgzN30.s8pRhBWGfx_ecPxedcC5yPbw_GsBwXHEICAwreUV4NX5rs8T-l27q4u-Jt71-fNJVBx3nwjlfbNAGLAq_gDwGQ";
-    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl = 'http://api-votes.com/permisos/setPermisos';
-    var formElement = document.querySelector("#formPermisos");
-    var formData = new FormData(formElement);
-    request.open("POST", ajaxUrl, true);
-    request.setRequestHeader('Authorization', 'Bearer ' + miToken);
-    request.setRequestHeader('Accept', 'application/json');
-    request.send(formData);
-
-    request.onreadystatechange = function () {
-        if (request.readyState == 4 && request.status == 200) {
-            var objData = JSON.parse(request.responseText);
-            if (objData.status) {
-                swal("Permisos de usuario", objData.msg, "success");
-            } else {
-                swal("Error", objData.msg, "error");
-            }
-        }
-    }
-
 }
