@@ -16,6 +16,11 @@ function testText(txtString) {
     }
 }
 
+function testAddress(address) {
+    var stringAddress = new RegExp(/^[a-zA-Z0-9ÑñÁáÉéÍíÓóÚúÜü\s#.,-\/]+$/);
+    return stringAddress.test(address);
+}
+
 function testEntero(intCant) {
     var intCantidad = new RegExp(/^([0-9])*$/);
     if (intCantidad.test(intCant)) {
@@ -68,6 +73,22 @@ function fntValidEmail() {
         validEmail.addEventListener('keyup', function () {
             let inputValue = this.value;
             if (!fntEmailValidate(inputValue)) {
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
+    });
+}
+
+function fntValidAddress() {
+    let validAddress = document.querySelectorAll(".validAddress");
+    validAddress.forEach(function (input) {
+        input.addEventListener('keyup', function () {
+            let inputValue = this.value;
+            // Si el campo está vacío, podrías decidir si es válido o no. 
+            // Aquí validamos si cumple el patrón.
+            if (!testAddress(inputValue) && inputValue !== "") {
                 this.classList.add('is-invalid');
             } else {
                 this.classList.remove('is-invalid');

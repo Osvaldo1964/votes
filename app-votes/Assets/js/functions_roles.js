@@ -41,9 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
 
             // Validaciones rápidas
-            if (document.querySelector('#txtNombre').value == '' || document.querySelector('#txtDescripcion').value == '') {
-                swal("Atención", "Todos los campos son obligatorios.", "error");
-                return false;
+            /*             if (document.querySelector('#txtNombre').value == '' || document.querySelector('#txtDescripcion').value == '') {
+                            swal("Atención", "Todos los campos son obligatorios.", "error");
+                            return false;
+                        } */
+            let elements = formUsuario.querySelectorAll(".is-invalid");
+            if (elements.length > 0) {
+                elements[0].focus();
+                return;
             }
 
             var formData = new FormData(formRol);

@@ -29,7 +29,7 @@
                         <div class="form-group col-md-6">
                             <label for="txtTelefono">Teléfono</label>
                             <input type="text" class="form-control valid validNumber" id="txtTelefono"
-                                name="txtTelefono" required="">
+                                name="txtTelefono" required="" onkeypress="return controlTag(event)">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="txtEmail">Email</label>

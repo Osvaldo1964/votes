@@ -44,6 +44,12 @@ document.addEventListener('DOMContentLoaded', function () {
         formUsuario.onsubmit = function (e) {
             e.preventDefault();
 
+            let elements = formUsuario.querySelectorAll(".is-invalid");
+            if (elements.length > 0) {
+                elements[0].focus();
+                return;
+            }
+
             var formData = new FormData(formUsuario);
             var request = new XMLHttpRequest();
             var ajaxUrl = BASE_URL + '/usuario/setUsuario';
@@ -103,7 +109,9 @@ function fntRolesUsuario() {
             if (objData.status) {
                 var html = '<option value="">Seleccione un Rol</option>';
                 objData.data.forEach(item => {
-                    html += `<option value="${item.id_rol}">${item.nombre_rol}</option>`;
+                    if (item.status_rol == 1) {
+                        html += `<option value="${item.id_rol}">${item.nombre_rol}</option>`;
+                    }
                 });
                 $('#listRolid').html(html).selectpicker('destroy').selectpicker();
             }
