@@ -169,20 +169,12 @@ function sendMailLocal($data, $template)
 //Cargar los permisos
 function getPermisos(int $idmodulo)
 {
-    require_once("Models/PermisosModel.php");
-    $objPermisos = new PermisosModel();
-    if (!empty($_SESSION['userData'])) {
-        $idRol = $_SESSION['userData']['idRol'];
-        $arrPermisos = $objPermisos->permisosModulo($idRol);
-        $permisos = '';
-        $permisosMod = '';
-        if (count($arrPermisos) > 0) {
-            $permisos = $arrPermisos;
-            $permisosMod = isset($arrPermisos[$idmodulo]) ? $arrPermisos[$idmodulo] : "";
-        }
-        $_SESSION['permisos'] = $permisos;
-        $_SESSION['permisosMod'] = $permisosMod;
+    $arrPermisos = $_SESSION["permisos"];
+    $permisosMod = '';
+    if (count($arrPermisos) > 0) {
+        $permisosMod = isset($arrPermisos[$idmodulo]) ? $arrPermisos[$idmodulo] : "";
     }
+    $_SESSION['permisosMod'] = $permisosMod;
 }
 
 function sessionUser()

@@ -2,9 +2,10 @@ const BASE_URL = "http://app-votes.com";
 const BASE_URL_API = "http://api-votes.com";
 
 var tableUsuarios;
+// Evitar alerts nativos de DataTables
+$.fn.dataTable.ext.errMode = 'none';
 
 document.addEventListener('DOMContentLoaded', function () {
-
     // 1. INICIALIZACIÓN DE DATATABLE
     tableUsuarios = $('#tableUsuarios').DataTable({
         "processing": true,
@@ -16,7 +17,18 @@ document.addEventListener('DOMContentLoaded', function () {
             "url": BASE_URL_API + "/usuario/getUsers",
             "type": "GET",
             "headers": { "Authorization": "Bearer " + localStorage.getItem('userToken') },
-            "dataSrc": "data"
+            "data": function (d) {
+                d.rolUser = localStorage.getItem('userRol');
+            },
+            "dataSrc": function (json) {
+                if (json.status == false && json.msg) {
+                    return [];
+                }
+                return json.data;
+            },
+            "error": function (xhr, error, thrown) {
+                fntHandleError(xhr);
+            }
         },
         "columns": [
             { "data": "id_usuario" },
@@ -55,15 +67,19 @@ document.addEventListener('DOMContentLoaded', function () {
             request.send(formData);
 
             request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-                    var objData = JSON.parse(request.responseText);
-                    if (objData.status) {
-                        $('#modalFormUsuario').modal("hide");
-                        formUsuario.reset();
-                        swal("Usuarios", objData.msg, "success");
-                        tableUsuarios.ajax.reload();
+                if (request.readyState == 4) {
+                    if (request.status == 200) {
+                        var objData = JSON.parse(request.responseText);
+                        if (objData.status) {
+                            $('#modalFormUsuario').modal("hide");
+                            formUsuario.reset();
+                            swal("Usuarios", objData.msg, "success");
+                            tableUsuarios.ajax.reload();
+                        } else {
+                            swal("Error", objData.msg, "error");
+                        }
                     } else {
-                        swal("Error", objData.msg, "error");
+                        fntHandleError(request);
                     }
                 }
             }
@@ -71,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 3. DELEGACIÓN DE EVENTOS (CLICK GLOBAL)
-    // Esto maneja todos los botones de la tabla, incluso después de recargar AJAX
     document.addEventListener('click', function (e) {
         const btnView = e.target.closest('.btnViewUsuario');
         const btnEdit = e.target.closest('.btnEditUsuario');
@@ -84,13 +99,35 @@ document.addEventListener('DOMContentLoaded', function () {
         if (btnDel) fntDelUsuario(btnDel.getAttribute('us'));
     });
 
-    // Cargar roles al inicio
     fntRolesUsuario();
 });
 
 /**
- * FUNCIONES DE APOYO
+ * FUNCION GLOBAL PARA MANEJO DE ERRORES DE AUTORIZACIÓN
  */
+function fntHandleError(xhr) {
+    if (xhr.status === 401 || xhr.status === 400) {
+        let mensaje = "Tu sesión ha expirado o no tienes autorización.";
+        try {
+            let res = JSON.parse(xhr.responseText);
+            if (res.msg) mensaje = res.msg;
+        } catch (e) { }
+
+        swal({
+            title: "Sesión Expirada",
+            text: mensaje,
+            type: "warning",
+            confirmButtonText: "Aceptar",
+            closeOnConfirm: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                window.location.href = BASE_URL + '/logout/logout';
+            }
+        });
+    } else {
+        console.error("Error del sistema:", xhr.responseText);
+    }
+}
 
 function fntRolesUsuario() {
     var ajaxUrl = BASE_URL_API + '/roles/getSelectRoles';
@@ -100,16 +137,20 @@ function fntRolesUsuario() {
     request.send();
 
     request.onreadystatechange = function () {
-        if (request.readyState == 4 && request.status == 200) {
-            var objData = JSON.parse(request.responseText);
-            if (objData.status) {
-                var html = '<option value="">Seleccione un Rol</option>';
-                objData.data.forEach(item => {
-                    if (item.status_rol == 1) {
-                        html += `<option value="${item.id_rol}">${item.nombre_rol}</option>`;
-                    }
-                });
-                $('#listRolid').html(html).selectpicker('destroy').selectpicker();
+        if (request.readyState == 4) {
+            if (request.status == 200) {
+                var objData = JSON.parse(request.responseText);
+                if (objData.status) {
+                    var html = '<option value="">Seleccione un Rol</option>';
+                    objData.data.forEach(item => {
+                        if (item.status_rol == 1) {
+                            html += `<option value="${item.id_rol}">${item.nombre_rol}</option>`;
+                        }
+                    });
+                    $('#listRolid').html(html).selectpicker('destroy').selectpicker();
+                }
+            } else {
+                fntHandleError(request);
             }
         }
     }
@@ -123,26 +164,29 @@ function fntViewUsuario(idUsuario) {
     request.send();
 
     request.onreadystatechange = function () {
-        if (request.readyState == 4 && request.status == 200) {
-            var objData = JSON.parse(request.responseText);
-            if (objData.status) {
-                document.querySelector('#celNombre').innerHTML = objData.data.nombres_usuario;
-                document.querySelector('#celApellido').innerHTML = objData.data.apellidos_usuario;
-                document.querySelector('#celTelefono').innerHTML = objData.data.telefono_usuario;
-                document.querySelector('#celEmail').innerHTML = objData.data.email_usuario;
-                document.querySelector('#celTipoUsuario').innerHTML = objData.data.nombre_rol;
-                var estado = objData.data.estado_usuario == 1
-                    ? '<span class="badge badge-success">Activo</span>'
-                    : '<span class="badge badge-danger">Inactivo</span>';
-                document.querySelector('#celEstado').innerHTML = estado;
-                $('#modalViewUser').modal('show');
+        if (request.readyState == 4) {
+            if (request.status == 200) {
+                var objData = JSON.parse(request.responseText);
+                if (objData.status) {
+                    document.querySelector('#celNombre').innerHTML = objData.data.nombres_usuario;
+                    document.querySelector('#celApellido').innerHTML = objData.data.apellidos_usuario;
+                    document.querySelector('#celTelefono').innerHTML = objData.data.telefono_usuario;
+                    document.querySelector('#celEmail').innerHTML = objData.data.email_usuario;
+                    document.querySelector('#celTipoUsuario').innerHTML = objData.data.nombre_rol;
+                    var estado = objData.data.estado_usuario == 1
+                        ? '<span class="badge badge-success">Activo</span>'
+                        : '<span class="badge badge-danger">Inactivo</span>';
+                    document.querySelector('#celEstado').innerHTML = estado;
+                    $('#modalViewUser').modal('show');
+                }
+            } else {
+                fntHandleError(request);
             }
         }
     }
 }
 
 function fntEditUsuario(idUsuario) {
-    // Ajustes visuales del modal
     document.querySelector('#titleModal').innerHTML = "Actualizar Usuario";
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
@@ -155,31 +199,32 @@ function fntEditUsuario(idUsuario) {
     request.send();
 
     request.onreadystatechange = function () {
-        if (request.readyState == 4 && request.status == 200) {
-            var objData = JSON.parse(request.responseText);
-            if (objData.status) {
-                document.querySelector('#idUsuario').value = objData.data.id_usuario;
-                document.querySelector('#txtNombre').value = objData.data.nombres_usuario;
-                document.querySelector('#txtApellido').value = objData.data.apellidos_usuario;
-                document.querySelector('#txtTelefono').value = objData.data.telefono_usuario;
-                document.querySelector('#txtEmail').value = objData.data.email_usuario;
+        if (request.readyState == 4) {
+            if (request.status == 200) {
+                var objData = JSON.parse(request.responseText);
+                if (objData.status) {
+                    document.querySelector('#idUsuario').value = objData.data.id_usuario;
+                    document.querySelector('#txtNombre').value = objData.data.nombres_usuario;
+                    document.querySelector('#txtApellido').value = objData.data.apellidos_usuario;
+                    document.querySelector('#txtTelefono').value = objData.data.telefono_usuario;
+                    document.querySelector('#txtEmail').value = objData.data.email_usuario;
 
-                // Actualización de Selects (Destruir y Reconstruir)
-                // 1. Identifica el ID correcto (Asegúrate que el nombre coincida con tu JSON)
-                let idRol = objData.data.id_rol || objData.data.rol_usuario || objData.data.id_rol_usuario;
+                    let idRol = objData.data.id_rol || objData.data.rol_usuario;
 
-                // 2. Destrucción total y asignación forzada
-                $('#listRolid').selectpicker('destroy'); // Quitamos la capa de Bootstrap
-                document.querySelector('#listRolid').value = String(idRol); // Forzamos el valor al HTML puro
-                $('#listRolid').selectpicker(); // Volvemos a inicializar
-                $('#listRolid').selectpicker('refresh'); // Sincronizamos
+                    $('#listRolid').selectpicker('destroy');
+                    document.querySelector('#listRolid').value = String(idRol);
+                    $('#listRolid').selectpicker();
+                    $('#listRolid').selectpicker('refresh');
 
-                $('#listStatus').selectpicker('destroy'); // Quitamos la capa de Bootstrap
-                document.querySelector('#listStatus').value = String(objData.data.estado_usuario); // Forzamos el valor al HTML puro
-                $('#listStatus').selectpicker(); // Volvemos a inicializar
-                $('#listStatus').selectpicker('refresh'); // Sincronizamos
+                    $('#listStatus').selectpicker('destroy');
+                    document.querySelector('#listStatus').value = String(objData.data.estado_usuario);
+                    $('#listStatus').selectpicker();
+                    $('#listStatus').selectpicker('refresh');
 
-                $('#modalFormUsuario').modal('show');
+                    $('#modalFormUsuario').modal('show');
+                }
+            } else {
+                fntHandleError(request);
             }
         }
     }
@@ -203,13 +248,17 @@ function fntDelUsuario(idUsuario) {
             request.send();
 
             request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-                    var objData = JSON.parse(request.responseText);
-                    if (objData.status) {
-                        swal("Eliminado!", objData.msg, "success");
-                        tableUsuarios.ajax.reload();
+                if (request.readyState == 4) {
+                    if (request.status == 200) {
+                        var objData = JSON.parse(request.responseText);
+                        if (objData.status) {
+                            swal("Eliminado!", objData.msg, "success");
+                            tableUsuarios.ajax.reload();
+                        } else {
+                            swal("Error!", objData.msg, "error");
+                        }
                     } else {
-                        swal("Error!", objData.msg, "error");
+                        fntHandleError(request);
                     }
                 }
             }
@@ -224,10 +273,7 @@ function openModal() {
     document.querySelector('#btnText').innerHTML = "Guardar";
     document.querySelector('#titleModal').innerHTML = "Nuevo Usuario";
     document.querySelector("#formUsuario").reset();
-
-    // Resetear selects al abrir nuevo
     $('#listRolid').val('').selectpicker('refresh');
     $('#listStatus').val('1').selectpicker('refresh');
-
     $('#modalFormUsuario').modal('show');
 }

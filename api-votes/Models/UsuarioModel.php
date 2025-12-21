@@ -134,4 +134,5 @@ class UsuarioModel extends Mysql
         return $request;
     }
 
+
 }

@@ -4,14 +4,15 @@ class Permisos extends Controllers
 {
 	public function __construct()
 	{
+		if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+			die(); // Finaliza la ejecución para OPTIONS con un status 200 implícito
+		}
 		try {
-			//================= Validar token ===================
 			$arrHeaders = getallheaders();
-			$reesponse = fntAuthorization($arrHeaders);
-			//====================================================
+			fntAuthorization($arrHeaders);
 		} catch (\Throwable $e) {
-			$arrResponse = array('status' => false, 'msg' => $e->getMessage());
-			jsonResponse($arrResponse, 400);
+			$arrResponse = array('status' => false, 'msg' => 'Token inválido o expirado');
+			jsonResponse($arrResponse, 401); // <-- CAMBIAR A 401
 			die();
 		}
 		parent::__construct();
@@ -41,15 +42,16 @@ class Permisos extends Controllers
 					}
 				} else {
 					for ($i = 0; $i < count($arrModulos); $i++) {
-						$arrPermisos = array(
-							'r' => $arrPermisosRol[$i]['r_permiso'],
-							'w' => $arrPermisosRol[$i]['w_permiso'],
-							'u' => $arrPermisosRol[$i]['u_permiso'],
-							'd' => $arrPermisosRol[$i]['d_permiso']
-						);
-						if ($arrModulos[$i]['id_modulo'] == $arrPermisosRol[$i]['modulo_permiso']) {
-							$arrModulos[$i]['permisos'] = $arrPermisos;
+						$arrPermisos = array('r' => 0, 'w' => 0, 'u' => 0, 'd' => 0);
+						if (isset($arrPermisosRol[$i])) {
+							$arrPermisos = array(
+								'r' => $arrPermisosRol[$i]['r_permiso'],
+								'w' => $arrPermisosRol[$i]['w_permiso'],
+								'u' => $arrPermisosRol[$i]['u_permiso'],
+								'd' => $arrPermisosRol[$i]['d_permiso']
+							);
 						}
+						$arrModulos[$i]['permisos'] = $arrPermisos;
 					}
 				}
 				$arrPermisosRol['modulos'] = $arrModulos;
@@ -79,7 +81,6 @@ class Permisos extends Controllers
 		if ($_POST) {
 			$intIdrol = intval($_POST['idrol']);
 			$modulos = $_POST['modulos'];
-			dep($modulos);
 
 			$this->model->deletePermisos($intIdrol);
 			foreach ($modulos as $modulo) {

@@ -19,7 +19,7 @@ class Logout extends Controllers
 
 		// 3. Redirigimos al login, pero agregamos un parámetro 
 		// para decirle al JS que también limpie el LocalStorage
-		header('Location: ' . base_url() . '/login?logout=true');
+		header('Location: ' . base_url() . '/login');
 		die();
 	}
 }

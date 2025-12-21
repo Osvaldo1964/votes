@@ -41,6 +41,16 @@ class Login extends Controllers
                         $arrAuth['telefono_usuario'] = $requestUser['telefono_usuario'];
                         $arrAuth['nombre_rol'] = $requestUser['nombre_rol'];
                         $_SESSION['login'] = true;
+                        $requestPermisos = $this->model->permisosModulo($requestUser['rol_usuario']);
+                        $permisos = '';
+                        $permisosMod = '';
+
+                        if (count($requestPermisos) > 0) {
+                            $permisos = $requestPermisos;
+                            $permisosMod = isset($requestPermisos['id_modulo']) ? $requestPermisos['id_modulo'] : '';
+                        }
+                        $arrAuth['permisos'] = $permisos;
+                        $arrAuth['permisosMod'] = $permisosMod;
                         $code = 200;
                         $response = array('status' => true, 'msg' => '¡Bienvenido al sistema!', 'auth' => $arrAuth);
                     } else {

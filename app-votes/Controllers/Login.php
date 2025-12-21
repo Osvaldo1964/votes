@@ -125,6 +125,8 @@ class Login extends Controllers
 			$_SESSION['idUser'] = $data['id_usuario'];
 			$_SESSION['userToken'] = $data['access_token'];
 			$_SESSION['userData'] = $data;
+			$_SESSION['permisos'] = $data['permisos'];
+			$_SESSION['permisosMod'] = $data['permisosMod'];
 			echo json_encode(['status' => true]);
 		} else {
 			echo json_encode(['status' => false, 'msg' => 'Datos insuficientes']);

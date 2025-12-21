@@ -59,13 +59,13 @@ function strClean($strCadena)
     return $string;
 }
 
-function jsonResponse(array $arrData, int $code)
+function jsonResponse($data, int $code)
 {
-    if (is_array($arrData)) {
-        //header("HTTP/1.1 ".$code);
-        header("Content-Type: application/json");
-        echo json_encode($arrData, true);
-    }
+    // Esta línea le dice al navegador que algo salió mal (401, 400, etc.)
+    http_response_code($code);
+    header('Content-Type: application/json');
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    die();
 }
 
 function testString(string $data)
@@ -100,28 +100,43 @@ function testEmail(string $email)
 
 function fntAuthorization(array $arrHeaders)
 {
-    if (empty($arrHeaders['Authorization'])) {
-        $response = array('status' => false, 'msg' => 'Autorización requerida');
-        jsonResponse($response, 400);
-        die();
-    } else {
-        $tokenBearer = $arrHeaders['Authorization'];
-        $arrTokenBearer = explode(" ", $tokenBearer);
+    // Convertir todas las llaves de cabeceras a minúsculas para evitar errores
+    $arrHeaders = array_change_key_case($arrHeaders, CASE_LOWER);
 
-        if ($arrTokenBearer[0] != 'Bearer') {
-            $arrResponse = array('status' => false, 'msg' => 'Error de autorización');
-            jsonResponse($arrResponse, 400);
-            die();
-        } else {
-            $token = $arrTokenBearer[1];
-            try {
-                $arrPayload = JWT::decode($token, new Key(KEY_SECRET, 'HS512'));
-            } catch (\Firebase\JWT\ExpiredException $e) {
-                $arrResponse = array('status' => false, 'msg' => $e->getMessage());
-                jsonResponse($arrResponse, 400);
-                die();
-            }
-        }
+    if (empty($arrHeaders['authorization'])) {
+        $response = array('status' => false, 'msg' => 'Autorización requerida');
+        jsonResponse($response, 401); // Enviamos código 401
+        die();
+    }
+
+    $tokenBearer = $arrHeaders['authorization'];
+    $arrTokenBearer = explode(" ", $tokenBearer);
+
+    // Validar formato "Bearer <token>"
+    if (count($arrTokenBearer) < 2 || $arrTokenBearer[0] != 'Bearer') {
+        $arrResponse = array('status' => false, 'msg' => 'Formato de token inválido');
+        jsonResponse($arrResponse, 401);
+        die();
+    }
+
+    $token = $arrTokenBearer[1];
+
+    try {
+        // Decodificar el token
+        $arrPayload = JWT::decode($token, new Key(KEY_SECRET, 'HS512'));
+
+        // OPCIONAL: Podrías retornar el $arrPayload por si el controlador 
+        // necesita saber qué usuario está logueado.
+        return $arrPayload;
+
+    } catch (\Firebase\JWT\ExpiredException $e) {
+        $arrResponse = array('status' => false, 'msg' => 'El token ha expirado');
+        jsonResponse($arrResponse, 401);
+        die();
+    } catch (\Exception $e) {
+        $arrResponse = array('status' => false, 'msg' => 'Token inválido o corrupto');
+        jsonResponse($arrResponse, 401);
+        die();
     }
 }
 
@@ -152,4 +167,19 @@ function token()
     $r4 = bin2hex(random_bytes(10));
     $token = $r1 . '-' . $r2 . '-' . $r3 . '-' . $r4;
     return $token;
+}
+
+function getPermisos(int $idrol)
+{
+    // __DIR__ es C:\...\api-votes\Helpers
+    // Subimos un nivel para llegar a api-votes y entramos a Models
+    $rutaModel = dirname(__DIR__) . "/Models/PermisosModel.php";
+
+    if (file_exists($rutaModel)) {
+        require_once($rutaModel);
+        $objPermisos = new PermisosModel();
+        return $objPermisos->permisosModulo($idrol);
+    } else {
+        return []; // Retorna un array vacío si no encuentra el archivo
+    }
 }

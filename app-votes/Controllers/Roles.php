@@ -5,6 +5,7 @@ class Roles extends Controllers
     {
         parent::__construct();
         sessionUser(); // Con esta sola línea ya proteges todo el controlador
+        getPermisos(3);
     }
 
     public function Roles($params)

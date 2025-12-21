@@ -6,11 +6,12 @@ class Usuarios extends Controllers
     {
         parent::__construct();
         sessionUser(); // Con esta sola línea ya proteges todo el controlador
+        getPermisos(2);
     }
 
     public function Usuarios()
     {
-        $data['page_id'] = 1;
+        $data['page_id'] = 2;
         $data['page_tag'] = "Usuarios";
         $data['page_title'] = "Usuarios - Sistema de votos";
         $data['page_name'] = "usuarios";

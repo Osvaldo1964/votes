@@ -6,7 +6,7 @@ $('.login-content [data-toggle="flip"]').click(function () {
 	return false;
 });
 
-//var divLoading = document.querySelector("#divLoading");
+var divLoading = document.querySelector("#divLoading");
 document.addEventListener('DOMContentLoaded', function () {
 	if (document.querySelector("#formLogin")) {
 		let formLogin = document.querySelector("#formLogin");
@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 							localStorage.setItem('idUser', objData.auth.id_usuario);
 							localStorage.setItem('userEmail', objData.auth.email_usuario);
 							localStorage.setItem('userToken', objData.auth.access_token);
+							localStorage.setItem('userRol', objData.auth.rol_usuario);
 							localStorage.setItem('login', true);
 							// 2. PASO NUEVO: Crear la sesión en el servidor local (app-vote)
 							// Usaremos otro AJAX pero hacia BASE_URL (tu app)
@@ -75,7 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			localStorage.clear();
 
 			// Opcional: Limpiar la URL para que no se quede el ?logout=true
-			window.history.replaceState({}, document.title, window.location.pathname);
+			//window.history.replaceState({}, document.title, window.location.pathname);
+			window.history.replaceState({}, document.title, "/login");
 
 			console.log("Sesión y LocalStorage limpiados correctamente.");
 		}
