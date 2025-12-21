@@ -1,8 +1,5 @@
-/**
- * CONFIGURACIÓN GLOBAL
- */
-const BASE_URL = "http://api-votes.com";
-const MI_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYxNjc0MTMsImV4cCI6MTc2NjI1MzgxM30.CpK3aqP-1JWpv1bdIkFwRVSKKKvxGu5FzUgbiFa38ky99eXaJSvnXap_JOO3ZipyEoHGG4EGAJdWP-ZiT0Ia_A";
+const BASE_URL = "http://app-votes.com";
+const BASE_URL_API = "http://api-votes.com";
 
 var tableRoles;
 
@@ -13,12 +10,12 @@ document.addEventListener('DOMContentLoaded', function () {
         "processing": true,
         "serverSide": false,
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+            "url": BASE_URL + "/assets/json/spanish.json"
         },
         "ajax": {
-            "url": BASE_URL + "/roles/getRoles",
+            "url": BASE_URL_API + "/roles/getRoles",
             "type": "GET",
-            "headers": { "Authorization": "Bearer " + MI_TOKEN },
+            "headers": { "Authorization": "Bearer " + localStorage.getItem('userToken') },
             "dataSrc": "data"
         },
         "columns": [
@@ -53,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var formData = new FormData(formRol);
             var request = new XMLHttpRequest();
-            request.open("POST", BASE_URL + '/roles/setRol', true);
-            request.setRequestHeader('Authorization', 'Bearer ' + MI_TOKEN);
+            request.open("POST", BASE_URL_API + '/roles/setRol', true);
+            request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
             request.send(formData);
 
             request.onreadystatechange = function () {
@@ -110,8 +107,8 @@ function fntEditRol(idRol) {
     document.querySelector('#btnText').innerHTML = "Actualizar";
 
     var request = new XMLHttpRequest();
-    request.open("GET", BASE_URL + '/roles/getRol/' + idRol, true);
-    request.setRequestHeader('Authorization', 'Bearer ' + MI_TOKEN);
+    request.open("GET", BASE_URL_API + '/roles/getRol/' + idRol, true);
+    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
     request.send();
 
     request.onreadystatechange = function () {
@@ -146,8 +143,8 @@ function fntDelRol(idRol) {
         if (isConfirm) {
             var request = new XMLHttpRequest();
             var jsonParams = JSON.stringify({ idrol: idRol });
-            request.open("PUT", BASE_URL + '/roles/delRol/', true);
-            request.setRequestHeader('Authorization', 'Bearer ' + MI_TOKEN);
+            request.open("PUT", BASE_URL_API + '/roles/delRol/', true);
+            request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
             request.setRequestHeader('Content-Type', 'application/json');
             request.send(jsonParams);
 
@@ -168,8 +165,8 @@ function fntDelRol(idRol) {
 
 function fntPermisos(idRol) {
     var request = new XMLHttpRequest();
-    request.open("GET", BASE_URL + '/permisos/getPermisosRol/' + idRol, true);
-    request.setRequestHeader('Authorization', 'Bearer ' + MI_TOKEN);
+    request.open("GET", BASE_URL_API + '/permisos/getPermisosRol/' + idRol, true);
+    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
     request.send();
 
     request.onreadystatechange = function () {
@@ -211,8 +208,8 @@ function fntSavePermisos(e) {
     e.preventDefault();
     var formData = new FormData(document.querySelector('#formPermisos'));
     var request = new XMLHttpRequest();
-    request.open("POST", BASE_URL + '/permisos/setPermisos', true);
-    request.setRequestHeader('Authorization', 'Bearer ' + MI_TOKEN);
+    request.open("POST", BASE_URL_API + '/permisos/setPermisos', true);
+    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
     request.send(formData);
 
     request.onreadystatechange = function () {

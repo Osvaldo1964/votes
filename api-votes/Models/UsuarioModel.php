@@ -134,20 +134,4 @@ class UsuarioModel extends Mysql
         return $request;
     }
 
-    public function loginUser(string $email, string $password)
-    {
-        $this->strEmail = $email;
-        $this->strPassword = $password;
-
-        $sql = "SELECT id_usuario, estado_usuario FROM usuarios WHERE
-                        email_usuario = BINARY :email AND password_usuario = BINARY :pass AND estado_usuario != 0 ";
-        $arrData = array(
-            ":email" => $this->strEmail,
-            ":pass" => $this->strPassword
-        );
-        $request = $this->select($sql, $arrData);
-        return $request;
-    }
 }
-
-?>

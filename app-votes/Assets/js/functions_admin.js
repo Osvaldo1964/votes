@@ -97,6 +97,49 @@ function fntValidAddress() {
     });
 }
 
+function checkAuth() {
+    const token = localStorage.getItem('userToken');
+
+    if (!token) {
+        window.location.href = "http://app-vote.com/login";
+    }
+}
+
+function verificarExpiracionToken() {
+    const token = localStorage.getItem('userToken');
+
+    // Si no hay token, no hacemos nada (el middleware de PHP se encargará)
+    if (!token) return;
+
+    try {
+        // Decodificamos el Payload del JWT
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const payload = JSON.parse(window.atob(base64));
+
+        const tiempoActual = Math.floor(Date.now() / 1000);
+
+        // Si el tiempo actual es mayor a la expiración
+        if (payload.exp < tiempoActual) {
+            swal({
+                title: "Sesión Expirada",
+                text: "Tu tiempo de acceso ha terminado. Por seguridad, debes ingresar nuevamente.",
+                type: "warning",
+                confirmButtonText: "Aceptar",
+                closeOnConfirm: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    // Llamamos a tu controlador de logout de PHP
+                    // Esto limpiará la sesión en el servidor y el localStorage
+                    window.location.href = BASE_URL + '/logout/logout';
+                }
+            });
+        }
+    } catch (e) {
+        console.error("Error al decodificar el token:", e);
+    }
+}
+
 window.addEventListener('load', function () {
     fntValidText();
     fntValidEmail();

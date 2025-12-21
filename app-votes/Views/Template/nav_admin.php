@@ -4,8 +4,11 @@
     <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="<?= media(); ?>/images/avatar.png"
             alt="User Image">
         <div>
-            <p class="app-sidebar__user-name">Abel OSH</p>
-            <p class="app-sidebar__user-designation">Administrador</p>
+            <p class="app-sidebar__user-name" style="text-transform: capitalize; font-size: 10px;">
+                <?= $_SESSION['userData']['nombre_usuario']; ?>
+            </p>
+            <p class="app-sidebar__user-designation" style="text-transform: capitalize; font-size: 10px;">
+                <?= $_SESSION['userData']['nombre_rol']; ?></p>
         </div>
     </div>
     <ul class="app-menu">

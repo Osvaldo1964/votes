@@ -18,7 +18,7 @@ function media()
 //Muestra información formateada
 function dep($data)
 {
-    $format  = print_r('<pre>');
+    $format = print_r('<pre>');
     $format .= print_r($data);
     $format .= print_r('</pre>');
     return $format;
@@ -133,7 +133,7 @@ function getTokenApi()
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
     curl_setopt($ch, CURLOPT_USERPWD, CLIENT_ID . ":" . KEY_SECRET);
-    
+
     $result = curl_exec($ch);
     $err = curl_error($ch);
 
@@ -143,4 +143,13 @@ function getTokenApi()
         $request = json_decode($result, true);
     }
     return $request;
+}
+function token()
+{
+    $r1 = bin2hex(random_bytes(10));
+    $r2 = bin2hex(random_bytes(10));
+    $r3 = bin2hex(random_bytes(10));
+    $r4 = bin2hex(random_bytes(10));
+    $token = $r1 . '-' . $r2 . '-' . $r3 . '-' . $r4;
+    return $token;
 }

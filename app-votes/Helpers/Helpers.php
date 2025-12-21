@@ -42,7 +42,7 @@ function footerTienda($data = "")
 //Muestra información formateada
 function dep($data)
 {
-    $format  = print_r('<pre>');
+    $format = print_r('<pre>');
     $format .= print_r($data);
     $format .= print_r('</pre>');
     return $format;
@@ -92,12 +92,12 @@ function sendEmail($data, $template)
             //Server settings
             $mail->SMTPDebug = 0;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'runalbi.com';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'suscripciones@runalbi.com';          //SMTP username
-            $mail->Password   = 'Abtu97?14';                               //SMTP password
+            $mail->Host = 'runalbi.com';                     //Set the SMTP server to send through
+            $mail->SMTPAuth = true;                                   //Enable SMTP authentication
+            $mail->Username = 'suscripciones@runalbi.com';          //SMTP username
+            $mail->Password = 'Abtu97?14';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->Port = 465; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
             $mail->setFrom('suscripciones@runalbi.com', 'VITAL FOOD');
@@ -109,7 +109,7 @@ function sendEmail($data, $template)
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = $data['asunto'];
-            $mail->Body    = $mensaje;
+            $mail->Body = $mensaje;
 
             $mail->send();
             return true;
@@ -158,7 +158,7 @@ function sendMailLocal($data, $template)
 
         $mail->addAddress($data['email']);
         $mail->Subject = $data['asunto'];
-        $mail->Body    = $mensaje;
+        $mail->Body = $mensaje;
         $mail->send();
         $mail->clearAllRecipients();
     } catch (Exception $e) {
@@ -185,12 +185,24 @@ function getPermisos(int $idmodulo)
     }
 }
 
-function sessionUser(int $idusuario)
+function sessionUser()
 {
-    require_once("Models/LoginModel.php");
-    $objLogin = new LoginModel();
-    $request = $objLogin->sessionLogin($idusuario);
-    return $request;
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (empty($_SESSION['login'])) {
+        header('Location: ' . base_url() . '/login');
+        die();
+    }
+
+    // Opcional: Validar tiempo de vida de la sesión local
+    if (isset($_SESSION['timeout']) && time() > $_SESSION['timeout']) {
+        session_unset();
+        session_destroy();
+        header('Location: ' . base_url() . '/login?expired=true');
+        die();
+    }
 }
 
 function sessionStart()
@@ -209,9 +221,9 @@ function sessionStart()
 
 function uploadImage(array $data, string $name)
 {
-    $url_temp   =   $data['tmp_name'];
-    $destino    =   'Assets/images/uploads/' . $name;
-    $move       =   move_uploaded_file($url_temp, $destino);
+    $url_temp = $data['tmp_name'];
+    $destino = 'Assets/images/uploads/' . $name;
+    $move = move_uploaded_file($url_temp, $destino);
     return $move;
 }
 
@@ -411,7 +423,7 @@ function CurlConnectionGet(string $ruta, string $contentType = null, string $tok
     curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
     $result = curl_exec($ch);
     $err = curl_error($ch);
-    
+
     if ($err) {
         $request = "CURL Error #:" . $err;
     } else {
@@ -439,7 +451,7 @@ function CurlConnectionPost(string $ruta, string $contentType = null, string $to
     curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
     $result = curl_exec($ch);
     $err = curl_error($ch);
-    
+
     if ($err) {
         $request = "CURL Error #:" . $err;
     } else {

@@ -31,7 +31,8 @@
           </li>
           <li><a class="dropdown-item" href="<?= base_url(); ?>/perfil"><i class="fa fa-user fa-lg"></i> Profile</a>
           </li>
-          <li><a class="dropdown-item" href="<?= base_url(); ?>/logout"><i class="fa fa-sign-out fa-lg"></i> Logout</a>
+          <li><a class="dropdown-item" href="<?= base_url(); ?>/logout/logout"><i class="fa fa-sign-out fa-lg"></i>
+              Logout</a>
           </li>
         </ul>
       </li>

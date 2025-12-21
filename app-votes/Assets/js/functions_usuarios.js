@@ -1,9 +1,5 @@
-/**
- * CONFIGURACIÓN GLOBAL
- * Centralizamos para facilitar el mantenimiento
- */
-const BASE_URL = "http://api-votes.com";
-const MI_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYxNjc0MTMsImV4cCI6MTc2NjI1MzgxM30.CpK3aqP-1JWpv1bdIkFwRVSKKKvxGu5FzUgbiFa38ky99eXaJSvnXap_JOO3ZipyEoHGG4EGAJdWP-ZiT0Ia_A";
+const BASE_URL = "http://app-votes.com";
+const BASE_URL_API = "http://api-votes.com";
 
 var tableUsuarios;
 
@@ -14,12 +10,12 @@ document.addEventListener('DOMContentLoaded', function () {
         "processing": true,
         "serverSide": false,
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json" // Más limpio que escribir todo el JSON
+            "url": BASE_URL + "/assets/json/spanish.json"
         },
         "ajax": {
-            "url": BASE_URL + "/usuario/getUsers",
+            "url": BASE_URL_API + "/usuario/getUsers",
             "type": "GET",
-            "headers": { "Authorization": "Bearer " + MI_TOKEN },
+            "headers": { "Authorization": "Bearer " + localStorage.getItem('userToken') },
             "dataSrc": "data"
         },
         "columns": [
@@ -52,10 +48,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var formData = new FormData(formUsuario);
             var request = new XMLHttpRequest();
-            var ajaxUrl = BASE_URL + '/usuario/setUsuario';
+            var ajaxUrl = BASE_URL_API + '/usuario/setUsuario';
 
             request.open("POST", ajaxUrl, true);
-            request.setRequestHeader('Authorization', 'Bearer ' + MI_TOKEN);
+            request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
             request.send(formData);
 
             request.onreadystatechange = function () {
@@ -97,10 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
  */
 
 function fntRolesUsuario() {
-    var ajaxUrl = BASE_URL + '/roles/getSelectRoles';
+    var ajaxUrl = BASE_URL_API + '/roles/getSelectRoles';
     var request = new XMLHttpRequest();
     request.open("GET", ajaxUrl, true);
-    request.setRequestHeader('Authorization', 'Bearer ' + MI_TOKEN);
+    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
     request.send();
 
     request.onreadystatechange = function () {
@@ -120,10 +116,10 @@ function fntRolesUsuario() {
 }
 
 function fntViewUsuario(idUsuario) {
-    var ajaxUrl = BASE_URL + '/usuario/getUsuario/' + idUsuario;
+    var ajaxUrl = BASE_URL_API + '/usuario/getUsuario/' + idUsuario;
     var request = new XMLHttpRequest();
     request.open("GET", ajaxUrl, true);
-    request.setRequestHeader('Authorization', 'Bearer ' + MI_TOKEN);
+    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
     request.send();
 
     request.onreadystatechange = function () {
@@ -152,10 +148,10 @@ function fntEditUsuario(idUsuario) {
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
     document.querySelector('#btnText').innerHTML = "Actualizar";
 
-    var ajaxUrl = BASE_URL + '/usuario/getUsuario/' + idUsuario;
+    var ajaxUrl = BASE_URL_API + '/usuario/getUsuario/' + idUsuario;
     var request = new XMLHttpRequest();
     request.open("GET", ajaxUrl, true);
-    request.setRequestHeader('Authorization', 'Bearer ' + MI_TOKEN);
+    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
     request.send();
 
     request.onreadystatechange = function () {
@@ -201,9 +197,9 @@ function fntDelUsuario(idUsuario) {
     }, function (isConfirm) {
         if (isConfirm) {
             var request = new XMLHttpRequest();
-            var ajaxUrl = BASE_URL + '/usuario/delUsuario/' + idUsuario;
+            var ajaxUrl = BASE_URL_API + '/usuario/delUsuario/' + idUsuario;
             request.open("PUT", ajaxUrl, true);
-            request.setRequestHeader('Authorization', 'Bearer ' + MI_TOKEN);
+            request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
             request.send();
 
             request.onreadystatechange = function () {

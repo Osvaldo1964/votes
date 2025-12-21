@@ -168,7 +168,7 @@ class Oauthjwt extends Controllers
                     // 1 H = 3600
                     // 1 D = 86,400
                     //$expires_in = $time + (60 * 60 * 24); //1 días ó 24 horas
-                    $expires_in = $time + (60 * 60 * 24); // 1 hora
+                    $expires_in = $time + 60 * 60; // 1 horas
                     $arrPayLoad = array(
                         'id_sp' => $idScope,
                         'scope' => $scope,

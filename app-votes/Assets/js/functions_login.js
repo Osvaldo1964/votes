@@ -1,13 +1,12 @@
 const BASE_URL = "http://app-votes.com";
-const API_URL = "http://api-votes.com";
-const MI_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZF9zcCI6OSwic2NvcGUiOiJFbXByZXNhIFVubyIsImVtYWlsIjoiZW1wcmVzYXVub0BnbWFpbC5jb20iLCJpYXQiOjE3NjYxNjc0MTMsImV4cCI6MTc2NjI1MzgxM30.CpK3aqP-1JWpv1bdIkFwRVSKKKvxGu5FzUgbiFa38ky99eXaJSvnXap_JOO3ZipyEoHGG4EGAJdWP-ZiT0Ia_A";
+const BASE_URL_API = "http://api-votes.com";
 
 $('.login-content [data-toggle="flip"]').click(function () {
 	$('.login-box').toggleClass('flipped');
 	return false;
 });
 
-var divLoading = document.querySelector("#divLoading");
+//var divLoading = document.querySelector("#divLoading");
 document.addEventListener('DOMContentLoaded', function () {
 	if (document.querySelector("#formLogin")) {
 		let formLogin = document.querySelector("#formLogin");
@@ -23,16 +22,38 @@ document.addEventListener('DOMContentLoaded', function () {
 			} else {
 				divLoading.style.display = "flex";
 				var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-				var ajaxUrl = API_URL + '/login/loginUser';
+				var ajaxUrl = BASE_URL_API + '/login/loginUser';
 				var formData = new FormData(formLogin);
 				request.open("POST", ajaxUrl, true);
+				//request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
 				request.send(formData);
 				request.onreadystatechange = function () {
 					if (request.readyState != 4) return;
 					if (request.status == 200) {
 						var objData = JSON.parse(request.responseText);
 						if (objData.status) {
-							window.location = BASE_URL + '/dashboard';
+							//console.log(objData); return;
+							localStorage.setItem('idUser', objData.auth.id_usuario);
+							localStorage.setItem('userEmail', objData.auth.email_usuario);
+							localStorage.setItem('userToken', objData.auth.access_token);
+							localStorage.setItem('login', true);
+							// 2. PASO NUEVO: Crear la sesión en el servidor local (app-vote)
+							// Usaremos otro AJAX pero hacia BASE_URL (tu app)
+							var requestSession = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+							var sessionUrl = BASE_URL + '/login/crearSesion'; // Apunta a tu controlador local
+
+							requestSession.open("POST", sessionUrl, true);
+							requestSession.setRequestHeader("Content-Type", "application/json");
+
+							// Enviamos los datos necesarios para la sesión
+							requestSession.send(JSON.stringify(objData.auth));
+
+							requestSession.onreadystatechange = function () {
+								if (requestSession.readyState == 4 && requestSession.status == 200) {
+									// 3. Solo cuando el servidor local confirme que creó la sesión, redireccionamos
+									window.location = BASE_URL + '/dashboard';
+								}
+							}
 						} else {
 							swal("Atención", objData.msg, "error");
 							document.querySelector('#txtPassword').value = "";
@@ -44,6 +65,19 @@ document.addEventListener('DOMContentLoaded', function () {
 					return false;
 				}
 			}
+		}
+
+		// Verificamos si en la URL viene el parámetro ?logout=true
+		const urlParams = new URLSearchParams(window.location.search);
+
+		if (urlParams.get('logout') === 'true') {
+			// Limpiamos todo el LocalStorage del navegador
+			localStorage.clear();
+
+			// Opcional: Limpiar la URL para que no se quede el ?logout=true
+			window.history.replaceState({}, document.title, window.location.pathname);
+
+			console.log("Sesión y LocalStorage limpiados correctamente.");
 		}
 	}
 
@@ -58,11 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
 				return false;
 			} else {
 				divLoading.style.display = "flex";
-				var request = (window.XMLHttpRequest) ?
-					new XMLHttpRequest() :
-					new ActiveXObject('Microsoft.XMLHTTP');
-
-				var ajaxUrl = base_url + '/Login/resetPass';
+				var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+				var ajaxUrl = BASE_URL_API + '/login/resetPass';
 				var formData = new FormData(formRecetPass);
 				request.open("POST", ajaxUrl, true);
 				request.send(formData);

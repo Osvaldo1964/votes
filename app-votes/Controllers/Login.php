@@ -21,60 +21,6 @@ class Login extends Controllers
 	}
 
 
-	public function resetPass()
-	{
-		if ($_POST) {
-			error_reporting(0);
-
-			if (empty($_POST['txtEmailReset'])) {
-				$arrResponse = array('status' => false, 'msg' => 'Error de datos');
-			} else {
-				$token = token();
-				$strEmail = strtolower(strClean($_POST['txtEmailReset']));
-				$arrData = $this->model->getUserEmail($strEmail);
-
-				if (empty($arrData)) {
-					$arrResponse = array('status' => false, 'msg' => 'Usuario no existente.');
-				} else {
-					$idpersona = $arrData['idpersona'];
-					$nombreUsuario = $arrData['nombres'] . ' ' . $arrData['apellidos'];
-
-					$url_recovery = base_url() . '/login/confirmUser/' . $strEmail . '/' . $token;
-					$requestUpdate = $this->model->setTokenUser($idpersona, $token);
-
-					$dataUsuario = array(
-						'nombreUsuario' => $nombreUsuario,
-						'email' => $strEmail,
-						'asunto' => 'Recuperar cuenta - ' . NOMBRE_REMITENTE,
-						'url_recovery' => $url_recovery
-					);
-					if ($requestUpdate) {
-						$sendEmail = sendEmail($dataUsuario, 'email_cambioPassword');
-
-						if ($sendEmail) {
-							$arrResponse = array(
-								'status' => true,
-								'msg' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.'
-							);
-						} else {
-							$arrResponse = array(
-								'status' => false,
-								'msg' => 'No es posible realizar el proceso, intenta más tarde.'
-							);
-						}
-					} else {
-						$arrResponse = array(
-							'status' => false,
-							'msg' => 'No es posible realizar el proceso, intenta más tarde.'
-						);
-					}
-				}
-			}
-			echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-		}
-		die();
-	}
-
 	public function confirmUser(string $params)
 	{
 
@@ -151,5 +97,38 @@ class Login extends Controllers
 		die();
 	}
 
+	public function crearSesion()
+	{
+		// 1. Recibir los datos enviados por JS
+		$json = file_get_contents('php://input');
+		$data = json_decode($json, true);
+
+		if ($data && isset($data['access_token'])) {
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
+
+			// 2. Decodificar el JWT para obtener la expiración (exp)
+			$tokenParts = explode('.', $data['access_token']);
+			if (count($tokenParts) === 3) {
+				$payload = base64_decode($tokenParts[1]);
+				$payloadData = json_decode($payload, true);
+
+				if (isset($payloadData['exp'])) {
+					// Guardamos el timestamp de expiración en la sesión
+					$_SESSION['timeout'] = $payloadData['exp'];
+				}
+			}
+
+			// 3. Cargar las variables de sesión normales
+			$_SESSION['login'] = true;
+			$_SESSION['idUser'] = $data['id_usuario'];
+			$_SESSION['userToken'] = $data['access_token'];
+			$_SESSION['userData'] = $data;
+			echo json_encode(['status' => true]);
+		} else {
+			echo json_encode(['status' => false, 'msg' => 'Datos insuficientes']);
+		}
+		die();
+	}
 }
-?>

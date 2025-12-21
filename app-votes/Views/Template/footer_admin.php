@@ -20,6 +20,11 @@
 
 <script src="<?= media(); ?>/js/functions_admin.js"></script>
 <script src="<?= media(); ?>/js/<?= $data['page_functions_js'] ?>"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    verificarExpiracionToken();
+  });
+</script>
 
 </body>
 
