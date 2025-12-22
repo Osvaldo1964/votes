@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const btnView = e.target.closest('.btnView');
         const btnEdit = e.target.closest('.btnEdit');
         const btnDel = e.target.closest('.btnDel');
-        const btnNuevo = e.target.closest('#btnNuevo');
+        const btnNuevo = e.target.closest('#btnNuevoCandidato');
 
         if (btnNuevo) openModal();
         if (btnView) fntViewCandidato(btnView.getAttribute('can'));

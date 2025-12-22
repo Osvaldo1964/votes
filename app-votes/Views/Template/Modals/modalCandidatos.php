@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="modalFormCandidato" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header headerRegister">
                 <h5 class="modal-title" id="titleModal">Nuevo Candidato</h5>
@@ -14,48 +14,74 @@
                     <p class="text-primary">Todos los campos son obligatorios.</p>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="txtNombre">Nombres</label>
-                            <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre"
+                        <div class="form-group col-md-2">
+                            <label for="txtCedula">Cédula</label>
+                            <input type="text" class="form-control valid validNumber" id="txtCedula" name="txtCedula"
                                 required="">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="txtApellido">Apellidos</label>
-                            <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido"
+                        <div class="form-group col-md-2">
+                            <label for="txtApe1">Primer Apellido</label>
+                            <input type="text" class="form-control valid validText" id="txtApe1" name="txtApe1"
+                                required="">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="txtApe2">Segundo Apellido</label>
+                            <input type="text" class="form-control valid validText" id="txtApe2" name="txtApe2"
+                                required="">
+                        </div>
+                        <div class="form-group col-md-">
+                            <label for="txtNom1">Primer Nombre</label>
+                            <input type="text" class="form-control valid validText" id="txtNom1" name="txtNom1"
+                                required="">
+                        </div>
+                        <div class="form-group col-md-">
+                            <label for="txtNom2">Segundo Nombre</label>
+                            <input type="text" class="form-control valid validText" id="txtNom2" name="txtNom2"
                                 required="">
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-2">
                             <label for="txtTelefono">Teléfono</label>
                             <input type="text" class="form-control valid validNumber" id="txtTelefono"
                                 name="txtTelefono" required="" onkeypress="return controlTag(event)">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-5">
                             <label for="txtEmail">Email</label>
                             <input type="email" class="form-control valid validEmail" id="txtEmail" name="txtEmail"
                                 required="">
                         </div>
+                        <div class="form-group col-md-5">
+                            <label for="txtDireccion">Dirección</label>
+                            <input type="text" class="form-control valid validAddress" id="txtDireccion"
+                                name="txtDireccion" required="">
+                        </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="listRolid">Tipo usuario</label>
-                            <select class="form-control" data-live-search="true" id="listRolid" name="listRolid"
-                                required>
+                        <div class="form-group col-md-3">
+                            <label for="listCurul">Curul</label>
+                            <select class="form-control selectpicker" id="listCurul" name="listCurul" required>
+                                <option value="">Seleccione</option>
+                                <option value="1">Senado</option>
+                                <option value="2">Cámara</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
+                            <label for="listPartido">Partido</label>
+                            <select class="form-control selectpicker" id="listPartido" name="listPartido" required>
+                                <option value="">Seleccione</option>
+                                <option value="1">Liberal</option>
+                                <option value="2">Conservador</option>
+                                <option value="3">Partido de la U</option>
+                                <option value="4">Centro Democrático</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
                             <label for="listEstado">Estado</label>
                             <select class="form-control selectpicker" id="listEstado" name="listEstado" required>
                                 <option value="1">Activo</option>
                                 <option value="2">Inactivo</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="txtPassword">Password</label>
-                            <input type="password" class="form-control" id="txtPassword" name="txtPassword">
                         </div>
                     </div>
                     <div class="tile-footer">

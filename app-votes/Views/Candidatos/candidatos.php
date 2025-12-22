@@ -1,7 +1,7 @@
 <?php headerAdmin($data); ?>
 <main class="app-content">
     <?php
-    getModal('modalUsuarios', $data);
+    getModal('modalCandidatos', $data);
     if (empty($_SESSION['permisosMod']['r_permiso'])) {
         ?>
         <p>No tienes permisos para ver esta página</p>
@@ -12,7 +12,7 @@
             <div>
                 <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
                     <?php if (!empty($_SESSION['permisosMod']['w_permiso'])) { ?>
-                        <button class="btn btn-primary" id="btnNuevo" type="button"><i class="fas fa-plus-circle"></i>
+                        <button class="btn btn-primary" id="btnNuevoCandidato" type="button"><i class="fas fa-plus-circle"></i>
                             Nuevo</button>
                     <?php } ?>
                 </h1>
