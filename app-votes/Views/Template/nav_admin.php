@@ -33,33 +33,60 @@
                             Usuarios</a></li>
                     <li><a class="treeview-item" href="<?= base_url(); ?>roles"><i class="icon fa fa-circle-o"></i>
                             Roles</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>permisos"><i class="icon fa fa-circle-o"></i>
-                            Permisos</a></li>
                 </ul>
             </li>
         <?php } ?>
-        <?php if (!empty($_SESSION['permisos'][3]['r_permiso'])) { ?>
-            <li>
-                <a class="app-menu__item" href="<?= base_url(); ?>/clientes">
-                    <i class="app-menu__icon fa fa-user" aria-hidden="true"></i>
-                    <span class="app-menu__label">Clientes</span>
-                </a>
-            </li>
-        <?php } ?>
         <?php if (!empty($_SESSION['permisos'][4]['r_permiso'])) { ?>
-            <li>
-                <a class="app-menu__item" href="<?= base_url(); ?>/productos">
-                    <i class="app-menu__icon fa fa-archive" aria-hidden="true"></i>
-                    <span class="app-menu__label">Productos</span>
+            <li class="treeview">
+                <a class="app-menu__item" href="#" data-toggle="treeview">
+                    <i class="app-menu__icon fa fa-users" aria-hidden="true"></i>
+                    <span class="app-menu__label">Control Electoral</span>
+                    <i class="treeview-indicator fa fa-angle-right"></i>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a class="treeview-item" href="<?= base_url(); ?>candidatos"><i class="icon fa fa-circle-o"></i>
+                            Candidatos</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>lideres"><i class="icon fa fa-circle-o"></i>
+                            Lideres</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>electores"><i class="icon fa fa-circle-o"></i>
+                            Electores</a></li>
+                </ul>
             </li>
         <?php } ?>
-        <?php if (!empty($_SESSION['permisos'][5]['r_permiso'])) { ?>
-            <li>
-                <a class="app-menu__item" href="<?= base_url(); ?>/pedidos">
-                    <i class="app-menu__icon fa fa-shopping-cart" aria-hidden="true"></i>
-                    <span class="app-menu__label">Pedidos</span>
+        <?php if (!empty($_SESSION['permisos'][7]['r_permiso'])) { ?>
+            <li class="treeview">
+                <a class="app-menu__item" href="#" data-toggle="treeview">
+                    <i class="app-menu__icon fa fa-users" aria-hidden="true"></i>
+                    <span class="app-menu__label">Control Financiero</span>
+                    <i class="treeview-indicator fa fa-angle-right"></i>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a class="treeview-item" href="<?= base_url(); ?>terceros"><i class="icon fa fa-circle-o"></i>
+                            Terceros</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>conceptos"><i class="icon fa fa-circle-o"></i>
+                            Conceptos Ing. y Gastos</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>elementos"><i class="icon fa fa-circle-o"></i>
+                            Elementos de Campaña</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>movimientos"><i class="icon fa fa-circle-o"></i>
+                            Movimientos</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>entradas"><i class="icon fa fa-circle-o"></i>
+                            Entradas</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>salidas"><i class="icon fa fa-circle-o"></i>
+                            Salidas</a></li>
+                </ul>
+            </li>
+        <?php } ?>
+        <?php if (!empty($_SESSION['permisos'][13]['r_permiso'])) { ?>
+            <li class="treeview">
+                <a class="app-menu__item" href="#" data-toggle="treeview">
+                    <i class="app-menu__icon fa fa-users" aria-hidden="true"></i>
+                    <span class="app-menu__label">Informes</span>
+                    <i class="treeview-indicator fa fa-angle-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a class="treeview-item" href="<?= base_url(); ?>infelectores"><i class="icon fa fa-circle-o"></i>
+                            Informe Electores</a></li>
+                </ul>
             </li>
         <?php } ?>
         <li>

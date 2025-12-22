@@ -8,7 +8,7 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="max-height: 600px; overflow-y: auto;">
         <div class="col-md-12">
           <div class="tile">
             <form action="" id="formPermisos" name="formPermisos" onsubmit="event.preventDefault(); fntSavePermisos();">
