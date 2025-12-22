@@ -102,21 +102,34 @@ class Candidatos extends Controllers
     {
         try {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                if (empty($_POST['txtNombre']) || empty($_POST['txtDescripcion'])) {
+                if (
+                    empty($_POST['txtCedula']) || empty($_POST['txtApe1']) || empty($_POST['txtApe2']) ||
+                    empty($_POST['txtNom1']) || empty($_POST['txtNom2']) || empty($_POST['txtTelefono']) ||
+                    empty($_POST['txtEmail']) || empty($_POST['txtDireccion']) || empty($_POST['listCurul']) ||
+                    empty($_POST['listPartido']) || empty($_POST['listEstado'])
+                ) {
                     jsonResponse(['status' => false, 'msg' => 'Datos incompletos'], 200);
                     die();
                 }
 
                 $intIdCandidato = intval($_POST['idCandidato']);
-                $strNombre = strClean($_POST['txtNombre']);
-                $strDescript = strClean($_POST['txtDescripcion']);
-                $listEstado = intval($_POST['listStatus']);
+                $strCedula = strClean($_POST['txtCedula']);
+                $strApe1 = strClean($_POST['txtApe1']);
+                $strApe2 = strClean($_POST['txtApe2']);
+                $strNom1 = strClean($_POST['txtNom1']);
+                $strNom2 = strClean($_POST['txtNom2']);
+                $strTelefono = strClean($_POST['txtTelefono']);
+                $strEmail = strClean($_POST['txtEmail']);
+                $strDireccion = strClean($_POST['txtDireccion']);
+                $listCurul = intval($_POST['listCurul']);
+                $listPartido = intval($_POST['listPartido']);
+                $listEstado = intval($_POST['listEstado']);
 
                 if ($intIdCandidato == 0) {
-                    $request_candidato = $this->model->insertCandidato($strNombre, $strDescript, $listEstado);
+                    $request_candidato = $this->model->insertCandidato($strCedula, $strApe1, $strApe2, $strNom1, $strNom2, $strTelefono, $strEmail, $strDireccion, $listCurul, $listPartido, $listEstado);
                     $option = 1;
                 } else {
-                    $request_candidato = $this->model->updateCandidato($intIdCandidato, $strNombre, $strDescript, $listEstado);
+                    $request_candidato = $this->model->updateCandidato($intIdCandidato, $strNom1, $strNom2, $strTelefono, $strEmail, $strDireccion, $listCurul, $listPartido, $listEstado);
                     $option = 2;
                 }
 
@@ -135,7 +148,7 @@ class Candidatos extends Controllers
         die();
     }
 
-    public function delRol()
+    public function delCandidato()
     {
         try {
             if ($_SERVER['REQUEST_METHOD'] == "PUT") {

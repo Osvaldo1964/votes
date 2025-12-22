@@ -3,13 +3,17 @@
 class CandidatosModel extends Mysql
 {
     private $intIdCandidato;
-    private $strNombres;
-    private $strApellidos;
+    private $strCedula;
+    private $strApe1;
+    private $strApe2;
+    private $strNom1;
+    private $strNom2;
     private $strTelefono;
     private $strEmail;
-    private $strPassword;
-    private $intRolUsuario;
-    private $intStatus;
+    private $strDireccion;
+    private $strCurul;
+    private $strPartido;
+    private $intEstado;
 
     public function __construct()
     {
@@ -28,29 +32,41 @@ class CandidatosModel extends Mysql
         return $request;
     }
 
-    public function setCandidato(string $nombres, string $apellidos, string $telefono, string $email, string $password, int $rolusuario)
+    public function setCandidato(string $cedula, string $ape1, string $ape2, string $nom1, string $nom2, string $telefono, string $email, string $direccion, int $curul, int $partido, int $estado)
     {
-        $this->strNombres = $nombres;
-        $this->strApellidos = $apellidos;
+        $this->strCedula = $cedula;
+        $this->strApe1 = $ape1;
+        $this->strApe2 = $ape2;
+        $this->strNom1 = $nom1;
+        $this->strNom2 = $nom2;
         $this->strTelefono = $telefono;
         $this->strEmail = $email;
-        $this->strPassword = $password;
-        $this->intRolUsuario = $rolusuario;
+        $this->strDireccion = $direccion;
+        $this->strCurul = $curul;
+        $this->strPartido = $partido;
+        $this->intEstado = $estado;
         $return = 0;
 
-        $sql = "SELECT email_candidato FROM candidatos WHERE email_candidato = '{$this->strEmail}' AND estado_candidato != 0";
+        $sql = "SELECT ident_candidato FROM candidatos WHERE ident_candidato = ? AND estado_candidato != 0";
+        $arrData = array($this->strCedula);
+        $request = $this->select($sql, $arrData);
 
         if (empty($request)) {
-            $sql_insert = "INSERT INTO candidatos(nombres_candidato, apellidos_candidato, telefono_candidato, email_candidato, password_candidato,rol_candidato)
-                       VALUES(?, ?, ?, ?, ?, ?)";
+            $sql_insert = "INSERT INTO candidatos(ident_candidato, ape1_candidato, ape2_candidato, nom1_candidato, nom2_candidato, telefono_candidato, email_candidato, direccion_candidato, curul_candidato, partido_candidato, estado_candidato)
+                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $arrData = array(
-                $this->strNombres,
-                $this->strApellidos,
-                $this->strTelefono,
-                $this->strEmail,
-                $this->strPassword,
-                $this->intRolUsuario
+                "ident_candidato" => $this->strCedula,
+                "ape1_candidato" => $this->strApe1,
+                "ape2_candidato" => $this->strApe2,
+                "nom1_candidato" => $this->strNom1,
+                "nom2_candidato" => $this->strNom2,
+                "telefono_candidato" => $this->strTelefono,
+                "email_candidato" => $this->strEmail,
+                "direccion_candidato" => $this->strDireccion,
+                "curul_candidato" => $this->strCurul,
+                "partido_candidato" => $this->strPartido,
+                "estado_candidato" => $this->intEstado
             );
 
             $request_insert = $this->insert($sql_insert, $arrData);
