@@ -70,23 +70,23 @@ class Candidatos extends Controllers
                             : '<span class="badge badge-danger">Inactivo</span>';
 
                         // Lógica de botones según permisos
-                        $btnPerm = '';
+                        $btnView = '';
                         $btnEdit = '';
                         $btnDel = '';
 
                         // Asumiendo que validas permisos para el módulo de Roles
                         // Si tu tabla de permisos usa r_permiso, u_permiso, etc.
                         if (!empty($requestPermisos[3]['r_permiso'])) {
-                            $btnPerm = '<button class="btn btn-info btn-sm btnPermisosRol" rl="' . $arrData[$i]['id_candidato'] . '" title="Permisos"><i class="fas fa-key"></i></button>';
+                            $btnView = '<button class="btn btn-info btn-sm btnView" can="' . $arrData[$i]['id_candidato'] . '" title="View"><i class="fas fa-eye"></i></button>';
                         }
                         if (!empty($requestPermisos[3]['u_permiso'])) {
-                            $btnEdit = '<button class="btn btn-primary btn-sm btnEditRol" rl="' . $arrData[$i]['id_candidato'] . '" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
+                            $btnEdit = '<button class="btn btn-primary btn-sm btnEdit" can="' . $arrData[$i]['id_candidato'] . '" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
                         }
                         if (!empty($requestPermisos[3]['d_permiso'])) {
-                            $btnDel = '<button class="btn btn-danger btn-sm btnDelRol" rl="' . $arrData[$i]['id_rol'] . '" title="Eliminar"><i class="fas fa-trash-alt"></i></button>';
+                            $btnDel = '<button class="btn btn-danger btn-sm btnDel" can="' . $arrData[$i]['id_candidato'] . '" title="Eliminar"><i class="fas fa-trash-alt"></i></button>';
                         }
 
-                        $arrData[$i]['options'] = '<div class="text-center">' . $btnPerm . ' ' . $btnEdit . ' ' . $btnDel . '</div>';
+                        $arrData[$i]['options'] = '<div class="text-center">' . $btnView . ' ' . $btnEdit . ' ' . $btnDel . '</div>';
                     }
                     $response = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrData);
                 }

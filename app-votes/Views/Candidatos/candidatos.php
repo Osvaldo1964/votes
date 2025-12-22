@@ -12,14 +12,14 @@
             <div>
                 <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
                     <?php if (!empty($_SESSION['permisosMod']['w_permiso'])) { ?>
-                        <button class="btn btn-primary" id="btnNuevoUsuario" type="button"><i class="fas fa-plus-circle"></i>
+                        <button class="btn btn-primary" id="btnNuevo" type="button"><i class="fas fa-plus-circle"></i>
                             Nuevo</button>
                     <?php } ?>
                 </h1>
             </div>
             <ul class="app-breadcrumb breadcrumb">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                <li class="breadcrumb-item"><a href="<?= base_url(); ?>/usuarios"><?= $data['page_title'] ?></a></li>
+                <li class="breadcrumb-item"><a href="<?= base_url(); ?>/candidatos"><?= $data['page_title'] ?></a></li>
             </ul>
         </div>
         <div class="row">
@@ -27,7 +27,7 @@
                 <div class="tile">
                     <div class="tile-body">
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered" id="tableUsuarios">
+                            <table class="table table-hover table-bordered" id="tableCandidatos">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -35,8 +35,10 @@
                                         <th>Apellidos</th>
                                         <th>Teléfono</th>
                                         <th>Email</th>
-                                        <th>Rol</th>
-                                        <th>Status</th>
+                                        <th>Dirección</th>
+                                        <th>Curul</th>
+                                        <th>Partido</th>
+                                        <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>

@@ -1,21 +1,21 @@
 const BASE_URL = "http://app-votes.com";
 const BASE_URL_API = "http://api-votes.com";
 
-var tableRoles;
+var tableCandidatos;
 // Evitar alerts nativos de DataTables
 $.fn.dataTable.ext.errMode = 'none';
 
 document.addEventListener('DOMContentLoaded', function () {
 
     // 1. INICIALIZACIÓN DE DATATABLE
-    tableRoles = $('#tableRoles').DataTable({
+    tableCandidatos = $('#tableCandidatos').DataTable({
         "processing": true,
         "serverSide": false,
         "language": {
             "url": BASE_URL + "/assets/json/spanish.json"
         },
         "ajax": {
-            "url": BASE_URL_API + "/roles/getRoles",
+            "url": BASE_URL_API + "/candidatos/getCandidatos",
             "type": "GET",
             "headers": { "Authorization": "Bearer " + localStorage.getItem('userToken') },
             "data": function (d) {
@@ -32,10 +32,27 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         "columns": [
-            { "data": "id_rol" },
-            { "data": "nombre_rol" },
-            { "data": "descript_rol" },
-            { "data": "status_rol" },
+            { "data": "id_candidato" },
+            {
+                "data": null, // 'null' porque usaremos varios campos
+                "render": function (data, type, row) {
+                    // concatenamos nombre 1 y nombre 2
+                    return row.nom1_candidato + ' ' + (row.nom2_candidato || "");
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    // concatenamos apellido 1 y apellido 2
+                    return row.ape1_candidato + ' ' + (row.ape2_candidato || "");
+                }
+            },
+            { "data": "telefono_candidato" },
+            { "data": "email_candidato" },
+            { "data": "direccion_candidato" },
+            { "data": "curul_candidato" },
+            { "data": "partido_candidato" },
+            { "data": "estado_candidato" },
             { "data": "options" }
         ],
         "responsive": true,
@@ -44,21 +61,21 @@ document.addEventListener('DOMContentLoaded', function () {
         "order": [[0, "desc"]]
     });
 
-    // 2. GUARDAR ROL (NUEVO/ACTUALIZAR)
-    var formRol = document.querySelector("#formRol");
-    if (formRol) {
-        formRol.onsubmit = function (e) {
+    // 2. GUARDAR CANDIDATO (NUEVO/ACTUALIZAR)
+    var formCandidato = document.querySelector("#formCandidato");
+    if (formCandidato) {
+        formCandidato.onsubmit = function (e) {
             e.preventDefault();
 
-            let elements = formRol.querySelectorAll(".is-invalid");
+            let elements = formCandidato.querySelectorAll(".is-invalid");
             if (elements.length > 0) {
                 elements[0].focus();
                 return;
             }
 
-            var formData = new FormData(formRol);
+            var formData = new FormData(formCandidato);
             var request = new XMLHttpRequest();
-            request.open("POST", BASE_URL_API + '/roles/setRol', true);
+            request.open("POST", BASE_URL_API + '/candidatos/setCandidato', true);
             request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
             request.send(formData);
 
@@ -67,10 +84,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (request.status == 200) {
                         var objData = JSON.parse(request.responseText);
                         if (objData.status) {
-                            $('#modalFormRol').modal("hide");
-                            formRol.reset();
-                            swal("Roles", objData.msg, "success");
-                            tableRoles.ajax.reload();
+                            $('#modalFormCandidato').modal("hide");
+                            formCandidato.reset();
+                            swal("Candidatos", objData.msg, "success");
+                            tableCandidatos.ajax.reload();
                         } else {
                             swal("Error", objData.msg, "error");
                         }
@@ -84,15 +101,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 3. DELEGACIÓN DE EVENTOS (CLICK GLOBAL)
     document.addEventListener('click', function (e) {
-        const btnEdit = e.target.closest('.btnEditRol');
-        const btnDel = e.target.closest('.btnDelRol');
-        const btnPerm = e.target.closest('.btnPermisosRol');
-        const btnNuevo = e.target.closest('#btnNuevoRol'); // Asegúrate de que el ID del botón coincida
+        const btnView = e.target.closest('.btnView');
+        const btnEdit = e.target.closest('.btnEdit');
+        const btnDel = e.target.closest('.btnDel');
+        const btnNuevo = e.target.closest('#btnNuevo');
 
         if (btnNuevo) openModal();
-        if (btnEdit) fntEditRol(btnEdit.getAttribute('rl'));
-        if (btnDel) fntDelRol(btnDel.getAttribute('rl'));
-        if (btnPerm) fntPermisos(btnPerm.getAttribute('rl'));
+        if (btnView) fntViewCandidato(btnView.getAttribute('can'));
+        if (btnEdit) fntEditCandidato(btnEdit.getAttribute('can'));
+        if (btnDel) fntDelCandidato(btnDel.getAttribute('can'));
     });
 
 });
@@ -124,26 +141,10 @@ function fntHandleError(xhr) {
     }
 }
 
-function openModal() {
-    if (document.querySelector('#idRol')) document.querySelector('#idRol').value = "";
-    document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
-    document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
-    document.querySelector('#btnText').innerHTML = "Guardar";
-    document.querySelector('#titleModal').innerHTML = "Nuevo Rol";
-    document.querySelector("#formRol").reset();
-
-    $('#listStatus').val('1').selectpicker('refresh');
-    $('#modalFormRol').modal('show');
-}
-
-function fntEditRol(idRol) {
-    document.querySelector('#titleModal').innerHTML = "Actualizar Rol";
-    document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
-    document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
-    document.querySelector('#btnText').innerHTML = "Actualizar";
-
+function fntViewCandidato(idCandidato) {
+    var ajaxUrl = BASE_URL_API + '/candidatos/getCandidato/' + idCandidato;
     var request = new XMLHttpRequest();
-    request.open("GET", BASE_URL_API + '/roles/getRol/' + idRol, true);
+    request.open("GET", ajaxUrl, true);
     request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
     request.send();
 
@@ -152,16 +153,16 @@ function fntEditRol(idRol) {
             if (request.status == 200) {
                 var objData = JSON.parse(request.responseText);
                 if (objData.status) {
-                    document.querySelector("#idRol").value = objData.data.id_rol;
-                    document.querySelector("#txtNombre").value = objData.data.nombre_rol;
-                    document.querySelector("#txtDescripcion").value = objData.data.descript_rol;
-
-                    $('#listStatus').selectpicker('destroy');
-                    document.querySelector('#listStatus').value = String(objData.data.status_rol);
-                    $('#listStatus').selectpicker();
-                    $('#listStatus').selectpicker('refresh');
-
-                    $('#modalFormRol').modal('show');
+                    document.querySelector('#celNombre').innerHTML = objData.data.nom1_candidato + ' ' + objData.data.nom2_candidato;
+                    document.querySelector('#celApellido').innerHTML = objData.data.ape1_candidato + ' ' + objData.data.ape2_candidato;
+                    document.querySelector('#celTelefono').innerHTML = objData.data.telefono_candidato;
+                    document.querySelector('#celEmail').innerHTML = objData.data.email_candidato;
+                    document.querySelector('#celPartido').innerHTML = objData.data.partido_candidato;
+                    var estado = objData.data.estado_candidato == 1
+                        ? '<span class="badge badge-success">Activo</span>'
+                        : '<span class="badge badge-danger">Inactivo</span>';
+                    document.querySelector('#celEstado').innerHTML = estado;
+                    $('#modalViewCandidato').modal('show');
                 }
             } else {
                 fntHandleError(request);
@@ -170,10 +171,47 @@ function fntEditRol(idRol) {
     }
 }
 
-function fntDelRol(idRol) {
+function fntEditCandidato(idCandidato) {
+    document.querySelector('#titleModal').innerHTML = "Actualizar Candidato";
+    document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
+    document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
+    document.querySelector('#btnText').innerHTML = "Actualizar";
+
+    var request = new XMLHttpRequest();
+    request.open("GET", BASE_URL_API + '/candidatos/getCandidato/' + idCandidato, true);
+    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
+    request.send();
+
+    request.onreadystatechange = function () {
+        if (request.readyState == 4) {
+            if (request.status == 200) {
+                var objData = JSON.parse(request.responseText);
+                if (objData.status) {
+                    document.querySelector("#idCandidato").value = objData.data.id_candidato;
+                    document.querySelector("#txtNombre").value = objData.data.nom1_candidato + ' ' + objData.data.nom2_candidato;
+                    document.querySelector("#txtApellido").value = objData.data.ape1_candidato + ' ' + objData.data.ape2_candidato;
+                    document.querySelector("#txtTelefono").value = objData.data.telefono_candidato;
+                    document.querySelector("#txtEmail").value = objData.data.email_candidato;
+                    document.querySelector("#txtPartido").value = objData.data.partido_candidato;
+
+                    $('#listEstado').selectpicker('destroy');
+                    document.querySelector('#listEstado').value = String(objData.data.estado_candidato);
+                    $('#listEstado').selectpicker();
+                    $('#listEstado').selectpicker('refresh');
+
+                    $('#modalFormCandidato').modal('show');
+                }
+            } else {
+                fntHandleError(request);
+            }
+        }
+    }
+}
+
+function fntDelCandidato(idCandidato) {
     swal({
-        title: "Eliminar Rol",
-        text: "¿Realmente quiere eliminar el Rol?",
+        title: "Eliminar Candidato",
+        text: "¿Realmente quiere eliminar el Candidato?",
         type: "warning",
         showCancelButton: true,
         confirmButtonText: "Si, eliminar!",
@@ -181,8 +219,8 @@ function fntDelRol(idRol) {
     }, function (isConfirm) {
         if (isConfirm) {
             var request = new XMLHttpRequest();
-            var jsonParams = JSON.stringify({ idrol: idRol });
-            request.open("PUT", BASE_URL_API + '/roles/delRol/', true);
+            var jsonParams = JSON.stringify({ idcandidato: idCandidato });
+            request.open("PUT", BASE_URL_API + '/candidatos/delCandidato/', true);
             request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
             request.setRequestHeader('Content-Type', 'application/json');
             request.send(jsonParams);
@@ -193,7 +231,7 @@ function fntDelRol(idRol) {
                         var objData = JSON.parse(request.responseText);
                         if (objData.status) {
                             swal("Eliminado!", objData.msg, "success");
-                            tableRoles.ajax.reload();
+                            tableCandidatos.ajax.reload();
                         } else {
                             swal("Atención!", objData.msg, "error");
                         }
@@ -206,71 +244,29 @@ function fntDelRol(idRol) {
     });
 }
 
-function fntPermisos(idRol) {
-    var request = new XMLHttpRequest();
-    request.open("GET", BASE_URL_API + '/permisos/getPermisosRol/' + idRol, true);
-    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-    request.send();
+function openModal() {
+    // Buscamos el formulario justo en este momento, no antes
+    let formCandidato = document.getElementById("formCandidato");
 
-    request.onreadystatechange = function () {
-        if (request.readyState == 4) {
-            if (request.status == 200) {
-                var objResponse = JSON.parse(request.responseText);
-                if (objResponse.status) {
-                    var htmlTable = "";
-                    var no = 1;
-                    objResponse.data.forEach(function (modulo) {
-                        var pR = (modulo.permisos && modulo.permisos.r == 1) ? "checked" : "";
-                        var pW = (modulo.permisos && modulo.permisos.w == 1) ? "checked" : "";
-                        var pU = (modulo.permisos && modulo.permisos.u == 1) ? "checked" : "";
-                        var pD = (modulo.permisos && modulo.permisos.d == 1) ? "checked" : "";
+    if (formCandidato) {
+        formCandidato.reset();
 
-                        htmlTable += `
-                            <tr>
-                                <td>${no} <input type="hidden" name="modulos[${modulo.id_modulo}][idmodulo]" value="${modulo.id_modulo}"></td>
-                                <td>${modulo.titulo_modulo}</td>
-                                <td><div class="toggle-flip"><label><input type="checkbox" name="modulos[${modulo.id_modulo}][r]" ${pR}><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span></label></div></td>
-                                <td><div class="toggle-flip"><label><input type="checkbox" name="modulos[${modulo.id_modulo}][w]" ${pW}><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span></label></div></td>
-                                <td><div class="toggle-flip"><label><input type="checkbox" name="modulos[${modulo.id_modulo}][u]" ${pU}><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span></label></div></td>
-                                <td><div class="toggle-flip"><label><input type="checkbox" name="modulos[${modulo.id_modulo}][d]" ${pD}><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span></label></div></td>
-                            </tr>`;
-                        no++;
-                    });
-
-                    document.querySelector('#contentAjax').innerHTML = htmlTable;
-                    if (document.querySelector('#idrol')) document.querySelector('#idrol').value = idRol;
-                    $('.modalPermisos').modal('show');
-
-                    document.querySelector('#formPermisos').onsubmit = fntSavePermisos;
-                }
-            } else {
-                fntHandleError(request);
-            }
+        // Limpiar ID oculto
+        if (document.querySelector('#idCandidato')) {
+            document.querySelector('#idCandidato').value = "";
         }
+
+        // Cambios visuales obligatorios
+        document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
+        document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
+        document.querySelector('#btnText').innerHTML = "Guardar";
+        document.querySelector('#titleModal').innerHTML = "Nuevo Candidato";
+
+        // Abrir el modal usando jQuery (que es lo que usa Bootstrap 4)
+        $('#modalFormCandidato').modal('show');
+    } else {
+        // Este mensaje te confirma que el problema es que el HTML del modal no está cargado
+        console.error("ERROR CRÍTICO: El formulario con ID 'formCandidato' no existe en el DOM.");
+        swal("Error", "El formulario de candidatos no se cargó correctamente.", "error");
     }
-}
-
-function fntSavePermisos(e) {
-    e.preventDefault();
-    var formData = new FormData(document.querySelector('#formPermisos'));
-    var request = new XMLHttpRequest();
-    request.open("POST", BASE_URL_API + '/permisos/setPermisos', true);
-    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-    request.send(formData);
-
-    request.onreadystatechange = function () {
-        if (request.readyState == 4) {
-            if (request.status == 200) {
-                var objData = JSON.parse(request.responseText);
-                if (objData.status) {
-                    swal("Permisos", objData.msg, "success");
-                    $('.modalPermisos').modal('hide');
-                } else {
-                    swal("Error", objData.msg, "error");
-                }
-            } else {
-                fntHandleError(request);
-            }
-        }
-    };
 }

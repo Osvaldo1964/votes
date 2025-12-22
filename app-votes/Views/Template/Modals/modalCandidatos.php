@@ -1,16 +1,16 @@
 <!-- Modal -->
-<div class="modal fade" id="modalFormUsuario" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalFormCandidato" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header headerRegister">
-                <h5 class="modal-title" id="titleModal">Nuevo Usuario</h5>
+                <h5 class="modal-title" id="titleModal">Nuevo Candidato</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formUsuario" name="formUsuario" class="form-horizontal">
-                    <input type="hidden" id="idUsuario" name="idUsuario" value="">
+                <form id="formCandidato" name="formCandidato" class="form-horizontal">
+                    <input type="hidden" id="idCandidato" name="idCandidato" value="">
                     <p class="text-primary">Todos los campos son obligatorios.</p>
 
                     <div class="form-row">
@@ -45,8 +45,8 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="listStatus">Status</label>
-                            <select class="form-control selectpicker" id="listStatus" name="listStatus" required>
+                            <label for="listEstado">Estado</label>
+                            <select class="form-control selectpicker" id="listEstado" name="listEstado" required>
                                 <option value="1">Activo</option>
                                 <option value="2">Inactivo</option>
                             </select>
@@ -72,11 +72,11 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalViewUser" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalViewCandidato" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header header-primary">
-                <h5 class="modal-title" id="titleModal">Datos del usuario</h5>
+                <h5 class="modal-title" id="titleModal">Datos del Candidato</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

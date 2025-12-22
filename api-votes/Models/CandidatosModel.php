@@ -114,13 +114,13 @@ class CandidatosModel extends Mysql
         }
     }
 
-    public function getCandidatos()
+    public function selectCandidatos()
     {
-        $sql = "SELECT u.id_candidato, u.nombres_candidato, u.apellidos_candidato,
-                            u.telefono_candidato, u.email_candidato,u.rol_candidato,u.estado_candidato,r.nombre_rol
-							FROM candidatos u 
-                            inner join roles r on u.rol_candidato = r.id_rol
-                            WHERE u.estado_usuario != 0 ORDER BY u.id_usuario DESC ";
+        $sql = "SELECT c.id_candidato, c.ape1_candidato, c.ape2_candidato,
+                            c.nom1_candidato, c.nom2_candidato,c.telefono_candidato,
+                            c.email_candidato, c.direccion_candidato, c.curul_candidato,c.partido_candidato,c.estado_candidato
+							FROM candidatos c 
+                            WHERE c.estado_candidato != 0 ORDER BY c.id_candidato DESC ";
         $request = $this->select_all($sql);
         return $request;
     }
