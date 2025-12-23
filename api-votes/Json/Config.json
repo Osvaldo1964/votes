@@ -1,0 +1,34 @@
+{
+    "curules": [
+        {
+            "id": "1",
+            "nombre": "Senado"
+        },
+        {
+            "id": "2",
+            "nombre": "Cámara"
+        },
+        {
+            "id": "3",
+            "nombre": "Concejo"
+        }
+    ],
+    "partidos": [
+        {
+            "id": "1",
+            "nombre": "Partido Liberal"
+        },
+        {
+            "id": "2",
+            "nombre": "Partido Conservador"
+        },
+        {
+            "id": "3",
+            "nombre": "Centro Democrático"
+        },
+        {
+            "id": "4",
+            "nombre": "Partido Verde"
+        }
+    ]
+}

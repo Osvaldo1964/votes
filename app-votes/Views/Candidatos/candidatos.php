@@ -3,11 +3,11 @@
     <?php
     getModal('modalCandidatos', $data);
     if (empty($_SESSION['permisosMod']['r_permiso'])) {
-        ?>
+    ?>
         <p>No tienes permisos para ver esta página</p>
     <?php } else {
 
-        ?>
+    ?>
         <div class="app-title">
             <div>
                 <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
@@ -26,11 +26,12 @@
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="overflow-x: hidden;">
                             <table class="table table-hover table-bordered" id="tableCandidatos">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Cédula</th>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>
                                         <th>Teléfono</th>

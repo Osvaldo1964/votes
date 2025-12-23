@@ -114,22 +114,47 @@ class Candidatos extends Controllers
 
                 $intIdCandidato = intval($_POST['idCandidato']);
                 $strCedula = strClean($_POST['txtCedula']);
-                $strApe1 = strClean($_POST['txtApe1']);
-                $strApe2 = strClean($_POST['txtApe2']);
-                $strNom1 = strClean($_POST['txtNom1']);
-                $strNom2 = strClean($_POST['txtNom2']);
+                $strApe1 = strtoupper(strClean($_POST['txtApe1']));
+                $strApe2 = strtoupper(strClean($_POST['txtApe2']));
+                $strNom1 = strtoupper(strClean($_POST['txtNom1']));
+                $strNom2 = strtoupper(strClean($_POST['txtNom2']));
                 $strTelefono = strClean($_POST['txtTelefono']);
-                $strEmail = strClean($_POST['txtEmail']);
+                $strEmail = strtolower(strClean($_POST['txtEmail']));
                 $strDireccion = strClean($_POST['txtDireccion']);
                 $listCurul = intval($_POST['listCurul']);
                 $listPartido = intval($_POST['listPartido']);
-                $listEstado = intval($_POST['listEstado']);
+                $listEstado = intval($_POST['listEstado']) == 0 ? 1 : intval($_POST['listEstado']);
 
                 if ($intIdCandidato == 0) {
-                    $request_candidato = $this->model->insertCandidato($strCedula, $strApe1, $strApe2, $strNom1, $strNom2, $strTelefono, $strEmail, $strDireccion, $listCurul, $listPartido, $listEstado);
+                    $request_candidato = $this->model->insertCandidato(
+                        $strCedula,
+                        $strApe1,
+                        $strApe2,
+                        $strNom1,
+                        $strNom2,
+                        $strTelefono,
+                        $strEmail,
+                        $strDireccion,
+                        $listCurul,
+                        $listPartido,
+                        $listEstado
+                    );
                     $option = 1;
                 } else {
-                    $request_candidato = $this->model->updateCandidato($intIdCandidato, $strNom1, $strNom2, $strTelefono, $strEmail, $strDireccion, $listCurul, $listPartido, $listEstado);
+                    $request_candidato = $this->model->updateCandidato(
+                        $intIdCandidato,
+                        $strCedula,
+                        $strApe1,
+                        $strApe2,
+                        $strNom1,
+                        $strNom2,
+                        $strTelefono,
+                        $strEmail,
+                        $strDireccion,
+                        $listCurul,
+                        $listPartido,
+                        $listEstado
+                    );
                     $option = 2;
                 }
 
@@ -192,6 +217,20 @@ class Candidatos extends Controllers
             }
         } catch (Exception $e) {
             jsonResponse(['status' => false, 'msg' => $e->getMessage()], 500);
+        }
+        die();
+    }
+
+    public function getJsons()
+    {
+        // Ruta hacia donde guardaste el archivo json
+        $jsonPath = "Json/Config.json";
+
+        if (file_exists($jsonPath)) {
+            $jsonContent = file_get_contents($jsonPath);
+            echo $jsonContent; // Esto ya devuelve el JSON tal cual
+        } else {
+            echo json_encode(["status" => false, "msg" => "No se encontró el archivo de opciones"]);
         }
         die();
     }

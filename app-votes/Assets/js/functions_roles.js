@@ -1,276 +1,202 @@
 const BASE_URL = "http://app-votes.com";
 const BASE_URL_API = "http://api-votes.com";
 
-var tableRoles;
-// Evitar alerts nativos de DataTables
+let tableRoles;
 $.fn.dataTable.ext.errMode = 'none';
+
+// 1. HELPER DE PETICIONES (Consistente con los otros archivos)
+async function fetchData(url, method = 'GET', body = null) {
+    const options = {
+        method,
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
+            'Content-Type': 'application/json'
+        }
+    };
+    if (body && method !== 'GET') options.body = body instanceof FormData ? body : JSON.stringify(body);
+    if (body instanceof FormData) delete options.headers['Content-Type'];
+
+    try {
+        const response = await fetch(url, options);
+        if (response.status === 401 || response.status === 400) {
+            fntHandleError(response);
+            return null;
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error en la petición:", error);
+        return null;
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    // 1. INICIALIZACIÓN DE DATATABLE
+    // 2. INICIALIZACIÓN DE DATATABLE
     tableRoles = $('#tableRoles').DataTable({
         "processing": true,
-        "serverSide": false,
-        "language": {
-            "url": BASE_URL + "/assets/json/spanish.json"
-        },
+        "language": { "url": `${BASE_URL}/assets/json/spanish.json` },
         "ajax": {
-            "url": BASE_URL_API + "/roles/getRoles",
+            "url": `${BASE_URL_API}/roles/getRoles`,
             "type": "GET",
-            "headers": { "Authorization": "Bearer " + localStorage.getItem('userToken') },
-            "data": function (d) {
-                d.rolUser = localStorage.getItem('userRol');
-            },
-            "dataSrc": function (json) {
-                if (json.status == false && json.msg) {
-                    return [];
-                }
-                return json.data;
-            },
-            "error": function (xhr, error, thrown) {
-                fntHandleError(xhr);
-            }
+            "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
+            "data": d => { d.rolUser = localStorage.getItem('userRol'); },
+            "dataSrc": json => json.status ? json.data : [],
+            "error": xhr => fntHandleError(xhr)
         },
         "columns": [
             { "data": "id_rol" },
             { "data": "nombre_rol" },
             { "data": "descript_rol" },
-            { "data": "status_rol" },
+            { "data": "status_rol", "render": d => d == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>' },
             { "data": "options" }
         ],
         "responsive": true,
         "destroy": true,
-        "displayLength": 10,
         "order": [[0, "desc"]]
     });
 
-    // 2. GUARDAR ROL (NUEVO/ACTUALIZAR)
-    var formRol = document.querySelector("#formRol");
+    // 3. GUARDAR ROL
+    const formRol = document.querySelector("#formRol");
     if (formRol) {
-        formRol.onsubmit = function (e) {
+        formRol.onsubmit = async function (e) {
             e.preventDefault();
+            const formData = new FormData(formRol);
+            const objData = await fetchData(`${BASE_URL_API}/roles/setRol`, 'POST', formData);
 
-            let elements = formRol.querySelectorAll(".is-invalid");
-            if (elements.length > 0) {
-                elements[0].focus();
-                return;
+            if (objData?.status) {
+                $('#modalFormRol').modal("hide");
+                formRol.reset();
+                swal("Roles", objData.msg, "success");
+                tableRoles.ajax.reload();
+            } else if (objData) {
+                swal("Error", objData.msg, "error");
             }
-
-            var formData = new FormData(formRol);
-            var request = new XMLHttpRequest();
-            request.open("POST", BASE_URL_API + '/roles/setRol', true);
-            request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-            request.send(formData);
-
-            request.onreadystatechange = function () {
-                if (request.readyState == 4) {
-                    if (request.status == 200) {
-                        var objData = JSON.parse(request.responseText);
-                        if (objData.status) {
-                            $('#modalFormRol').modal("hide");
-                            formRol.reset();
-                            swal("Roles", objData.msg, "success");
-                            tableRoles.ajax.reload();
-                        } else {
-                            swal("Error", objData.msg, "error");
-                        }
-                    } else {
-                        fntHandleError(request);
-                    }
-                }
-            }
-        }
+        };
     }
 
-    // 3. DELEGACIÓN DE EVENTOS (CLICK GLOBAL)
+    // 4. DELEGACIÓN DE EVENTOS
     document.addEventListener('click', function (e) {
-        const btnEdit = e.target.closest('.btnEditRol');
-        const btnDel = e.target.closest('.btnDelRol');
-        const btnPerm = e.target.closest('.btnPermisosRol');
-        const btnNuevo = e.target.closest('#btnNuevoRol'); // Asegúrate de que el ID del botón coincida
+        const target = e.target.closest('.btnEditRol, .btnDelRol, .btnPermisosRol, #btnNuevoRol');
+        if (!target) return;
 
-        if (btnNuevo) openModal();
-        if (btnEdit) fntEditRol(btnEdit.getAttribute('rl'));
-        if (btnDel) fntDelRol(btnDel.getAttribute('rl'));
-        if (btnPerm) fntPermisos(btnPerm.getAttribute('rl'));
+        const id = target.getAttribute('rl');
+        if (target.id === 'btnNuevoRol') openModal();
+        if (target.classList.contains('btnEditRol')) fntEditRol(id);
+        if (target.classList.contains('btnDelRol')) fntDelRol(id);
+        if (target.classList.contains('btnPermisosRol')) fntPermisos(id);
     });
-
 });
 
-/**
- * FUNCION GLOBAL PARA MANEJO DE ERRORES DE AUTORIZACIÓN
- */
-function fntHandleError(xhr) {
-    if (xhr.status === 401 || xhr.status === 400) {
-        let mensaje = "Tu sesión ha expirado o no tienes autorización.";
-        try {
-            let res = JSON.parse(xhr.responseText);
-            if (res.msg) mensaje = res.msg;
-        } catch (e) { }
+// --- ACCIONES ---
 
-        swal({
-            title: "Sesión Expirada",
-            text: mensaje,
-            type: "warning",
-            confirmButtonText: "Aceptar",
-            closeOnConfirm: true
-        }, function (isConfirm) {
-            if (isConfirm) {
-                window.location.href = BASE_URL + '/logout/logout';
-            }
-        });
+function openModal(isEdit = false, data = null) {
+    const form = document.querySelector("#formRol");
+    if (!form) return;
+    form.reset();
+
+    document.querySelector('#idRol').value = "";
+    const header = document.querySelector('.modal-header');
+    const btn = document.querySelector('#btnActionForm');
+
+    if (isEdit && data) {
+        document.querySelector('#titleModal').innerHTML = "Actualizar Rol";
+        header.classList.replace("headerRegister", "headerUpdate");
+        btn.classList.replace("btn-primary", "btn-info");
+        document.querySelector('#btnText').innerHTML = "Actualizar";
+
+        document.querySelector("#idRol").value = data.id_rol;
+        document.querySelector("#txtNombre").value = data.nombre_rol;
+        document.querySelector("#txtDescripcion").value = data.descript_rol;
+        $('#listStatus').val(data.status_rol);
     } else {
-        console.error("Error del sistema:", xhr.responseText);
+        document.querySelector('#titleModal').innerHTML = "Nuevo Rol";
+        header.classList.replace("headerUpdate", "headerRegister");
+        btn.classList.replace("btn-info", "btn-primary");
+        document.querySelector('#btnText').innerHTML = "Guardar";
+        $('#listStatus').val('1');
     }
-}
-
-function openModal() {
-    if (document.querySelector('#idRol')) document.querySelector('#idRol').value = "";
-    document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
-    document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
-    document.querySelector('#btnText').innerHTML = "Guardar";
-    document.querySelector('#titleModal').innerHTML = "Nuevo Rol";
-    document.querySelector("#formRol").reset();
-
-    $('#listStatus').val('1').selectpicker('refresh');
+    $('.selectpicker').selectpicker('refresh');
     $('#modalFormRol').modal('show');
 }
 
-function fntEditRol(idRol) {
-    document.querySelector('#titleModal').innerHTML = "Actualizar Rol";
-    document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
-    document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
-    document.querySelector('#btnText').innerHTML = "Actualizar";
-
-    var request = new XMLHttpRequest();
-    request.open("GET", BASE_URL_API + '/roles/getRol/' + idRol, true);
-    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-    request.send();
-
-    request.onreadystatechange = function () {
-        if (request.readyState == 4) {
-            if (request.status == 200) {
-                var objData = JSON.parse(request.responseText);
-                if (objData.status) {
-                    document.querySelector("#idRol").value = objData.data.id_rol;
-                    document.querySelector("#txtNombre").value = objData.data.nombre_rol;
-                    document.querySelector("#txtDescripcion").value = objData.data.descript_rol;
-
-                    $('#listStatus').selectpicker('destroy');
-                    document.querySelector('#listStatus').value = String(objData.data.status_rol);
-                    $('#listStatus').selectpicker();
-                    $('#listStatus').selectpicker('refresh');
-
-                    $('#modalFormRol').modal('show');
-                }
-            } else {
-                fntHandleError(request);
-            }
-        }
+async function fntEditRol(id) {
+    const res = await fetchData(`${BASE_URL_API}/roles/getRol/${id}`);
+    if (res?.status) {
+        openModal(true, res.data);
     }
 }
 
-function fntDelRol(idRol) {
+function fntDelRol(id) {
     swal({
         title: "Eliminar Rol",
         text: "¿Realmente quiere eliminar el Rol?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, eliminar!",
-        closeOnConfirm: false
-    }, function (isConfirm) {
+        confirmButtonText: "Si, eliminar!"
+    }, async (isConfirm) => {
         if (isConfirm) {
-            var request = new XMLHttpRequest();
-            var jsonParams = JSON.stringify({ idrol: idRol });
-            request.open("PUT", BASE_URL_API + '/roles/delRol/', true);
-            request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-            request.setRequestHeader('Content-Type', 'application/json');
-            request.send(jsonParams);
-
-            request.onreadystatechange = function () {
-                if (request.readyState == 4) {
-                    if (request.status == 200) {
-                        var objData = JSON.parse(request.responseText);
-                        if (objData.status) {
-                            swal("Eliminado!", objData.msg, "success");
-                            tableRoles.ajax.reload();
-                        } else {
-                            swal("Atención!", objData.msg, "error");
-                        }
-                    } else {
-                        fntHandleError(request);
-                    }
-                }
+            const res = await fetchData(`${BASE_URL_API}/roles/delRol/`, 'PUT', { idrol: id });
+            if (res?.status) {
+                swal("Eliminado!", res.msg, "success");
+                tableRoles.ajax.reload();
             }
         }
     });
 }
 
-function fntPermisos(idRol) {
-    var request = new XMLHttpRequest();
-    request.open("GET", BASE_URL_API + '/permisos/getPermisosRol/' + idRol, true);
-    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-    request.send();
+// --- GESTIÓN DE PERMISOS ---
 
-    request.onreadystatechange = function () {
-        if (request.readyState == 4) {
-            if (request.status == 200) {
-                var objResponse = JSON.parse(request.responseText);
-                if (objResponse.status) {
-                    var htmlTable = "";
-                    var no = 1;
-                    objResponse.data.forEach(function (modulo) {
-                        var pR = (modulo.permisos && modulo.permisos.r == 1) ? "checked" : "";
-                        var pW = (modulo.permisos && modulo.permisos.w == 1) ? "checked" : "";
-                        var pU = (modulo.permisos && modulo.permisos.u == 1) ? "checked" : "";
-                        var pD = (modulo.permisos && modulo.permisos.d == 1) ? "checked" : "";
+async function fntPermisos(idRol) {
+    const res = await fetchData(`${BASE_URL_API}/permisos/getPermisosRol/${idRol}`);
+    if (res?.status) {
+        let htmlTable = "";
+        res.data.forEach((modulo, index) => {
+            const check = (p) => (modulo.permisos && modulo.permisos[p] == 1) ? "checked" : "";
 
-                        htmlTable += `
-                            <tr>
-                                <td>${no} <input type="hidden" name="modulos[${modulo.id_modulo}][idmodulo]" value="${modulo.id_modulo}"></td>
-                                <td>${modulo.titulo_modulo}</td>
-                                <td><div class="toggle-flip"><label><input type="checkbox" name="modulos[${modulo.id_modulo}][r]" ${pR}><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span></label></div></td>
-                                <td><div class="toggle-flip"><label><input type="checkbox" name="modulos[${modulo.id_modulo}][w]" ${pW}><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span></label></div></td>
-                                <td><div class="toggle-flip"><label><input type="checkbox" name="modulos[${modulo.id_modulo}][u]" ${pU}><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span></label></div></td>
-                                <td><div class="toggle-flip"><label><input type="checkbox" name="modulos[${modulo.id_modulo}][d]" ${pD}><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span></label></div></td>
-                            </tr>`;
-                        no++;
-                    });
+            htmlTable += `
+                <tr>
+                    <td>${index + 1} <input type="hidden" name="modulos[${modulo.id_modulo}][idmodulo]" value="${modulo.id_modulo}"></td>
+                    <td>${modulo.titulo_modulo}</td>
+                    ${['r', 'w', 'u', 'd'].map(p => `
+                        <td>
+                            <div class="toggle-flip">
+                                <label>
+                                    <input type="checkbox" name="modulos[${modulo.id_modulo}][${p}]" ${check(p)}>
+                                    <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                                </label>
+                            </div>
+                        </td>
+                    `).join('')}
+                </tr>`;
+        });
 
-                    document.querySelector('#contentAjax').innerHTML = htmlTable;
-                    if (document.querySelector('#idrol')) document.querySelector('#idrol').value = idRol;
-                    $('.modalPermisos').modal('show');
+        document.querySelector('#contentAjax').innerHTML = htmlTable;
+        if (document.querySelector('#idrol')) document.querySelector('#idrol').value = idRol;
+        $('.modalPermisos').modal('show');
 
-                    document.querySelector('#formPermisos').onsubmit = fntSavePermisos;
-                }
-            } else {
-                fntHandleError(request);
-            }
-        }
+        document.querySelector('#formPermisos').onsubmit = fntSavePermisos;
     }
 }
 
-function fntSavePermisos(e) {
+async function fntSavePermisos(e) {
     e.preventDefault();
-    var formData = new FormData(document.querySelector('#formPermisos'));
-    var request = new XMLHttpRequest();
-    request.open("POST", BASE_URL_API + '/permisos/setPermisos', true);
-    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-    request.send(formData);
+    const formData = new FormData(document.querySelector('#formPermisos'));
+    const res = await fetchData(`${BASE_URL_API}/permisos/setPermisos`, 'POST', formData);
 
-    request.onreadystatechange = function () {
-        if (request.readyState == 4) {
-            if (request.status == 200) {
-                var objData = JSON.parse(request.responseText);
-                if (objData.status) {
-                    swal("Permisos", objData.msg, "success");
-                    $('.modalPermisos').modal('hide');
-                } else {
-                    swal("Error", objData.msg, "error");
-                }
-            } else {
-                fntHandleError(request);
-            }
-        }
-    };
+    if (res?.status) {
+        swal("Permisos", res.msg, "success");
+        $('.modalPermisos').modal('hide');
+    } else if (res) {
+        swal("Error", res.msg, "error");
+    }
+}
+
+function fntHandleError(xhr) {
+    if (xhr.status === 401 || xhr.status === 400) {
+        swal({
+            title: "Sesión Expirada",
+            text: "Tu sesión ha expirado o no tienes autorización.",
+            type: "warning"
+        }, () => { window.location.href = BASE_URL + '/logout/logout'; });
+    }
 }

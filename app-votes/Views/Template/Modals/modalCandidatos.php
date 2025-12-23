@@ -58,22 +58,17 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label for="listCurul">Curul</label>
                             <select class="form-control selectpicker" id="listCurul" name="listCurul" required>
                                 <option value="">Seleccione</option>
-                                <option value="1">Senado</option>
-                                <option value="2">Cámara</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
-                            <label for="listPartido">Partido</label>
+
+                        <div class="form-group col-md-4">
+                            <label for="listPartido">Partido Político</label>
                             <select class="form-control selectpicker" id="listPartido" name="listPartido" required>
                                 <option value="">Seleccione</option>
-                                <option value="1">Liberal</option>
-                                <option value="2">Conservador</option>
-                                <option value="3">Partido de la U</option>
-                                <option value="4">Centro Democrático</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
@@ -111,6 +106,10 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
+                            <td>Cédula:</td>
+                            <td id="celIdent">Jacob</td>
+                        </tr>
+                        <tr>
                             <td>Nombres:</td>
                             <td id="celNombre">Jacob</td>
                         </tr>
@@ -127,8 +126,16 @@
                             <td id="celEmail">Larry</td>
                         </tr>
                         <tr>
-                            <td>Tipo Usuario:</td>
-                            <td id="celTipoUsuario">Larry</td>
+                            <td>Dirección:</td>
+                            <td id="celDireccion">Larry</td>
+                        </tr>
+                        <tr>
+                            <td>Curul:</td>
+                            <td id="celCurul">Larry</td>
+                        </tr>
+                        <tr>
+                            <td>Partido:</td>
+                            <td id="celPartido">Larry</td>
                         </tr>
                         <tr>
                             <td>Estado:</td>

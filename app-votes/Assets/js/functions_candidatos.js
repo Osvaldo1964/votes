@@ -1,272 +1,215 @@
 const BASE_URL = "http://app-votes.com";
 const BASE_URL_API = "http://api-votes.com";
 
-var tableCandidatos;
-// Evitar alerts nativos de DataTables
+let dataConfig = null;
+let tableCandidatos;
 $.fn.dataTable.ext.errMode = 'none';
 
-document.addEventListener('DOMContentLoaded', function () {
+// 1. HELPER DE PETICIONES
+async function fetchData(url, method = 'GET', body = null) {
+    const options = {
+        method,
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
+            'Content-Type': 'application/json'
+        }
+    };
+    if (body && method !== 'GET') options.body = body instanceof FormData ? body : JSON.stringify(body);
+    if (body instanceof FormData) delete options.headers['Content-Type'];
 
-    // 1. INICIALIZACIÓN DE DATATABLE
+    try {
+        const response = await fetch(url, options);
+        if (response.status === 401 || response.status === 400) {
+            fntHandleError(response);
+            return null;
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error en la petición:", error);
+        return null;
+    }
+}
+
+// 2. INICIO DEL DOCUMENTO
+document.addEventListener('DOMContentLoaded', async function () {
+
+    // Esperar a que el JSON cargue para que la tabla tenga nombres desde el inicio
+    await cargarJson();
+
     tableCandidatos = $('#tableCandidatos').DataTable({
         "processing": true,
-        "serverSide": false,
-        "language": {
-            "url": BASE_URL + "/assets/json/spanish.json"
-        },
+        "language": { "url": `${BASE_URL}/assets/json/spanish.json` },
         "ajax": {
-            "url": BASE_URL_API + "/candidatos/getCandidatos",
+            "url": `${BASE_URL_API}/candidatos/getCandidatos`,
             "type": "GET",
-            "headers": { "Authorization": "Bearer " + localStorage.getItem('userToken') },
-            "data": function (d) {
-                d.rolUser = localStorage.getItem('userRol');
-            },
-            "dataSrc": function (json) {
-                if (json.status == false && json.msg) {
-                    return [];
-                }
-                return json.data;
-            },
-            "error": function (xhr, error, thrown) {
-                fntHandleError(xhr);
-            }
+            "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
+            "data": d => { d.rolUser = localStorage.getItem('userRol'); },
+            "dataSrc": json => json.status ? json.data : [],
+            "error": xhr => fntHandleError(xhr)
         },
         "columns": [
             { "data": "id_candidato" },
-            {
-                "data": null, // 'null' porque usaremos varios campos
-                "render": function (data, type, row) {
-                    // concatenamos nombre 1 y nombre 2
-                    return row.nom1_candidato + ' ' + (row.nom2_candidato || "");
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, row) {
-                    // concatenamos apellido 1 y apellido 2
-                    return row.ape1_candidato + ' ' + (row.ape2_candidato || "");
-                }
-            },
+            { "data": "ident_candidato" },
+            { "render": (d, t, row) => `${row.nom1_candidato} ${row.nom2_candidato || ""}` },
+            { "render": (d, t, row) => `${row.ape1_candidato} ${row.ape2_candidato || ""}` },
             { "data": "telefono_candidato" },
             { "data": "email_candidato" },
             { "data": "direccion_candidato" },
-            { "data": "curul_candidato" },
-            { "data": "partido_candidato" },
-            { "data": "estado_candidato" },
+            { "data": "curul_candidato", "render": d => getNombreById('curules', d) },
+            { "data": "partido_candidato", "render": d => getNombreById('partidos', d) },
+            { "data": "estado_candidato", "render": d => d == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>' },
             { "data": "options" }
         ],
         "responsive": true,
         "destroy": true,
-        "displayLength": 10,
         "order": [[0, "desc"]]
     });
 
-    // 2. GUARDAR CANDIDATO (NUEVO/ACTUALIZAR)
-    var formCandidato = document.querySelector("#formCandidato");
+    const formCandidato = document.querySelector("#formCandidato");
     if (formCandidato) {
-        formCandidato.onsubmit = function (e) {
+        formCandidato.onsubmit = async function (e) {
             e.preventDefault();
 
-            let elements = formCandidato.querySelectorAll(".is-invalid");
-            if (elements.length > 0) {
-                elements[0].focus();
-                return;
+            if (formCandidato.listCurul.value == "" || formCandidato.listPartido.value == "") {
+                swal("Atención", "Seleccione una Curul y un Partido.", "error");
+                return false;
             }
 
-            var formData = new FormData(formCandidato);
-            var request = new XMLHttpRequest();
-            request.open("POST", BASE_URL_API + '/candidatos/setCandidato', true);
-            request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-            request.send(formData);
+            const formData = new FormData(formCandidato);
+            const objData = await fetchData(`${BASE_URL_API}/candidatos/setCandidato`, 'POST', formData);
 
-            request.onreadystatechange = function () {
-                if (request.readyState == 4) {
-                    if (request.status == 200) {
-                        var objData = JSON.parse(request.responseText);
-                        if (objData.status) {
-                            $('#modalFormCandidato').modal("hide");
-                            formCandidato.reset();
-                            swal("Candidatos", objData.msg, "success");
-                            tableCandidatos.ajax.reload();
-                        } else {
-                            swal("Error", objData.msg, "error");
-                        }
-                    } else {
-                        fntHandleError(request);
-                    }
-                }
+            if (objData?.status) {
+                $('#modalFormCandidato').modal("hide");
+                formCandidato.reset();
+                swal("Candidatos", objData.msg, "success");
+                tableCandidatos.ajax.reload();
+            } else if (objData) {
+                swal("Error", objData.msg, "error");
             }
-        }
+        };
     }
 
-    // 3. DELEGACIÓN DE EVENTOS (CLICK GLOBAL)
     document.addEventListener('click', function (e) {
-        const btnView = e.target.closest('.btnView');
-        const btnEdit = e.target.closest('.btnEdit');
-        const btnDel = e.target.closest('.btnDel');
-        const btnNuevo = e.target.closest('#btnNuevoCandidato');
+        const target = e.target.closest('.btnView, .btnEdit, .btnDel, #btnNuevoCandidato');
+        if (!target) return;
 
-        if (btnNuevo) openModal();
-        if (btnView) fntViewCandidato(btnView.getAttribute('can'));
-        if (btnEdit) fntEditCandidato(btnEdit.getAttribute('can'));
-        if (btnDel) fntDelCandidato(btnDel.getAttribute('can'));
+        const id = target.getAttribute('can');
+        if (target.id === 'btnNuevoCandidato') openModal();
+        if (target.classList.contains('btnView')) fntViewCandidato(id);
+        if (target.classList.contains('btnEdit')) fntEditCandidato(id);
+        if (target.classList.contains('btnDel')) fntDelCandidato(id);
     });
-
 });
 
-/**
- * FUNCION GLOBAL PARA MANEJO DE ERRORES DE AUTORIZACIÓN
- */
-function fntHandleError(xhr) {
-    if (xhr.status === 401 || xhr.status === 400) {
-        let mensaje = "Tu sesión ha expirado o no tienes autorización.";
-        try {
-            let res = JSON.parse(xhr.responseText);
-            if (res.msg) mensaje = res.msg;
-        } catch (e) { }
-
-        swal({
-            title: "Sesión Expirada",
-            text: mensaje,
-            type: "warning",
-            confirmButtonText: "Aceptar",
-            closeOnConfirm: true
-        }, function (isConfirm) {
-            if (isConfirm) {
-                window.location.href = BASE_URL + '/logout/logout';
+// 3. FUNCIONES DE LÓGICA Y DATOS
+async function cargarJson() {
+    const res = await fetchData(`${BASE_URL_API}/candidatos/getJsons`);
+    if (res) {
+        dataConfig = res;
+        const llenarSelect = (id, datos) => {
+            const el = document.querySelector(id);
+            if (el) {
+                el.length = 1;
+                datos.forEach(item => el.add(new Option(item.nombre, item.id)));
             }
-        });
+        };
+        llenarSelect('#listCurul', res.curules);
+        llenarSelect('#listPartido', res.partidos);
+        $('.selectpicker').selectpicker('refresh');
+    }
+}
+
+function getNombreById(tipo, id) {
+    if (!dataConfig || !dataConfig[tipo]) return id;
+    const item = dataConfig[tipo].find(x => x.id == id);
+    return item ? item.nombre : id;
+}
+
+// 4. ACCIONES (VIEW, EDIT, DELETE, MODAL)
+async function fntViewCandidato(id) {
+    const res = await fetchData(`${BASE_URL_API}/candidatos/getCandidato/${id}`);
+    if (res?.status) {
+        const d = res.data;
+        const setHtml = (id, val) => { if (document.querySelector(id)) document.querySelector(id).innerHTML = val; };
+
+        setHtml('#celIdent', d.ident_candidato);
+        setHtml('#celNombre', `${d.nom1_candidato} ${d.nom2_candidato}`);
+        setHtml('#celApellido', `${d.ape1_candidato} ${d.ape2_candidato}`);
+        setHtml('#celTelefono', d.telefono_candidato);
+        setHtml('#celEmail', d.email_candidato);
+        setHtml('#celDireccion', d.direccion_candidato);
+        setHtml('#celCurul', getNombreById('curules', d.curul_candidato));
+        setHtml('#celPartido', getNombreById('partidos', d.partido_candidato));
+        setHtml('#celEstado', d.estado_candidato == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>');
+
+        $('#modalViewCandidato').modal('show');
+    }
+}
+
+async function fntEditCandidato(idCandidato) {
+    const res = await fetchData(`${BASE_URL_API}/candidatos/getCandidato/${idCandidato}`);
+    if (res?.status) {
+        openModal(true, res.data);
     } else {
-        console.error("Error del sistema:", xhr.responseText);
+        swal("Error", "No se pudieron obtener los datos", "error");
     }
 }
 
-function fntViewCandidato(idCandidato) {
-    var ajaxUrl = BASE_URL_API + '/candidatos/getCandidato/' + idCandidato;
-    var request = new XMLHttpRequest();
-    request.open("GET", ajaxUrl, true);
-    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-    request.send();
-
-    request.onreadystatechange = function () {
-        if (request.readyState == 4) {
-            if (request.status == 200) {
-                var objData = JSON.parse(request.responseText);
-                if (objData.status) {
-                    document.querySelector('#celNombre').innerHTML = objData.data.nom1_candidato + ' ' + objData.data.nom2_candidato;
-                    document.querySelector('#celApellido').innerHTML = objData.data.ape1_candidato + ' ' + objData.data.ape2_candidato;
-                    document.querySelector('#celTelefono').innerHTML = objData.data.telefono_candidato;
-                    document.querySelector('#celEmail').innerHTML = objData.data.email_candidato;
-                    document.querySelector('#celPartido').innerHTML = objData.data.partido_candidato;
-                    var estado = objData.data.estado_candidato == 1
-                        ? '<span class="badge badge-success">Activo</span>'
-                        : '<span class="badge badge-danger">Inactivo</span>';
-                    document.querySelector('#celEstado').innerHTML = estado;
-                    $('#modalViewCandidato').modal('show');
-                }
-            } else {
-                fntHandleError(request);
-            }
-        }
-    }
-}
-
-function fntEditCandidato(idCandidato) {
-    document.querySelector('#titleModal').innerHTML = "Actualizar Candidato";
-    document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
-    document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
-    document.querySelector('#btnText').innerHTML = "Actualizar";
-
-    var request = new XMLHttpRequest();
-    request.open("GET", BASE_URL_API + '/candidatos/getCandidato/' + idCandidato, true);
-    request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-    request.send();
-
-    request.onreadystatechange = function () {
-        if (request.readyState == 4) {
-            if (request.status == 200) {
-                var objData = JSON.parse(request.responseText);
-                if (objData.status) {
-                    document.querySelector("#idCandidato").value = objData.data.id_candidato;
-                    document.querySelector("#txtNombre").value = objData.data.nom1_candidato + ' ' + objData.data.nom2_candidato;
-                    document.querySelector("#txtApellido").value = objData.data.ape1_candidato + ' ' + objData.data.ape2_candidato;
-                    document.querySelector("#txtTelefono").value = objData.data.telefono_candidato;
-                    document.querySelector("#txtEmail").value = objData.data.email_candidato;
-                    document.querySelector("#txtPartido").value = objData.data.partido_candidato;
-
-                    $('#listEstado').selectpicker('destroy');
-                    document.querySelector('#listEstado').value = String(objData.data.estado_candidato);
-                    $('#listEstado').selectpicker();
-                    $('#listEstado').selectpicker('refresh');
-
-                    $('#modalFormCandidato').modal('show');
-                }
-            } else {
-                fntHandleError(request);
-            }
-        }
-    }
-}
-
-function fntDelCandidato(idCandidato) {
+function fntDelCandidato(id) {
     swal({
-        title: "Eliminar Candidato",
+        title: "Eliminar",
         text: "¿Realmente quiere eliminar el Candidato?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, eliminar!",
-        closeOnConfirm: false
-    }, function (isConfirm) {
+        confirmButtonText: "Si, eliminar!"
+    }, async (isConfirm) => {
         if (isConfirm) {
-            var request = new XMLHttpRequest();
-            var jsonParams = JSON.stringify({ idcandidato: idCandidato });
-            request.open("PUT", BASE_URL_API + '/candidatos/delCandidato/', true);
-            request.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-            request.setRequestHeader('Content-Type', 'application/json');
-            request.send(jsonParams);
-
-            request.onreadystatechange = function () {
-                if (request.readyState == 4) {
-                    if (request.status == 200) {
-                        var objData = JSON.parse(request.responseText);
-                        if (objData.status) {
-                            swal("Eliminado!", objData.msg, "success");
-                            tableCandidatos.ajax.reload();
-                        } else {
-                            swal("Atención!", objData.msg, "error");
-                        }
-                    } else {
-                        fntHandleError(request);
-                    }
-                }
+            const res = await fetchData(`${BASE_URL_API}/candidatos/delCandidato/`, 'PUT', { idcandidato: id });
+            if (res?.status) {
+                swal("Eliminado!", res.msg, "success");
+                tableCandidatos.ajax.reload();
             }
         }
     });
 }
 
-function openModal() {
-    // Buscamos el formulario justo en este momento, no antes
-    let formCandidato = document.getElementById("formCandidato");
+function openModal(isEdit = false, data = null) {
+    const form = document.getElementById("formCandidato");
+    if (!form) return;
 
-    if (formCandidato) {
-        formCandidato.reset();
+    form.reset();
+    document.querySelector('#idCandidato').value = "";
+    const header = document.querySelector('.modal-header');
+    const btn = document.querySelector('#btnActionForm');
 
-        // Limpiar ID oculto
-        if (document.querySelector('#idCandidato')) {
-            document.querySelector('#idCandidato').value = "";
-        }
+    if (isEdit && data) {
+        document.querySelector('#titleModal').innerHTML = "Actualizar Candidato";
+        header.classList.replace("headerRegister", "headerUpdate");
+        btn.classList.replace("btn-primary", "btn-info");
+        document.querySelector('#btnText').innerHTML = "Actualizar";
 
-        // Cambios visuales obligatorios
-        document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
-        document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
-        document.querySelector('#btnText').innerHTML = "Guardar";
-        document.querySelector('#titleModal').innerHTML = "Nuevo Candidato";
+        document.querySelector("#idCandidato").value = data.id_candidato;
+        document.querySelector("#txtCedula").value = data.ident_candidato;
+        document.querySelector("#txtApe1").value = data.ape1_candidato;
+        document.querySelector("#txtApe2").value = data.ape2_candidato;
+        document.querySelector("#txtNom1").value = data.nom1_candidato;
+        document.querySelector("#txtNom2").value = data.nom2_candidato;
+        document.querySelector("#txtTelefono").value = data.telefono_candidato;
+        document.querySelector("#txtEmail").value = data.email_candidato;
+        document.querySelector("#txtDireccion").value = data.direccion_candidato;
 
-        // Abrir el modal usando jQuery (que es lo que usa Bootstrap 4)
-        $('#modalFormCandidato').modal('show');
+        $('#listCurul').val(data.curul_candidato);
+        $('#listPartido').val(data.partido_candidato);
+        $('#listEstado').val(data.estado_candidato);
     } else {
-        // Este mensaje te confirma que el problema es que el HTML del modal no está cargado
-        console.error("ERROR CRÍTICO: El formulario con ID 'formCandidato' no existe en el DOM.");
-        swal("Error", "El formulario de candidatos no se cargó correctamente.", "error");
+        document.querySelector('#titleModal').innerHTML = "Nuevo Candidato";
+        header.classList.replace("headerUpdate", "headerRegister");
+        btn.classList.replace("btn-info", "btn-primary");
+        document.querySelector('#btnText').innerHTML = "Guardar";
+        $('#listCurul').val("");
+        $('#listPartido').val("");
+        $('#listEstado').val("1");
     }
+    $('.selectpicker').selectpicker('refresh');
+    $('#modalFormCandidato').modal('show');
 }
