@@ -129,9 +129,11 @@ function verificarExpiracionToken() {
                 closeOnConfirm: true
             }, function (isConfirm) {
                 if (isConfirm) {
-                    // Llamamos a tu controlador de logout de PHP
-                    // Esto limpiará la sesión en el servidor y el localStorage
-                    window.location.href = BASE_URL + '/logout/logout';
+                    // 1. Limpiamos el token localmente de inmediato
+                    localStorage.removeItem('userToken');
+
+                    // 2. Redirigimos al logout del servidor
+                    window.location.href = 'http://app-vote.com/logout/logout';
                 }
             });
         }
