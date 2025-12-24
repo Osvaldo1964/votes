@@ -11,8 +11,10 @@ class CandidatosModel extends Mysql
     private $strTelefono;
     private $strEmail;
     private $strDireccion;
-    private $strCurul;
-    private $strPartido;
+    private $intDpto;
+    private $intMuni;
+    private $intCurul;
+    private $intPartido;
     private $intEstado;
 
     public function __construct()
@@ -24,7 +26,7 @@ class CandidatosModel extends Mysql
     {
         $this->intIdCandidato = $idcandidato;
         $sql = "SELECT id_candidato,ident_candidato,ape1_candidato,ape2_candidato,nom1_candidato,nom2_candidato,
-                        telefono_candidato,email_candidato,direccion_candidato,curul_candidato,partido_candidato,estado_candidato
+                        telefono_candidato,email_candidato,dpto_candidato,muni_candidato,direccion_candidato,curul_candidato,partido_candidato,estado_candidato
                         FROM candidatos
                         WHERE id_candidato = ? AND estado_candidato != ? ";
         $arrData = array($this->intIdCandidato, 0);
@@ -40,6 +42,8 @@ class CandidatosModel extends Mysql
         string $nom2,
         string $telefono,
         string $email,
+        int $dpto,
+        int $muni,
         string $direccion,
         int $curul,
         int $partido,
@@ -52,9 +56,11 @@ class CandidatosModel extends Mysql
         $this->strNom2 = $nom2;
         $this->strTelefono = $telefono;
         $this->strEmail = $email;
+        $this->intDpto = $dpto;
+        $this->intMuni = $muni;
         $this->strDireccion = $direccion;
-        $this->strCurul = $curul;
-        $this->strPartido = $partido;
+        $this->intCurul = $curul;
+        $this->intPartido = $partido;
         $this->intEstado = $estado;
         $return = 0;
 
@@ -64,9 +70,9 @@ class CandidatosModel extends Mysql
 
         if (empty($request)) {
             $sql_insert = "INSERT INTO candidatos(ident_candidato, ape1_candidato, ape2_candidato, nom1_candidato,
-                                     nom2_candidato, telefono_candidato, email_candidato, direccion_candidato,
+                                     nom2_candidato, telefono_candidato, email_candidato, dpto_candidato, muni_candidato, direccion_candidato,
                                      curul_candidato, partido_candidato, estado_candidato)
-                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $arrData = array(
                 $this->strCedula,
@@ -76,9 +82,11 @@ class CandidatosModel extends Mysql
                 $this->strNom2,
                 $this->strTelefono,
                 $this->strEmail,
+                $this->intDpto,
+                $this->intMuni,
                 $this->strDireccion,
-                $this->strCurul,
-                $this->strPartido,
+                $this->intCurul,
+                $this->intPartido,
                 $this->intEstado
             );
 
@@ -99,6 +107,8 @@ class CandidatosModel extends Mysql
         string $nom2,
         string $telefono,
         string $email,
+        int $dpto,
+        int $muni,
         string $direccion,
         int $curul,
         int $partido,
@@ -112,9 +122,11 @@ class CandidatosModel extends Mysql
         $this->strNom2 = $nom2;
         $this->strTelefono = $telefono;
         $this->strEmail = $email;
+        $this->intDpto = $dpto;
+        $this->intMuni = $muni;
         $this->strDireccion = $direccion;
-        $this->strCurul = $curul;
-        $this->strPartido = $partido;
+        $this->intCurul = $curul;
+        $this->intPartido = $partido;
         $this->intEstado = $estado;
 
         // 1. Validar si el email ya existe en OTRO usuario
@@ -124,7 +136,7 @@ class CandidatosModel extends Mysql
 
         if (empty($request)) {
             $sql = "UPDATE candidatos SET ident_candidato = ?, ape1_candidato = ?, ape2_candidato = ?, nom1_candidato = ?, nom2_candidato = ?,
-                         telefono_candidato = ?, email_candidato = ?, direccion_candidato = ?, curul_candidato = ?,
+                         telefono_candidato = ?, email_candidato = ?, dpto_candidato = ?, muni_candidato = ?, direccion_candidato = ?, curul_candidato = ?,
                          partido_candidato = ?, estado_candidato = ? 
                     WHERE id_candidato = ?";
             $arrData = array(
@@ -135,9 +147,11 @@ class CandidatosModel extends Mysql
                 $this->strNom2,
                 $this->strTelefono,
                 $this->strEmail,
+                $this->intDpto,
+                $this->intMuni,
                 $this->strDireccion,
-                $this->strCurul,
-                $this->strPartido,
+                $this->intCurul,
+                $this->intPartido,
                 $this->intEstado,
                 $this->intIdCandidato
             );
@@ -153,7 +167,7 @@ class CandidatosModel extends Mysql
     {
         $sql = "SELECT c.id_candidato,c.ident_candidato, c.ape1_candidato, c.ape2_candidato,
                             c.nom1_candidato, c.nom2_candidato,c.telefono_candidato,
-                            c.email_candidato, c.direccion_candidato, c.curul_candidato,c.partido_candidato,c.estado_candidato
+                            c.email_candidato, c.dpto_candidato, c.muni_candidato, c.direccion_candidato, c.curul_candidato,c.partido_candidato,c.estado_candidato
 							FROM candidatos c 
                             WHERE c.estado_candidato != 0 ORDER BY c.id_candidato DESC ";
         $request = $this->select_all($sql);

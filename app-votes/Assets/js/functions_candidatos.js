@@ -55,6 +55,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             { "data": "telefono_candidato" },
             { "data": "email_candidato" },
             { "data": "direccion_candidato" },
+            { "data": "dpto_candidato", "render": d => getNombreById('dptos', d) },
+            { "data": "muni_candidato", "render": d => getNombreById('munis', d) },
             { "data": "curul_candidato", "render": d => getNombreById('curules', d) },
             { "data": "partido_candidato", "render": d => getNombreById('partidos', d) },
             { "data": "estado_candidato", "render": d => d == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>' },
@@ -64,6 +66,33 @@ document.addEventListener('DOMContentLoaded', async function () {
         "destroy": true,
         "order": [[0, "desc"]]
     });
+
+    // --- AQUÍ EL FILTRO DE MUNICIPIOS ---
+    const listDpto = document.querySelector('#listDpto');
+    const listMuni = document.querySelector('#listMuni');
+
+    if (listDpto && listMuni) {
+        listDpto.addEventListener('change', function () {
+            const idDptoSeleccionado = this.value; // Captura el iddpto del selector
+
+            // Limpiamos el selector de municipios (dejando solo la opción por defecto)
+            listMuni.length = 1;
+
+            if (idDptoSeleccionado !== "") {
+                // Filtramos el array de municipios usando la llave 'dptomuni' de tu JSON
+                const filtrados = dataConfig.munis.filter(m => m.dptomuni == idDptoSeleccionado);
+
+                // Llenamos el selector con los resultados
+                filtrados.forEach(item => {
+                    listMuni.add(new Option(item.namemuni, item.idmuni));
+                });
+            }
+
+            // IMPORTANTE: Refrescar el selectpicker si usas Bootstrap Select
+            $(listMuni).selectpicker('refresh');
+        });
+    }
+    // ------------------------------------
 
     const formCandidato = document.querySelector("#formCandidato");
     if (formCandidato) {
@@ -106,23 +135,45 @@ async function cargarJson() {
     const res = await fetchData(`${BASE_URL_API}/candidatos/getJsons`);
     if (res) {
         dataConfig = res;
-        const llenarSelect = (id, datos) => {
-            const el = document.querySelector(id);
-            if (el) {
-                el.length = 1;
-                datos.forEach(item => el.add(new Option(item.nombre, item.id)));
+
+        // Función mejorada que acepta los nombres de las llaves
+        const llenarSelect = (selectorId, datos, llaveId, llaveNombre) => {
+            const el = document.querySelector(selectorId);
+            if (el && datos) {
+                el.length = 1; // Mantiene la opción "Seleccione..."
+                datos.forEach(item => {
+                    el.add(new Option(item[llaveNombre], item[llaveId]));
+                });
             }
         };
-        llenarSelect('#listCurul', res.curules);
-        llenarSelect('#listPartido', res.partidos);
+
+        // Llamadas con las llaves específicas de tu JSON
+        llenarSelect('#listCurul', res.curules, 'id', 'nombre');
+        llenarSelect('#listPartido', res.partidos, 'id', 'nombre');
+        llenarSelect('#listDpto', res.dptos, 'iddpto', 'namedpto');
+        llenarSelect('#listMuni', res.munis, 'idmuni', 'namemuni');
+
         $('.selectpicker').selectpicker('refresh');
     }
 }
 
 function getNombreById(tipo, id) {
     if (!dataConfig || !dataConfig[tipo]) return id;
-    const item = dataConfig[tipo].find(x => x.id == id);
-    return item ? item.nombre : id;
+
+    // Definimos un mapa de llaves según el grupo
+    const campos = {
+        'curules': { id: 'id', nombre: 'nombre' },
+        'partidos': { id: 'id', nombre: 'nombre' },
+        'dptos': { id: 'iddpto', nombre: 'namedpto' },
+        'munis': { id: 'idmuni', nombre: 'namemuni' }
+    };
+
+    const config = campos[tipo];
+    if (!config) return id;
+
+    // Buscamos usando la llave dinámica definida arriba
+    const item = dataConfig[tipo].find(x => x[config.id] == id);
+    return item ? item[config.nombre] : id;
 }
 
 // 4. ACCIONES (VIEW, EDIT, DELETE, MODAL)
@@ -138,6 +189,8 @@ async function fntViewCandidato(id) {
         setHtml('#celTelefono', d.telefono_candidato);
         setHtml('#celEmail', d.email_candidato);
         setHtml('#celDireccion', d.direccion_candidato);
+        setHtml('#celDpto', getNombreById('departamentos', d.dpto_candidato));
+        setHtml('#celMuni', getNombreById('municipios', d.muni_candidato));
         setHtml('#celCurul', getNombreById('curules', d.curul_candidato));
         setHtml('#celPartido', getNombreById('partidos', d.partido_candidato));
         setHtml('#celEstado', d.estado_candidato == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>');
@@ -198,6 +251,15 @@ function openModal(isEdit = false, data = null) {
         document.querySelector("#txtEmail").value = data.email_candidato;
         document.querySelector("#txtDireccion").value = data.direccion_candidato;
 
+        $('#listDpto').val(data.departamento_candidato);
+        // 2. FORZAMOS el llenado de municipios para ese departamento antes de asignar el valor
+        const filtrados = dataConfig.munis.filter(m => m.dptomuni == data.dpto_candidato);
+        const elMuni = document.querySelector('#listMuni');
+        elMuni.length = 1; // Limpiar
+        filtrados.forEach(item => elMuni.add(new Option(item.namemuni, item.idmuni)));
+
+        // 3. Ahora sí asignamos el municipio
+        $('#listMuni').val(data.muni_candidato);
         $('#listCurul').val(data.curul_candidato);
         $('#listPartido').val(data.partido_candidato);
         $('#listEstado').val(data.estado_candidato);
@@ -206,6 +268,8 @@ function openModal(isEdit = false, data = null) {
         header.classList.replace("headerUpdate", "headerRegister");
         btn.classList.replace("btn-info", "btn-primary");
         document.querySelector('#btnText').innerHTML = "Guardar";
+        $('#listDpto').val("");
+        $('#listMuni').val("");
         $('#listCurul').val("");
         $('#listPartido').val("");
         $('#listEstado').val("1");

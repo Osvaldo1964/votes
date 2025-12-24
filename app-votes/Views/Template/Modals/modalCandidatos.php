@@ -59,6 +59,20 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
+                            <label for="listDpto">Departamento</label>
+                            <select class="form-control selectpicker" id="listDpto" name="listDpto" required>
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="listMuni">Municipio</label>
+                            <select class="form-control selectpicker" id="listMuni" name="listMuni" required>
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
                             <label for="listCurul">Curul</label>
                             <select class="form-control selectpicker" id="listCurul" name="listCurul" required>
                                 <option value="">Seleccione</option>
@@ -124,6 +138,14 @@
                         <tr>
                             <td>Email (Usuario):</td>
                             <td id="celEmail">Larry</td>
+                        </tr>
+                        <tr>
+                            <td>Departamento:</td>
+                            <td id="celDpto">Larry</td>
+                        </tr>
+                        <tr>
+                            <td>Municipio:</td>
+                            <td id="celMuni">Larry</td>
                         </tr>
                         <tr>
                             <td>Dirección:</td>

@@ -30,5 +30,6929 @@
             "id": "4",
             "nombre": "Partido Verde"
         }
+    ],
+    "dptos": [
+        {
+            "iddpto": "1",
+            "namedpto": "ANTIOQUIA",
+            "codedpto": "05"
+        },
+        {
+            "iddpto": "2",
+            "namedpto": "ATLANTICO",
+            "codedpto": "08"
+        },
+        {
+            "iddpto": "3",
+            "namedpto": "BOGOTA",
+            "codedpto": "11"
+        },
+        {
+            "iddpto": "4",
+            "namedpto": "BOLIVAR",
+            "codedpto": "13"
+        },
+        {
+            "iddpto": "5",
+            "namedpto": "BOYACA",
+            "codedpto": "15"
+        },
+        {
+            "iddpto": "6",
+            "namedpto": "CALDAS",
+            "codedpto": "17"
+        },
+        {
+            "iddpto": "7",
+            "namedpto": "CAQUETA",
+            "codedpto": "18"
+        },
+        {
+            "iddpto": "8",
+            "namedpto": "CAUCA",
+            "codedpto": "19"
+        },
+        {
+            "iddpto": "9",
+            "namedpto": "CESAR",
+            "codedpto": "20"
+        },
+        {
+            "iddpto": "10",
+            "namedpto": "CORDOBA",
+            "codedpto": "23"
+        },
+        {
+            "iddpto": "11",
+            "namedpto": "CUNDINAMARCA",
+            "codedpto": "25"
+        },
+        {
+            "iddpto": "12",
+            "namedpto": "CHOCO",
+            "codedpto": "27"
+        },
+        {
+            "iddpto": "13",
+            "namedpto": "HUILA",
+            "codedpto": "41"
+        },
+        {
+            "iddpto": "14",
+            "namedpto": "LA GUAJIRA",
+            "codedpto": "44"
+        },
+        {
+            "iddpto": "15",
+            "namedpto": "MAGDALENA",
+            "codedpto": "47"
+        },
+        {
+            "iddpto": "16",
+            "namedpto": "META",
+            "codedpto": "50"
+        },
+        {
+            "iddpto": "17",
+            "namedpto": "NARIÑO",
+            "codedpto": "52"
+        },
+        {
+            "iddpto": "18",
+            "namedpto": "N. DE SANTANDER",
+            "codedpto": "54"
+        },
+        {
+            "iddpto": "19",
+            "namedpto": "QUINDIO",
+            "codedpto": "63"
+        },
+        {
+            "iddpto": "20",
+            "namedpto": "RISARALDA",
+            "codedpto": "66"
+        },
+        {
+            "iddpto": "21",
+            "namedpto": "SANTANDER",
+            "codedpto": "68"
+        },
+        {
+            "iddpto": "22",
+            "namedpto": "SUCRE",
+            "codedpto": "70"
+        },
+        {
+            "iddpto": "23",
+            "namedpto": "TOLIMA",
+            "codedpto": "73"
+        },
+        {
+            "iddpto": "24",
+            "namedpto": "VALLE DEL CAUCA",
+            "codedpto": "76"
+        },
+        {
+            "iddpto": "25",
+            "namedpto": "ARAUCA",
+            "codedpto": "81"
+        },
+        {
+            "iddpto": "26",
+            "namedpto": "CASANARE",
+            "codedpto": "85"
+        },
+        {
+            "iddpto": "27",
+            "namedpto": "PUTUMAYO",
+            "codedpto": "86"
+        },
+        {
+            "iddpto": "28",
+            "namedpto": "SAN ANDRES",
+            "codedpto": "88"
+        },
+        {
+            "iddpto": "29",
+            "namedpto": "AMAZONAS",
+            "codedpto": "91"
+        },
+        {
+            "iddpto": "30",
+            "namedpto": "GUAINIA",
+            "codedpto": "94"
+        },
+        {
+            "iddpto": "31",
+            "namedpto": "GUAVIARE",
+            "codedpto": "95"
+        },
+        {
+            "iddpto": "32",
+            "namedpto": "VAUPES",
+            "codedpto": "97"
+        },
+        {
+            "iddpto": "33",
+            "namedpto": "VICHADA",
+            "codedpto": "99"
+        },
+        {
+            "iddpto": "34",
+            "namedpto": "VENEZUELA",
+            "codedpto": "55"
+        }
+    ],
+    "munis": [
+        {
+            "idmuni": "1",
+            "namemuni": "MEDELLÍN",
+            "codemuni": "5001",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "2",
+            "namemuni": "ABEJORRAL",
+            "codemuni": "5002",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "3",
+            "namemuni": "ABRIAQUÍ",
+            "codemuni": "5004",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "4",
+            "namemuni": "ALEJANDRÍA",
+            "codemuni": "5021",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "5",
+            "namemuni": "AMAGÁ",
+            "codemuni": "503",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "6",
+            "namemuni": "AMALFI",
+            "codemuni": "5031",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "7",
+            "namemuni": "ANDES",
+            "codemuni": "5034",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "8",
+            "namemuni": "ANGELÓPOLIS",
+            "codemuni": "5036",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "9",
+            "namemuni": "ANGOSTURA",
+            "codemuni": "5038",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "10",
+            "namemuni": "ANORÍ",
+            "codemuni": "504",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "11",
+            "namemuni": "TUNUNGUÁ",
+            "codemuni": "15832",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "12",
+            "namemuni": "ANZA",
+            "codemuni": "5044",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "13",
+            "namemuni": "APARTADÓ",
+            "codemuni": "5045",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "14",
+            "namemuni": "ARBOLETES",
+            "codemuni": "5051",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "15",
+            "namemuni": "ARGELIA",
+            "codemuni": "5055",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "16",
+            "namemuni": "ARMENIA",
+            "codemuni": "5059",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "17",
+            "namemuni": "BARBOSA",
+            "codemuni": "5079",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "18",
+            "namemuni": "BELLO",
+            "codemuni": "5088",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "19",
+            "namemuni": "BETANIA",
+            "codemuni": "5091",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "20",
+            "namemuni": "BETULIA",
+            "codemuni": "5093",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "21",
+            "namemuni": "CIUDAD BOLÍVAR",
+            "codemuni": "5101",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "22",
+            "namemuni": "BRICEÑO",
+            "codemuni": "5107",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "23",
+            "namemuni": "BURITICÁ",
+            "codemuni": "5113",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "24",
+            "namemuni": "CÁCERES",
+            "codemuni": "512",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "25",
+            "namemuni": "CAICEDO",
+            "codemuni": "5125",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "26",
+            "namemuni": "CALDAS",
+            "codemuni": "5129",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "27",
+            "namemuni": "CAMPAMENTO",
+            "codemuni": "5134",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "28",
+            "namemuni": "CAÑASGORDAS",
+            "codemuni": "5138",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "29",
+            "namemuni": "CARACOLÍ",
+            "codemuni": "5142",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "30",
+            "namemuni": "CARAMANTA",
+            "codemuni": "5145",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "31",
+            "namemuni": "CAREPA",
+            "codemuni": "5147",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "32",
+            "namemuni": "MOTAVITA",
+            "codemuni": "15476",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "33",
+            "namemuni": "CAROLINA",
+            "codemuni": "515",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "34",
+            "namemuni": "CAUCASIA",
+            "codemuni": "5154",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "35",
+            "namemuni": "CHIGORODÓ",
+            "codemuni": "5172",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "36",
+            "namemuni": "CISNEROS",
+            "codemuni": "519",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "37",
+            "namemuni": "COCORNÁ",
+            "codemuni": "5197",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "38",
+            "namemuni": "CONCEPCIÓN",
+            "codemuni": "5206",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "39",
+            "namemuni": "CONCORDIA",
+            "codemuni": "5209",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "40",
+            "namemuni": "COPACABANA",
+            "codemuni": "5212",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "41",
+            "namemuni": "DABEIBA",
+            "codemuni": "5234",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "42",
+            "namemuni": "DON MATÍAS",
+            "codemuni": "5237",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "43",
+            "namemuni": "EB?JICO",
+            "codemuni": "524",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "44",
+            "namemuni": "EL BAGRE",
+            "codemuni": "525",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "45",
+            "namemuni": "ENTRERRIOS",
+            "codemuni": "5264",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "46",
+            "namemuni": "ENVIGADO",
+            "codemuni": "5266",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "47",
+            "namemuni": "FREDONIA",
+            "codemuni": "5282",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "48",
+            "namemuni": "SAN BERNARDO DEL VIENTO",
+            "codemuni": "23675",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "49",
+            "namemuni": "GIRALDO",
+            "codemuni": "5306",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "50",
+            "namemuni": "GIRARDOTA",
+            "codemuni": "5308",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "51",
+            "namemuni": "GÓMEZ PLATA",
+            "codemuni": "531",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "52",
+            "namemuni": "ISTMINA",
+            "codemuni": "27361",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "53",
+            "namemuni": "GUADALUPE",
+            "codemuni": "5315",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "54",
+            "namemuni": "GUARNE",
+            "codemuni": "5318",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "55",
+            "namemuni": "GUATAPÉ",
+            "codemuni": "5321",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "56",
+            "namemuni": "HELICONIA",
+            "codemuni": "5347",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "57",
+            "namemuni": "HISPANIA",
+            "codemuni": "5353",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "58",
+            "namemuni": "ITAGUI",
+            "codemuni": "536",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "59",
+            "namemuni": "ITUANGO",
+            "codemuni": "5361",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "60",
+            "namemuni": "BELMIRA",
+            "codemuni": "5086",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "61",
+            "namemuni": "JERICÓ",
+            "codemuni": "5368",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "62",
+            "namemuni": "LA CEJA",
+            "codemuni": "5376",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "63",
+            "namemuni": "LA ESTRELLA",
+            "codemuni": "538",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "64",
+            "namemuni": "LA PINTADA",
+            "codemuni": "539",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "65",
+            "namemuni": "LA UNIÓN",
+            "codemuni": "54",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "66",
+            "namemuni": "LIBORINA",
+            "codemuni": "5411",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "67",
+            "namemuni": "MACEO",
+            "codemuni": "5425",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "68",
+            "namemuni": "MARINILLA",
+            "codemuni": "544",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "69",
+            "namemuni": "MONTEBELLO",
+            "codemuni": "5467",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "70",
+            "namemuni": "MURIND?",
+            "codemuni": "5475",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "71",
+            "namemuni": "MUTAT?",
+            "codemuni": "548",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "72",
+            "namemuni": "NARIÑO",
+            "codemuni": "5483",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "73",
+            "namemuni": "NECOCLÍ",
+            "codemuni": "549",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "74",
+            "namemuni": "NECH?",
+            "codemuni": "5495",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "75",
+            "namemuni": "OLAYA",
+            "codemuni": "5501",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "76",
+            "namemuni": "PEÑOL",
+            "codemuni": "5541",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "77",
+            "namemuni": "PEQUE",
+            "codemuni": "5543",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "78",
+            "namemuni": "PUEBLORRICO",
+            "codemuni": "5576",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "79",
+            "namemuni": "PUERTO BERRÍO",
+            "codemuni": "5579",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "80",
+            "namemuni": "PUERTO NARE",
+            "codemuni": "5585",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "81",
+            "namemuni": "PUERTO TRIUNFO",
+            "codemuni": "5591",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "82",
+            "namemuni": "REMEDIOS",
+            "codemuni": "5604",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "83",
+            "namemuni": "RETIRO",
+            "codemuni": "5607",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "84",
+            "namemuni": "RIONEGRO",
+            "codemuni": "5615",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "85",
+            "namemuni": "SABANALARGA",
+            "codemuni": "5628",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "86",
+            "namemuni": "SABANETA",
+            "codemuni": "5631",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "87",
+            "namemuni": "SALGAR",
+            "codemuni": "5642",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "88",
+            "namemuni": "CIÉNEGA",
+            "codemuni": "15189",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "89",
+            "namemuni": "SANTACRUZ",
+            "codemuni": "52699",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "90",
+            "namemuni": "SAN FRANCISCO",
+            "codemuni": "5652",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "91",
+            "namemuni": "SAN JERÓNIMO",
+            "codemuni": "5656",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "92",
+            "namemuni": "PUERTO WILCHES",
+            "codemuni": "68575",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "93",
+            "namemuni": "PUERTO PARRA",
+            "codemuni": "68573",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "94",
+            "namemuni": "SAN LUIS",
+            "codemuni": "566",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "95",
+            "namemuni": "SAN PEDRO",
+            "codemuni": "5664",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "96",
+            "namemuni": "SAN RAFAEL",
+            "codemuni": "5667",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "97",
+            "namemuni": "SAN ROQUE",
+            "codemuni": "567",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "98",
+            "namemuni": "SAN VICENTE",
+            "codemuni": "5674",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "99",
+            "namemuni": "SANTA BARBARA",
+            "codemuni": "5679",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "100",
+            "namemuni": "SANTO DOMINGO",
+            "codemuni": "569",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "101",
+            "namemuni": "EL SANTUARIO",
+            "codemuni": "5697",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "102",
+            "namemuni": "SEGOVIA",
+            "codemuni": "5736",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "103",
+            "namemuni": "SOPETR?N",
+            "codemuni": "5761",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "104",
+            "namemuni": "URIBE",
+            "codemuni": "5037",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "105",
+            "namemuni": "TÁMESIS",
+            "codemuni": "5789",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "106",
+            "namemuni": "TARAZÁ",
+            "codemuni": "579",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "107",
+            "namemuni": "TARSO",
+            "codemuni": "5792",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "108",
+            "namemuni": "TITIRIB?",
+            "codemuni": "5809",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "109",
+            "namemuni": "TOLEDO",
+            "codemuni": "5819",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "110",
+            "namemuni": "TURBO",
+            "codemuni": "5837",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "111",
+            "namemuni": "URAMITA",
+            "codemuni": "5842",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "112",
+            "namemuni": "URRAO",
+            "codemuni": "5847",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "113",
+            "namemuni": "VALDIVIA",
+            "codemuni": "5854",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "114",
+            "namemuni": "VALPARAÍSO",
+            "codemuni": "5856",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "115",
+            "namemuni": "VEGACHÍ",
+            "codemuni": "5858",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "116",
+            "namemuni": "VENECIA",
+            "codemuni": "5861",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "117",
+            "namemuni": "YAL?",
+            "codemuni": "5885",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "118",
+            "namemuni": "YARUMAL",
+            "codemuni": "5887",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "119",
+            "namemuni": "YOLOMBÓ",
+            "codemuni": "589",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "120",
+            "namemuni": "YONDÓ",
+            "codemuni": "5893",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "121",
+            "namemuni": "ZARAGOZA",
+            "codemuni": "5895",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "122",
+            "namemuni": "BARRANQUILLA",
+            "codemuni": "8001",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "123",
+            "namemuni": "BARANOA",
+            "codemuni": "8078",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "124",
+            "namemuni": "CANDELARIA",
+            "codemuni": "8141",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "125",
+            "namemuni": "GALAPA",
+            "codemuni": "8296",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "126",
+            "namemuni": "LURUACO",
+            "codemuni": "8421",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "127",
+            "namemuni": "MALAMBO",
+            "codemuni": "8433",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "128",
+            "namemuni": "MANATÍ",
+            "codemuni": "8436",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "129",
+            "namemuni": "PIOJÓ",
+            "codemuni": "8549",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "130",
+            "namemuni": "POLONUEVO",
+            "codemuni": "8558",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "131",
+            "namemuni": "SABANAGRANDE",
+            "codemuni": "8634",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "132",
+            "namemuni": "SABANALARGA",
+            "codemuni": "8638",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "133",
+            "namemuni": "SANTA LUCÍA",
+            "codemuni": "8675",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "134",
+            "namemuni": "SANTO TOMÁS",
+            "codemuni": "8685",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "135",
+            "namemuni": "SOLEDAD",
+            "codemuni": "8758",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "136",
+            "namemuni": "SUAN",
+            "codemuni": "877",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "137",
+            "namemuni": "TUBARÁ",
+            "codemuni": "8832",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "138",
+            "namemuni": "USIACURÍ",
+            "codemuni": "8849",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "139",
+            "namemuni": "ACHÍ",
+            "codemuni": "13006",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "140",
+            "namemuni": "ARENAL",
+            "codemuni": "13042",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "141",
+            "namemuni": "ARJONA",
+            "codemuni": "13052",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "142",
+            "namemuni": "ARROYOHONDO",
+            "codemuni": "13062",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "143",
+            "namemuni": "CALAMAR",
+            "codemuni": "1314",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "144",
+            "namemuni": "CANTAGALLO",
+            "codemuni": "1316",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "145",
+            "namemuni": "CICUCO",
+            "codemuni": "13188",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "146",
+            "namemuni": "CÓRDOBA",
+            "codemuni": "13212",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "147",
+            "namemuni": "CLEMENCIA",
+            "codemuni": "13222",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "148",
+            "namemuni": "EL GUAMO",
+            "codemuni": "13248",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "149",
+            "namemuni": "MAGANGUE",
+            "codemuni": "1343",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "150",
+            "namemuni": "MAHATES",
+            "codemuni": "13433",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "151",
+            "namemuni": "MARGARITA",
+            "codemuni": "1344",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "152",
+            "namemuni": "MONTECRISTO",
+            "codemuni": "13458",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "153",
+            "namemuni": "SANTA CRUZ DE MOMPOX",
+            "codemuni": "13468",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "154",
+            "namemuni": "MORALES",
+            "codemuni": "13473",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "155",
+            "namemuni": "NOROSI",
+            "codemuni": "1349",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "156",
+            "namemuni": "PINILLOS",
+            "codemuni": "13549",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "157",
+            "namemuni": "REGIDOR",
+            "codemuni": "1358",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "158",
+            "namemuni": "RIO VIEJO",
+            "codemuni": "136",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "159",
+            "namemuni": "SAN ESTANISLAO",
+            "codemuni": "13647",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "160",
+            "namemuni": "SAN FERNANDO",
+            "codemuni": "1365",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "161",
+            "namemuni": "SAN JUAN NEPOMUCENO",
+            "codemuni": "13657",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "162",
+            "namemuni": "SANTA CATALINA",
+            "codemuni": "13673",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "163",
+            "namemuni": "SANTA ROSA",
+            "codemuni": "13683",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "164",
+            "namemuni": "SIMITÍ",
+            "codemuni": "13744",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "165",
+            "namemuni": "SOPLAVIENTO",
+            "codemuni": "1376",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "166",
+            "namemuni": "TALAIGUA NUEVO",
+            "codemuni": "1378",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "167",
+            "namemuni": "TIQUISIO",
+            "codemuni": "1381",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "168",
+            "namemuni": "TURBACO",
+            "codemuni": "13836",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "169",
+            "namemuni": "TURBANA",
+            "codemuni": "13838",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "170",
+            "namemuni": "VILLANUEVA",
+            "codemuni": "13873",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "171",
+            "namemuni": "TUNJA",
+            "codemuni": "15001",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "172",
+            "namemuni": "ALMEIDA",
+            "codemuni": "15022",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "173",
+            "namemuni": "AQUITANIA",
+            "codemuni": "15047",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "174",
+            "namemuni": "ARCABUCO",
+            "codemuni": "15051",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "175",
+            "namemuni": "BERBEO",
+            "codemuni": "1509",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "176",
+            "namemuni": "BET?ITIVA",
+            "codemuni": "15092",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "177",
+            "namemuni": "BOAVITA",
+            "codemuni": "15097",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "178",
+            "namemuni": "BOYACÁ",
+            "codemuni": "15104",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "179",
+            "namemuni": "BRICEÑO",
+            "codemuni": "15106",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "180",
+            "namemuni": "BUENA VISTA",
+            "codemuni": "15109",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "181",
+            "namemuni": "BUSBANZÁ",
+            "codemuni": "15114",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "182",
+            "namemuni": "CALDAS",
+            "codemuni": "15131",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "183",
+            "namemuni": "CAMPOHERMOSO",
+            "codemuni": "15135",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "184",
+            "namemuni": "CERINZA",
+            "codemuni": "15162",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "185",
+            "namemuni": "CHINAVITA",
+            "codemuni": "15172",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "186",
+            "namemuni": "CHIQUINQUIRÁ",
+            "codemuni": "15176",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "187",
+            "namemuni": "CHISCAS",
+            "codemuni": "1518",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "188",
+            "namemuni": "CHITA",
+            "codemuni": "15183",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "189",
+            "namemuni": "CHITARAQUE",
+            "codemuni": "15185",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "190",
+            "namemuni": "CHIVATÁ",
+            "codemuni": "15187",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "191",
+            "namemuni": "CÓMBITA",
+            "codemuni": "15204",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "192",
+            "namemuni": "COPER",
+            "codemuni": "15212",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "193",
+            "namemuni": "CORRALES",
+            "codemuni": "15215",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "194",
+            "namemuni": "COVARACH?A",
+            "codemuni": "15218",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "195",
+            "namemuni": "CUBARÁ",
+            "codemuni": "15223",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "196",
+            "namemuni": "CUCAITA",
+            "codemuni": "15224",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "197",
+            "namemuni": "CU?TIVA",
+            "codemuni": "15226",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "198",
+            "namemuni": "CH?QUIZA",
+            "codemuni": "15232",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "199",
+            "namemuni": "CHIVOR",
+            "codemuni": "15236",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "200",
+            "namemuni": "DUITAMA",
+            "codemuni": "15238",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "201",
+            "namemuni": "EL COCUY",
+            "codemuni": "15244",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "202",
+            "namemuni": "EL ESPINO",
+            "codemuni": "15248",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "203",
+            "namemuni": "FIRAVITOBA",
+            "codemuni": "15272",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "204",
+            "namemuni": "FLORESTA",
+            "codemuni": "15276",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "205",
+            "namemuni": "GACHANTIVÁ",
+            "codemuni": "15293",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "206",
+            "namemuni": "GAMEZA",
+            "codemuni": "15296",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "207",
+            "namemuni": "GARAGOA",
+            "codemuni": "15299",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "208",
+            "namemuni": "GUACAMAYAS",
+            "codemuni": "15317",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "209",
+            "namemuni": "GUATEQUE",
+            "codemuni": "15322",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "210",
+            "namemuni": "GUAYAT?",
+            "codemuni": "15325",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "211",
+            "namemuni": "G?IC?N",
+            "codemuni": "15332",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "212",
+            "namemuni": "IZA",
+            "codemuni": "15362",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "213",
+            "namemuni": "JENESANO",
+            "codemuni": "15367",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "214",
+            "namemuni": "JERICÓ",
+            "codemuni": "15368",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "215",
+            "namemuni": "LABRANZAGRANDE",
+            "codemuni": "15377",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "216",
+            "namemuni": "LA CAPILLA",
+            "codemuni": "1538",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "217",
+            "namemuni": "LA VICTORIA",
+            "codemuni": "15401",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "218",
+            "namemuni": "MACANAL",
+            "codemuni": "15425",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "219",
+            "namemuni": "MARIP?",
+            "codemuni": "15442",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "220",
+            "namemuni": "MIRAFLORES",
+            "codemuni": "15455",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "221",
+            "namemuni": "MONGUA",
+            "codemuni": "15464",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "222",
+            "namemuni": "MONGU?",
+            "codemuni": "15466",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "223",
+            "namemuni": "MONIQUIRÁ",
+            "codemuni": "15469",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "224",
+            "namemuni": "MUZO",
+            "codemuni": "1548",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "225",
+            "namemuni": "NOBSA",
+            "codemuni": "15491",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "226",
+            "namemuni": "NUEVO COLÓN",
+            "codemuni": "15494",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "227",
+            "namemuni": "OICAT?",
+            "codemuni": "155",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "228",
+            "namemuni": "OTANCHE",
+            "codemuni": "15507",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "229",
+            "namemuni": "PACHAVITA",
+            "codemuni": "15511",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "230",
+            "namemuni": "PÁEZ",
+            "codemuni": "15514",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "231",
+            "namemuni": "PAIPA",
+            "codemuni": "15516",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "232",
+            "namemuni": "PAJARITO",
+            "codemuni": "15518",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "233",
+            "namemuni": "PANQUEBA",
+            "codemuni": "15522",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "234",
+            "namemuni": "PAUNA",
+            "codemuni": "15531",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "235",
+            "namemuni": "PAYA",
+            "codemuni": "15533",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "236",
+            "namemuni": "PESCA",
+            "codemuni": "15542",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "237",
+            "namemuni": "PISBA",
+            "codemuni": "1555",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "238",
+            "namemuni": "PUERTO BOYACÁ",
+            "codemuni": "15572",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "239",
+            "namemuni": "QU?PAMA",
+            "codemuni": "1558",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "240",
+            "namemuni": "RAMIRIQUÁ",
+            "codemuni": "15599",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "241",
+            "namemuni": "R?QUIRA",
+            "codemuni": "156",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "242",
+            "namemuni": "RONDÓN",
+            "codemuni": "15621",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "243",
+            "namemuni": "SABOYÁ",
+            "codemuni": "15632",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "244",
+            "namemuni": "S?CHICA",
+            "codemuni": "15638",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "245",
+            "namemuni": "SAMAC?",
+            "codemuni": "15646",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "246",
+            "namemuni": "SAN EDUARDO",
+            "codemuni": "1566",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "247",
+            "namemuni": "SAN MATEO",
+            "codemuni": "15673",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "248",
+            "namemuni": "SANTANA",
+            "codemuni": "15686",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "249",
+            "namemuni": "SANTA MARÍA",
+            "codemuni": "1569",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "250",
+            "namemuni": "SANTA SOFÍA",
+            "codemuni": "15696",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "251",
+            "namemuni": "SATIVANORTE",
+            "codemuni": "1572",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "252",
+            "namemuni": "SATIVASUR",
+            "codemuni": "15723",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "253",
+            "namemuni": "SIACHOQUE",
+            "codemuni": "1574",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "254",
+            "namemuni": "SOAT?",
+            "codemuni": "15753",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "255",
+            "namemuni": "SOCOT?",
+            "codemuni": "15755",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "256",
+            "namemuni": "SOCHA",
+            "codemuni": "15757",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "257",
+            "namemuni": "SOGAMOSO",
+            "codemuni": "15759",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "258",
+            "namemuni": "SOMONDOCO",
+            "codemuni": "15761",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "259",
+            "namemuni": "SORA",
+            "codemuni": "15762",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "260",
+            "namemuni": "SOTAQUIR?",
+            "codemuni": "15763",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "261",
+            "namemuni": "SORAC?",
+            "codemuni": "15764",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "262",
+            "namemuni": "SUSAC?N",
+            "codemuni": "15774",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "263",
+            "namemuni": "SUTAMARCHÁN",
+            "codemuni": "15776",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "264",
+            "namemuni": "SUTATENZA",
+            "codemuni": "15778",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "265",
+            "namemuni": "TASCO",
+            "codemuni": "1579",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "266",
+            "namemuni": "TENZA",
+            "codemuni": "15798",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "267",
+            "namemuni": "TIBAN?",
+            "codemuni": "15804",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "268",
+            "namemuni": "TINJAC?",
+            "codemuni": "15808",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "269",
+            "namemuni": "TIPACOQUE",
+            "codemuni": "1581",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "270",
+            "namemuni": "TOCA",
+            "codemuni": "15814",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "271",
+            "namemuni": "T?PAGA",
+            "codemuni": "1582",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "272",
+            "namemuni": "TOTA",
+            "codemuni": "15822",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "273",
+            "namemuni": "TURMEQUÉ",
+            "codemuni": "15835",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "274",
+            "namemuni": "TUTAZ?",
+            "codemuni": "15839",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "275",
+            "namemuni": "UMBITA",
+            "codemuni": "15842",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "276",
+            "namemuni": "VENTAQUEMADA",
+            "codemuni": "15861",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "277",
+            "namemuni": "VIRACACH?",
+            "codemuni": "15879",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "278",
+            "namemuni": "ZETAQUIRA",
+            "codemuni": "15897",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "279",
+            "namemuni": "MANIZALES",
+            "codemuni": "17001",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "280",
+            "namemuni": "AGUADAS",
+            "codemuni": "17013",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "281",
+            "namemuni": "ANSERMA",
+            "codemuni": "17042",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "282",
+            "namemuni": "ARANZAZU",
+            "codemuni": "1705",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "283",
+            "namemuni": "BELALCÁZAR",
+            "codemuni": "17088",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "284",
+            "namemuni": "CHINCHINÁ",
+            "codemuni": "17174",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "285",
+            "namemuni": "FILADELFIA",
+            "codemuni": "17272",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "286",
+            "namemuni": "LA DORADA",
+            "codemuni": "1738",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "287",
+            "namemuni": "LA MERCED",
+            "codemuni": "17388",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "288",
+            "namemuni": "MANZANARES",
+            "codemuni": "17433",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "289",
+            "namemuni": "MARMATO",
+            "codemuni": "17442",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "290",
+            "namemuni": "MARULANDA",
+            "codemuni": "17446",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "291",
+            "namemuni": "NEIRA",
+            "codemuni": "17486",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "292",
+            "namemuni": "NORCASIA",
+            "codemuni": "17495",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "293",
+            "namemuni": "P?CORA",
+            "codemuni": "17513",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "294",
+            "namemuni": "PALESTINA",
+            "codemuni": "17524",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "295",
+            "namemuni": "PENSILVANIA",
+            "codemuni": "17541",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "296",
+            "namemuni": "RIOSUCIO",
+            "codemuni": "17614",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "297",
+            "namemuni": "RISARALDA",
+            "codemuni": "17616",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "298",
+            "namemuni": "SALAMINA",
+            "codemuni": "17653",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "299",
+            "namemuni": "SAMANÁ",
+            "codemuni": "17662",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "300",
+            "namemuni": "SAN JOSÉ",
+            "codemuni": "17665",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "301",
+            "namemuni": "SUP?A",
+            "codemuni": "17777",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "302",
+            "namemuni": "VICTORIA",
+            "codemuni": "17867",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "303",
+            "namemuni": "VILLAMARÍA",
+            "codemuni": "17873",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "304",
+            "namemuni": "VITERBO",
+            "codemuni": "17877",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "305",
+            "namemuni": "FLORENCIA",
+            "codemuni": "18001",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "306",
+            "namemuni": "ALBANIA",
+            "codemuni": "18029",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "307",
+            "namemuni": "CURILLO",
+            "codemuni": "18205",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "308",
+            "namemuni": "EL DONCELLO",
+            "codemuni": "18247",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "309",
+            "namemuni": "EL PAUJIL",
+            "codemuni": "18256",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "310",
+            "namemuni": "MORELIA",
+            "codemuni": "18479",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "311",
+            "namemuni": "PUERTO RICO",
+            "codemuni": "18592",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "312",
+            "namemuni": "SOLANO",
+            "codemuni": "18756",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "313",
+            "namemuni": "SOLITA",
+            "codemuni": "18785",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "314",
+            "namemuni": "VALPARAÍSO",
+            "codemuni": "1886",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "315",
+            "namemuni": "POPAYÁN",
+            "codemuni": "19001",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "316",
+            "namemuni": "ALMAGUER",
+            "codemuni": "19022",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "317",
+            "namemuni": "ARGELIA",
+            "codemuni": "1905",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "318",
+            "namemuni": "BALBOA",
+            "codemuni": "19075",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "319",
+            "namemuni": "BOLÍVAR",
+            "codemuni": "191",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "320",
+            "namemuni": "BUENOS AIRES",
+            "codemuni": "1911",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "321",
+            "namemuni": "CAJIBÍO",
+            "codemuni": "1913",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "322",
+            "namemuni": "CALDONO",
+            "codemuni": "19137",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "323",
+            "namemuni": "CALOTO",
+            "codemuni": "19142",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "324",
+            "namemuni": "CORINTO",
+            "codemuni": "19212",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "325",
+            "namemuni": "EL TAMBO",
+            "codemuni": "19256",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "326",
+            "namemuni": "FLORENCIA",
+            "codemuni": "1929",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "327",
+            "namemuni": "GUACHEN?",
+            "codemuni": "193",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "328",
+            "namemuni": "GUAPI",
+            "codemuni": "19318",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "329",
+            "namemuni": "INZ?",
+            "codemuni": "19355",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "330",
+            "namemuni": "JAMBAL?",
+            "codemuni": "19364",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "331",
+            "namemuni": "LA SIERRA",
+            "codemuni": "19392",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "332",
+            "namemuni": "LA VEGA",
+            "codemuni": "19397",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "333",
+            "namemuni": "LÓPEZ",
+            "codemuni": "19418",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "334",
+            "namemuni": "MERCADERES",
+            "codemuni": "1945",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "335",
+            "namemuni": "MIRANDA",
+            "codemuni": "19455",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "336",
+            "namemuni": "MORALES",
+            "codemuni": "19473",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "337",
+            "namemuni": "PADILLA",
+            "codemuni": "19513",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "338",
+            "namemuni": "PAT?A",
+            "codemuni": "19532",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "339",
+            "namemuni": "PIAMONTE",
+            "codemuni": "19533",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "340",
+            "namemuni": "PIENDAM?",
+            "codemuni": "19548",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "341",
+            "namemuni": "PUERTO TEJADA",
+            "codemuni": "19573",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "342",
+            "namemuni": "PURACÉ",
+            "codemuni": "19585",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "343",
+            "namemuni": "ROSAS",
+            "codemuni": "19622",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "344",
+            "namemuni": "SANTA ROSA",
+            "codemuni": "19701",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "345",
+            "namemuni": "SILVIA",
+            "codemuni": "19743",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "346",
+            "namemuni": "SOTARA",
+            "codemuni": "1976",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "347",
+            "namemuni": "SUÁREZ",
+            "codemuni": "1978",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "348",
+            "namemuni": "SUCRE",
+            "codemuni": "19785",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "349",
+            "namemuni": "TIMB?O",
+            "codemuni": "19807",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "350",
+            "namemuni": "TIMBIQU?",
+            "codemuni": "19809",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "351",
+            "namemuni": "TORIBIO",
+            "codemuni": "19821",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "352",
+            "namemuni": "TOTOR?",
+            "codemuni": "19824",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "353",
+            "namemuni": "VILLA RICA",
+            "codemuni": "19845",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "354",
+            "namemuni": "VALLEDUPAR",
+            "codemuni": "20001",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "355",
+            "namemuni": "AGUACHICA",
+            "codemuni": "20011",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "356",
+            "namemuni": "AGUSTÍN CODAZZI",
+            "codemuni": "20013",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "357",
+            "namemuni": "ASTREA",
+            "codemuni": "20032",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "358",
+            "namemuni": "BECERRIL",
+            "codemuni": "20045",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "359",
+            "namemuni": "BOSCONIA",
+            "codemuni": "2006",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "360",
+            "namemuni": "CHIMICHAGUA",
+            "codemuni": "20175",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "361",
+            "namemuni": "CHIRIGUANA",
+            "codemuni": "20178",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "362",
+            "namemuni": "CURUMANÍ",
+            "codemuni": "20228",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "363",
+            "namemuni": "EL COPEY",
+            "codemuni": "20238",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "364",
+            "namemuni": "EL PASO",
+            "codemuni": "2025",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "365",
+            "namemuni": "GAMARRA",
+            "codemuni": "20295",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "366",
+            "namemuni": "GONZÁLEZ",
+            "codemuni": "2031",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "367",
+            "namemuni": "LA GLORIA",
+            "codemuni": "20383",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "368",
+            "namemuni": "MANAURE BALCON DEL CESAR",
+            "codemuni": "20443",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "369",
+            "namemuni": "PAILITAS",
+            "codemuni": "20517",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "370",
+            "namemuni": "PELAYA",
+            "codemuni": "2055",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "371",
+            "namemuni": "PUEBLO BELLO",
+            "codemuni": "2057",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "372",
+            "namemuni": "LA PAZ",
+            "codemuni": "20621",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "373",
+            "namemuni": "SAN ALBERTO",
+            "codemuni": "2071",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "374",
+            "namemuni": "SAN DIEGO",
+            "codemuni": "2075",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "375",
+            "namemuni": "SAN MARTÍN",
+            "codemuni": "2077",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "376",
+            "namemuni": "TAMALAMEQUE",
+            "codemuni": "20787",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "377",
+            "namemuni": "MONTERIA",
+            "codemuni": "23001",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "378",
+            "namemuni": "AYAPEL",
+            "codemuni": "23068",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "379",
+            "namemuni": "BUENAVISTA",
+            "codemuni": "23079",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "380",
+            "namemuni": "CANALETE",
+            "codemuni": "2309",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "381",
+            "namemuni": "CERETÉ",
+            "codemuni": "23162",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "382",
+            "namemuni": "CHIMÁ",
+            "codemuni": "23168",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "383",
+            "namemuni": "CHINÚ",
+            "codemuni": "23182",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "384",
+            "namemuni": "COTORRA",
+            "codemuni": "233",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "385",
+            "namemuni": "LORICA",
+            "codemuni": "23417",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "386",
+            "namemuni": "LOS CÓRDOBAS",
+            "codemuni": "23419",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "387",
+            "namemuni": "MOMIL",
+            "codemuni": "23464",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "388",
+            "namemuni": "MOÑITOS",
+            "codemuni": "235",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "389",
+            "namemuni": "PLANETA RICA",
+            "codemuni": "23555",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "390",
+            "namemuni": "PUEBLO NUEVO",
+            "codemuni": "2357",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "391",
+            "namemuni": "PUERTO ESCONDIDO",
+            "codemuni": "23574",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "392",
+            "namemuni": "PURÍSIMA DE LA CONCEPCION",
+            "codemuni": "23586",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "393",
+            "namemuni": "SAHAGÚN",
+            "codemuni": "2366",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "394",
+            "namemuni": "SAN ANDRÉS SOTAVENTO",
+            "codemuni": "2367",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "395",
+            "namemuni": "SAN ANTERO",
+            "codemuni": "23672",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "396",
+            "namemuni": "SAN PELAYO",
+            "codemuni": "23686",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "397",
+            "namemuni": "TIERRALTA",
+            "codemuni": "23807",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "398",
+            "namemuni": "TUCHÍN",
+            "codemuni": "23815",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "399",
+            "namemuni": "VALENCIA",
+            "codemuni": "23855",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "400",
+            "namemuni": "ANAPOIMA",
+            "codemuni": "25035",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "401",
+            "namemuni": "ARBELÁEZ",
+            "codemuni": "25053",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "402",
+            "namemuni": "BELTRÁN",
+            "codemuni": "25086",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "403",
+            "namemuni": "BITUIMA",
+            "codemuni": "25095",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "404",
+            "namemuni": "BOJACÁ",
+            "codemuni": "25099",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "405",
+            "namemuni": "CABRERA",
+            "codemuni": "2512",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "406",
+            "namemuni": "CACHIPAY",
+            "codemuni": "25123",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "407",
+            "namemuni": "CAJICÁ",
+            "codemuni": "25126",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "408",
+            "namemuni": "CAPARRAPÍ",
+            "codemuni": "25148",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "409",
+            "namemuni": "CAQUEZA",
+            "codemuni": "25151",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "410",
+            "namemuni": "CHAGUAN?",
+            "codemuni": "25168",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "411",
+            "namemuni": "CHIPAQUE",
+            "codemuni": "25178",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "412",
+            "namemuni": "CHOACH?",
+            "codemuni": "25181",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "413",
+            "namemuni": "CHOCONTÁ",
+            "codemuni": "25183",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "414",
+            "namemuni": "COGUA",
+            "codemuni": "252",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "415",
+            "namemuni": "COTA",
+            "codemuni": "25214",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "416",
+            "namemuni": "CUCUNUBÁ",
+            "codemuni": "25224",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "417",
+            "namemuni": "EL COLEGIO",
+            "codemuni": "25245",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "418",
+            "namemuni": "EL ROSAL",
+            "codemuni": "2526",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "419",
+            "namemuni": "FOMEQUE",
+            "codemuni": "25279",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "420",
+            "namemuni": "FOSCA",
+            "codemuni": "25281",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "421",
+            "namemuni": "FUNZA",
+            "codemuni": "25286",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "422",
+            "namemuni": "FÚQUENE",
+            "codemuni": "25288",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "423",
+            "namemuni": "GACHALA",
+            "codemuni": "25293",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "424",
+            "namemuni": "GACHANCIPÁ",
+            "codemuni": "25295",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "425",
+            "namemuni": "GACHETÁ",
+            "codemuni": "25297",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "426",
+            "namemuni": "GIRARDOT",
+            "codemuni": "25307",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "427",
+            "namemuni": "GRANADA",
+            "codemuni": "25312",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "428",
+            "namemuni": "GUACHET?",
+            "codemuni": "25317",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "429",
+            "namemuni": "GUADUAS",
+            "codemuni": "2532",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "430",
+            "namemuni": "GUASCA",
+            "codemuni": "25322",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "431",
+            "namemuni": "GUATAQU?",
+            "codemuni": "25324",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "432",
+            "namemuni": "GUATAVITA",
+            "codemuni": "25326",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "433",
+            "namemuni": "GUAYABETAL",
+            "codemuni": "25335",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "434",
+            "namemuni": "GUTIÉRREZ",
+            "codemuni": "25339",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "435",
+            "namemuni": "JERUSALÉN",
+            "codemuni": "25368",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "436",
+            "namemuni": "JUN?N",
+            "codemuni": "25372",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "437",
+            "namemuni": "LA CALERA",
+            "codemuni": "25377",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "438",
+            "namemuni": "LA MESA",
+            "codemuni": "25386",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "439",
+            "namemuni": "LA PALMA",
+            "codemuni": "25394",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "440",
+            "namemuni": "LA PEÑA",
+            "codemuni": "25398",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "441",
+            "namemuni": "LA VEGA",
+            "codemuni": "25402",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "442",
+            "namemuni": "LENGUAZAQUE",
+            "codemuni": "25407",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "443",
+            "namemuni": "MACHETA",
+            "codemuni": "25426",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "444",
+            "namemuni": "MADRID",
+            "codemuni": "2543",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "445",
+            "namemuni": "MANTA",
+            "codemuni": "25436",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "446",
+            "namemuni": "MEDINA",
+            "codemuni": "25438",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "447",
+            "namemuni": "MOSQUERA",
+            "codemuni": "25473",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "448",
+            "namemuni": "NARI?O",
+            "codemuni": "25483",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "449",
+            "namemuni": "NEMOC?N",
+            "codemuni": "25486",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "450",
+            "namemuni": "NILO",
+            "codemuni": "25488",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "451",
+            "namemuni": "NIMAIMA",
+            "codemuni": "25489",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "452",
+            "namemuni": "NOCAIMA",
+            "codemuni": "25491",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "453",
+            "namemuni": "VENECIA",
+            "codemuni": "25506",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "454",
+            "namemuni": "PACHO",
+            "codemuni": "25513",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "455",
+            "namemuni": "PAIME",
+            "codemuni": "25518",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "456",
+            "namemuni": "PANDI",
+            "codemuni": "25524",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "457",
+            "namemuni": "PARATEBUENO",
+            "codemuni": "2553",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "458",
+            "namemuni": "PASCA",
+            "codemuni": "25535",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "459",
+            "namemuni": "PUERTO SALGAR",
+            "codemuni": "25572",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "460",
+            "namemuni": "PUL?",
+            "codemuni": "2558",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "461",
+            "namemuni": "QUEBRADANEGRA",
+            "codemuni": "25592",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "462",
+            "namemuni": "QUETAME",
+            "codemuni": "25594",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "463",
+            "namemuni": "QUIPILE",
+            "codemuni": "25596",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "464",
+            "namemuni": "APULO",
+            "codemuni": "25599",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "465",
+            "namemuni": "RICAURTE",
+            "codemuni": "25612",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "466",
+            "namemuni": "SAN BERNARDO",
+            "codemuni": "25649",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "467",
+            "namemuni": "SAN CAYETANO",
+            "codemuni": "25653",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "468",
+            "namemuni": "SAN FRANCISCO",
+            "codemuni": "25658",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "469",
+            "namemuni": "SESQUIL?",
+            "codemuni": "25736",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "470",
+            "namemuni": "SIBATÉ",
+            "codemuni": "2574",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "471",
+            "namemuni": "SILVANIA",
+            "codemuni": "25743",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "472",
+            "namemuni": "SIMIJACA",
+            "codemuni": "25745",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "473",
+            "namemuni": "SOACHA",
+            "codemuni": "25754",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "474",
+            "namemuni": "SUBACHOQUE",
+            "codemuni": "25769",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "475",
+            "namemuni": "SUESCA",
+            "codemuni": "25772",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "476",
+            "namemuni": "SUPAT?",
+            "codemuni": "25777",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "477",
+            "namemuni": "SUSA",
+            "codemuni": "25779",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "478",
+            "namemuni": "SUTATAUSA",
+            "codemuni": "25781",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "479",
+            "namemuni": "TABIO",
+            "codemuni": "25785",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "480",
+            "namemuni": "TAUSA",
+            "codemuni": "25793",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "481",
+            "namemuni": "TENA",
+            "codemuni": "25797",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "482",
+            "namemuni": "TENJO",
+            "codemuni": "25799",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "483",
+            "namemuni": "TIBACUY",
+            "codemuni": "25805",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "484",
+            "namemuni": "TIBIRITA",
+            "codemuni": "25807",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "485",
+            "namemuni": "TOCAIMA",
+            "codemuni": "25815",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "486",
+            "namemuni": "TOCANCIPÁ",
+            "codemuni": "25817",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "487",
+            "namemuni": "TOPAIP?",
+            "codemuni": "25823",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "488",
+            "namemuni": "UBAL?",
+            "codemuni": "25839",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "489",
+            "namemuni": "UBAQUE",
+            "codemuni": "25841",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "490",
+            "namemuni": "UNE",
+            "codemuni": "25845",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "491",
+            "namemuni": "ÚTICA",
+            "codemuni": "25851",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "492",
+            "namemuni": "VIAN?",
+            "codemuni": "25867",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "493",
+            "namemuni": "VILLAGÓMEZ",
+            "codemuni": "25871",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "494",
+            "namemuni": "VILLAPINZÓN",
+            "codemuni": "25873",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "495",
+            "namemuni": "VILLETA",
+            "codemuni": "25875",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "496",
+            "namemuni": "VIOT?",
+            "codemuni": "25878",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "497",
+            "namemuni": "ZIPAC?N",
+            "codemuni": "25898",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "498",
+            "namemuni": "QUIBDÓ",
+            "codemuni": "27001",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "499",
+            "namemuni": "ACANDÍ",
+            "codemuni": "27006",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "500",
+            "namemuni": "ALTO BAUDO",
+            "codemuni": "27025",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "501",
+            "namemuni": "ATRATO",
+            "codemuni": "2705",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "502",
+            "namemuni": "BAGADÓ",
+            "codemuni": "27073",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "503",
+            "namemuni": "BAHÍA SOLANO",
+            "codemuni": "27075",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "504",
+            "namemuni": "BAJO BAUDÓ",
+            "codemuni": "27077",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "505",
+            "namemuni": "BOJAYA",
+            "codemuni": "27099",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "506",
+            "namemuni": "CÉRTEGUI",
+            "codemuni": "2716",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "507",
+            "namemuni": "CONDOTO",
+            "codemuni": "27205",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "508",
+            "namemuni": "JURAD?",
+            "codemuni": "27372",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "509",
+            "namemuni": "LLOR?",
+            "codemuni": "27413",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "510",
+            "namemuni": "MEDIO ATRATO",
+            "codemuni": "27425",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "511",
+            "namemuni": "MEDIO BAUDÓ",
+            "codemuni": "2743",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "512",
+            "namemuni": "MEDIO SAN JUAN",
+            "codemuni": "2745",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "513",
+            "namemuni": "N?VITA",
+            "codemuni": "27491",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "514",
+            "namemuni": "NUQU?",
+            "codemuni": "27495",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "515",
+            "namemuni": "R?O IRO",
+            "codemuni": "2758",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "516",
+            "namemuni": "R?O QUITO",
+            "codemuni": "276",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "517",
+            "namemuni": "RIOSUCIO",
+            "codemuni": "27615",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "518",
+            "namemuni": "SIP?",
+            "codemuni": "27745",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "519",
+            "namemuni": "UNGUÍA",
+            "codemuni": "278",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "520",
+            "namemuni": "NEIVA",
+            "codemuni": "41001",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "521",
+            "namemuni": "ACEVEDO",
+            "codemuni": "41006",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "522",
+            "namemuni": "AGRADO",
+            "codemuni": "41013",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "523",
+            "namemuni": "AIPE",
+            "codemuni": "41016",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "524",
+            "namemuni": "ALGECIRAS",
+            "codemuni": "4102",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "525",
+            "namemuni": "ALTAMIRA",
+            "codemuni": "41026",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "526",
+            "namemuni": "BARAYA",
+            "codemuni": "41078",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "527",
+            "namemuni": "CAMPOALEGRE",
+            "codemuni": "41132",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "528",
+            "namemuni": "COLOMBIA",
+            "codemuni": "41206",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "529",
+            "namemuni": "ELÍAS",
+            "codemuni": "41244",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "530",
+            "namemuni": "GARZÓN",
+            "codemuni": "41298",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "531",
+            "namemuni": "GIGANTE",
+            "codemuni": "41306",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "532",
+            "namemuni": "GUADALUPE",
+            "codemuni": "41319",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "533",
+            "namemuni": "HOBO",
+            "codemuni": "41349",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "534",
+            "namemuni": "IQUIRA",
+            "codemuni": "41357",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "535",
+            "namemuni": "ISNOS",
+            "codemuni": "41359",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "536",
+            "namemuni": "LA ARGENTINA",
+            "codemuni": "41378",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "537",
+            "namemuni": "LA PLATA",
+            "codemuni": "41396",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "538",
+            "namemuni": "N?TAGA",
+            "codemuni": "41483",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "539",
+            "namemuni": "OPORAPA",
+            "codemuni": "41503",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "540",
+            "namemuni": "PAICOL",
+            "codemuni": "41518",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "541",
+            "namemuni": "PALERMO",
+            "codemuni": "41524",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "542",
+            "namemuni": "PALESTINA",
+            "codemuni": "4153",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "543",
+            "namemuni": "PITAL",
+            "codemuni": "41548",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "544",
+            "namemuni": "PITALITO",
+            "codemuni": "41551",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "545",
+            "namemuni": "RIVERA",
+            "codemuni": "41615",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "546",
+            "namemuni": "SALADOBLANCO",
+            "codemuni": "4166",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "547",
+            "namemuni": "SANTA MARÍA",
+            "codemuni": "41676",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "548",
+            "namemuni": "SUAZA",
+            "codemuni": "4177",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "549",
+            "namemuni": "TARQUI",
+            "codemuni": "41791",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "550",
+            "namemuni": "TESALIA",
+            "codemuni": "41797",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "551",
+            "namemuni": "TELLO",
+            "codemuni": "41799",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "552",
+            "namemuni": "TERUEL",
+            "codemuni": "41801",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "553",
+            "namemuni": "TIMAN?",
+            "codemuni": "41807",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "554",
+            "namemuni": "VILLAVIEJA",
+            "codemuni": "41872",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "555",
+            "namemuni": "YAGUAR?",
+            "codemuni": "41885",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "556",
+            "namemuni": "RIOHACHA",
+            "codemuni": "44001",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "557",
+            "namemuni": "ALBANIA",
+            "codemuni": "44035",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "558",
+            "namemuni": "BARRANCAS",
+            "codemuni": "44078",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "559",
+            "namemuni": "DIBULLA",
+            "codemuni": "4409",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "560",
+            "namemuni": "DISTRACCIÓN",
+            "codemuni": "44098",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "561",
+            "namemuni": "EL MOLINO",
+            "codemuni": "4411",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "562",
+            "namemuni": "FONSECA",
+            "codemuni": "44279",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "563",
+            "namemuni": "HATONUEVO",
+            "codemuni": "44378",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "564",
+            "namemuni": "MAICAO",
+            "codemuni": "4443",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "565",
+            "namemuni": "MANAURE",
+            "codemuni": "4456",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "566",
+            "namemuni": "URIBIA",
+            "codemuni": "44847",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "567",
+            "namemuni": "URUMITA",
+            "codemuni": "44855",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "568",
+            "namemuni": "VILLANUEVA",
+            "codemuni": "44874",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "569",
+            "namemuni": "SANTA MARTA",
+            "codemuni": "47001",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "570",
+            "namemuni": "ALGARROBO",
+            "codemuni": "4703",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "571",
+            "namemuni": "ARACATACA",
+            "codemuni": "47053",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "572",
+            "namemuni": "ARIGUANÍ",
+            "codemuni": "47058",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "573",
+            "namemuni": "CERRO SAN ANTONIO",
+            "codemuni": "47161",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "574",
+            "namemuni": "CHIVOLO",
+            "codemuni": "4717",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "575",
+            "namemuni": "CONCORDIA",
+            "codemuni": "47205",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "576",
+            "namemuni": "EL BANCO",
+            "codemuni": "47245",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "577",
+            "namemuni": "EL PIÑON",
+            "codemuni": "47258",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "578",
+            "namemuni": "EL RETÉN",
+            "codemuni": "47268",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "579",
+            "namemuni": "FUNDACION",
+            "codemuni": "47288",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "580",
+            "namemuni": "GUAMAL",
+            "codemuni": "47318",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "581",
+            "namemuni": "NUEVA GRANADA",
+            "codemuni": "4746",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "582",
+            "namemuni": "PEDRAZA",
+            "codemuni": "47541",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "583",
+            "namemuni": "PIVIJAY",
+            "codemuni": "47551",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "584",
+            "namemuni": "PLATO",
+            "codemuni": "47555",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "585",
+            "namemuni": "REMOLINO",
+            "codemuni": "47605",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "586",
+            "namemuni": "SALAMINA",
+            "codemuni": "47675",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "587",
+            "namemuni": "SAN ZENÓN",
+            "codemuni": "47703",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "588",
+            "namemuni": "SANTA ANA",
+            "codemuni": "47707",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "589",
+            "namemuni": "SITIONUEVO",
+            "codemuni": "47745",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "590",
+            "namemuni": "TENERIFE",
+            "codemuni": "47798",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "591",
+            "namemuni": "ZAPAYÁN",
+            "codemuni": "4796",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "592",
+            "namemuni": "ZONA BANANERA",
+            "codemuni": "4798",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "593",
+            "namemuni": "VILLAVICENCIO",
+            "codemuni": "50001",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "594",
+            "namemuni": "ACACIAS",
+            "codemuni": "50006",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "595",
+            "namemuni": "CABUYARO",
+            "codemuni": "50124",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "596",
+            "namemuni": "CUBARRAL",
+            "codemuni": "50223",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "597",
+            "namemuni": "CUMARAL",
+            "codemuni": "50226",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "598",
+            "namemuni": "EL CALVARIO",
+            "codemuni": "50245",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "599",
+            "namemuni": "EL CASTILLO",
+            "codemuni": "50251",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "600",
+            "namemuni": "EL DORADO",
+            "codemuni": "5027",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "601",
+            "namemuni": "GRANADA",
+            "codemuni": "50313",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "602",
+            "namemuni": "GUAMAL",
+            "codemuni": "50318",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "603",
+            "namemuni": "MAPIRIPÁN",
+            "codemuni": "50325",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "604",
+            "namemuni": "MESETAS",
+            "codemuni": "5033",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "605",
+            "namemuni": "LA MACARENA",
+            "codemuni": "5035",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "606",
+            "namemuni": "LEJANÍAS",
+            "codemuni": "504",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "607",
+            "namemuni": "PUERTO CONCORDIA",
+            "codemuni": "5045",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "608",
+            "namemuni": "PUERTO GAITÁN",
+            "codemuni": "50568",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "609",
+            "namemuni": "PUERTO LÓPEZ",
+            "codemuni": "50573",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "610",
+            "namemuni": "PUERTO LLERAS",
+            "codemuni": "50577",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "611",
+            "namemuni": "PUERTO RICO",
+            "codemuni": "5059",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "612",
+            "namemuni": "RESTREPO",
+            "codemuni": "50606",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "613",
+            "namemuni": "SAN JUANITO",
+            "codemuni": "50686",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "614",
+            "namemuni": "SAN MARTÍN",
+            "codemuni": "50689",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "615",
+            "namemuni": "VISTA HERMOSA",
+            "codemuni": "50711",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "616",
+            "namemuni": "PASTO",
+            "codemuni": "52001",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "617",
+            "namemuni": "ALBÁN",
+            "codemuni": "52019",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "618",
+            "namemuni": "ALDANA",
+            "codemuni": "52022",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "619",
+            "namemuni": "ANCUYÁ",
+            "codemuni": "52036",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "620",
+            "namemuni": "BARBACOAS",
+            "codemuni": "52079",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "621",
+            "namemuni": "COLÓN",
+            "codemuni": "52203",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "622",
+            "namemuni": "CONSACA",
+            "codemuni": "52207",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "623",
+            "namemuni": "CONTADERO",
+            "codemuni": "5221",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "624",
+            "namemuni": "CÓRDOBA",
+            "codemuni": "52215",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "625",
+            "namemuni": "CUASPUD",
+            "codemuni": "52224",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "626",
+            "namemuni": "CUMBAL",
+            "codemuni": "52227",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "627",
+            "namemuni": "CUMBITARA",
+            "codemuni": "52233",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "628",
+            "namemuni": "EL CHARCO",
+            "codemuni": "5225",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "629",
+            "namemuni": "EL PEÑOL",
+            "codemuni": "52254",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "630",
+            "namemuni": "EL ROSARIO",
+            "codemuni": "52256",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "631",
+            "namemuni": "EL TAMBO",
+            "codemuni": "5226",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "632",
+            "namemuni": "FUNES",
+            "codemuni": "52287",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "633",
+            "namemuni": "GUACHUCAL",
+            "codemuni": "52317",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "634",
+            "namemuni": "GUAITARILLA",
+            "codemuni": "5232",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "635",
+            "namemuni": "GUALMAT?N",
+            "codemuni": "52323",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "636",
+            "namemuni": "ILES",
+            "codemuni": "52352",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "637",
+            "namemuni": "IMU?S",
+            "codemuni": "52354",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "638",
+            "namemuni": "IPIALES",
+            "codemuni": "52356",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "639",
+            "namemuni": "LA CRUZ",
+            "codemuni": "52378",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "640",
+            "namemuni": "LA FLORIDA",
+            "codemuni": "52381",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "641",
+            "namemuni": "LA LLANADA",
+            "codemuni": "52385",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "642",
+            "namemuni": "LA TOLA",
+            "codemuni": "5239",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "643",
+            "namemuni": "LA UNIÓN",
+            "codemuni": "52399",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "644",
+            "namemuni": "LEIVA",
+            "codemuni": "52405",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "645",
+            "namemuni": "LINARES",
+            "codemuni": "52411",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "646",
+            "namemuni": "LOS ANDES",
+            "codemuni": "52418",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "647",
+            "namemuni": "MAG??",
+            "codemuni": "52427",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "648",
+            "namemuni": "MALLAMA",
+            "codemuni": "52435",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "649",
+            "namemuni": "MOSQUERA",
+            "codemuni": "52473",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "650",
+            "namemuni": "NARIÑO",
+            "codemuni": "5248",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "651",
+            "namemuni": "OLAYA HERRERA",
+            "codemuni": "5249",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "652",
+            "namemuni": "OSPINA",
+            "codemuni": "52506",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "653",
+            "namemuni": "FRANCISCO PIZARRO",
+            "codemuni": "5252",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "654",
+            "namemuni": "POLICARPA",
+            "codemuni": "5254",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "655",
+            "namemuni": "POTOSÍ",
+            "codemuni": "5256",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "656",
+            "namemuni": "PROVIDENCIA",
+            "codemuni": "52565",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "657",
+            "namemuni": "PUERRES",
+            "codemuni": "52573",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "658",
+            "namemuni": "PUPIALES",
+            "codemuni": "52585",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "659",
+            "namemuni": "RICAURTE",
+            "codemuni": "52612",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "660",
+            "namemuni": "ROBERTO PAY?N",
+            "codemuni": "52621",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "661",
+            "namemuni": "SAMANIEGO",
+            "codemuni": "52678",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "662",
+            "namemuni": "SANDON?",
+            "codemuni": "52683",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "663",
+            "namemuni": "SAN BERNARDO",
+            "codemuni": "52685",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "664",
+            "namemuni": "SAN LORENZO",
+            "codemuni": "52687",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "665",
+            "namemuni": "SAN PABLO",
+            "codemuni": "52693",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "666",
+            "namemuni": "SANTA BARBARA",
+            "codemuni": "52696",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "667",
+            "namemuni": "SAPUYES",
+            "codemuni": "5272",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "668",
+            "namemuni": "TAMINANGO",
+            "codemuni": "52786",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "669",
+            "namemuni": "TANGUA",
+            "codemuni": "52788",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "670",
+            "namemuni": "T?QUERRES",
+            "codemuni": "52838",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "671",
+            "namemuni": "YACUANQUER",
+            "codemuni": "52885",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "672",
+            "namemuni": "ARMENIA",
+            "codemuni": "63001",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "673",
+            "namemuni": "BUENAVISTA",
+            "codemuni": "63111",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "674",
+            "namemuni": "CIRCASIA",
+            "codemuni": "6319",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "675",
+            "namemuni": "CÓRDOBA",
+            "codemuni": "63212",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "676",
+            "namemuni": "FILANDIA",
+            "codemuni": "63272",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "677",
+            "namemuni": "LA TEBAIDA",
+            "codemuni": "63401",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "678",
+            "namemuni": "MONTENEGRO",
+            "codemuni": "6347",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "679",
+            "namemuni": "PIJAO",
+            "codemuni": "63548",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "680",
+            "namemuni": "QUIMBAYA",
+            "codemuni": "63594",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "681",
+            "namemuni": "SALENTO",
+            "codemuni": "6369",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "682",
+            "namemuni": "PEREIRA",
+            "codemuni": "66001",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "683",
+            "namemuni": "APÍA",
+            "codemuni": "66045",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "684",
+            "namemuni": "BALBOA",
+            "codemuni": "66075",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "685",
+            "namemuni": "DOSQUEBRADAS",
+            "codemuni": "6617",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "686",
+            "namemuni": "GU?TICA",
+            "codemuni": "66318",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "687",
+            "namemuni": "LA CELIA",
+            "codemuni": "66383",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "688",
+            "namemuni": "LA VIRGINIA",
+            "codemuni": "664",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "689",
+            "namemuni": "MARSELLA",
+            "codemuni": "6644",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "690",
+            "namemuni": "MISTRAT?",
+            "codemuni": "66456",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "691",
+            "namemuni": "PUEBLO RICO",
+            "codemuni": "66572",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "692",
+            "namemuni": "QUINCH?A",
+            "codemuni": "66594",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "693",
+            "namemuni": "SANTUARIO",
+            "codemuni": "66687",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "694",
+            "namemuni": "BUCARAMANGA",
+            "codemuni": "68001",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "695",
+            "namemuni": "AGUADA",
+            "codemuni": "68013",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "696",
+            "namemuni": "ALBANIA",
+            "codemuni": "6802",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "697",
+            "namemuni": "ARATOCA",
+            "codemuni": "68051",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "698",
+            "namemuni": "BARBOSA",
+            "codemuni": "68077",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "699",
+            "namemuni": "BARICHARA",
+            "codemuni": "68079",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "700",
+            "namemuni": "BARRANCABERMEJA",
+            "codemuni": "68081",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "701",
+            "namemuni": "BETULIA",
+            "codemuni": "68092",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "702",
+            "namemuni": "BOLÍVAR",
+            "codemuni": "68101",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "703",
+            "namemuni": "CABRERA",
+            "codemuni": "68121",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "704",
+            "namemuni": "CALIFORNIA",
+            "codemuni": "68132",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "705",
+            "namemuni": "CARCASÍ",
+            "codemuni": "68152",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "706",
+            "namemuni": "CEPIT?",
+            "codemuni": "6816",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "707",
+            "namemuni": "CERRITO",
+            "codemuni": "68162",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "708",
+            "namemuni": "CHARALÁ",
+            "codemuni": "68167",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "709",
+            "namemuni": "CHARTA",
+            "codemuni": "68169",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "710",
+            "namemuni": "CHIPATÁ",
+            "codemuni": "68179",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "711",
+            "namemuni": "CIMITARRA",
+            "codemuni": "6819",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "712",
+            "namemuni": "CONCEPCIÓN",
+            "codemuni": "68207",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "713",
+            "namemuni": "CONFINES",
+            "codemuni": "68209",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "714",
+            "namemuni": "CONTRATACIÓN",
+            "codemuni": "68211",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "715",
+            "namemuni": "COROMORO",
+            "codemuni": "68217",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "716",
+            "namemuni": "CURIT?",
+            "codemuni": "68229",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "717",
+            "namemuni": "EL GUACAMAYO",
+            "codemuni": "68245",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "718",
+            "namemuni": "EL PLAYÓN",
+            "codemuni": "68255",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "719",
+            "namemuni": "ENCINO",
+            "codemuni": "68264",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "720",
+            "namemuni": "ENCISO",
+            "codemuni": "68266",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "721",
+            "namemuni": "FLORI?N",
+            "codemuni": "68271",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "722",
+            "namemuni": "FLORIDABLANCA",
+            "codemuni": "68276",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "723",
+            "namemuni": "GALÁN",
+            "codemuni": "68296",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "724",
+            "namemuni": "GAMBITA",
+            "codemuni": "68298",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "725",
+            "namemuni": "GIRÓN",
+            "codemuni": "68307",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "726",
+            "namemuni": "GUACA",
+            "codemuni": "68318",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "727",
+            "namemuni": "GUADALUPE",
+            "codemuni": "6832",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "728",
+            "namemuni": "GUAPOT?",
+            "codemuni": "68322",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "729",
+            "namemuni": "GUAVAT?",
+            "codemuni": "68324",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "730",
+            "namemuni": "G?EPSA",
+            "codemuni": "68327",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "731",
+            "namemuni": "JESÚS MARÍA",
+            "codemuni": "68368",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "732",
+            "namemuni": "JORD?N",
+            "codemuni": "6837",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "733",
+            "namemuni": "LA BELLEZA",
+            "codemuni": "68377",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "734",
+            "namemuni": "LANDÁZURI",
+            "codemuni": "68385",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "735",
+            "namemuni": "LA PAZ",
+            "codemuni": "68397",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "736",
+            "namemuni": "LEBRÍJA",
+            "codemuni": "68406",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "737",
+            "namemuni": "LOS SANTOS",
+            "codemuni": "68418",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "738",
+            "namemuni": "MACARAVITA",
+            "codemuni": "68425",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "739",
+            "namemuni": "MÁLAGA",
+            "codemuni": "68432",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "740",
+            "namemuni": "MATANZA",
+            "codemuni": "68444",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "741",
+            "namemuni": "MOGOTES",
+            "codemuni": "68464",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "742",
+            "namemuni": "MOLAGAVITA",
+            "codemuni": "68468",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "743",
+            "namemuni": "OCAMONTE",
+            "codemuni": "68498",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "744",
+            "namemuni": "OIBA",
+            "codemuni": "685",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "745",
+            "namemuni": "ONZAGA",
+            "codemuni": "68502",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "746",
+            "namemuni": "PALMAR",
+            "codemuni": "68522",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "747",
+            "namemuni": "PÁRAMO",
+            "codemuni": "68533",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "748",
+            "namemuni": "PIEDECUESTA",
+            "codemuni": "68547",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "749",
+            "namemuni": "PINCHOTE",
+            "codemuni": "68549",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "750",
+            "namemuni": "PUENTE NACIONAL",
+            "codemuni": "68572",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "751",
+            "namemuni": "RIONEGRO",
+            "codemuni": "68615",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "752",
+            "namemuni": "SAN ANDRÉS",
+            "codemuni": "68669",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "753",
+            "namemuni": "SAN GIL",
+            "codemuni": "68679",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "754",
+            "namemuni": "SAN JOAQUÍN",
+            "codemuni": "68682",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "755",
+            "namemuni": "SAN MIGUEL",
+            "codemuni": "68686",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "756",
+            "namemuni": "SANTA BARBARA",
+            "codemuni": "68705",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "757",
+            "namemuni": "SIMACOTA",
+            "codemuni": "68745",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "758",
+            "namemuni": "SOCORRO",
+            "codemuni": "68755",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "759",
+            "namemuni": "SUAITA",
+            "codemuni": "6877",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "760",
+            "namemuni": "SUCRE",
+            "codemuni": "68773",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "761",
+            "namemuni": "SURATA",
+            "codemuni": "6878",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "762",
+            "namemuni": "TONA",
+            "codemuni": "6882",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "763",
+            "namemuni": "VÉLEZ",
+            "codemuni": "68861",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "764",
+            "namemuni": "VETAS",
+            "codemuni": "68867",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "765",
+            "namemuni": "VILLANUEVA",
+            "codemuni": "68872",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "766",
+            "namemuni": "ZAPATOCA",
+            "codemuni": "68895",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "767",
+            "namemuni": "SINCELEJO",
+            "codemuni": "70001",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "768",
+            "namemuni": "BUENAVISTA",
+            "codemuni": "7011",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "769",
+            "namemuni": "CAIMITO",
+            "codemuni": "70124",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "770",
+            "namemuni": "COLOSO",
+            "codemuni": "70204",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "771",
+            "namemuni": "COVEÑAS",
+            "codemuni": "70221",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "772",
+            "namemuni": "CHALÁN",
+            "codemuni": "7023",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "773",
+            "namemuni": "EL ROBLE",
+            "codemuni": "70233",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "774",
+            "namemuni": "GALERAS",
+            "codemuni": "70235",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "775",
+            "namemuni": "GUARANDA",
+            "codemuni": "70265",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "776",
+            "namemuni": "LA UNIÓN",
+            "codemuni": "704",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "777",
+            "namemuni": "LOS PALMITOS",
+            "codemuni": "70418",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "778",
+            "namemuni": "MAJAGUAL",
+            "codemuni": "70429",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "779",
+            "namemuni": "MORROA",
+            "codemuni": "70473",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "780",
+            "namemuni": "OVEJAS",
+            "codemuni": "70508",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "781",
+            "namemuni": "PALMITO",
+            "codemuni": "70523",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "782",
+            "namemuni": "SAN BENITO ABAD",
+            "codemuni": "70678",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "783",
+            "namemuni": "SAN MARCOS",
+            "codemuni": "70708",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "784",
+            "namemuni": "SAN ONOFRE",
+            "codemuni": "70713",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "785",
+            "namemuni": "SAN PEDRO",
+            "codemuni": "70717",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "786",
+            "namemuni": "SUCRE",
+            "codemuni": "70771",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "787",
+            "namemuni": "SAN JOSE DE TOLÚ VIEJO",
+            "codemuni": "70823",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "788",
+            "namemuni": "ALPUJARRA",
+            "codemuni": "73024",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "789",
+            "namemuni": "ALVARADO",
+            "codemuni": "73026",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "790",
+            "namemuni": "AMBALEMA",
+            "codemuni": "7303",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "791",
+            "namemuni": "ARMERO",
+            "codemuni": "73055",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "792",
+            "namemuni": "ATACO",
+            "codemuni": "73067",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "793",
+            "namemuni": "CAJAMARCA",
+            "codemuni": "73124",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "794",
+            "namemuni": "CHAPARRAL",
+            "codemuni": "73168",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "795",
+            "namemuni": "COELLO",
+            "codemuni": "732",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "796",
+            "namemuni": "COYAIMA",
+            "codemuni": "73217",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "797",
+            "namemuni": "CUNDAY",
+            "codemuni": "73226",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "798",
+            "namemuni": "DOLORES",
+            "codemuni": "73236",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "799",
+            "namemuni": "ESPINAL",
+            "codemuni": "73268",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "800",
+            "namemuni": "FALAN",
+            "codemuni": "7327",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "801",
+            "namemuni": "FLANDES",
+            "codemuni": "73275",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "802",
+            "namemuni": "FRESNO",
+            "codemuni": "73283",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "803",
+            "namemuni": "GUAMO",
+            "codemuni": "73319",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "804",
+            "namemuni": "HERVEO",
+            "codemuni": "73347",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "805",
+            "namemuni": "HONDA",
+            "codemuni": "73349",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "806",
+            "namemuni": "ICONONZO",
+            "codemuni": "73352",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "807",
+            "namemuni": "MARIQUITA",
+            "codemuni": "73443",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "808",
+            "namemuni": "MELGAR",
+            "codemuni": "73449",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "809",
+            "namemuni": "MURILLO",
+            "codemuni": "73461",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "810",
+            "namemuni": "NATAGAIMA",
+            "codemuni": "73483",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "811",
+            "namemuni": "ORTEGA",
+            "codemuni": "73504",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "812",
+            "namemuni": "PALOCABILDO",
+            "codemuni": "7352",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "813",
+            "namemuni": "PIEDRAS",
+            "codemuni": "73547",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "814",
+            "namemuni": "PLANADAS",
+            "codemuni": "73555",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "815",
+            "namemuni": "PRADO",
+            "codemuni": "73563",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "816",
+            "namemuni": "PURIFICACIÓN",
+            "codemuni": "73585",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "817",
+            "namemuni": "RIO BLANCO",
+            "codemuni": "73616",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "818",
+            "namemuni": "RONCESVALLES",
+            "codemuni": "73622",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "819",
+            "namemuni": "ROVIRA",
+            "codemuni": "73624",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "820",
+            "namemuni": "SALDAÑA",
+            "codemuni": "73671",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "821",
+            "namemuni": "SANTA ISABEL",
+            "codemuni": "73686",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "822",
+            "namemuni": "VENADILLO",
+            "codemuni": "73861",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "823",
+            "namemuni": "VILLAHERMOSA",
+            "codemuni": "7387",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "824",
+            "namemuni": "VILLARRICA",
+            "codemuni": "73873",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "825",
+            "namemuni": "ARAUQUITA",
+            "codemuni": "81065",
+            "dptomuni": "25"
+        },
+        {
+            "idmuni": "826",
+            "namemuni": "CRAVO NORTE",
+            "codemuni": "8122",
+            "dptomuni": "25"
+        },
+        {
+            "idmuni": "827",
+            "namemuni": "FORTUL",
+            "codemuni": "813",
+            "dptomuni": "25"
+        },
+        {
+            "idmuni": "828",
+            "namemuni": "PUERTO RONDÓN",
+            "codemuni": "81591",
+            "dptomuni": "25"
+        },
+        {
+            "idmuni": "829",
+            "namemuni": "SARAVENA",
+            "codemuni": "81736",
+            "dptomuni": "25"
+        },
+        {
+            "idmuni": "830",
+            "namemuni": "TAME",
+            "codemuni": "81794",
+            "dptomuni": "25"
+        },
+        {
+            "idmuni": "831",
+            "namemuni": "ARAUCA",
+            "codemuni": "81001",
+            "dptomuni": "25"
+        },
+        {
+            "idmuni": "832",
+            "namemuni": "YOPAL",
+            "codemuni": "85001",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "833",
+            "namemuni": "AGUAZUL",
+            "codemuni": "8501",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "834",
+            "namemuni": "CH?MEZA",
+            "codemuni": "85015",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "835",
+            "namemuni": "HATO COROZAL",
+            "codemuni": "85125",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "836",
+            "namemuni": "LA SALINA",
+            "codemuni": "85136",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "837",
+            "namemuni": "MONTERREY",
+            "codemuni": "85162",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "838",
+            "namemuni": "PORE",
+            "codemuni": "85263",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "839",
+            "namemuni": "RECETOR",
+            "codemuni": "85279",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "840",
+            "namemuni": "SABANALARGA",
+            "codemuni": "853",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "841",
+            "namemuni": "S?CAMA",
+            "codemuni": "85315",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "842",
+            "namemuni": "TAURAMENA",
+            "codemuni": "8541",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "843",
+            "namemuni": "TRINIDAD",
+            "codemuni": "8543",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "844",
+            "namemuni": "VILLANUEVA",
+            "codemuni": "8544",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "845",
+            "namemuni": "MOCOA",
+            "codemuni": "86001",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "846",
+            "namemuni": "COLÓN",
+            "codemuni": "86219",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "847",
+            "namemuni": "ORITO",
+            "codemuni": "8632",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "848",
+            "namemuni": "PUERTO CAICEDO",
+            "codemuni": "86569",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "849",
+            "namemuni": "PUERTO GUZMÁN",
+            "codemuni": "86571",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "850",
+            "namemuni": "LEGUÍZAMO",
+            "codemuni": "86573",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "851",
+            "namemuni": "SIBUNDOY",
+            "codemuni": "86749",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "852",
+            "namemuni": "SAN FRANCISCO",
+            "codemuni": "86755",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "853",
+            "namemuni": "SAN MIGUEL",
+            "codemuni": "86757",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "854",
+            "namemuni": "SANTIAGO",
+            "codemuni": "8676",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "855",
+            "namemuni": "LETICIA",
+            "codemuni": "91001",
+            "dptomuni": "29"
+        },
+        {
+            "idmuni": "856",
+            "namemuni": "EL ENCANTO",
+            "codemuni": "91263",
+            "dptomuni": "29"
+        },
+        {
+            "idmuni": "857",
+            "namemuni": "LA CHORRERA",
+            "codemuni": "91405",
+            "dptomuni": "29"
+        },
+        {
+            "idmuni": "858",
+            "namemuni": "LA PEDRERA",
+            "codemuni": "91407",
+            "dptomuni": "29"
+        },
+        {
+            "idmuni": "859",
+            "namemuni": "LA VICTORIA",
+            "codemuni": "9143",
+            "dptomuni": "29"
+        },
+        {
+            "idmuni": "860",
+            "namemuni": "PUERTO ARICA",
+            "codemuni": "91536",
+            "dptomuni": "29"
+        },
+        {
+            "idmuni": "861",
+            "namemuni": "PUERTO NARIÑO",
+            "codemuni": "9154",
+            "dptomuni": "29"
+        },
+        {
+            "idmuni": "862",
+            "namemuni": "PUERTO SANTANDER",
+            "codemuni": "91669",
+            "dptomuni": "29"
+        },
+        {
+            "idmuni": "863",
+            "namemuni": "TARAPAC?",
+            "codemuni": "91798",
+            "dptomuni": "29"
+        },
+        {
+            "idmuni": "864",
+            "namemuni": "INÍRIDA",
+            "codemuni": "94001",
+            "dptomuni": "30"
+        },
+        {
+            "idmuni": "865",
+            "namemuni": "BARRANCO MINAS",
+            "codemuni": "94343",
+            "dptomuni": "30"
+        },
+        {
+            "idmuni": "866",
+            "namemuni": "MAPIRIPANA",
+            "codemuni": "94663",
+            "dptomuni": "30"
+        },
+        {
+            "idmuni": "867",
+            "namemuni": "SAN FELIPE",
+            "codemuni": "94883",
+            "dptomuni": "30"
+        },
+        {
+            "idmuni": "868",
+            "namemuni": "PUERTO COLOMBIA",
+            "codemuni": "94884",
+            "dptomuni": "30"
+        },
+        {
+            "idmuni": "869",
+            "namemuni": "LA GUADALUPE",
+            "codemuni": "94885",
+            "dptomuni": "30"
+        },
+        {
+            "idmuni": "870",
+            "namemuni": "CACAHUAL",
+            "codemuni": "94886",
+            "dptomuni": "30"
+        },
+        {
+            "idmuni": "871",
+            "namemuni": "PANA PANA",
+            "codemuni": "94887",
+            "dptomuni": "30"
+        },
+        {
+            "idmuni": "872",
+            "namemuni": "MITÚ",
+            "codemuni": "97001",
+            "dptomuni": "32"
+        },
+        {
+            "idmuni": "873",
+            "namemuni": "CARUR?",
+            "codemuni": "97161",
+            "dptomuni": "32"
+        },
+        {
+            "idmuni": "874",
+            "namemuni": "TARAIRA",
+            "codemuni": "97666",
+            "dptomuni": "32"
+        },
+        {
+            "idmuni": "875",
+            "namemuni": "PAPUNAHUA",
+            "codemuni": "97777",
+            "dptomuni": "32"
+        },
+        {
+            "idmuni": "876",
+            "namemuni": "YAVARAT?",
+            "codemuni": "97889",
+            "dptomuni": "32"
+        },
+        {
+            "idmuni": "877",
+            "namemuni": "PACOA",
+            "codemuni": "97511",
+            "dptomuni": "32"
+        },
+        {
+            "idmuni": "878",
+            "namemuni": "MORICHAL",
+            "codemuni": "94888",
+            "dptomuni": "30"
+        },
+        {
+            "idmuni": "879",
+            "namemuni": "PUERTO CARREÑO",
+            "codemuni": "99001",
+            "dptomuni": "33"
+        },
+        {
+            "idmuni": "880",
+            "namemuni": "LA PRIMAVERA",
+            "codemuni": "99524",
+            "dptomuni": "33"
+        },
+        {
+            "idmuni": "881",
+            "namemuni": "SANTA ROSALÍA",
+            "codemuni": "99624",
+            "dptomuni": "33"
+        },
+        {
+            "idmuni": "882",
+            "namemuni": "CUMARIBO",
+            "codemuni": "99773",
+            "dptomuni": "33"
+        },
+        {
+            "idmuni": "883",
+            "namemuni": "SAN JOSÉ DEL FRAGUA",
+            "codemuni": "1861",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "884",
+            "namemuni": "BARRANCA DE UPÍA",
+            "codemuni": "5011",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "885",
+            "namemuni": "PALMAS DEL SOCORRO",
+            "codemuni": "68524",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "886",
+            "namemuni": "SAN JUAN DE RÍO SECO",
+            "codemuni": "25662",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "887",
+            "namemuni": "JUAN DE ACOSTA",
+            "codemuni": "8372",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "888",
+            "namemuni": "FUENTE DE ORO",
+            "codemuni": "50287",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "889",
+            "namemuni": "SAN LUIS DE GACENO",
+            "codemuni": "85325",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "890",
+            "namemuni": "EL LITORAL DEL SAN JUAN",
+            "codemuni": "2725",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "891",
+            "namemuni": "VILLA DE SAN DIEGO DE UBATE",
+            "codemuni": "25843",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "892",
+            "namemuni": "BARRANCO DE LOBA",
+            "codemuni": "13074",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "893",
+            "namemuni": "TOG??",
+            "codemuni": "15816",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "894",
+            "namemuni": "SANTA ROSA DEL SUR",
+            "codemuni": "13688",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "895",
+            "namemuni": "EL CANTÓN DEL SAN PABLO",
+            "codemuni": "27135",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "896",
+            "namemuni": "VILLA DE LEYVA",
+            "codemuni": "15407",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "897",
+            "namemuni": "SAN SEBASTIÁN DE BUENAVISTA",
+            "codemuni": "47692",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "898",
+            "namemuni": "PAZ DE RíO",
+            "codemuni": "15537",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "899",
+            "namemuni": "HATILLO DE LOBA",
+            "codemuni": "133",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "900",
+            "namemuni": "SABANAS DE SAN ANGEL",
+            "codemuni": "4766",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "901",
+            "namemuni": "CALAMAR",
+            "codemuni": "95015",
+            "dptomuni": "31"
+        },
+        {
+            "idmuni": "902",
+            "namemuni": "RÍO DE ORO",
+            "codemuni": "20614",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "903",
+            "namemuni": "SAN PEDRO DE URABA",
+            "codemuni": "5665",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "904",
+            "namemuni": "SAN JOSÉ DEL GUAVIARE",
+            "codemuni": "95001",
+            "dptomuni": "31"
+        },
+        {
+            "idmuni": "905",
+            "namemuni": "SANTA ROSA DE VITERBO",
+            "codemuni": "15693",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "906",
+            "namemuni": "SANTANDER DE QUILICHAO",
+            "codemuni": "19698",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "907",
+            "namemuni": "MIRAFLORES",
+            "codemuni": "952",
+            "dptomuni": "31"
+        },
+        {
+            "idmuni": "908",
+            "namemuni": "SANTAFÉ DE ANTIOQUIA",
+            "codemuni": "5042",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "909",
+            "namemuni": "SAN CARLOS DE GUAROA",
+            "codemuni": "5068",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "910",
+            "namemuni": "PALMAR DE VARELA",
+            "codemuni": "852",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "911",
+            "namemuni": "SANTA ROSA DE OSOS",
+            "codemuni": "5686",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "912",
+            "namemuni": "SAN ANDRÉS DE CUERQUÍA",
+            "codemuni": "5647",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "913",
+            "namemuni": "VALLE DE SAN JUAN",
+            "codemuni": "73854",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "914",
+            "namemuni": "SAN VICENTE DE CHUCURI",
+            "codemuni": "68689",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "915",
+            "namemuni": "SAN JOSÉ DE MIRANDA",
+            "codemuni": "68684",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "916",
+            "namemuni": "PROVIDENCIA",
+            "codemuni": "88564",
+            "dptomuni": "28"
+        },
+        {
+            "idmuni": "917",
+            "namemuni": "SANTA ROSA DE CABAL",
+            "codemuni": "66682",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "918",
+            "namemuni": "GUAYABAL DE SIQUIMA",
+            "codemuni": "25328",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "919",
+            "namemuni": "BELÉN DE LOS ANDAQUIES",
+            "codemuni": "18094",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "920",
+            "namemuni": "PAZ DE ARIPORO",
+            "codemuni": "8525",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "921",
+            "namemuni": "SANTA HELENA DEL OP?N",
+            "codemuni": "6872",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "922",
+            "namemuni": "SAN PABLO DE BORBUR",
+            "codemuni": "15681",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "923",
+            "namemuni": "LA JAGUA DEL PILAR",
+            "codemuni": "4442",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "924",
+            "namemuni": "LA JAGUA DE IBIRICO",
+            "codemuni": "204",
+            "dptomuni": "9"
+        },
+        {
+            "idmuni": "925",
+            "namemuni": "SAN LUIS DE SINCÉ",
+            "codemuni": "70742",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "926",
+            "namemuni": "SAN LUIS DE GACENO",
+            "codemuni": "15667",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "927",
+            "namemuni": "EL CARMEN DE BOLIVAR",
+            "codemuni": "13244",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "928",
+            "namemuni": "EL CARMEN DE ATRATO",
+            "codemuni": "27245",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "929",
+            "namemuni": "SAN JUAN DE BETULIA",
+            "codemuni": "70702",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "930",
+            "namemuni": "PIJIÑO DEL CARMEN",
+            "codemuni": "47545",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "931",
+            "namemuni": "VIGÍA DEL FUERTE",
+            "codemuni": "5873",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "932",
+            "namemuni": "SAN MARTÍN DE LOBA",
+            "codemuni": "13667",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "933",
+            "namemuni": "ALTOS DEL ROSARIO",
+            "codemuni": "1303",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "934",
+            "namemuni": "CARMEN DE APICALA",
+            "codemuni": "73148",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "935",
+            "namemuni": "SAN ANTONIO DEL TEQUENDAMA",
+            "codemuni": "25645",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "936",
+            "namemuni": "SABANA DE TORRES",
+            "codemuni": "68655",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "937",
+            "namemuni": "EL RETORNO",
+            "codemuni": "95025",
+            "dptomuni": "31"
+        },
+        {
+            "idmuni": "938",
+            "namemuni": "SAN JOSÉ DE URÉ",
+            "codemuni": "23682",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "939",
+            "namemuni": "SAN PEDRO DE CARTAGO",
+            "codemuni": "52694",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "940",
+            "namemuni": "CAMPO DE LA CRUZ",
+            "codemuni": "8137",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "941",
+            "namemuni": "SAN JUAN DE ARAMA",
+            "codemuni": "50683",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "942",
+            "namemuni": "SAN JOSÉ DE LA MONTAÑA",
+            "codemuni": "5658",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "943",
+            "namemuni": "CARTAGENA DEL CHAIRÁ",
+            "codemuni": "1815",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "944",
+            "namemuni": "SAN JOSÉ DEL PALMAR",
+            "codemuni": "2766",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "945",
+            "namemuni": "AGUA DE DIOS",
+            "codemuni": "25001",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "946",
+            "namemuni": "SAN JACINTO DEL CAUCA",
+            "codemuni": "13655",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "947",
+            "namemuni": "SAN AGUSTÍN",
+            "codemuni": "41668",
+            "dptomuni": "13"
+        },
+        {
+            "idmuni": "948",
+            "namemuni": "EL TABLÓN DE GÓMEZ",
+            "codemuni": "52258",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "949",
+            "namemuni": "SAN ANDRÉS",
+            "codemuni": "88001",
+            "dptomuni": "28"
+        },
+        {
+            "idmuni": "950",
+            "namemuni": "SAN JOSÉ DE PARE",
+            "codemuni": "15664",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "951",
+            "namemuni": "VALLE DE GUAMEZ",
+            "codemuni": "86865",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "952",
+            "namemuni": "SAN PABLO DE BORBUR",
+            "codemuni": "1367",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "953",
+            "namemuni": "SANTIAGO DE TOLÚ",
+            "codemuni": "7082",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "954",
+            "namemuni": "BOGOTÁ D.C.",
+            "codemuni": "11001",
+            "dptomuni": "3"
+        },
+        {
+            "idmuni": "955",
+            "namemuni": "CARMEN DE CARUPA",
+            "codemuni": "25154",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "956",
+            "namemuni": "CIÉNAGA DE ORO",
+            "codemuni": "23189",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "957",
+            "namemuni": "SAN JUAN DE URABÁ",
+            "codemuni": "5659",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "958",
+            "namemuni": "SAN JUAN DEL CESAR",
+            "codemuni": "4465",
+            "dptomuni": "14"
+        },
+        {
+            "idmuni": "959",
+            "namemuni": "EL CARMEN DE CHUCURÍ",
+            "codemuni": "68235",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "960",
+            "namemuni": "EL CARMEN DE VIBORAL",
+            "codemuni": "5148",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "961",
+            "namemuni": "BELÉN DE UMBRÍA",
+            "codemuni": "66088",
+            "dptomuni": "20"
+        },
+        {
+            "idmuni": "962",
+            "namemuni": "BELÉN DE BAJIRA",
+            "codemuni": "27086",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "963",
+            "namemuni": "VALLE DE SAN JOSÉ",
+            "codemuni": "68855",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "964",
+            "namemuni": "SAN LUIS",
+            "codemuni": "73678",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "965",
+            "namemuni": "SAN MIGUEL DE SEMA",
+            "codemuni": "15676",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "966",
+            "namemuni": "SAN ANTONIO",
+            "codemuni": "73675",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "967",
+            "namemuni": "SAN BENITO",
+            "codemuni": "68673",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "968",
+            "namemuni": "VERGARA",
+            "codemuni": "25862",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "969",
+            "namemuni": "SAN CARLOS",
+            "codemuni": "23678",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "970",
+            "namemuni": "PUERTO ALEGRÍA",
+            "codemuni": "9153",
+            "dptomuni": "29"
+        },
+        {
+            "idmuni": "971",
+            "namemuni": "HATO",
+            "codemuni": "68344",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "972",
+            "namemuni": "SAN JACINTO",
+            "codemuni": "13654",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "973",
+            "namemuni": "SAN SEBASTIÁN",
+            "codemuni": "19693",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "974",
+            "namemuni": "SAN CARLOS",
+            "codemuni": "5649",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "975",
+            "namemuni": "TUTA",
+            "codemuni": "15837",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "976",
+            "namemuni": "SILOS",
+            "codemuni": "54743",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "977",
+            "namemuni": "CÁCOTA",
+            "codemuni": "54125",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "978",
+            "namemuni": "EL DOVIO",
+            "codemuni": "7625",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "979",
+            "namemuni": "TOLEDO",
+            "codemuni": "5482",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "980",
+            "namemuni": "ROLDANILLO",
+            "codemuni": "76622",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "981",
+            "namemuni": "MUTISCUA",
+            "codemuni": "5448",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "982",
+            "namemuni": "ARGELIA",
+            "codemuni": "76054",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "983",
+            "namemuni": "EL ZULIA",
+            "codemuni": "54261",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "984",
+            "namemuni": "SALAZAR",
+            "codemuni": "5466",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "985",
+            "namemuni": "SEVILLA",
+            "codemuni": "76736",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "986",
+            "namemuni": "ZARZAL",
+            "codemuni": "76895",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "987",
+            "namemuni": "CUCUTILLA",
+            "codemuni": "54223",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "988",
+            "namemuni": "EL CERRITO",
+            "codemuni": "76248",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "989",
+            "namemuni": "CARTAGO",
+            "codemuni": "76147",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "990",
+            "namemuni": "CAICEDONIA",
+            "codemuni": "76122",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "991",
+            "namemuni": "PUERTO SANTANDER",
+            "codemuni": "54553",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "992",
+            "namemuni": "GRAMALOTE",
+            "codemuni": "54313",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "993",
+            "namemuni": "EL CAIRO",
+            "codemuni": "76246",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "994",
+            "namemuni": "EL TARRA",
+            "codemuni": "5425",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "995",
+            "namemuni": "LA UNIÓN",
+            "codemuni": "764",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "996",
+            "namemuni": "RESTREPO",
+            "codemuni": "76606",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "997",
+            "namemuni": "TEORAMA",
+            "codemuni": "548",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "998",
+            "namemuni": "DAGUA",
+            "codemuni": "76233",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "999",
+            "namemuni": "ARBOLEDAS",
+            "codemuni": "54051",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1000",
+            "namemuni": "GUACAR?",
+            "codemuni": "76318",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1001",
+            "namemuni": "LOURDES",
+            "codemuni": "54418",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1002",
+            "namemuni": "ANSERMANUEVO",
+            "codemuni": "76041",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1003",
+            "namemuni": "BOCHALEMA",
+            "codemuni": "54099",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1004",
+            "namemuni": "BUGALAGRANDE",
+            "codemuni": "76113",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1005",
+            "namemuni": "CONVENCIÓN",
+            "codemuni": "54206",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1006",
+            "namemuni": "HACAR?",
+            "codemuni": "54344",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1007",
+            "namemuni": "LA VICTORIA",
+            "codemuni": "76403",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1008",
+            "namemuni": "HERR?N",
+            "codemuni": "54347",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1009",
+            "namemuni": "GINEBRA",
+            "codemuni": "76306",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1010",
+            "namemuni": "YUMBO",
+            "codemuni": "76892",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1011",
+            "namemuni": "OBANDO",
+            "codemuni": "76497",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1012",
+            "namemuni": "TIB?",
+            "codemuni": "5481",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1013",
+            "namemuni": "SAN CAYETANO",
+            "codemuni": "54673",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1014",
+            "namemuni": "SAN CALIXTO",
+            "codemuni": "5467",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1015",
+            "namemuni": "BOLÍVAR",
+            "codemuni": "761",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1016",
+            "namemuni": "LA PLAYA",
+            "codemuni": "54398",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1017",
+            "namemuni": "CALI",
+            "codemuni": "76001",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1018",
+            "namemuni": "SAN PEDRO",
+            "codemuni": "7667",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1019",
+            "namemuni": "GUADALAJARA DE BUGA",
+            "codemuni": "76111",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1020",
+            "namemuni": "CHINÁCOTA",
+            "codemuni": "54172",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1021",
+            "namemuni": "RAGONVALIA",
+            "codemuni": "54599",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1022",
+            "namemuni": "LA ESPERANZA",
+            "codemuni": "54385",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1023",
+            "namemuni": "VILLA DEL ROSARIO",
+            "codemuni": "54874",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1024",
+            "namemuni": "CHITAG?",
+            "codemuni": "54174",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1025",
+            "namemuni": "CALIMA",
+            "codemuni": "76126",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1026",
+            "namemuni": "SARDINATA",
+            "codemuni": "5472",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1027",
+            "namemuni": "ANDALUCÍA",
+            "codemuni": "76036",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1028",
+            "namemuni": "PRADERA",
+            "codemuni": "76563",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1029",
+            "namemuni": "ABREGO",
+            "codemuni": "54003",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1030",
+            "namemuni": "LOS PATIOS",
+            "codemuni": "54405",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1031",
+            "namemuni": "OCAÑA",
+            "codemuni": "54498",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1032",
+            "namemuni": "BUCARASICA",
+            "codemuni": "54109",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1033",
+            "namemuni": "YOTOCO",
+            "codemuni": "7689",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1034",
+            "namemuni": "PALMIRA",
+            "codemuni": "7652",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1035",
+            "namemuni": "RIOFRÍO",
+            "codemuni": "76616",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1036",
+            "namemuni": "SANTIAGO",
+            "codemuni": "5468",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1037",
+            "namemuni": "ALCALÁ",
+            "codemuni": "7602",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1038",
+            "namemuni": "VERSALLES",
+            "codemuni": "76863",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1039",
+            "namemuni": "LABATECA",
+            "codemuni": "54377",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1040",
+            "namemuni": "CACHIRÁ",
+            "codemuni": "54128",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1041",
+            "namemuni": "VILLA CARO",
+            "codemuni": "54871",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1042",
+            "namemuni": "DURANIA",
+            "codemuni": "54239",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1043",
+            "namemuni": "EL ÁGUILA",
+            "codemuni": "76243",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1044",
+            "namemuni": "TORO",
+            "codemuni": "76823",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1045",
+            "namemuni": "CANDELARIA",
+            "codemuni": "7613",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1046",
+            "namemuni": "LA CUMBRE",
+            "codemuni": "76377",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1047",
+            "namemuni": "ULLOA",
+            "codemuni": "76845",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1048",
+            "namemuni": "TRUJILLO",
+            "codemuni": "76828",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1049",
+            "namemuni": "VIJES",
+            "codemuni": "76869",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1050",
+            "namemuni": "CHIM?",
+            "codemuni": "68176",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "1051",
+            "namemuni": "SAMPUÉS",
+            "codemuni": "7067",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "1052",
+            "namemuni": "NUNCH?A",
+            "codemuni": "85225",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "1053",
+            "namemuni": "PAMPLONA",
+            "codemuni": "54518",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1054",
+            "namemuni": "ALBÁN",
+            "codemuni": "25019",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "1055",
+            "namemuni": "MONTELÍBANO",
+            "codemuni": "23466",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "1056",
+            "namemuni": "PUERTO ASÍS",
+            "codemuni": "86568",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "1057",
+            "namemuni": "COROZAL",
+            "codemuni": "70215",
+            "dptomuni": "22"
+        },
+        {
+            "idmuni": "1058",
+            "namemuni": "BUESACO",
+            "codemuni": "5211",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "1059",
+            "namemuni": "MAN?",
+            "codemuni": "85139",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "1060",
+            "namemuni": "EL PEÑÓN",
+            "codemuni": "13268",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "1061",
+            "namemuni": "TULU?",
+            "codemuni": "76834",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1062",
+            "namemuni": "CASABIANCA",
+            "codemuni": "73152",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "1063",
+            "namemuni": "ANOLAIMA",
+            "codemuni": "2504",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "1064",
+            "namemuni": "CHÍA",
+            "codemuni": "25175",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "1065",
+            "namemuni": "SAN ANDRÉS DE TUMACO",
+            "codemuni": "52835",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "1066",
+            "namemuni": "MIL?N",
+            "codemuni": "1846",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "1067",
+            "namemuni": "CAPITANEJO",
+            "codemuni": "68147",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "1068",
+            "namemuni": "ANZOÁTEGUI",
+            "codemuni": "73043",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "1069",
+            "namemuni": "FLORIDA",
+            "codemuni": "76275",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1070",
+            "namemuni": "REPELÓN",
+            "codemuni": "8606",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "1071",
+            "namemuni": "FRONTINO",
+            "codemuni": "5284",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "1072",
+            "namemuni": "EL PEÑÓN",
+            "codemuni": "25258",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "1073",
+            "namemuni": "PAMPLONITA",
+            "codemuni": "5452",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1074",
+            "namemuni": "MIRITI PARAN?",
+            "codemuni": "9146",
+            "dptomuni": "29"
+        },
+        {
+            "idmuni": "1075",
+            "namemuni": "T?MARA",
+            "codemuni": "854",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "1076",
+            "namemuni": "TIBASOSA",
+            "codemuni": "15806",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "1077",
+            "namemuni": "PÁEZ",
+            "codemuni": "19517",
+            "dptomuni": "8"
+        },
+        {
+            "idmuni": "1078",
+            "namemuni": "IBAGUÉ",
+            "codemuni": "73001",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "1079",
+            "namemuni": "PUERTO COLOMBIA",
+            "codemuni": "8573",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "1080",
+            "namemuni": "BELÉN",
+            "codemuni": "52083",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "1081",
+            "namemuni": "SOP?",
+            "codemuni": "25758",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "1082",
+            "namemuni": "CARMEN DEL DARIEN",
+            "codemuni": "2715",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "1083",
+            "namemuni": "GAMA",
+            "codemuni": "25299",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "1084",
+            "namemuni": "SASAIMA",
+            "codemuni": "25718",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "1085",
+            "namemuni": "CHACHAG??",
+            "codemuni": "5224",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "1086",
+            "namemuni": "CÚCUTA",
+            "codemuni": "54001",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1087",
+            "namemuni": "CARTAGENA",
+            "codemuni": "13001",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "1088",
+            "namemuni": "GRANADA",
+            "codemuni": "5313",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "1089",
+            "namemuni": "SANTA BARBARA DE PINTO",
+            "codemuni": "4772",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "1090",
+            "namemuni": "MARÍA LA BAJA",
+            "codemuni": "13442",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "1091",
+            "namemuni": "LA MONTAÑITA",
+            "codemuni": "1841",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "1092",
+            "namemuni": "SAN VICENTE DEL CAGUÁN",
+            "codemuni": "18753",
+            "dptomuni": "7"
+        },
+        {
+            "idmuni": "1093",
+            "namemuni": "EL PEÑÓN",
+            "codemuni": "6825",
+            "dptomuni": "21"
+        },
+        {
+            "idmuni": "1094",
+            "namemuni": "JARDÍN",
+            "codemuni": "5364",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "1095",
+            "namemuni": "JAMUNDÍ",
+            "codemuni": "76364",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1096",
+            "namemuni": "TAD?",
+            "codemuni": "27787",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "1097",
+            "namemuni": "OROCU?",
+            "codemuni": "8523",
+            "dptomuni": "26"
+        },
+        {
+            "idmuni": "1098",
+            "namemuni": "LÍBANO",
+            "codemuni": "73411",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "1099",
+            "namemuni": "YACOP?",
+            "codemuni": "25885",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "1100",
+            "namemuni": "CALARCÁ",
+            "codemuni": "6313",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "1101",
+            "namemuni": "SONSÓN",
+            "codemuni": "5756",
+            "dptomuni": "1"
+        },
+        {
+            "idmuni": "1102",
+            "namemuni": "EL CARMEN",
+            "codemuni": "54245",
+            "dptomuni": "18"
+        },
+        {
+            "idmuni": "1103",
+            "namemuni": "LÉRIDA",
+            "codemuni": "73408",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "1104",
+            "namemuni": "LA APARTADA",
+            "codemuni": "2335",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "1105",
+            "namemuni": "SAN CRISTOBAL",
+            "codemuni": "1362",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "1106",
+            "namemuni": "FUSAGASUGÁ",
+            "codemuni": "2529",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "1107",
+            "namemuni": "ZAMBRANO",
+            "codemuni": "13894",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "1108",
+            "namemuni": "LA UVITA",
+            "codemuni": "15403",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "1109",
+            "namemuni": "ZIPAQUIRÁ",
+            "codemuni": "25899",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "1110",
+            "namemuni": "GÉNOVA",
+            "codemuni": "63302",
+            "dptomuni": "19"
+        },
+        {
+            "idmuni": "1111",
+            "namemuni": "SUÁREZ",
+            "codemuni": "7377",
+            "dptomuni": "23"
+        },
+        {
+            "idmuni": "1112",
+            "namemuni": "CASTILLA LA NUEVA",
+            "codemuni": "5015",
+            "dptomuni": "16"
+        },
+        {
+            "idmuni": "1113",
+            "namemuni": "BELÉN",
+            "codemuni": "15087",
+            "dptomuni": "5"
+        },
+        {
+            "idmuni": "1114",
+            "namemuni": "UNIÓN PANAMERICANA",
+            "codemuni": "2781",
+            "dptomuni": "12"
+        },
+        {
+            "idmuni": "1115",
+            "namemuni": "PUEBLO VIEJO",
+            "codemuni": "4757",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "1116",
+            "namemuni": "VILLAGARZÓN",
+            "codemuni": "86885",
+            "dptomuni": "27"
+        },
+        {
+            "idmuni": "1117",
+            "namemuni": "FACATATIVÁ",
+            "codemuni": "25269",
+            "dptomuni": "11"
+        },
+        {
+            "idmuni": "1118",
+            "namemuni": "PUERTO LIBERTADOR",
+            "codemuni": "2358",
+            "dptomuni": "10"
+        },
+        {
+            "idmuni": "1119",
+            "namemuni": "MARQUETALIA",
+            "codemuni": "17444",
+            "dptomuni": "6"
+        },
+        {
+            "idmuni": "1120",
+            "namemuni": "ARBOLEDA",
+            "codemuni": "52051",
+            "dptomuni": "17"
+        },
+        {
+            "idmuni": "1121",
+            "namemuni": "BUENAVENTURA",
+            "codemuni": "76109",
+            "dptomuni": "24"
+        },
+        {
+            "idmuni": "1122",
+            "namemuni": "CIENAGA",
+            "codemuni": "47189",
+            "dptomuni": "15"
+        },
+        {
+            "idmuni": "1123",
+            "namemuni": "PONEDERA",
+            "codemuni": "856",
+            "dptomuni": "2"
+        },
+        {
+            "idmuni": "1124",
+            "namemuni": "ALTOS DEL ROSARIO",
+            "codemuni": "13030",
+            "dptomuni": "4"
+        },
+        {
+            "idmuni": "1125",
+            "namemuni": "VENEZUELA",
+            "codemuni": "5555501",
+            "dptomuni": "55"
+        }
     ]
 }
