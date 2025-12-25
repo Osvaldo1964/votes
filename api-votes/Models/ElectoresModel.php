@@ -3,54 +3,89 @@
 class ElectoresModel extends Mysql
 {
     private $intIdElector;
-    private $strNombres;
-    private $strApellidos;
+    private $strCedula;
+    private $strApe1;
+    private $strApe2;
+    private $strNom1;
+    private $strNom2;
     private $strTelefono;
     private $strEmail;
-    private $strPassword;
-    private $intRolUsuario;
-    private $intStatus;
+    private $intDpto;
+    private $intMuni;
+    private $strDireccion;
+    private $intLider;
+    private $intEstado;
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function getElector(int $idelector)
+    public function selectElector(int $idelector)
     {
         $this->intIdElector = $idelector;
-        $sql = "SELECT e.id_elector,e.nombres_elector,e.apellidos_elector,e.telefono_elector,e.email_elector,e.rol_elector,e.estado_elector,r.nombre_rol
-							FROM electores e
-                            INNER JOIN roles r ON e.rol_elector = r.id_rol
-                            WHERE e.id_elector = :idelector AND e.estado_elector != :status ";
-        $arrData = array(":idelector" => $this->intIdElector, ":status" => 0);
+        $sql = "SELECT c.id_elector,c.ident_elector,c.ape1_elector,c.ape2_elector,c.nom1_elector,c.nom2_elector,
+                        c.telefono_elector,c.email_elector,c.dpto_elector,c.muni_elector,c.direccion_elector, c.lider_elector,c.estado_elector,
+                        l.nom1_lider, l.ape1_lider
+                        FROM electores c
+                        LEFT JOIN lideres l ON c.lider_elector = l.id_lider
+                        WHERE c.id_elector = ? AND c.estado_elector != ? ";
+        $arrData = array($this->intIdElector, 0);
         $request = $this->select($sql, $arrData);
         return $request;
     }
 
-    public function setElector(string $nombres, string $apellidos, string $telefono, string $email, string $password, int $rolusuario)
-    {
-        $this->strNombres = $nombres;
-        $this->strApellidos = $apellidos;
+    public function insertElector(
+        string $cedula,
+        string $ape1,
+        string $ape2,
+        string $nom1,
+        string $nom2,
+        string $telefono,
+        string $email,
+        int $dpto,
+        int $muni,
+        string $direccion,
+        int $lider,
+        int $estado
+    ) {
+        $this->strCedula = $cedula;
+        $this->strApe1 = $ape1;
+        $this->strApe2 = $ape2;
+        $this->strNom1 = $nom1;
+        $this->strNom2 = $nom2;
         $this->strTelefono = $telefono;
         $this->strEmail = $email;
-        $this->strPassword = $password;
-        $this->intRolUsuario = $rolusuario;
+        $this->intDpto = $dpto;
+        $this->intMuni = $muni;
+        $this->strDireccion = $direccion;
+        $this->intLider = $lider;
+        $this->intEstado = $estado;
         $return = 0;
 
-        $sql = "SELECT email_usuario FROM usuarios WHERE email_usuario = '{$this->strEmail}' AND estado_usuario != 0";
+        $sql = "SELECT ident_elector FROM electores WHERE ident_elector = ? AND estado_elector != 0";
+        $arrData = array($this->strCedula);
+        $request = $this->select($sql, $arrData);
 
         if (empty($request)) {
-            $sql_insert = "INSERT INTO usuarios(nombres_usuario, apellidos_usuario, telefono_usuario, email_usuario, password_usuario,rol_usuario)
-                       VALUES(?, ?, ?, ?, ?, ?)";
+            $sql_insert = "INSERT INTO electores(ident_elector, ape1_elector, ape2_elector, nom1_elector,
+                                     nom2_elector, telefono_elector, email_elector, dpto_elector, muni_elector, direccion_elector, lider_elector,
+                                     estado_elector)
+                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $arrData = array(
-                $this->strNombres,
-                $this->strApellidos,
+                $this->strCedula,
+                $this->strApe1,
+                $this->strApe2,
+                $this->strNom1,
+                $this->strNom2,
                 $this->strTelefono,
                 $this->strEmail,
-                $this->strPassword,
-                $this->intRolUsuario
+                $this->intDpto,
+                $this->intMuni,
+                $this->strDireccion,
+                $this->intLider,
+                $this->intEstado
             );
 
             $request_insert = $this->insert($sql_insert, $arrData);
@@ -61,51 +96,59 @@ class ElectoresModel extends Mysql
         return $return;
     }
 
-    public function putUser(int $idusuario, string $nombres, string $apellidos, string $telefono, string $email, string $password, int $rolusuario, int $status)
-    {
-        $this->intIdUsuario = $idusuario;
-        $this->strNombres = $nombres;
-        $this->strApellidos = $apellidos;
-        $this->strTelefono = $telefono; // Faltaba asignar
+    public function updateElector(
+        int $idelector,
+        string $cedula,
+        string $ape1,
+        string $ape2,
+        string $nom1,
+        string $nom2,
+        string $telefono,
+        string $email,
+        int $dpto,
+        int $muni,
+        string $direccion,
+        int $lider,
+        int $estado
+    ) {
+        $this->intIdElector = $idelector;
+        $this->strCedula = $cedula;
+        $this->strApe1 = $ape1;
+        $this->strApe2 = $ape2;
+        $this->strNom1 = $nom1;
+        $this->strNom2 = $nom2;
+        $this->strTelefono = $telefono;
         $this->strEmail = $email;
-        $this->strPassword = $password;
-        $this->intRolUsuario = $rolusuario;
-        $this->intStatus = $status;
+        $this->intDpto = $dpto;
+        $this->intMuni = $muni;
+        $this->strDireccion = $direccion;
+        $this->intLider = $lider;
+        $this->intEstado = $estado;
 
         // 1. Validar si el email ya existe en OTRO usuario
-        $sql = "SELECT * FROM usuarios WHERE email_usuario = ? AND id_usuario != ? AND estado_usuario != 0";
-        $arrParams = array($this->strEmail, $this->intIdUsuario);
+        $sql = "SELECT * FROM electores WHERE email_elector = ? AND id_elector != ? AND estado_elector != 0";
+        $arrParams = array($this->strEmail, $this->intIdElector);
         $request = $this->select_all_prepare($sql, $arrParams); // Usa una función que acepte parámetros
 
         if (empty($request)) {
-            if ($this->strPassword == "") {
-                // UPDATE sin contraseña
-                $sql = "UPDATE usuarios SET nombres_usuario = ?, apellidos_usuario = ?, telefono_usuario = ?, email_usuario = ?, rol_usuario = ?, estado_usuario = ? 
-                    WHERE id_usuario = ?";
-                $arrData = array(
-                    $this->strNombres,
-                    $this->strApellidos,
-                    $this->strTelefono,
-                    $this->strEmail,
-                    $this->intRolUsuario,
-                    $this->intStatus,
-                    $this->intIdUsuario
-                );
-            } else {
-                // UPDATE con contraseña
-                $sql = "UPDATE usuarios SET nombres_usuario = ?, apellidos_usuario = ?, telefono_usuario = ?, email_usuario = ?, password_usuario = ?, rol_usuario = ?, estado_usuario = ? 
-                    WHERE id_usuario = ?";
-                $arrData = array(
-                    $this->strNombres,
-                    $this->strApellidos,
-                    $this->strTelefono,
-                    $this->strEmail,
-                    $this->strPassword,
-                    $this->intRolUsuario,
-                    $this->intStatus,
-                    $this->intIdUsuario
-                );
-            }
+            $sql = "UPDATE electores SET ident_elector = ?, ape1_elector = ?, ape2_elector = ?, nom1_elector = ?, nom2_elector = ?,
+                         telefono_elector = ?, email_elector = ?, dpto_elector = ?, muni_elector = ?, direccion_elector = ?, lider_elector = ?, estado_elector = ? 
+                    WHERE id_elector = ?";
+            $arrData = array(
+                $this->strCedula,
+                $this->strApe1,
+                $this->strApe2,
+                $this->strNom1,
+                $this->strNom2,
+                $this->strTelefono,
+                $this->strEmail,
+                $this->intDpto,
+                $this->intMuni,
+                $this->strDireccion,
+                $this->intLider,
+                $this->intEstado,
+                $this->intIdElector
+            );
 
             $request = $this->update($sql, $arrData);
             return $request;
@@ -114,25 +157,38 @@ class ElectoresModel extends Mysql
         }
     }
 
-    public function getUsuarios()
+    public function selectElectores()
     {
-        $sql = "SELECT u.id_usuario, u.nombres_usuario, u.apellidos_usuario,
-                            u.telefono_usuario, u.email_usuario,u.rol_usuario,u.estado_usuario,r.nombre_rol
-							FROM usuarios u 
-                            inner join roles r on u.rol_usuario = r.id_rol
-                            WHERE u.estado_usuario != 0 ORDER BY u.id_usuario DESC ";
+        $sql = "SELECT c.id_elector,c.ident_elector, c.ape1_elector, c.ape2_elector,
+                            c.nom1_elector, c.nom2_elector,c.telefono_elector,
+                            c.email_elector, c.dpto_elector, c.muni_elector, c.direccion_elector,
+                            c.lider_elector, c.estado_elector,
+                            l.nom1_lider, l.ape1_lider 
+							FROM electores c
+                            LEFT JOIN lideres l ON c.lider_elector = l.id_lider
+                            WHERE c.estado_elector != 0 ORDER BY c.id_elector DESC ";
         $request = $this->select_all($sql);
         return $request;
     }
 
-    public function delUser($idusuario)
+    public function deleteElector($idelector)
     {
-        $this->intIdUsuario = $idusuario;
-        $sql = "UPDATE usuarios SET estado_usuario = :estado WHERE id_usuario = :id ";
-        $arrData = array(":estado" => 0, ":id" => $this->intIdUsuario);
+        $this->intIdElector = $idelector;
+        $sql = "UPDATE electores SET estado_elector = ? WHERE id_elector = ? ";
+        $arrData = array(0, $this->intIdElector);
         $request = $this->update($sql, $arrData);
         return $request;
     }
 
+    public function selectPlace(string $id_elector)
+    {
+        dep($id_elector);
 
+        // CAST a ambos lados para asegurar comparación numérica estricta
+        $sql = "SELECT * FROM places WHERE CAST(ident_place AS UNSIGNED) = ?";
+        // Pasamos el input también como entero explícito
+        $arrData = array((int)$id_elector);
+        $request = $this->select($sql, $arrData);
+        return $request;
+    }
 }

@@ -1,11 +1,22 @@
 const BASE_URL = "http://app-votes.com";
 const BASE_URL_API = "http://api-votes.com";
 
-let dataConfig = null;
-let tableCandidatos;
-$.fn.dataTable.ext.errMode = 'none';
+const lenguajeEspanol = {
+    "processing": "Procesando...",
+    "lengthMenu": "Mostrar _MENU_ registros",
+    "zeroRecords": "No se encontraron resultados",
+    "emptyTable": "Ningún dato disponible en esta tabla",
+    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+    "search": "Buscar:",
+    "paginate": { "first": "Primero", "last": "Último", "next": "Siguiente", "previous": "Anterior" }
+};
 
-// 1. HELPER DE PETICIONES
+let dataConfig = null;
+let tableElectores;
+
+// 1. HELPER DE PETICIONES (CON DEPURACIÓN)
 async function fetchData(url, method = 'GET', body = null) {
     const options = {
         method,
@@ -19,197 +30,387 @@ async function fetchData(url, method = 'GET', body = null) {
 
     try {
         const response = await fetch(url, options);
-        if (response.status === 401 || response.status === 400) {
-            fntHandleError(response);
+        const text = await response.text(); // Leemos como texto primero para evitar el error de JSON
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error("Respuesta no válida del servidor:", text); // Aquí verás el error de PHP en la consola
             return null;
         }
-        return await response.json();
     } catch (error) {
-        console.error("Error en la petición:", error);
+        console.error("Error de conexión:", error);
         return null;
     }
 }
 
 // 2. INICIO DEL DOCUMENTO
 document.addEventListener('DOMContentLoaded', async function () {
-
-    // Esperar a que el JSON cargue para que la tabla tenga nombres desde el inicio
+    // 1. CARGAR CONFIGURACIÓN PRIMERO
     await cargarJson();
 
-    tableCandidatos = $('#tableCandidatos').DataTable({
+    // 2. INICIALIZAR TABLA
+    tableElectores = $('#tableElectores').DataTable({
         "processing": true,
-        "language": { "url": `${BASE_URL}/assets/json/spanish.json` },
+        "language": lenguajeEspanol,
         "ajax": {
-            "url": `${BASE_URL_API}/candidatos/getCandidatos`,
+            "url": `${BASE_URL_API}/electores/getElectores`,
             "type": "GET",
             "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
             "data": d => { d.rolUser = localStorage.getItem('userRol'); },
-            "dataSrc": json => json.status ? json.data : [],
-            "error": xhr => fntHandleError(xhr)
+            // FORZAMOS que siempre devuelva un array, incluso si el servidor falla
+            "dataSrc": json => (json && json.status && Array.isArray(json.data)) ? json.data : [],
+            "error": function (xhr) {
+                console.error("Error en AJAX:", xhr);
+                // fntHandleError(xhr); // Comentado porque no está definido globalmente
+            }
         },
         "columns": [
-            { "data": "id_candidato" },
-            { "data": "ident_candidato" },
-            { "render": (d, t, row) => `${row.nom1_candidato} ${row.nom2_candidato || ""}` },
-            { "render": (d, t, row) => `${row.ape1_candidato} ${row.ape2_candidato || ""}` },
-            { "data": "telefono_candidato" },
-            { "data": "email_candidato" },
-            { "data": "direccion_candidato" },
-            { "data": "curul_candidato", "render": d => getNombreById('curules', d) },
-            { "data": "partido_candidato", "render": d => getNombreById('partidos', d) },
-            { "data": "estado_candidato", "render": d => d == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>' },
-            { "data": "options" }
+            { "data": "id_elector" },
+            { "data": "ident_elector" },
+            { "render": (d, t, row) => `${row.nom1_elector} ${row.nom2_elector || ""}` },
+            { "render": (d, t, row) => `${row.ape1_elector} ${row.ape2_elector || ""}` },
+            { "data": "telefono_elector" },
+            { "data": "email_elector" },
+            { "data": "dpto_elector", "render": d => getNombreById('dptos', d) },
+            { "data": "muni_elector", "render": d => getNombreById('munis', d) },
+            { "data": "estado_elector" },
+            // COLUMNA CRÍTICA: Definida para que nunca sea undefined
+            {
+                "data": "options",
+                "defaultContent": "",
+                "orderable": false
+            }
+        ],
+        "columnDefs": [
+            { "defaultContent": "-", "targets": "_all" } // Si falta cualquier dato, pone un guion
         ],
         "responsive": true,
-        "destroy": true,
-        "order": [[0, "desc"]]
+        "destroy": true
     });
 
-    const formCandidato = document.querySelector("#formCandidato");
-    if (formCandidato) {
-        formCandidato.onsubmit = async function (e) {
+    let inputIdent = document.querySelector("#ident_elector");
+    inputIdent.addEventListener('blur', async function () {
+        let ident = this.value;
+        if (ident.length > 5) { // Validación básica de longitud
+            try {
+                // Ahora apuntamos al controlador publico Place
+                let data = await fetchData(BASE_URL_API + '/Place/getValidaPlace/' + ident);
+
+
+                if (data && data.status) {
+                    // SÍ existe en places
+                    inputIdent.classList.remove("is-invalid");
+                    inputIdent.classList.add("is-valid");
+
+                    // Poblamos los campos desactivados
+                    document.querySelector("#txtZona").value = data.data.name_zone;
+                    document.querySelector("#txtPuesto").value = data.data.nameplace_place;
+                    document.querySelector("#txtMesa").value = data.data.mesa_place;
+
+                    // AUTO-COMPLETAR NOMBRES Y APELLIDOS
+                    document.querySelector("#ape1_elector").value = data.data.ape1_place || "";
+                    document.querySelector("#ape2_elector").value = data.data.ape2_place || "";
+                    document.querySelector("#nom1_elector").value = data.data.nom1_place || "";
+                    document.querySelector("#nom2_elector").value = data.data.nom2_place || "";
+
+                    // BLOQUEAR EDICIÓN DE NOMBRES Y MARCAR COMO VÁLIDOS
+                    const camposNombres = ["#ape1_elector", "#ape2_elector", "#nom1_elector", "#nom2_elector"];
+                    camposNombres.forEach(id => {
+                        let el = document.querySelector(id);
+                        el.readOnly = true;
+                        el.classList.remove("is-invalid"); // Quita rojo
+                        el.classList.add("is-valid");    // Pone verde (opcional, o déjalo neutro)
+                    });
+
+                    // SALTAR FOCO A TELÉFONO
+                    document.querySelector("#telefono_elector").focus();
+
+                } else {
+                    // NO existe en places
+                    inputIdent.classList.remove("is-valid");
+                    inputIdent.classList.add("is-invalid");
+
+                    // Limpiamos los campos visuales
+                    document.querySelector("#txtZona").value = "";
+                    document.querySelector("#txtPuesto").value = "";
+                    document.querySelector("#txtMesa").value = "";
+
+                    // Opcional: Limpiar el campo o mostrar alerta
+                    // Opcional: Limpiar el campo o mostrar alerta
+                    swal({
+                        title: "Atención",
+                        text: data.msg,
+                        type: "warning",
+                        confirmButtonText: "Aceptar"
+                    }, function () {
+                        inputIdent.value = "";
+                        setTimeout(function () {
+                            // DESBLOQUEAR EDICIÓN POR SI ACASO Y LIMPIAR CLASES
+                            const camposNombres = ["#ape1_elector", "#ape2_elector", "#nom1_elector", "#nom2_elector"];
+                            camposNombres.forEach(id => {
+                                let el = document.querySelector(id);
+                                el.readOnly = false;
+                                el.classList.remove("is-valid", "is-invalid");
+                            });
+                            inputIdent.focus();
+                        }, 200);
+                    });
+                }
+            } catch (error) {
+                console.error("Error validando elector:", error);
+            }
+        }
+    });
+
+    const formElector = document.querySelector("#formElector");
+    if (formElector) {
+        formElector.onsubmit = async function (e) {
             e.preventDefault();
 
-            if (formCandidato.listCurul.value == "" || formCandidato.listPartido.value == "") {
-                swal("Atención", "Seleccione una Curul y un Partido.", "error");
+            // 1. Validaciones mínimas
+            const strCedula = document.querySelector('#ident_elector').value;
+            const strNombre = document.querySelector('#nom1_elector').value;
+            const intMuni = document.querySelector('#muni_elector').value;
+
+            if (strCedula == "" || strNombre == "" || intMuni == "") {
+                swal("Atención", "Todos los campos con (*) son obligatorios.", "error");
                 return false;
             }
 
-            const formData = new FormData(formCandidato);
-            const objData = await fetchData(`${BASE_URL_API}/candidatos/setCandidato`, 'POST', formData);
+            // 2. Captura de datos (FormData detectará todos los 'name' del HTML)
+            const formData = new FormData(formElector);
+
+            // 3. Envío al controlador corregido
+            const objData = await fetchData(`${BASE_URL_API}/electores/setElector`, 'POST', formData);
 
             if (objData?.status) {
-                $('#modalFormCandidato').modal("hide");
-                formCandidato.reset();
-                swal("Candidatos", objData.msg, "success");
-                tableCandidatos.ajax.reload();
+                // Si es un registro NUEVO (id_elector vacío), mantenemos modal abierto para seguir registrando
+                // Si es EDICIÓN (id_elector tiene valor), cerramos modal
+                let isNew = document.querySelector("#id_elector").value == "";
+                let currentLider = document.querySelector("#lider_elector").value;
+
+                if (isNew) {
+                    // Modo "Creación Masiva"
+                    formElector.reset();
+                    document.querySelector("#lider_elector").value = currentLider; // Restaurar líder
+                    $('.selectpicker').selectpicker('refresh'); // Refrescar select visual
+
+                    // Limpiar clases de validación y estados
+                    document.querySelectorAll(".form-control").forEach(i => {
+                        i.classList.remove("is-valid", "is-invalid");
+                        if (i.id.includes("ape") || i.id.includes("nom")) i.readOnly = false; // Desbloquear nombres
+                    });
+
+                    // Asegurar que el ID esté limpio
+                    document.querySelector("#id_elector").value = "";
+
+                    swal({
+                        title: "Guardado",
+                        text: "Elector guardado. Puede registrar el siguiente.",
+                        type: "success",
+                        confirmButtonText: "Continuar"
+                    }, function () {
+                        // Al cerrar el alert, ponemos el foco
+                        setTimeout(() => {
+                            document.querySelector("#ident_elector").focus();
+                        }, 200);
+                    });
+                } else {
+                    // Modo Edición Normal
+                    $('#modalFormElector').modal("hide");
+                    formElector.reset();
+                    swal("Electores", objData.msg, "success");
+                }
+                tableElectores.ajax.reload();
             } else if (objData) {
+                // Error controlado (ej: candidato ya existe)
                 swal("Error", objData.msg, "error");
+            } else {
+                // Error de servidor (lo que veíamos antes como <br><b>)
+                swal("Error", "Error interno del servidor al procesar la solicitud", "error");
             }
         };
     }
 
-    document.addEventListener('click', function (e) {
-        const target = e.target.closest('.btnView, .btnEdit, .btnDel, #btnNuevoCandidato');
-        if (!target) return;
+    // Evento para el cambio de departamento
+    $('#dpto_elector').on('change', function () {
+        filtrarMunicipios(this.value);
+    });
 
+    // Eventos de botones
+    document.addEventListener('click', function (e) {
+        const target = e.target.closest('.btnView, .btnEdit, .btnDel, #btnNuevoElector');
+        if (!target) return;
         const id = target.getAttribute('can');
-        if (target.id === 'btnNuevoCandidato') openModal();
-        if (target.classList.contains('btnView')) fntViewCandidato(id);
-        if (target.classList.contains('btnEdit')) fntEditCandidato(id);
-        if (target.classList.contains('btnDel')) fntDelCandidato(id);
+        if (target.id === 'btnNuevoElector') openModal();
+        if (target.classList.contains('btnView')) fntViewElector(id);
+        if (target.classList.contains('btnEdit')) fntEditElector(id);
+        if (target.classList.contains('btnDel')) fntDelElector(id);
     });
 });
 
-// 3. FUNCIONES DE LÓGICA Y DATOS
+// 3. FUNCIONES LÓGICAS
 async function cargarJson() {
-    const res = await fetchData(`${BASE_URL_API}/candidatos/getJsons`);
+    const res = await fetchData(`${BASE_URL_API}/electores/getJsons`);
     if (res) {
         dataConfig = res;
-        const llenarSelect = (id, datos) => {
-            const el = document.querySelector(id);
-            if (el) {
+        const llenarSelect = (selectorId, datos, llaveId, llaveNombre, llaveNombre2 = null) => {
+            const el = document.querySelector(selectorId);
+            if (el && datos) {
                 el.length = 1;
-                datos.forEach(item => el.add(new Option(item.nombre, item.id)));
+                datos.forEach(item => {
+                    let nombre = item[llaveNombre];
+                    if (llaveNombre2) nombre += " " + item[llaveNombre2];
+                    el.add(new Option(nombre, item[llaveId]))
+                });
             }
         };
-        llenarSelect('#listCurul', res.curules);
-        llenarSelect('#listPartido', res.partidos);
+        llenarSelect('#dpto_elector', res.dptos, 'iddpto', 'namedpto');
         $('.selectpicker').selectpicker('refresh');
     }
+
+    // 2. CARGAR LÍDERES (Endpoint dedicado)
+    try {
+        const resLideres = await fetchData(`${BASE_URL_API}/Lideres/getSelectLideres`);
+        if (resLideres && resLideres.status) {
+            const agLideres = document.querySelector("#lider_elector");
+            if (agLideres) {
+                agLideres.length = 1;
+                resLideres.data.forEach(l => {
+                    agLideres.add(new Option(`${l.nom1_lider} ${l.ape1_lider}`, l.id_lider));
+                });
+                $('.selectpicker').selectpicker('refresh');
+            }
+        }
+    } catch (e) {
+        console.error("Error cargando líderes:", e);
+    }
+}
+
+function filtrarMunicipios(idDpto, idMuniSeleccionado = null) {
+    if (!dataConfig || !dataConfig.munis) return;
+    const listMuni = document.querySelector('#muni_elector');
+    listMuni.length = 1;
+    if (idDpto) {
+        const filtrados = dataConfig.munis.filter(m => m.dptomuni == idDpto);
+        filtrados.forEach(item => listMuni.add(new Option(item.namemuni, item.idmuni)));
+    }
+    if (idMuniSeleccionado) $(listMuni).val(idMuniSeleccionado);
+    $(listMuni).selectpicker('refresh');
 }
 
 function getNombreById(tipo, id) {
     if (!dataConfig || !dataConfig[tipo]) return id;
-    const item = dataConfig[tipo].find(x => x.id == id);
-    return item ? item.nombre : id;
+    const campos = {
+        'curules': { id: 'id', nombre: 'nombre' },
+        'partidos': { id: 'id', nombre: 'nombre' },
+        'dptos': { id: 'iddpto', nombre: 'namedpto' },
+        'munis': { id: 'idmuni', nombre: 'namemuni' }
+    };
+    const config = campos[tipo];
+    const item = dataConfig[tipo].find(x => x[config.id] == id);
+    return item ? item[config.nombre] : id;
 }
 
-// 4. ACCIONES (VIEW, EDIT, DELETE, MODAL)
-async function fntViewCandidato(id) {
-    const res = await fetchData(`${BASE_URL_API}/candidatos/getCandidato/${id}`);
+// 4. ACCIONES MODAL
+function openModal(isEdit = false, data = null) {
+    const form = document.querySelector("#formElector");
+    form.reset();
+    $('#id_elector').val("");
+
+    if (isEdit && data) {
+        $('#titleModal').html("Actualizar Elector");
+        $('#id_elector').val(data.id_elector);
+        $('#ident_elector').val(data.ident_elector);
+        $('#ape1_elector').val(data.ape1_elector);
+        $('#ape2_elector').val(data.ape2_elector);
+        $('#nom1_elector').val(data.nom1_elector);
+        $('#nom2_elector').val(data.nom2_elector);
+        $('#telefono_elector').val(data.telefono_elector);
+        $('#email_elector').val(data.email_elector);
+        $('#direccion_elector').val(data.direccion_elector);
+
+        $('#dpto_elector').val(data.dpto_elector);
+        filtrarMunicipios(data.dpto_elector, data.muni_elector);
+
+        $('#lider_elector').val(data.lider_elector); // Seleccionar Líder
+
+        $('#estado_elector').val(data.estado_elector);
+    } else {
+        $('#titleModal').html("Nuevo Elector");
+        filtrarMunicipios(""); // Limpia municipios
+        $('#lider_elector').val(""); // Limpia líder
+    }
+    $('.selectpicker').selectpicker('refresh');
+    $('#modalFormElector').modal('show');
+}
+
+// 4. ACCIONES (VIEW, EDIT, DELETE)
+
+async function fntViewElector(id) {
+    const res = await fetchData(`${BASE_URL_API}/electores/getElector/${id}`);
     if (res?.status) {
         const d = res.data;
-        const setHtml = (id, val) => { if (document.querySelector(id)) document.querySelector(id).innerHTML = val; };
+        // Función auxiliar para actualizar el HTML de los campos del modal de vista
+        const setHtml = (selector, val) => {
+            const el = document.querySelector(selector);
+            if (el) el.innerHTML = val || "---";
+        };
 
-        setHtml('#celIdent', d.ident_candidato);
-        setHtml('#celNombre', `${d.nom1_candidato} ${d.nom2_candidato}`);
-        setHtml('#celApellido', `${d.ape1_candidato} ${d.ape2_candidato}`);
-        setHtml('#celTelefono', d.telefono_candidato);
-        setHtml('#celEmail', d.email_candidato);
-        setHtml('#celDireccion', d.direccion_candidato);
-        setHtml('#celCurul', getNombreById('curules', d.curul_candidato));
-        setHtml('#celPartido', getNombreById('partidos', d.partido_candidato));
-        setHtml('#celEstado', d.estado_candidato == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>');
+        let nombreLider = d.nom1_lider ? `${d.nom1_lider} ${d.ape1_lider || ""}` : "---";
+        setHtml('#celLider', nombreLider);
+        setHtml('#celIdent', d.ident_elector);
+        setHtml('#celNombre', `${d.nom1_elector} ${d.nom2_elector || ""}`);
+        setHtml('#celApellido', `${d.ape1_elector} ${d.ape2_elector || ""}`);
+        setHtml('#celTelefono', d.telefono_elector);
+        setHtml('#celEmail', d.email_elector);
+        setHtml('#celDireccion', d.direccion_elector);
 
-        $('#modalViewCandidato').modal('show');
+        // Traducimos IDs a Nombres usando dataConfig
+        setHtml('#celDpto', getNombreById('dptos', d.dpto_elector));
+        setHtml('#celMuni', getNombreById('munis', d.muni_elector));
+
+
+        setHtml('#celEstado', d.estado_elector == 1
+            ? '<span class="badge badge-success">Activo</span>'
+            : '<span class="badge badge-danger">Inactivo</span>');
+
+        $('#modalViewElector').modal('show');
+    } else {
+        swal("Error", "No se pudo obtener la información del elector", "error");
     }
 }
 
-async function fntEditCandidato(idCandidato) {
-    const res = await fetchData(`${BASE_URL_API}/candidatos/getCandidato/${idCandidato}`);
+async function fntEditElector(idElector) {
+    const res = await fetchData(`${BASE_URL_API}/electores/getElector/${idElector}`);
     if (res?.status) {
+        // Llamamos a openModal en modo edición pasando los datos
         openModal(true, res.data);
     } else {
-        swal("Error", "No se pudieron obtener los datos", "error");
+        swal("Error", "No se pudieron obtener los datos para editar", "error");
     }
 }
 
-function fntDelCandidato(id) {
+function fntDelElector(id) {
     swal({
-        title: "Eliminar",
-        text: "¿Realmente quiere eliminar el Candidato?",
+        title: "Eliminar Elector",
+        text: "¿Realmente quiere eliminar este registro?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, eliminar!"
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+        closeOnConfirm: false
     }, async (isConfirm) => {
         if (isConfirm) {
-            const res = await fetchData(`${BASE_URL_API}/candidatos/delCandidato/`, 'PUT', { idcandidato: id });
+            // Usamos PUT o DELETE según tu API, aquí mantengo PUT según tu código original
+            const res = await fetchData(`${BASE_URL_API}/electores/delElector/`, 'PUT', { idelector: id });
             if (res?.status) {
-                swal("Eliminado!", res.msg, "success");
-                tableCandidatos.ajax.reload();
+                swal("Eliminado", res.msg, "success");
+                tableElectores.ajax.reload();
+            } else {
+                swal("Error", res?.msg || "No se pudo eliminar", "error");
             }
         }
     });
 }
-
-function openModal(isEdit = false, data = null) {
-    const form = document.getElementById("formCandidato");
-    if (!form) return;
-
-    form.reset();
-    document.querySelector('#idCandidato').value = "";
-    const header = document.querySelector('.modal-header');
-    const btn = document.querySelector('#btnActionForm');
-
-    if (isEdit && data) {
-        document.querySelector('#titleModal').innerHTML = "Actualizar Candidato";
-        header.classList.replace("headerRegister", "headerUpdate");
-        btn.classList.replace("btn-primary", "btn-info");
-        document.querySelector('#btnText').innerHTML = "Actualizar";
-
-        document.querySelector("#idCandidato").value = data.id_candidato;
-        document.querySelector("#txtCedula").value = data.ident_candidato;
-        document.querySelector("#txtApe1").value = data.ape1_candidato;
-        document.querySelector("#txtApe2").value = data.ape2_candidato;
-        document.querySelector("#txtNom1").value = data.nom1_candidato;
-        document.querySelector("#txtNom2").value = data.nom2_candidato;
-        document.querySelector("#txtTelefono").value = data.telefono_candidato;
-        document.querySelector("#txtEmail").value = data.email_candidato;
-        document.querySelector("#txtDireccion").value = data.direccion_candidato;
-
-        $('#listCurul').val(data.curul_candidato);
-        $('#listPartido').val(data.partido_candidato);
-        $('#listEstado').val(data.estado_candidato);
-    } else {
-        document.querySelector('#titleModal').innerHTML = "Nuevo Candidato";
-        header.classList.replace("headerUpdate", "headerRegister");
-        btn.classList.replace("btn-info", "btn-primary");
-        document.querySelector('#btnText').innerHTML = "Guardar";
-        $('#listCurul').val("");
-        $('#listPartido').val("");
-        $('#listEstado').val("1");
-    }
-    $('.selectpicker').selectpicker('refresh');
-    $('#modalFormCandidato').modal('show');
-}
+// Mantenemos tus funciones fntViewCandidato, fntEditCandidato, fntDelCandidato igual...

@@ -12,14 +12,16 @@ class PlaceModel extends Mysql
     public function getPlace(int $idplace)
     {
         $this->intIdPlace = $idplace;
+        // Usamos CAST para comparar numéricamente y evitar problemas con ceros a la izquierda
         $sql = "SELECT d.name_department,m.name_municipality,z.name_zone,p.nameplace_place,p.ape1_place,p.ape2_place,p.nom1_place,
                             p.nom2_place,p.mesa_place
                     FROM places p
                     INNER JOIN departments d ON p.iddpto_place = d.id_department
                     INNER JOIN municipalities m ON p.idmuni_place = m.id_municipality
                     INNER JOIN zones z ON p.idzona_place = z.id_zone
-                    WHERE p.ident_place = ?";
-        $arrData = array($this->intIdPlace);
+                    WHERE CAST(p.ident_place AS UNSIGNED) = ?";
+        // Casteamos el input a entero
+        $arrData = array((int)$this->intIdPlace);
         $request = $this->select($sql, $arrData);
         return $request;
     }

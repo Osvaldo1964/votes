@@ -66,7 +66,7 @@ class LideresModel extends Mysql
             $sql_insert = "INSERT INTO lideres(ident_lider, ape1_lider, ape2_lider, nom1_lider,
                                      nom2_lider, telefono_lider, email_lider, dpto_lider, muni_lider, direccion_lider,
                                      estado_lider)
-                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $arrData = array(
                 $this->strCedula,

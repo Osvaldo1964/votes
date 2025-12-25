@@ -123,20 +123,16 @@
                             <td id="celEmail">Larry</td>
                         </tr>
                         <tr>
-                            <td>D epartamento:</td>
-                            <td id="celDepartamento">Larry</td>
+                            <td>Departamento:</td>
+                            <td id="celDpto">Larry</td>
                         </tr>
                         <tr>
                             <td>Municipio:</td>
-                            <td id="celMunicipio">Larry</td>
+                            <td id="celMuni">Larry</td>
                         </tr>
                         <tr>
-                            <td>Zona:</td>
-                            <td id="celZona">Larry</td>
-                        </tr>
-                        <tr>
-                            <td>Barrio:</td>
-                            <td id="celBarrio">Larry</td>
+                            <td>Dirección:</td>
+                            <td id="celDireccion">Larry</td>
                         </tr>
                         <tr>
                             <td>Estado:</td>
