@@ -10,84 +10,84 @@
             </div>
             <div class="modal-body">
                 <form id="formCandidato" name="formCandidato" class="form-horizontal">
-                    <input type="hidden" id="idCandidato" name="idCandidato" value="">
+                    <input type="hidden" id="id_candidato" name="id_candidato" value="">
                     <p class="text-primary">Todos los campos son obligatorios.</p>
 
                     <div class="form-row">
                         <div class="form-group col-md-2">
-                            <label for="txtCedula">Cédula</label>
-                            <input type="text" class="form-control valid validNumber" id="txtCedula" name="txtCedula"
+                            <label for="ident_candidato">Cédula</label>
+                            <input type="text" class="form-control valid validNumber" id="ident_candidato" name="ident_candidato"
                                 required="">
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="txtApe1">Primer Apellido</label>
-                            <input type="text" class="form-control valid validText" id="txtApe1" name="txtApe1"
+                            <label for="ape1_candidato">Primer Apellido</label>
+                            <input type="text" class="form-control valid validText" id="ape1_candidato" name="ape1_candidato"
                                 required="">
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="txtApe2">Segundo Apellido</label>
-                            <input type="text" class="form-control valid validText" id="txtApe2" name="txtApe2"
+                            <label for="ape2_candidato">Segundo Apellido</label>
+                            <input type="text" class="form-control valid validText" id="ape2_candidato" name="ape2_candidato"
                                 required="">
                         </div>
                         <div class="form-group col-md-">
-                            <label for="txtNom1">Primer Nombre</label>
-                            <input type="text" class="form-control valid validText" id="txtNom1" name="txtNom1"
+                            <label for="nom1_candidato">Primer Nombre</label>
+                            <input type="text" class="form-control valid validText" id="nom1_candidato" name="nom1_candidato"
                                 required="">
                         </div>
                         <div class="form-group col-md-">
-                            <label for="txtNom2">Segundo Nombre</label>
-                            <input type="text" class="form-control valid validText" id="txtNom2" name="txtNom2"
+                            <label for="nom2_candidato">Segundo Nombre</label>
+                            <input type="text" class="form-control valid validText" id="nom2_candidato" name="nom2_candidato"
                                 required="">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-2">
-                            <label for="txtTelefono">Teléfono</label>
-                            <input type="text" class="form-control valid validNumber" id="txtTelefono"
-                                name="txtTelefono" required="" onkeypress="return controlTag(event)">
+                            <label for="telefono_candidato">Teléfono</label>
+                            <input type="text" class="form-control valid validNumber" id="telefono_candidato"
+                                name="telefono_candidato" required="" onkeypress="return controlTag(event)">
                         </div>
                         <div class="form-group col-md-5">
-                            <label for="txtEmail">Email</label>
-                            <input type="email" class="form-control valid validEmail" id="txtEmail" name="txtEmail"
+                            <label for="email_candidato">Email</label>
+                            <input type="email" class="form-control valid validEmail" id="email_candidato" name="email_candidato"
                                 required="">
                         </div>
                         <div class="form-group col-md-5">
-                            <label for="txtDireccion">Dirección</label>
-                            <input type="text" class="form-control valid validAddress" id="txtDireccion"
-                                name="txtDireccion" required="">
+                            <label for="direccion_candidato">Dirección</label>
+                            <input type="text" class="form-control valid validAddress" id="direccion_candidato"
+                                name="direccion_candidato" required="">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="listDpto">Departamento</label>
-                            <select class="form-control selectpicker" id="listDpto" name="listDpto" required>
+                            <label for="dpto_candidato">Departamento</label>
+                            <select class="form-control selectpicker" id="dpto_candidato" name="dpto_candidato" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="listMuni">Municipio</label>
-                            <select class="form-control selectpicker" id="listMuni" name="listMuni" required>
+                            <label for="muni_candidato">Municipio</label>
+                            <select class="form-control selectpicker" id="muni_candidato" name="muni_candidato" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="listCurul">Curul</label>
-                            <select class="form-control selectpicker" id="listCurul" name="listCurul" required>
+                            <label for="curul_candidato">Curul</label>
+                            <select class="form-control selectpicker" id="curul_candidato" name="curul_candidato" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label for="listPartido">Partido Político</label>
-                            <select class="form-control selectpicker" id="listPartido" name="listPartido" required>
+                            <label for="partido_candidato">Partido Político</label>
+                            <select class="form-control selectpicker" id="partido_candidato" name="partido_candidato" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="listEstado">Estado</label>
-                            <select class="form-control selectpicker" id="listEstado" name="listEstado" required>
+                            <label for="estado_candidato">Estado</label>
+                            <select class="form-control selectpicker" id="estado_candidato" name="estado_candidato" required>
                                 <option value="1">Activo</option>
                                 <option value="2">Inactivo</option>
                             </select>

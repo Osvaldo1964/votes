@@ -6,7 +6,7 @@ class Lideres extends Controllers
     {
         parent::__construct();
         sessionUser(); // Con esta sola línea ya proteges todo el controlador
-        getPermisos(2);
+        getPermisos(5);
     }
 
     public function Lideres()

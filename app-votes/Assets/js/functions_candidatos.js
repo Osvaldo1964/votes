@@ -1,11 +1,22 @@
 const BASE_URL = "http://app-votes.com";
 const BASE_URL_API = "http://api-votes.com";
 
+const lenguajeEspanol = {
+    "processing": "Procesando...",
+    "lengthMenu": "Mostrar _MENU_ registros",
+    "zeroRecords": "No se encontraron resultados",
+    "emptyTable": "Ningún dato disponible en esta tabla",
+    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+    "search": "Buscar:",
+    "paginate": { "first": "Primero", "last": "Último", "next": "Siguiente", "previous": "Anterior" }
+};
+
 let dataConfig = null;
 let tableCandidatos;
-$.fn.dataTable.ext.errMode = 'none';
 
-// 1. HELPER DE PETICIONES
+// 1. HELPER DE PETICIONES (CON DEPURACIÓN)
 async function fetchData(url, method = 'GET', body = null) {
     const options = {
         method,
@@ -19,109 +30,118 @@ async function fetchData(url, method = 'GET', body = null) {
 
     try {
         const response = await fetch(url, options);
-        if (response.status === 401 || response.status === 400) {
-            fntHandleError(response);
+        const text = await response.text(); // Leemos como texto primero para evitar el error de JSON
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error("Respuesta no válida del servidor:", text); // Aquí verás el error de PHP en la consola
             return null;
         }
-        return await response.json();
     } catch (error) {
-        console.error("Error en la petición:", error);
+        console.error("Error de conexión:", error);
         return null;
     }
 }
 
 // 2. INICIO DEL DOCUMENTO
 document.addEventListener('DOMContentLoaded', async function () {
-
-    // Esperar a que el JSON cargue para que la tabla tenga nombres desde el inicio
+    // 1. CARGAR CONFIGURACIÓN PRIMERO
     await cargarJson();
 
+    // 2. INICIALIZAR TABLA
     tableCandidatos = $('#tableCandidatos').DataTable({
         "processing": true,
-        "language": { "url": `${BASE_URL}/assets/json/spanish.json` },
+        "language": lenguajeEspanol,
         "ajax": {
             "url": `${BASE_URL_API}/candidatos/getCandidatos`,
             "type": "GET",
             "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
             "data": d => { d.rolUser = localStorage.getItem('userRol'); },
-            "dataSrc": json => json.status ? json.data : [],
-            "error": xhr => fntHandleError(xhr)
+            // Mejoramos la validación del JSON recibido
+            "dataSrc": json => {
+                if (json && json.status && Array.isArray(json.data)) {
+                    return json.data;
+                }
+                return []; // Retorna array vacío si no hay datos o falla el status
+            }
         },
         "columns": [
             { "data": "id_candidato" },
             { "data": "ident_candidato" },
-            { "render": (d, t, row) => `${row.nom1_candidato} ${row.nom2_candidato || ""}` },
-            { "render": (d, t, row) => `${row.ape1_candidato} ${row.ape2_candidato || ""}` },
+            { "render": (d, t, row) => `${row.nom1_candidato || ""} ${row.nom2_candidato || ""}` },
+            { "render": (d, t, row) => `${row.ape1_candidato || ""} ${row.ape2_candidato || ""}` },
             { "data": "telefono_candidato" },
             { "data": "email_candidato" },
-            { "data": "direccion_candidato" },
             { "data": "dpto_candidato", "render": d => getNombreById('dptos', d) },
             { "data": "muni_candidato", "render": d => getNombreById('munis', d) },
             { "data": "curul_candidato", "render": d => getNombreById('curules', d) },
             { "data": "partido_candidato", "render": d => getNombreById('partidos', d) },
-            { "data": "estado_candidato", "render": d => d == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>' },
-            { "data": "options" }
+            {
+                "data": "estado_candidato",
+                "render": d => d == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>'
+            },
+            // COLUMNA BLINDADA: defaultContent evita el error si 'options' no viene en el JSON
+            {
+                "data": "options",
+                "defaultContent": "",
+                "orderable": false
+            }
+        ],
+        // REGLA DE ORO: Si cualquier celda viene undefined por error, pone un guion en lugar de romperse
+        "columnDefs": [
+            { "defaultContent": "-", "targets": "_all" }
         ],
         "responsive": true,
         "destroy": true,
         "order": [[0, "desc"]]
     });
 
-    // --- AQUÍ EL FILTRO DE MUNICIPIOS ---
-    const listDpto = document.querySelector('#listDpto');
-    const listMuni = document.querySelector('#listMuni');
-
-    if (listDpto && listMuni) {
-        listDpto.addEventListener('change', function () {
-            const idDptoSeleccionado = this.value; // Captura el iddpto del selector
-
-            // Limpiamos el selector de municipios (dejando solo la opción por defecto)
-            listMuni.length = 1;
-
-            if (idDptoSeleccionado !== "") {
-                // Filtramos el array de municipios usando la llave 'dptomuni' de tu JSON
-                const filtrados = dataConfig.munis.filter(m => m.dptomuni == idDptoSeleccionado);
-
-                // Llenamos el selector con los resultados
-                filtrados.forEach(item => {
-                    listMuni.add(new Option(item.namemuni, item.idmuni));
-                });
-            }
-
-            // IMPORTANTE: Refrescar el selectpicker si usas Bootstrap Select
-            $(listMuni).selectpicker('refresh');
-        });
-    }
-    // ------------------------------------
-
     const formCandidato = document.querySelector("#formCandidato");
     if (formCandidato) {
         formCandidato.onsubmit = async function (e) {
             e.preventDefault();
 
-            if (formCandidato.listCurul.value == "" || formCandidato.listPartido.value == "") {
-                swal("Atención", "Seleccione una Curul y un Partido.", "error");
+            // 1. Validaciones mínimas
+            const strCedula = document.querySelector('#ident_candidato').value;
+            const strNombre = document.querySelector('#nom1_candidato').value;
+            const intMuni = document.querySelector('#muni_candidato').value;
+
+            if (strCedula == "" || strNombre == "" || intMuni == "") {
+                swal("Atención", "Todos los campos con (*) son obligatorios.", "error");
                 return false;
             }
 
+            // 2. Captura de datos (FormData detectará todos los 'name' del HTML)
             const formData = new FormData(formCandidato);
+
+            // 3. Envío al controlador corregido
             const objData = await fetchData(`${BASE_URL_API}/candidatos/setCandidato`, 'POST', formData);
 
             if (objData?.status) {
+                // Éxito: Cerrar modal, limpiar form y refrescar tabla
                 $('#modalFormCandidato').modal("hide");
                 formCandidato.reset();
                 swal("Candidatos", objData.msg, "success");
                 tableCandidatos.ajax.reload();
             } else if (objData) {
+                // Error controlado (ej: candidato ya existe)
                 swal("Error", objData.msg, "error");
+            } else {
+                // Error de servidor (lo que veíamos antes como <br><b>)
+                swal("Error", "Error interno del servidor al procesar la solicitud", "error");
             }
         };
     }
 
+    // Evento para el cambio de departamento
+    $('#dpto_candidato').on('change', function () {
+        filtrarMunicipios(this.value);
+    });
+
+    // Eventos de botones
     document.addEventListener('click', function (e) {
         const target = e.target.closest('.btnView, .btnEdit, .btnDel, #btnNuevoCandidato');
         if (!target) return;
-
         const id = target.getAttribute('can');
         if (target.id === 'btnNuevoCandidato') openModal();
         if (target.classList.contains('btnView')) fntViewCandidato(id);
@@ -130,150 +150,147 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 });
 
-// 3. FUNCIONES DE LÓGICA Y DATOS
+// 3. FUNCIONES LÓGICAS
 async function cargarJson() {
     const res = await fetchData(`${BASE_URL_API}/candidatos/getJsons`);
     if (res) {
         dataConfig = res;
-
-        // Función mejorada que acepta los nombres de las llaves
         const llenarSelect = (selectorId, datos, llaveId, llaveNombre) => {
             const el = document.querySelector(selectorId);
             if (el && datos) {
-                el.length = 1; // Mantiene la opción "Seleccione..."
-                datos.forEach(item => {
-                    el.add(new Option(item[llaveNombre], item[llaveId]));
-                });
+                el.length = 1;
+                datos.forEach(item => el.add(new Option(item[llaveNombre], item[llaveId])));
             }
         };
-
-        // Llamadas con las llaves específicas de tu JSON
-        llenarSelect('#listCurul', res.curules, 'id', 'nombre');
-        llenarSelect('#listPartido', res.partidos, 'id', 'nombre');
-        llenarSelect('#listDpto', res.dptos, 'iddpto', 'namedpto');
-        llenarSelect('#listMuni', res.munis, 'idmuni', 'namemuni');
-
+        llenarSelect('#curul_candidato', res.curules, 'id', 'nombre');
+        llenarSelect('#partido_candidato', res.partidos, 'id', 'nombre');
+        llenarSelect('#dpto_candidato', res.dptos, 'iddpto', 'namedpto');
         $('.selectpicker').selectpicker('refresh');
     }
 }
 
+function filtrarMunicipios(idDpto, idMuniSeleccionado = null) {
+    if (!dataConfig || !dataConfig.munis) return;
+    const listMuni = document.querySelector('#muni_candidato');
+    listMuni.length = 1;
+    if (idDpto) {
+        const filtrados = dataConfig.munis.filter(m => m.dptomuni == idDpto);
+        filtrados.forEach(item => listMuni.add(new Option(item.namemuni, item.idmuni)));
+    }
+    if (idMuniSeleccionado) $(listMuni).val(idMuniSeleccionado);
+    $(listMuni).selectpicker('refresh');
+}
+
 function getNombreById(tipo, id) {
     if (!dataConfig || !dataConfig[tipo]) return id;
-
-    // Definimos un mapa de llaves según el grupo
     const campos = {
         'curules': { id: 'id', nombre: 'nombre' },
         'partidos': { id: 'id', nombre: 'nombre' },
         'dptos': { id: 'iddpto', nombre: 'namedpto' },
         'munis': { id: 'idmuni', nombre: 'namemuni' }
     };
-
     const config = campos[tipo];
-    if (!config) return id;
-
-    // Buscamos usando la llave dinámica definida arriba
     const item = dataConfig[tipo].find(x => x[config.id] == id);
     return item ? item[config.nombre] : id;
 }
 
-// 4. ACCIONES (VIEW, EDIT, DELETE, MODAL)
+// 4. ACCIONES MODAL
+function openModal(isEdit = false, data = null) {
+    const form = document.querySelector("#formCandidato");
+    form.reset();
+    $('#idCandidato').val("");
+
+    if (isEdit && data) {
+        $('#titleModal').html("Actualizar Candidato");
+        $('#id_candidato').val(data.id_candidato);
+        $('#ident_candidato').val(data.ident_candidato);
+        $('#ape1_candidato').val(data.ape1_candidato);
+        $('#ape2_candidato').val(data.ape2_candidato);
+        $('#nom1_candidato').val(data.nom1_candidato);
+        $('#nom2_candidato').val(data.nom2_candidato);
+        $('#telefono_candidato').val(data.telefono_candidato);
+        $('#email_candidato').val(data.email_candidato);
+        $('#direccion_candidato').val(data.direccion_candidato);
+
+        $('#dpto_candidato').val(data.dpto_candidato);
+        filtrarMunicipios(data.dpto_candidato, data.muni_candidato);
+
+        $('#curul_candidato').val(data.curul_candidato);
+        $('#partido_candidato').val(data.partido_candidato);
+        $('#estado_candidato').val(data.estado_candidato);
+    } else {
+        $('#titleModal').html("Nuevo Candidato");
+        filtrarMunicipios(""); // Limpia municipios
+    }
+    $('.selectpicker').selectpicker('refresh');
+    $('#modalFormCandidato').modal('show');
+}
+
+// 4. ACCIONES (VIEW, EDIT, DELETE)
+
 async function fntViewCandidato(id) {
     const res = await fetchData(`${BASE_URL_API}/candidatos/getCandidato/${id}`);
     if (res?.status) {
         const d = res.data;
-        const setHtml = (id, val) => { if (document.querySelector(id)) document.querySelector(id).innerHTML = val; };
+        // Función auxiliar para actualizar el HTML de los campos del modal de vista
+        const setHtml = (selector, val) => {
+            const el = document.querySelector(selector);
+            if (el) el.innerHTML = val || "---";
+        };
 
         setHtml('#celIdent', d.ident_candidato);
-        setHtml('#celNombre', `${d.nom1_candidato} ${d.nom2_candidato}`);
-        setHtml('#celApellido', `${d.ape1_candidato} ${d.ape2_candidato}`);
+        setHtml('#celNombre', `${d.nom1_candidato} ${d.nom2_candidato || ""}`);
+        setHtml('#celApellido', `${d.ape1_candidato} ${d.ape2_candidato || ""}`);
         setHtml('#celTelefono', d.telefono_candidato);
         setHtml('#celEmail', d.email_candidato);
         setHtml('#celDireccion', d.direccion_candidato);
-        setHtml('#celDpto', getNombreById('departamentos', d.dpto_candidato));
-        setHtml('#celMuni', getNombreById('municipios', d.muni_candidato));
+
+        // Traducimos IDs a Nombres usando dataConfig
+        setHtml('#celDpto', getNombreById('dptos', d.dpto_candidato));
+        setHtml('#celMuni', getNombreById('munis', d.muni_candidato));
         setHtml('#celCurul', getNombreById('curules', d.curul_candidato));
         setHtml('#celPartido', getNombreById('partidos', d.partido_candidato));
-        setHtml('#celEstado', d.estado_candidato == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>');
+
+        setHtml('#celEstado', d.estado_candidato == 1
+            ? '<span class="badge badge-success">Activo</span>'
+            : '<span class="badge badge-danger">Inactivo</span>');
 
         $('#modalViewCandidato').modal('show');
+    } else {
+        swal("Error", "No se pudo obtener la información del candidato", "error");
     }
 }
 
 async function fntEditCandidato(idCandidato) {
     const res = await fetchData(`${BASE_URL_API}/candidatos/getCandidato/${idCandidato}`);
     if (res?.status) {
+        // Llamamos a openModal en modo edición pasando los datos
         openModal(true, res.data);
     } else {
-        swal("Error", "No se pudieron obtener los datos", "error");
+        swal("Error", "No se pudieron obtener los datos para editar", "error");
     }
 }
 
 function fntDelCandidato(id) {
     swal({
-        title: "Eliminar",
-        text: "¿Realmente quiere eliminar el Candidato?",
+        title: "Eliminar Candidato",
+        text: "¿Realmente quiere eliminar este registro?",
         type: "warning",
         showCancelButton: true,
-        confirmButtonText: "Si, eliminar!"
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+        closeOnConfirm: false
     }, async (isConfirm) => {
         if (isConfirm) {
+            // Usamos PUT o DELETE según tu API, aquí mantengo PUT según tu código original
             const res = await fetchData(`${BASE_URL_API}/candidatos/delCandidato/`, 'PUT', { idcandidato: id });
             if (res?.status) {
-                swal("Eliminado!", res.msg, "success");
+                swal("Eliminado", res.msg, "success");
                 tableCandidatos.ajax.reload();
+            } else {
+                swal("Error", res?.msg || "No se pudo eliminar", "error");
             }
         }
     });
 }
-
-function openModal(isEdit = false, data = null) {
-    const form = document.getElementById("formCandidato");
-    if (!form) return;
-
-    form.reset();
-    document.querySelector('#idCandidato').value = "";
-    const header = document.querySelector('.modal-header');
-    const btn = document.querySelector('#btnActionForm');
-
-    if (isEdit && data) {
-        document.querySelector('#titleModal').innerHTML = "Actualizar Candidato";
-        header.classList.replace("headerRegister", "headerUpdate");
-        btn.classList.replace("btn-primary", "btn-info");
-        document.querySelector('#btnText').innerHTML = "Actualizar";
-
-        document.querySelector("#idCandidato").value = data.id_candidato;
-        document.querySelector("#txtCedula").value = data.ident_candidato;
-        document.querySelector("#txtApe1").value = data.ape1_candidato;
-        document.querySelector("#txtApe2").value = data.ape2_candidato;
-        document.querySelector("#txtNom1").value = data.nom1_candidato;
-        document.querySelector("#txtNom2").value = data.nom2_candidato;
-        document.querySelector("#txtTelefono").value = data.telefono_candidato;
-        document.querySelector("#txtEmail").value = data.email_candidato;
-        document.querySelector("#txtDireccion").value = data.direccion_candidato;
-
-        $('#listDpto').val(data.departamento_candidato);
-        // 2. FORZAMOS el llenado de municipios para ese departamento antes de asignar el valor
-        const filtrados = dataConfig.munis.filter(m => m.dptomuni == data.dpto_candidato);
-        const elMuni = document.querySelector('#listMuni');
-        elMuni.length = 1; // Limpiar
-        filtrados.forEach(item => elMuni.add(new Option(item.namemuni, item.idmuni)));
-
-        // 3. Ahora sí asignamos el municipio
-        $('#listMuni').val(data.muni_candidato);
-        $('#listCurul').val(data.curul_candidato);
-        $('#listPartido').val(data.partido_candidato);
-        $('#listEstado').val(data.estado_candidato);
-    } else {
-        document.querySelector('#titleModal').innerHTML = "Nuevo Candidato";
-        header.classList.replace("headerUpdate", "headerRegister");
-        btn.classList.replace("btn-info", "btn-primary");
-        document.querySelector('#btnText').innerHTML = "Guardar";
-        $('#listDpto').val("");
-        $('#listMuni').val("");
-        $('#listCurul').val("");
-        $('#listPartido').val("");
-        $('#listEstado').val("1");
-    }
-    $('.selectpicker').selectpicker('refresh');
-    $('#modalFormCandidato').modal('show');
-}
+// Mantenemos tus funciones fntViewCandidato, fntEditCandidato, fntDelCandidato igual...

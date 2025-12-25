@@ -1,61 +1,83 @@
 <!-- Modal -->
-<div class="modal fade" id="modalFormUsuario" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="modalFormLider" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header headerRegister">
-                <h5 class="modal-title" id="titleModal">Nuevo Usuario</h5>
+                <h5 class="modal-title" id="titleModal">Nuevo Lider</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formUsuario" name="formUsuario" class="form-horizontal">
-                    <input type="hidden" id="idUsuario" name="idUsuario" value="">
+                <form id="formLider" name="formLider" class="form-horizontal">
+                    <input type="hidden" id="id_lider" name="id_lider" value="">
                     <p class="text-primary">Todos los campos son obligatorios.</p>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="txtNombre">Nombres</label>
-                            <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre"
+                        <div class="form-group col-md-2">
+                            <label for="ident_lider">Cédula</label>
+                            <input type="text" class="form-control valid validNumber" id="ident_lider" name="ident_lider"
                                 required="">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="txtApellido">Apellidos</label>
-                            <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido"
+                        <div class="form-group col-md-2">
+                            <label for="ape1_lider">Primer apellido</label>
+                            <input type="text" class="form-control valid validText" id="ape1_lider" name="ape1_lider"
+                                required="">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="ape2_lider">Segundo apellido</label>
+                            <input type="text" class="form-control valid validText" id="ape2_lider" name="ape2_lider"
+                                required="">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="nom1_lider">Primer nombre</label>
+                            <input type="text" class="form-control valid validText" id="nom1_lider" name="nom1_lider"
+                                required="">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="nom2_lider">Segundo nombre</label>
+                            <input type="text" class="form-control valid validText" id="nom2_lider" name="nom2_lider"
                                 required="">
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="txtTelefono">Teléfono</label>
-                            <input type="text" class="form-control valid validNumber" id="txtTelefono"
-                                name="txtTelefono" required="" onkeypress="return controlTag(event)">
+                        <div class="form-group col-md-2">
+                            <label for="telefono_lider">Teléfono</label>
+                            <input type="text" class="form-control valid validNumber" id="telefono_lider"
+                                name="telefono_lider" required="" onkeypress="return controlTag(event)">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="txtEmail">Email</label>
-                            <input type="email" class="form-control valid validEmail" id="txtEmail" name="txtEmail"
+                        <div class="form-group col-md-5">
+                            <label for="email_lider">Email</label>
+                            <input type="email" class="form-control valid validEmail" id="email_lider" name="email_lider"
                                 required="">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="direccion_lider">Dirección</label>
+                            <input type="text" class="form-control valid validAddress" id="direccion_lider"
+                                name="direccion_lider" required="">
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="listRolid">Tipo usuario</label>
-                            <select class="form-control" data-live-search="true" id="listRolid" name="listRolid"
-                                required>
+                        <div class="form-group col-md-4">
+                            <label for="dpto_lider">Departamento</label>
+                            <select class="form-control selectpicker" id="dpto_lider" name="dpto_lider" required>
+                                <option value="">Seleccione</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="listStatus">Status</label>
-                            <select class="form-control selectpicker" id="listStatus" name="listStatus" required>
+                        <div class="form-group col-md-4">
+                            <label for="muni_lider">Municipio</label>
+                            <select class="form-control selectpicker" id="muni_lider" name="muni_lider" required>
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="estado_lider">Estado</label>
+                            <select class="form-control selectpicker" id="estado_lider" name="estado_lider" required>
                                 <option value="1">Activo</option>
                                 <option value="2">Inactivo</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="txtPassword">Password</label>
-                            <input type="password" class="form-control" id="txtPassword" name="txtPassword">
                         </div>
                     </div>
                     <div class="tile-footer">
@@ -72,7 +94,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalViewUser" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalViewLider" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header header-primary">
@@ -101,8 +123,20 @@
                             <td id="celEmail">Larry</td>
                         </tr>
                         <tr>
-                            <td>Tipo Usuario:</td>
-                            <td id="celTipoUsuario">Larry</td>
+                            <td>D epartamento:</td>
+                            <td id="celDepartamento">Larry</td>
+                        </tr>
+                        <tr>
+                            <td>Municipio:</td>
+                            <td id="celMunicipio">Larry</td>
+                        </tr>
+                        <tr>
+                            <td>Zona:</td>
+                            <td id="celZona">Larry</td>
+                        </tr>
+                        <tr>
+                            <td>Barrio:</td>
+                            <td id="celBarrio">Larry</td>
                         </tr>
                         <tr>
                             <td>Estado:</td>

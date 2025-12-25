@@ -36,7 +36,8 @@
                                         <th>Apellidos</th>
                                         <th>Teléfono</th>
                                         <th>Email</th>
-                                        <th>Dirección</th>
+                                        <th>Departamento</th>
+                                        <th>Municipio</th>
                                         <th>Curul</th>
                                         <th>Partido</th>
                                         <th>Estado</th>

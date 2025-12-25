@@ -1,18 +1,18 @@
 <?php headerAdmin($data); ?>
 <main class="app-content">
     <?php
-    getModal('modalUsuarios', $data);
+    getModal('modalLideres', $data);
     if (empty($_SESSION['permisosMod']['r_permiso'])) {
-        ?>
+    ?>
         <p>No tienes permisos para ver esta página</p>
     <?php } else {
 
-        ?>
+    ?>
         <div class="app-title">
             <div>
                 <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
                     <?php if (!empty($_SESSION['permisosMod']['w_permiso'])) { ?>
-                        <button class="btn btn-primary" id="btnNuevoUsuario" type="button"><i class="fas fa-plus-circle"></i>
+                        <button class="btn btn-primary" id="btnNuevoLider" type="button"><i class="fas fa-plus-circle"></i>
                             Nuevo</button>
                     <?php } ?>
                 </h1>
@@ -27,7 +27,7 @@
                 <div class="tile">
                     <div class="tile-body">
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered" id="tableUsuarios">
+                            <table class="table table-hover table-bordered" id="tableLideres">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -35,8 +35,9 @@
                                         <th>Apellidos</th>
                                         <th>Teléfono</th>
                                         <th>Email</th>
-                                        <th>Rol</th>
-                                        <th>Status</th>
+                                        <th>Departamento</th>
+                                        <th>Municipio</th>
+                                        <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>

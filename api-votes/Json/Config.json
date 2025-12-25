@@ -2,33 +2,33 @@
     "curules": [
         {
             "id": "1",
-            "nombre": "Senado"
+            "nombre": "SENADO"
         },
         {
             "id": "2",
-            "nombre": "Cámara"
+            "nombre": "CAMARA"
         },
         {
             "id": "3",
-            "nombre": "Concejo"
+            "nombre": "CONCEJO"
         }
     ],
     "partidos": [
         {
             "id": "1",
-            "nombre": "Partido Liberal"
+            "nombre": "PARTIDO LIBERAL"
         },
         {
             "id": "2",
-            "nombre": "Partido Conservador"
+            "nombre": "PARTIDO CONSERVADOR"
         },
         {
             "id": "3",
-            "nombre": "Centro Democrático"
+            "nombre": "CENTRO DEMOCRÁTICO"
         },
         {
             "id": "4",
-            "nombre": "Partido Verde"
+            "nombre": "PARTIDO VERDE"
         }
     ],
     "dptos": [

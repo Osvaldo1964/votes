@@ -23,16 +23,16 @@ class Lideres extends Controllers
         }
     }
 
-    public function getLider($idl)
+    public function getLider($idlider)
     {
         try {
             if ($_SERVER['REQUEST_METHOD'] == "GET") {
-                if (empty($idl) or !is_numeric($idl)) {
+                if (empty($idlider) or !is_numeric($idlider)) {
                     jsonResponse(['status' => false, 'msg' => 'Error en los parámetros'], 400);
                     die();
                 }
 
-                $arrLider = $this->model->getLider($idl);
+                $arrLider = $this->model->selectLider($idlider);
                 if (empty($arrLider)) {
                     $response = array('status' => false, 'msg' => 'Registro no encontrado');
                 } else {
@@ -55,7 +55,7 @@ class Lideres extends Controllers
                 // Obtener ID del usuario para validar botones de permisos r, u, d
                 $rolUser = isset($_GET['rolUser']) ? intval($_GET['rolUser']) : 0;
 
-                $arrData = $this->model->getLideres();
+                $arrData = $this->model->selectLideres();
 
                 if (empty($arrData)) {
                     $response = array('status' => false, 'msg' => 'No hay datos para mostrar', 'data' => "");
@@ -70,23 +70,23 @@ class Lideres extends Controllers
                             : '<span class="badge badge-danger">Inactivo</span>';
 
                         // Lógica de botones según permisos
-                        $btnPerm = '';
+                        $btnView = '';
                         $btnEdit = '';
                         $btnDel = '';
 
                         // Asumiendo que validas permisos para el módulo de Roles
                         // Si tu tabla de permisos usa r_permiso, u_permiso, etc.
-                        if (!empty($requestPermisos[4]['r_permiso'])) {
-                            $btnPerm = '<button class="btn btn-info btn-sm btnPermisosLider" rl="' . $arrData[$i]['id_lider'] . '" title="Permisos"><i class="fas fa-key"></i></button>';
+                        if (!empty($requestPermisos[3]['r_permiso'])) {
+                            $btnView = '<button class="btn btn-info btn-sm btnView" can="' . $arrData[$i]['id_lider'] . '" title="View"><i class="fas fa-eye"></i></button>';
                         }
-                        if (!empty($requestPermisos[4]['u_permiso'])) {
-                            $btnEdit = '<button class="btn btn-primary btn-sm btnEditLider" rl="' . $arrData[$i]['id_lider'] . '" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
+                        if (!empty($requestPermisos[3]['u_permiso'])) {
+                            $btnEdit = '<button class="btn btn-primary btn-sm btnEdit" can="' . $arrData[$i]['id_lider'] . '" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
                         }
                         if (!empty($requestPermisos[3]['d_permiso'])) {
-                            $btnDel = '<button class="btn btn-danger btn-sm btnDelRol" rl="' . $arrData[$i]['id_rol'] . '" title="Eliminar"><i class="fas fa-trash-alt"></i></button>';
+                            $btnDel = '<button class="btn btn-danger btn-sm btnDel" can="' . $arrData[$i]['id_lider'] . '" title="Eliminar"><i class="fas fa-trash-alt"></i></button>';
                         }
 
-                        $arrData[$i]['options'] = '<div class="text-center">' . $btnPerm . ' ' . $btnEdit . ' ' . $btnDel . '</div>';
+                        $arrData[$i]['options'] = '<div class="text-center">' . $btnView . ' ' . $btnEdit . ' ' . $btnDel . '</div>';
                     }
                     $response = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrData);
                 }
@@ -102,29 +102,66 @@ class Lideres extends Controllers
     {
         try {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                if (empty($_POST['txtNombre']) || empty($_POST['txtDescripcion'])) {
+                if (
+                    empty($_POST['ident_lider']) || empty($_POST['ape1_lider']) || empty($_POST['ape2_lider']) ||
+                    empty($_POST['nom1_lider']) || empty($_POST['nom2_lider']) || empty($_POST['telefono_lider']) ||
+                    empty($_POST['email_lider']) || empty($_POST['dpto_lider']) || empty($_POST['muni_lider']) ||
+                    empty($_POST['direccion_lider'])
+                ) {
                     jsonResponse(['status' => false, 'msg' => 'Datos incompletos'], 200);
                     die();
                 }
-
                 $intIdLider = intval($_POST['id_lider']);
-                $strNombre = strClean($_POST['txtNombre']);
-                $strDescript = strClean($_POST['txtDescripcion']);
-                $listEstado = intval($_POST['listEstado']);
+                $strCedula = strClean($_POST['ident_lider']);
+                $strApe1 = strtoupper(strClean($_POST['ape1_lider']));
+                $strApe2 = strtoupper(strClean($_POST['ape2_lider']));
+                $strNom1 = strtoupper(strClean($_POST['nom1_lider']));
+                $strNom2 = strtoupper(strClean($_POST['nom2_lider']));
+                $strTelefono = strClean($_POST['telefono_lider']);
+                $strEmail = strClean($_POST['email_lider']);
+                $intDpto = intval($_POST['dpto_lider']);
+                $intMuni = intval($_POST['muni_lider']);
+                $strDireccion = strtolower(strClean($_POST['direccion_lider']));
+                $intEstado = intval($_POST['estado_lider']) == 0 ? 1 : intval($_POST['estado_lider']);
 
                 if ($intIdLider == 0) {
-                    $request_rol = $this->model->insertLider($strNombre, $strDescript, $listEstado);
+                    $request_lider = $this->model->insertLider(
+                        $strCedula,
+                        $strApe1,
+                        $strApe2,
+                        $strNom1,
+                        $strNom2,
+                        $strTelefono,
+                        $strEmail,
+                        $intDpto,
+                        $intMuni,
+                        $strDireccion,
+                        $intEstado
+                    );
                     $option = 1;
                 } else {
-                    $request_rol = $this->model->updateLider($intIdLider, $strNombre, $strDescript, $listEstado);
+                    $request_lider = $this->model->updateLider(
+                        $intIdLider,
+                        $strCedula,
+                        $strApe1,
+                        $strApe2,
+                        $strNom1,
+                        $strNom2,
+                        $strTelefono,
+                        $strEmail,
+                        $intDpto,
+                        $intMuni,
+                        $strDireccion,
+                        $intEstado
+                    );
                     $option = 2;
                 }
 
-                if ($request_rol > 0) {
+                if ($request_lider > 0) {
                     $msg = ($option == 1) ? 'Datos guardados correctamente' : 'Datos actualizados correctamente.';
                     jsonResponse(['status' => true, 'msg' => $msg], 200);
-                } else if ($request_rol == 'exist') {
-                    jsonResponse(['status' => false, 'msg' => '¡Atención! El rol ya existe.'], 200);
+                } else if ($request_lider == 'exist') {
+                    jsonResponse(['status' => false, 'msg' => '¡Atención! El lider ya existe.'], 200);
                 } else {
                     jsonResponse(['status' => false, 'msg' => 'No es posible realizar la acción'], 200);
                 }
@@ -140,24 +177,24 @@ class Lideres extends Controllers
         try {
             if ($_SERVER['REQUEST_METHOD'] == "PUT") {
                 $data = json_decode(file_get_contents("php://input"), true);
-                $id_lider = isset($data['id_lider']) ? intval($data['id_lider']) : 0;
+                $idrol = isset($data['idrol']) ? intval($data['idrol']) : 0;
 
-                if ($id_lider <= 0) {
+                if ($idrol <= 0) {
                     jsonResponse(['status' => false, 'msg' => 'Error en los parámetros'], 400);
                     die();
                 }
 
-                $buscar_rol = $this->model->getLider($id_lider);
+                $buscar_rol = $this->model->selectLider($idrol);
                 if (empty($buscar_rol)) {
                     jsonResponse(['status' => false, 'msg' => 'El lider no existe'], 400);
                     die();
                 }
 
-                $requestDelete = $this->model->deleteLider($id_lider);
+                $requestDelete = $this->model->deleteLider($idrol);
                 if ($requestDelete == "ok") {
                     jsonResponse(['status' => true, 'msg' => 'Registro eliminado'], 200);
                 } else {
-                    jsonResponse(['status' => false, 'msg' => 'No es posible eliminar el lider (tiene usuarios asociados o no existe)'], 200);
+                    jsonResponse(['status' => false, 'msg' => 'No es posible eliminar el lider (tiene votos asociados o no existe)'], 200);
                 }
             }
         } catch (Exception $e) {
@@ -170,7 +207,7 @@ class Lideres extends Controllers
     {
         try {
             if ($_SERVER['REQUEST_METHOD'] == "GET") {
-                $arrData = $this->model->getLideres();
+                $arrData = $this->model->selectLideres();
                 if (count($arrData) > 0) {
                     jsonResponse(['status' => true, 'data' => $arrData], 200);
                 } else {
@@ -179,6 +216,20 @@ class Lideres extends Controllers
             }
         } catch (Exception $e) {
             jsonResponse(['status' => false, 'msg' => $e->getMessage()], 500);
+        }
+        die();
+    }
+
+    public function getJsons()
+    {
+        // Ruta hacia donde guardaste el archivo json
+        $jsonPath = "Json/Config.json";
+
+        if (file_exists($jsonPath)) {
+            $jsonContent = file_get_contents($jsonPath);
+            echo $jsonContent; // Esto ya devuelve el JSON tal cual
+        } else {
+            echo json_encode(["status" => false, "msg" => "No se encontró el archivo de opciones"]);
         }
         die();
     }

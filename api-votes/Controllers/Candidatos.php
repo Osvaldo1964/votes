@@ -103,27 +103,29 @@ class Candidatos extends Controllers
         try {
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if (
-                    empty($_POST['txtCedula']) || empty($_POST['txtApe1']) || empty($_POST['txtApe2']) ||
-                    empty($_POST['txtNom1']) || empty($_POST['txtNom2']) || empty($_POST['txtTelefono']) ||
-                    empty($_POST['txtEmail']) || empty($_POST['txtDireccion']) || empty($_POST['listCurul']) ||
-                    empty($_POST['listPartido']) || empty($_POST['listEstado'])
+                    empty($_POST['ident_candidato']) || empty($_POST['ape1_candidato']) || empty($_POST['ape2_candidato']) ||
+                    empty($_POST['nom1_candidato']) || empty($_POST['nom2_candidato']) || empty($_POST['telefono_candidato']) ||
+                    empty($_POST['email_candidato']) || empty($_POST['dpto_candidato']) || empty($_POST['muni_candidato']) ||
+                    empty($_POST['direccion_candidato']) || empty($_POST['curul_candidato']) ||
+                    empty($_POST['partido_candidato']) || empty($_POST['estado_candidato'])
                 ) {
                     jsonResponse(['status' => false, 'msg' => 'Datos incompletos'], 200);
                     die();
                 }
-
-                $intIdCandidato = intval($_POST['idCandidato']);
-                $strCedula = strClean($_POST['txtCedula']);
-                $strApe1 = strtoupper(strClean($_POST['txtApe1']));
-                $strApe2 = strtoupper(strClean($_POST['txtApe2']));
-                $strNom1 = strtoupper(strClean($_POST['txtNom1']));
-                $strNom2 = strtoupper(strClean($_POST['txtNom2']));
-                $strTelefono = strClean($_POST['txtTelefono']);
-                $strEmail = strtolower(strClean($_POST['txtEmail']));
-                $strDireccion = strClean($_POST['txtDireccion']);
-                $listCurul = intval($_POST['listCurul']);
-                $listPartido = intval($_POST['listPartido']);
-                $listEstado = intval($_POST['listEstado']) == 0 ? 1 : intval($_POST['listEstado']);
+                $intIdCandidato = intval($_POST['id_candidato']);
+                $strCedula = strClean($_POST['ident_candidato']);
+                $strApe1 = strtoupper(strClean($_POST['ape1_candidato']));
+                $strApe2 = strtoupper(strClean($_POST['ape2_candidato']));
+                $strNom1 = strtoupper(strClean($_POST['nom1_candidato']));
+                $strNom2 = strtoupper(strClean($_POST['nom2_candidato']));
+                $strTelefono = strClean($_POST['telefono_candidato']);
+                $strEmail = strClean($_POST['email_candidato']);
+                $intDpto = intval($_POST['dpto_candidato']);
+                $intMuni = intval($_POST['muni_candidato']);
+                $strDireccion = strtolower(strClean($_POST['direccion_candidato']));
+                $intCurul = intval($_POST['curul_candidato']);
+                $intPartido = intval($_POST['partido_candidato']);
+                $intEstado = intval($_POST['estado_candidato']) == 0 ? 1 : intval($_POST['estado_candidato']);
 
                 if ($intIdCandidato == 0) {
                     $request_candidato = $this->model->insertCandidato(
@@ -134,10 +136,12 @@ class Candidatos extends Controllers
                         $strNom2,
                         $strTelefono,
                         $strEmail,
+                        $intDpto,
+                        $intMuni,
                         $strDireccion,
-                        $listCurul,
-                        $listPartido,
-                        $listEstado
+                        $intCurul,
+                        $intPartido,
+                        $intEstado
                     );
                     $option = 1;
                 } else {
@@ -150,10 +154,12 @@ class Candidatos extends Controllers
                         $strNom2,
                         $strTelefono,
                         $strEmail,
+                        $intDpto,
+                        $intMuni,
                         $strDireccion,
-                        $listCurul,
-                        $listPartido,
-                        $listEstado
+                        $intCurul,
+                        $intPartido,
+                        $intEstado
                     );
                     $option = 2;
                 }
