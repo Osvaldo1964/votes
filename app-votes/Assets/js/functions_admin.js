@@ -101,7 +101,7 @@ function checkAuth() {
     const token = localStorage.getItem('userToken');
 
     if (!token) {
-        window.location.href = "http://app-vote.com/login";
+        window.location.href = BASE_URL + "/login";
     }
 }
 
@@ -133,7 +133,7 @@ function verificarExpiracionToken() {
                     localStorage.removeItem('userToken');
 
                     // 2. Redirigimos al logout del servidor
-                    window.location.href = 'http://app-vote.com/logout/logout';
+                    window.location.href = BASE_URL + '/logout/logout';
                 }
             });
         }

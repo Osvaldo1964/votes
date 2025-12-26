@@ -69,6 +69,9 @@
   </section>
   <script>
     const base_url = "<?= base_url(); ?>";
+    const base_url_api = "<?= BASE_URL_API; ?>";
+    const BASE_URL = base_url;
+    const BASE_URL_API = base_url_api;
   </script>
   <!-- Essential javascripts for application to work-->
   <script src="<?= media(); ?>/js/jquery-3.3.1.min.js"></script>

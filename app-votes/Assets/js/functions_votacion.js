@@ -1,5 +1,3 @@
-const BASE_URL_API = "http://api-votes.com";
-
 document.addEventListener('DOMContentLoaded', function () {
 
     let formVoto = document.querySelector("#formVoto");

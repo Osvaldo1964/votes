@@ -1,6 +1,3 @@
-const BASE_URL = "http://app-votes.com";
-const BASE_URL_API = "http://api-votes.com";
-
 document.addEventListener('DOMContentLoaded', function () {
 
     // Referencia al div del calendario
