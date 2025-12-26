@@ -348,6 +348,13 @@ function openModal(isEdit = false, data = null) {
         $('#ape2_elector').val(data.ape2_elector);
         $('#nom1_elector').val(data.nom1_elector);
         $('#nom2_elector').val(data.nom2_elector);
+
+        // Bloquear campos de nombres en edición
+        document.querySelector("#ape1_elector").readOnly = true;
+        document.querySelector("#ape2_elector").readOnly = true;
+        document.querySelector("#nom1_elector").readOnly = true;
+        document.querySelector("#nom2_elector").readOnly = true;
+
         $('#telefono_elector').val(data.telefono_elector);
         $('#email_elector').val(data.email_elector);
         $('#direccion_elector').val(data.direccion_elector);
@@ -360,6 +367,13 @@ function openModal(isEdit = false, data = null) {
         $('#estado_elector').val(data.estado_elector);
     } else {
         $('#titleModal').html("Nuevo Elector");
+
+        // Desbloquear campos en modo nuevo
+        document.querySelector("#ape1_elector").readOnly = false;
+        document.querySelector("#ape2_elector").readOnly = false;
+        document.querySelector("#nom1_elector").readOnly = false;
+        document.querySelector("#nom2_elector").readOnly = false;
+
         filtrarMunicipios(""); // Limpia municipios
         $('#lider_elector').val(""); // Limpia líder
     }
