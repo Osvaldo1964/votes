@@ -209,7 +209,6 @@ class Usuario extends Controllers
                 $strEmail = strClean($_POST['email_usuario']);
                 $strPassword = hash("SHA256", $_POST['password_usuario']);
                 $requestUser = $this->model->loginUser($strEmail, $strPassword);
-
                 if (empty($requestUser)) {
                     jsonResponse(['status' => false, 'msg' => 'El usuario o la contraseña es incorrecto.'], 200);
                 } else {

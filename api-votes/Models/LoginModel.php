@@ -7,6 +7,8 @@ class LoginModel extends Mysql
     private $strPassword;
     private $intStatus;
     private $strUsuario;
+    private $intRolid;
+    private $strToken;
 
     public function __construct()
     {

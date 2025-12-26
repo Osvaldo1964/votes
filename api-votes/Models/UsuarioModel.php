@@ -133,6 +133,4 @@ class UsuarioModel extends Mysql
         $request = $this->update($sql, $arrData);
         return $request;
     }
-
-
 }
