@@ -19,9 +19,13 @@
 <script type="text/javascript" src="<?= media(); ?>/js/plugins/bootstrap-select.min.js"></script>
 
 <script src="<?= media(); ?>/js/functions_admin.js"></script>
+<?php if ($data['page_name'] == "agenda") { ?>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+<?php } ?>
 <script src="<?= media(); ?>/js/<?= $data['page_functions_js'] ?>"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     verificarExpiracionToken();
   });
 </script>

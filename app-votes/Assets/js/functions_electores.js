@@ -93,12 +93,30 @@ document.addEventListener('DOMContentLoaded', async function () {
         let ident = this.value;
         if (ident.length > 5) { // Validación básica de longitud
             try {
-                // Ahora apuntamos al controlador publico Place
-                let data = await fetchData(BASE_URL_API + '/Place/getValidaPlace/' + ident);
+                // Ahora apuntamos al controlador Electores que tiene la validación de duplicados
+                let data = await fetchData(BASE_URL_API + '/Electores/getValidaElector/' + ident);
 
 
                 if (data && data.status) {
-                    // SÍ existe en places
+                    // VERIFICACIÓN DE DUPLICADOS
+                    if (data.is_registered) {
+                        inputIdent.classList.remove("is-valid");
+                        inputIdent.classList.add("is-invalid");
+
+                        // Limpiar campos visuales
+                        document.querySelector("#txtZona").value = "";
+                        document.querySelector("#txtPuesto").value = "";
+                        document.querySelector("#txtMesa").value = "";
+                        document.querySelector("#ape1_elector").value = "";
+                        document.querySelector("#ape2_elector").value = "";
+                        document.querySelector("#nom1_elector").value = "";
+                        document.querySelector("#nom2_elector").value = "";
+
+                        swal("Atención", "El elector ya se encuentra registrado.", "warning");
+                        return; // Detener ejecución
+                    }
+
+                    // SÍ existe en places y NO está registrado
                     inputIdent.classList.remove("is-invalid");
                     inputIdent.classList.add("is-valid");
 
@@ -135,7 +153,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                     document.querySelector("#txtPuesto").value = "";
                     document.querySelector("#txtMesa").value = "";
 
-                    // Opcional: Limpiar el campo o mostrar alerta
+                    document.querySelector("#ape1_elector").value = "";
+                    document.querySelector("#ape2_elector").value = "";
+                    document.querySelector("#nom1_elector").value = "";
+                    document.querySelector("#nom2_elector").value = "";
+
                     // Opcional: Limpiar el campo o mostrar alerta
                     swal({
                         title: "Atención",

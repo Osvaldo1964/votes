@@ -28,7 +28,7 @@
                             <input type="text" class="form-control valid validNumber" id="ident_elector" name="ident_elector"
                                 required="">
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label for="ape1_elector">Primer apellido</label>
                             <input type="text" class="form-control valid validText" id="ape1_elector" name="ape1_elector"
                                 required="">
@@ -38,7 +38,7 @@
                             <input type="text" class="form-control valid validText" id="ape2_elector" name="ape2_elector"
                                 required="">
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label for="nom1_elector">Primer nombre</label>
                             <input type="text" class="form-control valid validText" id="nom1_elector" name="nom1_elector"
                                 required="">

@@ -172,6 +172,37 @@ class Electores extends Controllers
         die();
     }
 
+    public function getValidaElector($id_elector)
+    {
+        if (empty($id_elector)) {
+            jsonResponse(['status' => false, 'msg' => 'Identificación obligatoria'], 200);
+            die();
+        }
+
+        $strCedula = strClean($id_elector);
+
+        // 1. Buscamos en la tabla PLACES (Censo) para obtener datos de ubicación y nombres
+        $requestPlace = $this->model->selectPlace($strCedula);
+
+        // 2. Verificamos si YA existe en la base de datos de electores
+        $checkDuplicate = $this->model->selectElectorByIdent($strCedula);
+        $isRegistered = !empty($checkDuplicate);
+
+        if (empty($requestPlace)) {
+            $response = array('status' => false, 'msg' => 'Datos no encontrados en el censo');
+        } else {
+            // Retornamos los datos del censo y la bandera de si ya está registrado
+            $response = array(
+                'status' => true,
+                'msg' => 'Datos encontrados',
+                'data' => $requestPlace,
+                'is_registered' => $isRegistered
+            );
+        }
+        jsonResponse($response, 200);
+        die();
+    }
+
     public function delElector()
     {
         try {
@@ -199,6 +230,28 @@ class Electores extends Controllers
             }
         } catch (Exception $e) {
             jsonResponse(['status' => false, 'msg' => $e->getMessage()], 500);
+        }
+        die();
+    }
+
+    public function setVoto()
+    {
+        if ($_POST) {
+            if (empty($_POST['identificacion'])) {
+                jsonResponse(['status' => false, 'msg' => 'Identificación obligatoria'], 200);
+            }
+            $strIdentificacion = strClean($_POST['identificacion']);
+            $request = $this->model->updatePollElector($strIdentificacion);
+
+            if ($request == "voted") {
+                jsonResponse(['status' => false, 'msg' => '¡Atención! Este elector YA registró su voto.'], 200);
+            } else if ($request == "not_found") {
+                jsonResponse(['status' => false, 'msg' => 'Elector no encontrado o inactivo.'], 200);
+            } else if ($request) {
+                jsonResponse(['status' => true, 'msg' => 'Voto registrado correctamente.'], 200);
+            } else {
+                jsonResponse(['status' => false, 'msg' => 'Error al registrar el voto.'], 200);
+            }
         }
         die();
     }

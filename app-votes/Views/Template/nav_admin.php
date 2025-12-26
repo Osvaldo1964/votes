@@ -50,6 +50,8 @@
                             Lideres</a></li>
                     <li><a class="treeview-item" href="<?= base_url(); ?>electores"><i class="icon fa fa-circle-o"></i>
                             Electores</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>votacion"><i class="icon fa fa-circle-o"></i>
+                            Votacion</a></li>
                 </ul>
             </li>
         <?php } ?>
@@ -86,6 +88,19 @@
                 <ul class="treeview-menu">
                     <li><a class="treeview-item" href="<?= base_url(); ?>infelectores"><i class="icon fa fa-circle-o"></i>
                             Informe Electores</a></li>
+                </ul>
+            </li>
+        <?php } ?>
+        <?php if (!empty($_SESSION['permisos'][14]['r_permiso'])) { ?>
+            <li class="treeview">
+                <a class="app-menu__item" href="#" data-toggle="treeview">
+                    <i class="app-menu__icon fa fa-users" aria-hidden="true"></i>
+                    <span class="app-menu__label">Agenda</span>
+                    <i class="treeview-indicator fa fa-angle-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a class="treeview-item" href="<?= base_url(); ?>agenda"><i class="icon fa fa-circle-o"></i>
+                            Agenda</a></li>
                 </ul>
             </li>
         <?php } ?>

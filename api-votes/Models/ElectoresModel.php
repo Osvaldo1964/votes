@@ -182,12 +182,49 @@ class ElectoresModel extends Mysql
 
     public function selectPlace(string $id_elector)
     {
-        dep($id_elector);
-
         // CAST a ambos lados para asegurar comparación numérica estricta
-        $sql = "SELECT * FROM places WHERE CAST(ident_place AS UNSIGNED) = ?";
-        // Pasamos el input también como entero explícito
+        // query optimizada copiada de PlaceModel para traer nombres de zona
+        $sql = "SELECT d.name_department, m.name_municipality, z.name_zone, p.nameplace_place, p.ape1_place, p.ape2_place, p.nom1_place, p.nom2_place, p.mesa_place, p.ident_place 
+                FROM places p
+                INNER JOIN departments d ON p.iddpto_place = d.id_department
+                INNER JOIN municipalities m ON p.idmuni_place = m.id_municipality
+                INNER JOIN zones z ON p.idzona_place = z.id_zone
+                WHERE CAST(p.ident_place AS UNSIGNED) = ?";
+
         $arrData = array((int)$id_elector);
+        $request = $this->select($sql, $arrData);
+        return $request;
+    }
+    public function updatePollElector(string $identificacion)
+    {
+        $this->strCedula = $identificacion;
+
+        // 1. Buscar elector y verificar estado actual del voto
+        $sql = "SELECT id_elector, poll_elector FROM electores WHERE ident_elector = ? AND estado_elector != 0";
+        $arrData = array($this->strCedula);
+        $request = $this->select($sql, $arrData);
+
+        if (empty($request)) {
+            return "not_found";
+        }
+
+        if ($request['poll_elector'] == 1) {
+            return "voted";
+        }
+
+        // 2. Registrar el voto (cambiar a 1)
+        $sql_update = "UPDATE electores SET poll_elector = ? WHERE id_elector = ?";
+        $arrUpdate = array(1, $request['id_elector']);
+        $request_update = $this->update($sql_update, $arrUpdate);
+
+        return $request_update;
+    }
+
+    public function selectElectorByIdent(string $identificacion)
+    {
+        $this->strCedula = $identificacion;
+        $sql = "SELECT id_elector FROM electores WHERE ident_elector = ? AND estado_elector != 0";
+        $arrData = array($this->strCedula);
         $request = $this->select($sql, $arrData);
         return $request;
     }
