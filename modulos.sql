@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-12-2025 a las 04:26:38
+-- Tiempo de generación: 27-12-2025 a las 14:49:08
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -53,7 +53,8 @@ INSERT INTO `modulos` (`id_modulo`, `titulo_modulo`, `descript_modulo`, `estado_
 (12, 'Salidas', 'Salidas Elementos de Campaña', 1),
 (13, 'InformeElectores', 'Informe de Electores', 1),
 (14, 'Agenda', 'Agenda de Eventos', 1),
-(15, 'Votación', 'Registro de Votos Exitpooll', 1);
+(15, 'Votación', 'Registro de Votos Exitpooll', 1),
+(16, 'Resultados', 'Registro formularios E-14', 1);
 
 --
 -- Índices para tablas volcadas
@@ -73,7 +74,7 @@ ALTER TABLE `modulos`
 -- AUTO_INCREMENT de la tabla `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `id_modulo` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_modulo` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

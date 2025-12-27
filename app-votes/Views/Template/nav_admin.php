@@ -36,6 +36,7 @@
                 </ul>
             </li>
         <?php } ?>
+        <!-- Aqui debo colocar los permisos de control electoral de todos los modulos -->
         <?php if (!empty($_SESSION['permisos'][4]['r_permiso'])) { ?>
             <li class="treeview">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
@@ -52,9 +53,12 @@
                             Electores</a></li>
                     <li><a class="treeview-item" href="<?= base_url(); ?>votacion"><i class="icon fa fa-circle-o"></i>
                             Votacion</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>resultados"><i class="icon fa fa-circle-o"></i>
+                            Resultados por Mesa</a></li>
                 </ul>
             </li>
         <?php } ?>
+        <!-- Aqui debo colocar los permisos de control financiero de todos los modulos -->
         <?php if (!empty($_SESSION['permisos'][7]['r_permiso'])) { ?>
             <li class="treeview">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
