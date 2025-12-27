@@ -88,6 +88,8 @@
                 <ul class="treeview-menu">
                     <li><a class="treeview-item" href="<?= base_url(); ?>infelectores"><i class="icon fa fa-circle-o"></i>
                             Informe Electores</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso"><i class="icon fa fa-circle-o"></i>
+                            Reporte Censo vs Real</a></li>
                 </ul>
             </li>
         <?php } ?>

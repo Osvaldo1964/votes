@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     // VERIFICACIÓN DE DUPLICADOS
                     if (data.is_registered) {
                         inputIdent.classList.remove("is-valid");
-                        inputIdent.classList.add("is-invalid");
+                        // inputIdent.classList.add("is-invalid"); // REMOVIDO: Evita marcar rojo antes de tiempo
 
                         // Limpiar campos visuales
                         document.querySelector("#txtZona").value = "";
@@ -109,7 +109,29 @@ document.addEventListener('DOMContentLoaded', async function () {
                         document.querySelector("#nom1_elector").value = "";
                         document.querySelector("#nom2_elector").value = "";
 
-                        swal("Atención", "El elector ya se encuentra registrado.", "warning");
+                        swal({
+                            title: "Atención",
+                            text: "El elector ya se encuentra registrado.",
+                            type: "warning",
+                            confirmButtonText: "Aceptar"
+                        }, function () {
+                            // Al aceptar, limpiamos el campo y quitamos cualquier rastro de error visual
+                            inputIdent.value = "";
+                            inputIdent.classList.remove("is-invalid", "is-valid");
+
+                            // NUEVO: Limpiar validaciones de los otros campos también
+                            const camposLimpiar = ["#ape1_elector", "#ape2_elector", "#nom1_elector", "#nom2_elector", "#email_elector"];
+                            camposLimpiar.forEach(id => {
+                                let el = document.querySelector(id);
+                                if (el) {
+                                    el.value = "";
+                                    el.classList.remove("is-invalid", "is-valid");
+                                }
+                            });
+
+                            // Opcional: enfocar de nuevo
+                            setTimeout(() => inputIdent.focus(), 200);
+                        });
                         return; // Detener ejecución
                     }
 
@@ -362,8 +384,26 @@ function openModal(isEdit = false, data = null) {
         $('#lider_elector').val(data.lider_elector); // Seleccionar Líder
 
         $('#estado_elector').val(data.estado_elector);
+
+        // --- NUEVO: Traer datos informativos de Puesto/Mesa (Places) ---
+        if (data.ident_elector) {
+            fetchData(BASE_URL_API + '/Electores/getValidaElector/' + data.ident_elector)
+                .then(info => {
+                    if (info && info.status && info.data) {
+                        document.querySelector("#txtZona").value = info.data.name_zone || "";
+                        document.querySelector("#txtPuesto").value = info.data.nameplace_place || "";
+                        document.querySelector("#txtMesa").value = info.data.mesa_place || "";
+                    }
+                });
+        }
+
     } else {
         $('#titleModal').html("Nuevo Elector");
+
+        // Datos informativos limpios
+        document.querySelector("#txtZona").value = "";
+        document.querySelector("#txtPuesto").value = "";
+        document.querySelector("#txtMesa").value = "";
 
         // Desbloquear campos en modo nuevo
         document.querySelector("#ape1_elector").readOnly = false;

@@ -23,6 +23,12 @@
       aria-label="Hide Sidebar"><i class="fas fa-bars"></i></a>
     <!-- Navbar Right Menu-->
     <ul class="app-nav">
+      <!-- Ver Sitio Web -->
+      <li>
+        <a class="app-nav__item" href="https://chadanalacamara.com" target="_blank" title="Ir al Sitio Web">
+          <i class="fa fa-globe fa-lg"></i>
+        </a>
+      </li>
       <!-- User Menu-->
       <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i
             class="fa fa-user fa-lg"></i></a>

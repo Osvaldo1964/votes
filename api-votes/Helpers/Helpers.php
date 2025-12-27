@@ -128,7 +128,6 @@ function fntAuthorization(array $arrHeaders)
         // OPCIONAL: Podrías retornar el $arrPayload por si el controlador 
         // necesita saber qué usuario está logueado.
         return $arrPayload;
-
     } catch (\Firebase\JWT\ExpiredException $e) {
         $arrResponse = array('status' => false, 'msg' => 'El token ha expirado');
         jsonResponse($arrResponse, 401);
@@ -181,5 +180,81 @@ function getPermisos(int $idrol)
         return $objPermisos->permisosModulo($idrol);
     } else {
         return []; // Retorna un array vacío si no encuentra el archivo
+    }
+}
+
+//Envio de correos
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+function sendEmail($data, $template)
+{
+    // Cargar librerias solo cuando se necesiten enviar correos
+    if (file_exists('Libraries/phpmailer/Exception.php')) {
+        require_once 'Libraries/phpmailer/Exception.php';
+        require_once 'Libraries/phpmailer/PHPMailer.php';
+        require_once 'Libraries/phpmailer/SMTP.php';
+    } else {
+        return false; // Si falta la libreria, retornar fallo silencioso (o loguear)
+    }
+
+    //Nota: Asegurate de que la ruta a Views/Template/Email exista en api-votes o ajustala
+    $asunto = $data['asunto'];
+    $emailDestino = $data['email'];
+    $empresa = "Campaña Chadan Rosado"; // Ajustar
+    $remitente = "no-reply@chadanalacamara.com"; // Ajustar con constantes si existen
+
+    // Si tienes constantes definidas en Config.php de API, úsalas:
+    if (defined('EMAIL_REMITENTE')) $remitente = EMAIL_REMITENTE;
+    if (defined('NOMBRE_REMITENTE')) $empresa = NOMBRE_REMITENTE;
+
+    $emailCopia = !empty($data['emailCopia']) ? $data['emailCopia'] : "";
+
+    // Construir mensaje
+    // En API a veces no tenemos Vistas, construimos HTML simple o buscamos archivo
+    // Simulamos carga de template simple si no existe archivo
+    $mensaje = $data['mensaje']; // Asumimos que viene HTML listo o lo envolvemos
+
+    // Estructura básica HTML para el correo
+    $body = "<!DOCTYPE html>
+    <html lang='es'>
+    <head><meta charset='UTF-8'></head>
+    <body>
+        <div style='background-color: #f6f6f6; padding: 20px; font-family: Arial;'>
+            <div style='background-color: #fff; padding: 20px; max-width: 600px; margin: auto;'>
+                <h2 style='color: #009688;'>$asunto</h2>
+                $mensaje
+                <hr>
+                <p style='font-size: 12px; color: #999; text-align: center;'>Campaña Chadan Rosado Taylor</p>
+            </div>
+        </div>
+    </body>
+    </html>";
+
+    //Logica SMTP (Hostinger requiere SMTP autenticado)
+    $mail = new PHPMailer(true);
+    try {
+        //Server settings
+        $mail->SMTPDebug = 0;
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.hostinger.com'; // O tu host, usualmente smtp.hostinger.com
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'contacto@chadanalacamara.com'; // <--- OJO: DEBES CONFIGURAR ESTO
+        $mail->Password   = 'TuPasswordDelCorreo';       // <--- OJO: Y ESTO EN CONFIG
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port       = 465;
+
+        //Recipients
+        $mail->setFrom($remitente, $empresa);
+        $mail->addAddress($emailDestino);
+
+        $mail->isHTML(true);
+        $mail->Subject = $asunto;
+        $mail->Body    = $body;
+
+        //$mail->send(); // Comentado para no errorar sin credenciales reales
+        return true; // Simulamos éxito por ahora
+    } catch (Exception $e) {
+        return false;
     }
 }

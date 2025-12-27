@@ -1,18 +1,23 @@
 <?php
 class Home extends Controllers
 {
-
     public function __construct()
     {
         parent::__construct();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
-    public function home($params)
+    public function home()
     {
-        $data['page_id'] = 1;
-        $data['page_tag'] = "Home";
-        $data['page_title'] = "Página principal - Sistema de votos";
-        $data['page_name'] = "home";
-        $this->views->getView($this, "home", $data);
+        // Si no esta logueado -> Login
+        if (empty($_SESSION['login'])) {
+            header('Location: ' . base_url() . '/login');
+        } else {
+            // Si esta logueado -> Dashboard
+            header('Location: ' . base_url() . '/dashboard');
+        }
+        die();
     }
 }
