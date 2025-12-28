@@ -51,7 +51,11 @@
             </li>
         <?php } ?>
         <!-- Aqui debo colocar los permisos de control electoral de todos los modulos -->
-        <?php if (!empty($_SESSION['permisos'][4]['r_permiso'])) { ?>
+        <?php if (
+            !empty($_SESSION['permisos'][4]['r_permiso']) || !empty($_SESSION['permisos'][5]['r_permiso'])
+            || !empty($_SESSION['permisos'][6]['r_permiso']) || !empty($_SESSION['permisos'][15]['r_permiso'])
+            || !empty($_SESSION['permisos'][16]['r_permiso']) || !empty($_SESSION['permisos'][17]['r_permiso'])
+        ) { ?>
             <li class="treeview">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
                     <i class="app-menu__icon fa fa-users" aria-hidden="true"></i>
@@ -59,23 +63,39 @@
                     <i class="treeview-indicator fa fa-angle-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="<?= base_url(); ?>candidatos"><i class="icon fa fa-circle-o"></i>
-                            Candidatos</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>lideres"><i class="icon fa fa-circle-o"></i>
-                            Lideres</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>electores"><i class="icon fa fa-circle-o"></i>
-                            Electores</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>votacion"><i class="icon fa fa-circle-o"></i>
-                            Votacion</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>resultados"><i class="icon fa fa-circle-o"></i>
-                            Resultados por Mesa</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>monitor"><i class="icon fa fa-circle-o"></i>
-                            Monitor dia D</a></li>
+                    <?php if (!empty($_SESSION['permisos'][4]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>candidatos"><i class="icon fa fa-circle-o"></i>
+                                Candidatos</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][5]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>lideres"><i class="icon fa fa-circle-o"></i>
+                                Lideres</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][6]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>electores"><i class="icon fa fa-circle-o"></i>
+                                Electores</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][15]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>votacion"><i class="icon fa fa-circle-o"></i>
+                                Votacion</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][16]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>resultados"><i class="icon fa fa-circle-o"></i>
+                                Resultados por Mesa</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][17]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>monitor"><i class="icon fa fa-circle-o"></i>
+                                Monitor dia D</a></li>
+                    <?php } ?>
                 </ul>
             </li>
         <?php } ?>
         <!-- Aqui debo colocar los permisos de control financiero de todos los modulos -->
-        <?php if (!empty($_SESSION['permisos'][7]['r_permiso'])) { ?>
+        <?php if (
+            !empty($_SESSION['permisos'][7]['r_permiso']) || !empty($_SESSION['permisos'][8]['r_permiso'])
+            || !empty($_SESSION['permisos'][9]['r_permiso']) || !empty($_SESSION['permisos'][10]['r_permiso'])
+            || !empty($_SESSION['permisos'][11]['r_permiso']) || !empty($_SESSION['permisos'][12]['r_permiso'])
+        ) { ?>
             <li class="treeview">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
                     <i class="app-menu__icon fa fa-users" aria-hidden="true"></i>
@@ -83,18 +103,30 @@
                     <i class="treeview-indicator fa fa-angle-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="<?= base_url(); ?>terceros"><i class="icon fa fa-circle-o"></i>
-                            Terceros</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>conceptos"><i class="icon fa fa-circle-o"></i>
-                            Conceptos Ing. y Gastos</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>elementos"><i class="icon fa fa-circle-o"></i>
-                            Elementos de Campaña</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>movimientos"><i class="icon fa fa-circle-o"></i>
-                            Movimientos</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>entradas"><i class="icon fa fa-circle-o"></i>
-                            Entradas</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>salidas"><i class="icon fa fa-circle-o"></i>
-                            Salidas</a></li>
+                    <?php if (!empty($_SESSION['permisos'][7]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>terceros"><i class="icon fa fa-circle-o"></i>
+                                Terceros</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][8]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>conceptos"><i class="icon fa fa-circle-o"></i>
+                                Conceptos Ing. y Gastos</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][9]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>elementos"><i class="icon fa fa-circle-o"></i>
+                                Elementos de Campaña</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][10]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>movimientos"><i class="icon fa fa-circle-o"></i>
+                                Movimientos</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][11]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>entradas"><i class="icon fa fa-circle-o"></i>
+                                Entradas</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][12]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>salidas"><i class="icon fa fa-circle-o"></i>
+                                Salidas</a></li>
+                    <?php } ?>
                 </ul>
             </li>
         <?php } ?>
