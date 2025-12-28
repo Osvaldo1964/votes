@@ -25,6 +25,7 @@ class Dashboard extends Controllers
         $data['page_name'] = "dashboard";
         $data['page_title'] = "Página principal - Sistema de votos";
         $data['usuario'] = $_SESSION['userData'];
+        $data['page_functions_js'] = "functions_dashboard.js";
         $this->views->getView($this, "dashboard", $data);
     }
 }
