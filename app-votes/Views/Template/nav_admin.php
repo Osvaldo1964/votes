@@ -24,7 +24,7 @@
         <?php if (!empty($_SESSION['permisos'][2]['r_permiso'])) { ?>
             <li class="treeview">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
-                    <i class="app-menu__icon fa fa-users" aria-hidden="true"></i>
+                    <i class="app-menu__icon fa fa-id-card" aria-hidden="true"></i>
                     <span class="app-menu__label">Usuarios</span>
                     <i class="treeview-indicator fa fa-angle-right"></i>
                 </a>
@@ -40,7 +40,7 @@
         <?php if (!empty($_SESSION['permisos'][14]['r_permiso'])) { ?>
             <li class="treeview">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
-                    <i class="app-menu__icon fa fa-users" aria-hidden="true"></i>
+                    <i class="app-menu__icon fa fa-briefcase" aria-hidden="true"></i>
                     <span class="app-menu__label">Control Administrativo</span>
                     <i class="treeview-indicator fa fa-angle-right"></i>
                 </a>
@@ -58,7 +58,7 @@
         ) { ?>
             <li class="treeview">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
-                    <i class="app-menu__icon fa fa-users" aria-hidden="true"></i>
+                    <i class="app-menu__icon fa fa-check-square-o" aria-hidden="true"></i>
                     <span class="app-menu__label">Control Electoral</span>
                     <i class="treeview-indicator fa fa-angle-right"></i>
                 </a>
@@ -98,7 +98,7 @@
         ) { ?>
             <li class="treeview">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
-                    <i class="app-menu__icon fa fa-users" aria-hidden="true"></i>
+                    <i class="app-menu__icon fa fa-money" aria-hidden="true"></i>
                     <span class="app-menu__label">Control Financiero</span>
                     <i class="treeview-indicator fa fa-angle-right"></i>
                 </a>
@@ -133,15 +133,51 @@
         <?php if (!empty($_SESSION['permisos'][13]['r_permiso'])) { ?>
             <li class="treeview">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
-                    <i class="app-menu__icon fa fa-users" aria-hidden="true"></i>
+                    <i class="app-menu__icon fa fa-bar-chart" aria-hidden="true"></i>
                     <span class="app-menu__label">Informes</span>
                     <i class="treeview-indicator fa fa-angle-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="<?= base_url(); ?>infelectores"><i class="icon fa fa-circle-o"></i>
-                            Informe Electores</a></li>
-                    <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso"><i class="icon fa fa-circle-o"></i>
-                            Reporte Censo vs Real</a></li>
+                    <!-- Nivel 2: Administrativos -->
+                    <li class="treeview">
+                        <a class="treeview-item" href="#" data-toggle="treeview" style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
+                            <span><i class="icon fa fa-circle-o"></i> Reportes Administrativos</span>
+                            <i class="treeview-indicator fa fa-angle-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <!-- Nivel 3 -->
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infelectores"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="treeview-menu">
+                    <!-- Nivel 2: Electorales -->
+                    <li class="treeview">
+                        <a class="treeview-item" href="#" data-toggle="treeview" style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
+                            <span><i class="icon fa fa-circle-o"></i> Reportes Electorales</span>
+                            <i class="treeview-indicator fa fa-angle-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <!-- Nivel 3 -->
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infelectores"><i class="icon fa fa-circle-o"></i> Informe Electores</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso"><i class="icon fa fa-circle-o"></i> Reporte Censo vs Real</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="treeview-menu">
+                    <!-- Nivel 2: Financieros -->
+                    <li class="treeview">
+                        <a class="treeview-item" href="#" data-toggle="treeview" style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
+                            <span><i class="icon fa fa-circle-o"></i> Reportes Financieros</span>
+                            <i class="treeview-indicator fa fa-angle-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <!-- Nivel 3 -->
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infsaldos"><i class="icon fa fa-circle-o"></i> Informe saldos</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infmovimientos"><i class="icon fa fa-circle-o"></i> Informe Movimientos</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
         <?php } ?>
