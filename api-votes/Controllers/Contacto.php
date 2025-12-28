@@ -33,7 +33,7 @@ class Contacto extends Controllers
 
         // Datos para el email
         // IMPORTANTE: Definir el destinatario real aqui o en Config
-        $emailCampaña = "contacto@chadanalacamara.com"; // Email donde llegan los contactos
+        $emailCampaña = "pqr@chadanalacamara.com"; // Email donde llegan los contactos (PQRS)
 
         $dataEmail = array(
             'asunto' => "Contacto Web: $nombre",

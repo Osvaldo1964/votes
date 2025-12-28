@@ -201,19 +201,13 @@ function sendEmail($data, $template)
     //Nota: Asegurate de que la ruta a Views/Template/Email exista en api-votes o ajustala
     $asunto = $data['asunto'];
     $emailDestino = $data['email'];
-    $empresa = "Campaña Chadan Rosado"; // Ajustar
-    $remitente = "no-reply@chadanalacamara.com"; // Ajustar con constantes si existen
-
-    // Si tienes constantes definidas en Config.php de API, úsalas:
-    if (defined('EMAIL_REMITENTE')) $remitente = EMAIL_REMITENTE;
-    if (defined('NOMBRE_REMITENTE')) $empresa = NOMBRE_REMITENTE;
+    $empresa = defined('NOMBRE_REMITENTE') ? NOMBRE_REMITENTE : "Campaña Chadan Rosado";
+    $remitente = defined('EMAIL_REMITENTE') ? EMAIL_REMITENTE : "no-reply@chadanalacamara.com";
 
     $emailCopia = !empty($data['emailCopia']) ? $data['emailCopia'] : "";
 
     // Construir mensaje
-    // En API a veces no tenemos Vistas, construimos HTML simple o buscamos archivo
-    // Simulamos carga de template simple si no existe archivo
-    $mensaje = $data['mensaje']; // Asumimos que viene HTML listo o lo envolvemos
+    $mensaje = $data['mensaje'];
 
     // Estructura básica HTML para el correo
     $body = "<!DOCTYPE html>
@@ -222,10 +216,10 @@ function sendEmail($data, $template)
     <body>
         <div style='background-color: #f6f6f6; padding: 20px; font-family: Arial;'>
             <div style='background-color: #fff; padding: 20px; max-width: 600px; margin: auto;'>
-                <h2 style='color: #009688;'>$asunto</h2>
+                <h2 style='color: #D81B60;'>$asunto</h2>
                 $mensaje
                 <hr>
-                <p style='font-size: 12px; color: #999; text-align: center;'>Campaña Chadan Rosado Taylor</p>
+                <p style='font-size: 12px; color: #999; text-align: center;'>$empresa</p>
             </div>
         </div>
     </body>
@@ -237,16 +231,17 @@ function sendEmail($data, $template)
         //Server settings
         $mail->SMTPDebug = 0;
         $mail->isSMTP();
-        $mail->Host       = 'smtp.hostinger.com'; // O tu host, usualmente smtp.hostinger.com
+        $mail->Host       = defined('SMTP_HOST') ? SMTP_HOST : 'smtp.hostinger.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'contacto@chadanalacamara.com'; // <--- OJO: DEBES CONFIGURAR ESTO
-        $mail->Password   = 'TuPasswordDelCorreo';       // <--- OJO: Y ESTO EN CONFIG
+        $mail->Username   = defined('SMTP_USER') ? SMTP_USER : 'user@example.com';
+        $mail->Password   = defined('SMTP_PASS') ? SMTP_PASS : 'password';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $mail->Port       = 465;
+        $mail->Port       = defined('SMTP_PORT') ? SMTP_PORT : 465;
 
         //Recipients
         $mail->setFrom($remitente, $empresa);
         $mail->addAddress($emailDestino);
+        if (!empty($emailCopia)) $mail->addBCC($emailCopia);
 
         $mail->isHTML(true);
         $mail->Subject = $asunto;
