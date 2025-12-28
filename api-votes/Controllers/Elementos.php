@@ -98,4 +98,19 @@ class Elementos extends Controllers
         }
         die();
     }
+    public function getSelectElementos()
+    {
+        // Reutilizamos el select del modelo que trae ID y Nombre
+        $arrData = $this->model->selectElementos();
+        if (count($arrData) > 0) {
+            // Limpiamos los datos innecesarios si los hubiera, o simplemente retornamos lo que da el modelo
+            // El modelo selectElementos retorna id_elemento, nombre_elemento y estado (filtra por activo)
+            // Solo necesitamos asegurarnos de devolver el formato correcto
+            $arrResponse = array('status' => true, 'data' => $arrData);
+        } else {
+            $arrResponse = array('status' => false, 'msg' => 'No hay elementos');
+        }
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        die();
+    }
 }

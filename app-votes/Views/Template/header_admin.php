@@ -11,9 +11,9 @@
   <link rel="shortcut icon" href="<?= media(); ?>/images/favicon.ico">
   <title><?= $data['page_tag'] ?></title>
   <!-- Main CSS-->
-  <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.css">
+  <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.css?v=2">
   <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/bootstrap-select.min.css">
-  <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/style.css">
+  <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/style.css?v=2">
 </head>
 
 <body class="app sidebar-mini">

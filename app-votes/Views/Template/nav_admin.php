@@ -170,8 +170,8 @@
                         </a>
                         <ul class="treeview-menu">
                             <!-- Nivel 3 -->
-                            <li><a class="treeview-item" href="<?= base_url(); ?>infsaldos" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe saldos</a></li>
-                            <li><a class="treeview-item" href="<?= base_url(); ?>infmovimientos" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe Movimientos</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infsaldos" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe Elementos</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infmovimientos" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe Ingresos y Gastos</a></li>
                         </ul>
                     </li>
                 </ul>

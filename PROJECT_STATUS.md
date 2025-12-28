@@ -47,13 +47,17 @@ El sistema ha sido dividido en tres componentes independientes para su despliegu
 *   **Contabilidad (Gestión):**
     *   **COMPLETADO:** Controladores y vistas base para Terceros, Conceptos, Elementos, Entradas, Salidas y Movimientos.
 *   **Contabilidad (Reportes):**
-    *   **PENDIENTE:** Desarrollo de controladores y vistas para `Infsaldos` (Informe Saldos) e `Infmovimientos` (Informe Movimientos), actualmente enlazados en el menú pero inexistentes en backend.
+    *   **COMPLETADO (`Infsaldos`):** Informe de Elementos (Kardex) funciona correctamente.
+        *   Backend: `InfsaldosModel` y `Infsaldos` controller.
+        *   Frontend: Vista con filtros, cálculo de saldos y precio promedio ponderado.
+        *   Estética: Membrete global implementado (`fntGetHeaderReporte` en main.js).
+    *   **PENDIENTE (`Infmovimientos`):** Informe de Ingresos y Gastos (Flujo de Caja, Movimientos Financieros).
 
 ## 4. Próximos Pasos Inmediatos
-1.  **Reportes Financieros:**
-    *   Crear controlador y vista para `Infsaldos`.
-    *   Crear controlador y vista para `Infmovimientos`.
-    *   Asegurar que consuman correctamente los datos de la API.
+1.  **Reporte Financiero Restante:**
+    *   Desarrollar módulo `Infmovimientos` (Ingresos y Gastos).
+    *   Implementar filtros por fecha y tipo de movimiento.
+    *   Integrar con el membrete global.
 
 ## 4. Notas para el Desarrollador
 *   Al subir nuevos controladores, **SIEMPRE verificar mayúsculas/minúsculas**.
