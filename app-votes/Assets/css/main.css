@@ -16482,16 +16482,16 @@ be a descendant of the grid when it is being dragged.
   flex: 1 1 auto;
 }
 
-.treeview.is-expanded [data-toggle='treeview'] {
+.treeview.is-expanded > [data-toggle='treeview'] {
   border-left-color: #E91E63;
   background: #0d1214;
 }
 
-.treeview.is-expanded .treeview-menu {
+.treeview.is-expanded > .treeview-menu {
   max-height: 100vh;
 }
 
-.treeview.is-expanded .treeview-indicator {
+.treeview.is-expanded > [data-toggle='treeview'] .treeview-indicator {
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);

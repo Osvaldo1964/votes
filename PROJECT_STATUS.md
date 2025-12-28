@@ -1,6 +1,6 @@
 # Estado del Proyecto - Campaña Chadan Rosado Taylor 2026
-**Fecha:** 26/12/2025
-**Última sesión:** Despliegue en Producción (Hostinger) y Ajustes Finales.
+**Fecha:** 28/12/2025
+**Última sesión:** Corrección Menú Navegación (Niveles 2 y 3) y Mejoras Estéticas.
 
 ## 1. Arquitectura del Sistema (Desacoplada)
 El sistema ha sido dividido en tres componentes independientes para su despliegue en Hostinger:
@@ -29,23 +29,31 @@ El sistema ha sido dividido en tres componentes independientes para su despliegu
     *   **Correo:** Se implementó `sendEmail` en `Helpers.php` usando PHPMailer (librería subida manualmente a `Libraries/phpmailer`).
 
 ## 2. Ajustes Recientes y Puntos Críticos
+*   **Menú Navegación (`nav_admin.php`):**
+    *   **Corrección Lógica:** Se solucionó el problema donde todos los submenús se abrían al mismo tiempo. Se actualizaron los selectores CSS (`>`) en `main.css` y se agregó `stopPropagation` en `main.js`.
+    *   **Estética:** Se actualizaron iconos de Nivel 2 (Administrativos, Electorales, Financieros) para ser más semánticos.
+    *   **Indentación:** Se agregó padding extra a los ítems de Nivel 3 para mejorar la jerarquía visual.
+    *   *Nota:* Queda pendiente revisión de color de fondo "rosado suave" para ítems activos (actualmente negro).
 *   **Reporte Electoral Censo:**
     *   Se corrigió la funcionalidad para agrupar por Zonas/Puestos.
-    *   Se ajustó el nombre del controlador a `ReporteElectoralCenso.php` (CamelCase) y se actualizó el enlace en `nav_admin.php` para coincidir.
+    *   Se ajustó el nombre del controlador a `ReporteElectoralCenso.php`.
 *   **Correo Electrónico:**
     *   Se habilitó `PHPMailer` en la API.
-    *   `Helpers.php` de la API fue modificado para cargar las librerías solo cuando se llama a `sendEmail`.
-*   **CORS:** Se habilitaron cabeceras CORS en `api-votes/Controllers/Contacto.php` para permitir peticiones desde la Landing.
+*   **CORS:** Se habilitaron cabeceras CORS en `api-votes/Controllers/Contacto.php`.
 
-## 3. Próximos Pasos (Plan de Trabajo Futuro)
-Para la siguiente sesión se tiene planeado:
+## 3. Estado de Módulos
+*   **Dashboard:**
+    *   **COMPLETADO:** Visualización gráfica implementada (Widgets, Gráfica de Barras Líderes, Gráfica Doughnut Municipios) consumiendo API.
+*   **Contabilidad (Gestión):**
+    *   **COMPLETADO:** Controladores y vistas base para Terceros, Conceptos, Elementos, Entradas, Salidas y Movimientos.
+*   **Contabilidad (Reportes):**
+    *   **PENDIENTE:** Desarrollo de controladores y vistas para `Infsaldos` (Informe Saldos) e `Infmovimientos` (Informe Movimientos), actualmente enlazados en el menú pero inexistentes en backend.
 
-1.  **Dashboard con Gráficas:**
-    *   Implementar visualización gráfica en el Dashboard principal.
-    *   **Métricas:** Potencial Electoral vs Electores Registrados.
-    *   **Desglose:** Por Departamento, Municipio, Zona y Puesto.
-2.  **Módulo Contable:**
-    *   Creación de nuevas páginas para la gestión financiera de la campaña (ingresos/gastos).
+## 4. Próximos Pasos Inmediatos
+1.  **Reportes Financieros:**
+    *   Crear controlador y vista para `Infsaldos`.
+    *   Crear controlador y vista para `Infmovimientos`.
+    *   Asegurar que consuman correctamente los datos de la API.
 
 ## 4. Notas para el Desarrollador
 *   Al subir nuevos controladores, **SIEMPRE verificar mayúsculas/minúsculas**.
@@ -53,4 +61,4 @@ Para la siguiente sesión se tiene planeado:
 *   La Landing Page es un HTML estático que depende de la disponibilidad del Admin (para assets) y la API (para datos).
 
 ---
-*Guardado por Antigravity - 26 Dic 2025*
+*Guardado por Antigravity - 28 Dic 2025*

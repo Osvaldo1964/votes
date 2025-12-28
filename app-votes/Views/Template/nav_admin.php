@@ -141,41 +141,37 @@
                     <!-- Nivel 2: Administrativos -->
                     <li class="treeview">
                         <a class="treeview-item" href="#" data-toggle="treeview" style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
-                            <span><i class="icon fa fa-circle-o"></i> Reportes Administrativos</span>
+                            <span><i class="icon fa fa-folder-open"></i> Reportes Administrativos</span>
                             <i class="treeview-indicator fa fa-angle-right"></i>
                         </a>
                         <ul class="treeview-menu">
                             <!-- Nivel 3 -->
-                            <li><a class="treeview-item" href="<?= base_url(); ?>infelectores"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
-                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infelectores" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
                         </ul>
                     </li>
-                </ul>
-                <ul class="treeview-menu">
                     <!-- Nivel 2: Electorales -->
                     <li class="treeview">
                         <a class="treeview-item" href="#" data-toggle="treeview" style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
-                            <span><i class="icon fa fa-circle-o"></i> Reportes Electorales</span>
+                            <span><i class="icon fa fa-address-book"></i> Reportes Electorales</span>
                             <i class="treeview-indicator fa fa-angle-right"></i>
                         </a>
                         <ul class="treeview-menu">
                             <!-- Nivel 3 -->
-                            <li><a class="treeview-item" href="<?= base_url(); ?>infelectores"><i class="icon fa fa-circle-o"></i> Informe Electores</a></li>
-                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso"><i class="icon fa fa-circle-o"></i> Reporte Censo vs Real</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infelectores" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe Electores</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Reporte Censo vs Real</a></li>
                         </ul>
                     </li>
-                </ul>
-                <ul class="treeview-menu">
                     <!-- Nivel 2: Financieros -->
                     <li class="treeview">
                         <a class="treeview-item" href="#" data-toggle="treeview" style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
-                            <span><i class="icon fa fa-circle-o"></i> Reportes Financieros</span>
+                            <span><i class="icon fa fa-area-chart"></i> Reportes Financieros</span>
                             <i class="treeview-indicator fa fa-angle-right"></i>
                         </a>
                         <ul class="treeview-menu">
                             <!-- Nivel 3 -->
-                            <li><a class="treeview-item" href="<?= base_url(); ?>infsaldos"><i class="icon fa fa-circle-o"></i> Informe saldos</a></li>
-                            <li><a class="treeview-item" href="<?= base_url(); ?>infmovimientos"><i class="icon fa fa-circle-o"></i> Informe Movimientos</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infsaldos" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe saldos</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infmovimientos" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe Movimientos</a></li>
                         </ul>
                     </li>
                 </ul>
