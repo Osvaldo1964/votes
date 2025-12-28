@@ -146,4 +146,46 @@ window.addEventListener('load', function () {
     fntValidText();
     fntValidEmail();
     fntValidNumber();
+
+    // Validar Rol para botón de inicialización
+    if (localStorage.getItem('userRol') == 1 && document.querySelector('#liInitEscrutinio')) {
+        document.querySelector('#liInitEscrutinio').classList.remove('d-none');
+    }
 }, false);
+
+function fntInicializarMesas(e) {
+    if (e) e.preventDefault();
+    swal({
+        title: "Inicializar Escrutinio",
+        text: "¿Desea ejecutar la carga de mesas faltantes? Esto verificará y creará los registros maestros de mesas. No afectará datos existentes.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, Ejecutar",
+        cancelButtonText: "Cancelar",
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true
+    }, async function () {
+        // Obtenemos Base URL API correctamente (asumiendo que variable global BASE_URL_API existe, si no, usar BASE_URL + '/api')
+        // Si no existe BASE_URL_API global, usar BASE_URL o construirla.
+        // En functions_resultados vi BASE_URL_API. Asumo que está disponible.
+        // Si no, fallback:
+        const apiUrl = (typeof BASE_URL_API !== 'undefined') ? BASE_URL_API : BASE_URL + '/api-votes';
+
+        const url = apiUrl + '/resultados/inicializar';
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+                }
+            });
+            const data = await response.json();
+            if (data.status) {
+                swal("Éxito", data.msg, "success");
+            } else {
+                swal("Error", data.msg, "error");
+            }
+        } catch (error) {
+            swal("Error", "Error de comunicación con el servidor.", "error");
+        }
+    });
+}

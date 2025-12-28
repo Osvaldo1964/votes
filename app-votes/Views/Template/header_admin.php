@@ -29,6 +29,11 @@
           <i class="fa fa-globe fa-lg"></i>
         </a>
       </li>
+      <li class="d-none" id="liInitEscrutinio">
+        <a class="app-nav__item" href="#" onclick="fntInicializarMesas(event)" title="Inicializar Escrutinio (Admin Only)">
+          <i class="fa fa-database fa-lg text-warning"></i>
+        </a>
+      </li>
       <!-- User Menu-->
       <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i
             class="fa fa-user fa-lg"></i></a>

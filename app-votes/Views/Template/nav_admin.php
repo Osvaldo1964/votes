@@ -55,6 +55,8 @@
                             Votacion</a></li>
                     <li><a class="treeview-item" href="<?= base_url(); ?>resultados"><i class="icon fa fa-circle-o"></i>
                             Resultados por Mesa</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>monitor"><i class="icon fa fa-circle-o"></i>
+                            Monitor dia D</a></li>
                 </ul>
             </li>
         <?php } ?>
