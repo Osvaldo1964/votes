@@ -87,6 +87,10 @@
                         <li><a class="treeview-item" href="<?= base_url(); ?>monitor"><i class="icon fa fa-circle-o"></i>
                                 Monitor dia D</a></li>
                     <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][17]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>analisis"><i class="icon fa fa-circle-o"></i>
+                                Analisis E-14</a></li>
+                    <?php } ?>
                 </ul>
             </li>
         <?php } ?>
@@ -140,38 +144,50 @@
                 <ul class="treeview-menu">
                     <!-- Nivel 2: Administrativos -->
                     <li class="treeview">
-                        <a class="treeview-item" href="#" data-toggle="treeview" style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
+                        <a class="treeview-item" href="#" data-toggle="treeview"
+                            style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
                             <span><i class="icon fa fa-folder-open"></i> Reportes Administrativos</span>
                             <i class="treeview-indicator fa fa-angle-right"></i>
                         </a>
                         <ul class="treeview-menu">
                             <!-- Nivel 3 -->
-                            <li><a class="treeview-item" href="<?= base_url(); ?>infelectores" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
-                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infelectores"
+                                    style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso"
+                                    style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
                         </ul>
                     </li>
                     <!-- Nivel 2: Electorales -->
                     <li class="treeview">
-                        <a class="treeview-item" href="#" data-toggle="treeview" style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
+                        <a class="treeview-item" href="#" data-toggle="treeview"
+                            style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
                             <span><i class="icon fa fa-address-book"></i> Reportes Electorales</span>
                             <i class="treeview-indicator fa fa-angle-right"></i>
                         </a>
                         <ul class="treeview-menu">
                             <!-- Nivel 3 -->
-                            <li><a class="treeview-item" href="<?= base_url(); ?>infelectores" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe Electores</a></li>
-                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Reporte Censo vs Real</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infelectores"
+                                    style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe Electores</a>
+                            </li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso"
+                                    style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Reporte Censo vs
+                                    Real</a></li>
                         </ul>
                     </li>
                     <!-- Nivel 2: Financieros -->
                     <li class="treeview">
-                        <a class="treeview-item" href="#" data-toggle="treeview" style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
+                        <a class="treeview-item" href="#" data-toggle="treeview"
+                            style="display: flex; justify-content: space-between; align-items: center; padding-right: 15px;">
                             <span><i class="icon fa fa-area-chart"></i> Reportes Financieros</span>
                             <i class="treeview-indicator fa fa-angle-right"></i>
                         </a>
                         <ul class="treeview-menu">
                             <!-- Nivel 3 -->
-                            <li><a class="treeview-item" href="<?= base_url(); ?>infsaldos" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe Elementos</a></li>
-                            <li><a class="treeview-item" href="<?= base_url(); ?>infmovimientos" style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe Ingresos y Gastos</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infsaldos" style="padding-left: 40px;"><i
+                                        class="icon fa fa-circle-o"></i> Informe Elementos</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>infmovimientos"
+                                    style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe Ingresos y
+                                    Gastos</a></li>
                         </ul>
                     </li>
                 </ul>

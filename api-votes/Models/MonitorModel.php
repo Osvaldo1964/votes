@@ -23,7 +23,7 @@ class MonitorModel extends Mysql
            1. Buscamos todas las mesas en 'places' para esa Zona y Puesto.
            2. Hacemos LEFT JOIN con 'electores' para ver cuántos están vinculados a esos puestos.
            3. Agrupamos por 'mesa_place'.
-           
+
            COLUMNAS:
            - mesa: El número de la mesa.
            - potencial: COUNT(places.id_place) -> Total de cédulas inscritas en esa mesa (Censo).
