@@ -2,7 +2,7 @@
 const BASE_URL = "http://app-votes.com/";
 const API_OAUTH_JWT = "http://oauth-jwt.com/oauthjwt/token";
 const API_VALID_JWT = "http://oauth-jwt.com/oauthjwt/tokenValidate/";
-const BASE_URL_API = "http://api-votes.com/";
+const BASE_URL_API = "http://localhost/votes/api-votes/";
 
 //Zona horaria
 date_default_timezone_set("America/Bogota");

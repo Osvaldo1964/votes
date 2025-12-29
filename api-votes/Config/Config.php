@@ -1,6 +1,5 @@
 <?php
 
-//define("BASE_URL","http://localhost/framework-abelosh/");
 const BASE_URL = "http://api-votes.com/";
 
 //Datos de conexión a Base de Datos
