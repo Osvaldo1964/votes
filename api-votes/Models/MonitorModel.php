@@ -34,10 +34,10 @@ class MonitorModel extends Mysql
         $sql = "SELECT 
                     p.mesa_place as mesa,
                     COUNT(DISTINCT p.id_place) as potencial,
-                    COUNT(DISTINCT e.id_elector) as mios,
-                    SUM(CASE WHEN e.poll_elector = 1 THEN 1 ELSE 0 END) as votaron
+                    COUNT(DISTINCT IF(e.estado_elector != 0, e.id_elector, NULL)) as mios,
+                    SUM(CASE WHEN e.poll_elector = 1 AND e.estado_elector != 0 THEN 1 ELSE 0 END) as votaron
                 FROM places p
-                LEFT JOIN electores e ON e.ident_elector = p.ident_place AND e.estado_elector != 0
+                LEFT JOIN electores e ON CAST(e.ident_elector AS CHAR) = CAST(p.ident_place AS CHAR)
                 WHERE p.idzona_place = $this->intIdZona 
                 AND TRIM(p.nameplace_place) = TRIM('$puestoClean')
                 GROUP BY p.mesa_place

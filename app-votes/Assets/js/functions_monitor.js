@@ -180,6 +180,7 @@ async function fntMonitorShow(silent = false) {
             // container.style.display = 'grid' !important (CSS)
 
             renderCards(data.data);
+            renderSummary(data.data); // Nuevo: Renderizar Totales
 
             // Si fue silencioso, quizás un pequeño indicador en consola o UI?
             if (silent) {
@@ -190,12 +191,61 @@ async function fntMonitorShow(silent = false) {
             if (!silent) {
                 container.classList.add('loading');
                 container.innerHTML = `<div class="col-12 text-center text-muted"><h4>${data.msg}</h4></div>`;
+                document.getElementById('divSummaryContainer').style.display = 'none';
             }
         }
     } catch (error) {
         console.error(error);
         if (!silent) swal("Error", "Error obteniendo datos.", "error");
     }
+}
+
+function renderSummary(mesas) {
+    if (!Array.isArray(mesas)) return;
+
+    let totalCenso = 0;
+    let totalMios = 0;
+    let totalVotaron = 0;
+
+    mesas.forEach(m => {
+        totalCenso += parseInt(m.potencial || 0);
+        totalMios += parseInt(m.mios || 0);
+        totalVotaron += parseInt(m.votaron || 0);
+    });
+
+    let pctGlobal = 0;
+    if (totalMios > 0) pctGlobal = ((totalVotaron / totalMios) * 100).toFixed(1);
+
+    let html = `
+        <div class="col-md-4">
+            <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+                <div class="info">
+                    <h4>CENSO PUESTO</h4>
+                    <p><b>${totalCenso.toLocaleString()}</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"></i>
+                <div class="info">
+                    <h4>MI POTENCIAL</h4>
+                    <p><b>${totalMios.toLocaleString()}</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="widget-small warning coloured-icon"><i class="icon fa fa-check-square-o fa-3x"></i>
+                <div class="info">
+                    <h4>VOTOS REALES (${pctGlobal}%)</h4>
+                    <p><b>${totalVotaron.toLocaleString()}</b></p>
+                </div>
+            </div>
+        </div>
+    `;
+
+    let divSummary = document.getElementById('divSummaryContainer');
+    divSummary.innerHTML = html;
+    divSummary.style.display = 'flex'; // Mostrar row
 }
 
 function renderCards(mesas) {

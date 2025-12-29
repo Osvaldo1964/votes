@@ -52,28 +52,32 @@ headerAdmin($data);
                             <!-- Departamento (2) -->
                             <div class="form-group col-md-2">
                                 <label for="listDpto">Departamento</label>
-                                <select class="form-control selectpicker" id="listDpto" name="listDpto" data-live-search="true" required>
+                                <select class="form-control selectpicker" id="listDpto" name="listDpto"
+                                    data-live-search="true" required>
                                     <option value="" selected>Seleccione...</option>
                                 </select>
                             </div>
                             <!-- Municipio (2) -->
                             <div class="form-group col-md-2">
                                 <label for="listMuni">Municipio</label>
-                                <select class="form-control selectpicker" id="listMuni" name="listMuni" data-live-search="true" disabled required>
+                                <select class="form-control selectpicker" id="listMuni" name="listMuni"
+                                    data-live-search="true" disabled required>
                                     <option value="" selected>Seleccione...</option>
                                 </select>
                             </div>
                             <!-- Zona (2) -->
                             <div class="form-group col-md-2">
                                 <label for="listZona">Zona</label>
-                                <select class="form-control selectpicker" id="listZona" name="listZona" data-live-search="true" disabled required>
+                                <select class="form-control selectpicker" id="listZona" name="listZona"
+                                    data-live-search="true" disabled required>
                                     <option value="" selected>Seleccione...</option>
                                 </select>
                             </div>
                             <!-- Puesto (3) -->
                             <div class="form-group col-md-3">
                                 <label for="listPuesto">Puesto de Votación</label>
-                                <select class="form-control selectpicker" id="listPuesto" name="listPuesto" data-live-search="true" disabled required>
+                                <select class="form-control selectpicker" id="listPuesto" name="listPuesto"
+                                    data-live-search="true" disabled required>
                                     <option value="" selected>Seleccione...</option>
                                 </select>
                             </div>
@@ -89,13 +93,19 @@ headerAdmin($data);
                             </div>
                             <!-- Botón Mostrar (1) -->
                             <div class="form-group col-md-1">
-                                <button type="button" class="btn btn-primary btn-block" onclick="fntMonitorShow();" title="Actualizar"><i class="fa fa-eye"></i></button>
+                                <button type="button" class="btn btn-primary btn-block" onclick="fntMonitorShow();"
+                                    title="Actualizar"><i class="fa fa-eye"></i></button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Contenedor Resumen Totales -->
+    <div id="divSummaryContainer" class="row mb-3" style="display:none;">
+        <!-- Se inyecta JS -->
     </div>
 
     <!-- Contenedor General de Mesas -->
