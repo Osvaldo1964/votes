@@ -25,3 +25,7 @@ const SMTP_HOST = "smtp.hostinger.com";
 const SMTP_USER = "pqr@chadanalacamara.com";
 const SMTP_PASS = "CAMBIAME_EN_PRODUCCION"; // <--- CAMBIAR CONTRASEÑA EN HOSTINGER
 const SMTP_PORT = 465;
+// Delimitadores decimal y millar
+const SPD = ",";
+const SPM = ".";
+const SMONEY = "$";

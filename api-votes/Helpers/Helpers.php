@@ -59,6 +59,12 @@ function strClean($strCadena)
     return $string;
 }
 
+function formatMoney($cantidad)
+{
+    $cantidad = number_format($cantidad, 0, SPD, SPM);
+    return $cantidad;
+}
+
 function jsonResponse($data, int $code)
 {
     // Esta línea le dice al navegador que algo salió mal (401, 400, etc.)
