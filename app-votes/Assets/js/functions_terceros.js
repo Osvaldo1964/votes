@@ -1,14 +1,17 @@
-var tableTerceros;
+// functions_terceros.js
+// Optimizado para arquitectura API con JWT y Async/Await
+
+let tableTerceros;
 
 document.addEventListener('DOMContentLoaded', function () {
-    tableTerceros = $('#tableTerceros').dataTable({
-        "aProcessing": true,
-        "aServerSide": true,
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-        },
+    // 1. Inicialización de DataTables
+    tableTerceros = $('#tableTerceros').DataTable({
+        "processing": true,
+        "language": lenguajeEspanol, // Variable global en functions_admin.js
         "ajax": {
-            "url": " " + BASE_URL_API + "/Terceros/getTerceros",
+            "url": BASE_URL_API + "/Terceros/getTerceros",
+            "type": "GET",
+            "headers": { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` },
             "dataSrc": ""
         },
         "columns": [
@@ -20,46 +23,40 @@ document.addEventListener('DOMContentLoaded', function () {
             { "data": "estado_tercero" },
             { "data": "options" }
         ],
-        "resonsive": true,
-        "bDestroy": true,
+        "responsive": true,
+        "destroy": true,
         "iDisplayLength": 10,
         "order": [[0, "desc"]]
     });
 
-    // Nuevo / Editar
+    // 2. Submit Form
     if (document.querySelector("#formTercero")) {
-        var formTercero = document.querySelector("#formTercero");
-        formTercero.onsubmit = function (e) {
+        const formTercero = document.querySelector("#formTercero");
+        formTercero.onsubmit = async function (e) {
             e.preventDefault();
-            var strIdentificacion = document.querySelector('#txtIdentificacion').value;
-            var strNombre = document.querySelector('#txtNombre').value;
-            var strEmail = document.querySelector('#txtEmail').value;
-            var strTelefono = document.querySelector('#txtTelefono').value;
+            const strIdentificacion = document.querySelector('#txtIdentificacion').value;
+            const strNombre = document.querySelector('#txtNombre').value;
+            const strEmail = document.querySelector('#txtEmail').value;
+            const strTelefono = document.querySelector('#txtTelefono').value;
 
             if (strIdentificacion == '' || strNombre == '' || strEmail == '' || strTelefono == '') {
                 swal("Atención", "Todos los campos son obligatorios.", "error");
-                return false;
+                return;
             }
 
-            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = BASE_URL_API + '/Terceros/setTercero';
-            var formData = new FormData(formTercero);
-            request.open("POST", ajaxUrl, true);
-            request.send(formData);
-            request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-                    var objData = JSON.parse(request.responseText);
-                    if (objData.status) {
-                        $('#modalFormTercero').modal("hide");
-                        formTercero.reset();
-                        swal("Terceros", objData.msg, "success");
-                        tableTerceros.api().ajax.reload();
-                    } else {
-                        swal("Error", objData.msg, "error");
-                    }
-                }
+            const formData = new FormData(formTercero);
+            // Uso de fetchData global
+            const objData = await fetchData(BASE_URL_API + '/Terceros/setTercero', 'POST', formData);
+
+            if (objData?.status) {
+                $('#modalFormTercero').modal("hide");
+                formTercero.reset();
+                swal("Terceros", objData.msg, "success");
+                tableTerceros.ajax.reload();
+            } else {
+                swal("Error", objData?.msg || "Error desconocido", "error");
             }
-        }
+        };
     }
 });
 
@@ -73,34 +70,26 @@ function openModal() {
     $('#modalFormTercero').modal('show');
 }
 
-function fntEditTercero(idtercero) {
+async function fntEditTercero(idtercero) {
     document.querySelector('#titleModal').innerHTML = "Actualizar Tercero";
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
     document.querySelector('#btnText').innerHTML = "Actualizar";
 
-    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl = BASE_URL_API + '/Terceros/getTercero/' + idtercero;
-    request.open("GET", ajaxUrl, true);
-    request.send();
-    request.onreadystatechange = function () {
+    // Petición con fetchData global
+    const objData = await fetchData(BASE_URL_API + '/Terceros/getTercero/' + idtercero);
 
-        if (request.readyState == 4 && request.status == 200) {
-            var objData = JSON.parse(request.responseText);
+    if (objData?.status) {
+        document.querySelector("#idTercero").value = objData.data.id_tercero;
+        document.querySelector("#txtIdentificacion").value = objData.data.ident_tercero;
+        document.querySelector("#txtNombre").value = objData.data.nombre_tercero;
+        document.querySelector("#txtTelefono").value = objData.data.telefono_tercero;
+        document.querySelector("#txtEmail").value = objData.data.email_tercero;
+        document.querySelector("#txtDireccion").value = objData.data.direccion_tercero;
 
-            if (objData.status) {
-                document.querySelector("#idTercero").value = objData.data.id_tercero;
-                document.querySelector("#txtIdentificacion").value = objData.data.ident_tercero;
-                document.querySelector("#txtNombre").value = objData.data.nombre_tercero;
-                document.querySelector("#txtTelefono").value = objData.data.telefono_tercero;
-                document.querySelector("#txtEmail").value = objData.data.email_tercero;
-                document.querySelector("#txtDireccion").value = objData.data.direccion_tercero;
-
-                $('#modalFormTercero').modal('show');
-            } else {
-                swal("Error", objData.msg, "error");
-            }
-        }
+        $('#modalFormTercero').modal('show');
+    } else {
+        swal("Error", objData?.msg || "Datos no encontrados", "error");
     }
 }
 
@@ -114,24 +103,19 @@ function fntDelTercero(idtercero) {
         cancelButtonText: "No, cancelar!",
         closeOnConfirm: false,
         closeOnCancel: true
-    }, function (isConfirm) {
+    }, async function (isConfirm) {
         if (isConfirm) {
-            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = BASE_URL_API + '/Terceros/delTercero';
-            var strData = "idTercero=" + idtercero;
-            request.open("POST", ajaxUrl, true);
-            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            request.send(strData);
-            request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-                    var objData = JSON.parse(request.responseText);
-                    if (objData.status) {
-                        swal("Eliminar!", objData.msg, "success");
-                        tableTerceros.api().ajax.reload();
-                    } else {
-                        swal("Atención!", objData.msg, "error");
-                    }
-                }
+            // Nota API legacy: Se usaba POST application/x-www-form-urlencoded
+            let formData = new FormData();
+            formData.append("idTercero", idtercero);
+
+            const objData = await fetchData(BASE_URL_API + '/Terceros/delTercero', 'POST', formData);
+
+            if (objData?.status) {
+                swal("Eliminado!", objData.msg, "success");
+                tableTerceros.ajax.reload();
+            } else {
+                swal("Atención!", objData?.msg || "Error al eliminar", "error");
             }
         }
     });

@@ -1,32 +1,5 @@
-let tableUsuarios;
-$.fn.dataTable.ext.errMode = 'none';
-
-/**
- * HELPER PARA PETICIONES FETCH
- */
-async function fetchData(url, method = 'GET', body = null) {
-    const options = {
-        method,
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
-            'Content-Type': 'application/json'
-        }
-    };
-    if (body && method !== 'GET') options.body = body instanceof FormData ? body : JSON.stringify(body);
-    if (body instanceof FormData) delete options.headers['Content-Type'];
-
-    try {
-        const response = await fetch(url, options);
-        if (response.status === 401 || response.status === 400) {
-            fntHandleError(response);
-            return null;
-        }
-        return await response.json();
-    } catch (error) {
-        console.error("Error en la petición:", error);
-        return null;
-    }
-}
+// functions_usuarios.js
+// Optimizado - Utiliza fetchData global (functions_admin.js)
 
 document.addEventListener('DOMContentLoaded', async function () {
 
@@ -36,14 +9,15 @@ document.addEventListener('DOMContentLoaded', async function () {
     // 2. INICIALIZACIÓN DE DATATABLE
     tableUsuarios = $('#tableUsuarios').DataTable({
         "processing": true,
-        "language": { "url": `${BASE_URL}/assets/json/spanish.json` },
+        "language": lenguajeEspanol, // Variable global
         "ajax": {
             "url": `${BASE_URL_API}/usuario/getUsers`,
             "type": "GET",
             "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
             "data": d => { d.rolUser = localStorage.getItem('userRol'); },
-            "dataSrc": json => json.status ? json.data : [],
-            "error": xhr => fntHandleError(xhr)
+            // Mantenemos la lógica de verificación de status
+            "dataSrc": json => (json && json.status && Array.isArray(json.data)) ? json.data : [],
+            "error": function (xhr) { console.error("Error DataTable Usuarios:", xhr); }
         },
         "columns": [
             { "data": "id_usuario" },

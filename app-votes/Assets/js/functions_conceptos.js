@@ -1,14 +1,17 @@
-var tableConceptos;
+// functions_conceptos.js
+// Optimizado para arquitectura API con JWT y Async/Await
+
+let tableConceptos;
 
 document.addEventListener('DOMContentLoaded', function () {
-    tableConceptos = $('#tableConceptos').dataTable({
-        "aProcessing": true,
-        "aServerSide": true,
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-        },
+    // 1. Inicialización de DataTables
+    tableConceptos = $('#tableConceptos').DataTable({
+        "processing": true,
+        "language": lenguajeEspanol, // Variable global en functions_admin.js
         "ajax": {
-            "url": " " + BASE_URL_API + "/Conceptos/getConceptos",
+            "url": BASE_URL_API + "/Conceptos/getConceptos",
+            "type": "GET",
+            "headers": { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` },
             "dataSrc": ""
         },
         "columns": [
@@ -17,44 +20,38 @@ document.addEventListener('DOMContentLoaded', function () {
             { "data": "estado_concepto" },
             { "data": "options" }
         ],
-        "resonsive": true,
-        "bDestroy": true,
+        "responsive": true,
+        "destroy": true,
         "iDisplayLength": 10,
         "order": [[0, "desc"]]
     });
 
-    // Submit Form
+    // 2. Submit Form
     if (document.querySelector("#formConcepto")) {
-        var formConcepto = document.querySelector("#formConcepto");
-        formConcepto.onsubmit = function (e) {
+        const formConcepto = document.querySelector("#formConcepto");
+        formConcepto.onsubmit = async function (e) {
             e.preventDefault();
-            var strNombre = document.querySelector('#txtNombre').value;
-            var intTipo = document.querySelector('#listTipo').value;
+            const strNombre = document.querySelector('#txtNombre').value;
+            const intTipo = document.querySelector('#listTipo').value;
 
             if (strNombre == '' || intTipo == '') {
                 swal("Atención", "Todos los campos son obligatorios.", "error");
-                return false;
+                return;
             }
 
-            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = BASE_URL_API + '/Conceptos/setConcepto';
-            var formData = new FormData(formConcepto);
-            request.open("POST", ajaxUrl, true);
-            request.send(formData);
-            request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-                    var objData = JSON.parse(request.responseText);
-                    if (objData.status) {
-                        $('#modalFormConcepto').modal("hide");
-                        formConcepto.reset();
-                        swal("Conceptos", objData.msg, "success");
-                        tableConceptos.api().ajax.reload();
-                    } else {
-                        swal("Error", objData.msg, "error");
-                    }
-                }
+            const formData = new FormData(formConcepto);
+            // Uso de fetchData global
+            const objData = await fetchData(BASE_URL_API + '/Conceptos/setConcepto', 'POST', formData);
+
+            if (objData?.status) {
+                $('#modalFormConcepto').modal("hide");
+                formConcepto.reset();
+                swal("Conceptos", objData.msg, "success");
+                tableConceptos.ajax.reload();
+            } else {
+                swal("Error", objData?.msg || "Error desconocido", "error");
             }
-        }
+        };
     }
 });
 
@@ -68,30 +65,22 @@ function openModal() {
     $('#modalFormConcepto').modal('show');
 }
 
-function fntEditConcepto(idconcepto) {
+async function fntEditConcepto(idconcepto) {
     document.querySelector('#titleModal').innerHTML = "Actualizar Concepto";
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
     document.querySelector('#btnText').innerHTML = "Actualizar";
 
-    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl = BASE_URL_API + '/Conceptos/getConcepto/' + idconcepto;
-    request.open("GET", ajaxUrl, true);
-    request.send();
-    request.onreadystatechange = function () {
+    // Petición con fetchData global
+    const objData = await fetchData(BASE_URL_API + '/Conceptos/getConcepto/' + idconcepto);
 
-        if (request.readyState == 4 && request.status == 200) {
-            var objData = JSON.parse(request.responseText);
-
-            if (objData.status) {
-                document.querySelector("#idConcepto").value = objData.data.id_concepto;
-                document.querySelector("#txtNombre").value = objData.data.nombre_concepto;
-                document.querySelector("#listTipo").value = objData.data.tipo_concepto;
-                $('#modalFormConcepto').modal('show');
-            } else {
-                swal("Error", objData.msg, "error");
-            }
-        }
+    if (objData?.status) {
+        document.querySelector("#idConcepto").value = objData.data.id_concepto;
+        document.querySelector("#txtNombre").value = objData.data.nombre_concepto;
+        document.querySelector("#listTipo").value = objData.data.tipo_concepto;
+        $('#modalFormConcepto').modal('show');
+    } else {
+        swal("Error", objData?.msg || "Datos no encontrados", "error");
     }
 }
 
@@ -105,24 +94,19 @@ function fntDelConcepto(idconcepto) {
         cancelButtonText: "No, cancelar!",
         closeOnConfirm: false,
         closeOnCancel: true
-    }, function (isConfirm) {
+    }, async function (isConfirm) {
         if (isConfirm) {
-            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = BASE_URL_API + '/Conceptos/delConcepto';
-            var strData = "idConcepto=" + idconcepto;
-            request.open("POST", ajaxUrl, true);
-            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            request.send(strData);
-            request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-                    var objData = JSON.parse(request.responseText);
-                    if (objData.status) {
-                        swal("Eliminar!", objData.msg, "success");
-                        tableConceptos.api().ajax.reload();
-                    } else {
-                        swal("Atención!", objData.msg, "error");
-                    }
-                }
+            // Nota API legacy: Se usaba POST application/x-www-form-urlencoded
+            let formData = new FormData();
+            formData.append("idConcepto", idconcepto);
+
+            const objData = await fetchData(BASE_URL_API + '/Conceptos/delConcepto', 'POST', formData);
+
+            if (objData?.status) {
+                swal("Eliminado!", objData.msg, "success");
+                tableConceptos.ajax.reload();
+            } else {
+                swal("Atención!", objData?.msg || "Error al eliminar", "error");
             }
         }
     });

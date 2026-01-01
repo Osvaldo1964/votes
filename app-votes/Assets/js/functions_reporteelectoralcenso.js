@@ -1,37 +1,5 @@
-
-// Helper de Peticiones
-async function fetchData(url, method = 'GET', body = null) {
-    const options = {
-        method,
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
-            'Content-Type': 'application/json' // Para POST/PUT
-        }
-    };
-
-    // Si usas FormData en el body, NO pongas Content-Type manualmente, fetch lo pone.
-    // Pero aquí mandaremos JSON casi siempre para filtros
-    if (body) {
-        options.body = JSON.stringify(body);
-    }
-    // Si es Formulario real:
-    // if (body instanceof FormData) { options.body = body; delete options.headers['Content-Type']; }
-
-    try {
-        const response = await fetch(url, options);
-        // Intentamos parsear JSON
-        const text = await response.text();
-        try {
-            return JSON.parse(text);
-        } catch (e) {
-            console.error("Respuesta no JSON:", text);
-            return null;
-        }
-    } catch (error) {
-        console.error("Error Fetch:", error);
-        return null;
-    }
-}
+// functions_reporteelectoralcenso.js
+// Optimizado para uso de funciones globales
 
 let dataConfig = null; // Para guardar dptos y munis cargados inicialmente
 

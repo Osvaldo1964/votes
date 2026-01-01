@@ -70,6 +70,9 @@ headerAdmin($data);
         </div>
     </div>
 
+    <!-- Contenedor Resumen Totales (Boxes) -->
+    <div id="divSummaryContainer" class="row mb-3" style="display:none;"></div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="tile">

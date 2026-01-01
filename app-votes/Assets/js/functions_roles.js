@@ -1,30 +1,8 @@
+// functions_roles.js
+// Optimizado - Utiliza fetchData global
+
 let tableRoles;
 $.fn.dataTable.ext.errMode = 'none';
-
-// 1. HELPER DE PETICIONES (Consistente con los otros archivos)
-async function fetchData(url, method = 'GET', body = null) {
-    const options = {
-        method,
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
-            'Content-Type': 'application/json'
-        }
-    };
-    if (body && method !== 'GET') options.body = body instanceof FormData ? body : JSON.stringify(body);
-    if (body instanceof FormData) delete options.headers['Content-Type'];
-
-    try {
-        const response = await fetch(url, options);
-        if (response.status === 401 || response.status === 400) {
-            fntHandleError(response);
-            return null;
-        }
-        return await response.json();
-    } catch (error) {
-        console.error("Error en la petición:", error);
-        return null;
-    }
-}
 
 document.addEventListener('DOMContentLoaded', function () {
 

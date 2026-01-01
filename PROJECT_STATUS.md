@@ -1,47 +1,62 @@
 # Estado del Proyecto - Campaña Chadan Rosado Taylor 2026
-**Fecha:** 29/12/2025 (Noche)
-**Última sesión:** Refactorización Completa Módulo Movimientos.
+**Fecha:** 01/01/2026
+**Última sesión:** Refactorización Integral Frontend & JavaScript Estándar.
 
-## 1. Arquitectura del Sistema (Desacoplada)
-El sistema ha sido dividido en tres componentes independientes para su despliegue en Hostinger:
+## 1. Arquitectura del Sistema (Estándar 2026)
+El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunicación vía JSON RESTful.
 
-*   **Landing Page (Pública):**
-    *   `chadanalacamara.com` (Ubicación: `public_html`).
-*   **Admin (Frontend):**
-    *   `admin.chadanalacamara.com` (Ubicación: `public_html/admin/`).
-    *   Código: `app-votes`. Consume API vía JS.
-*   **API (Backend):**
-    *   `api.chadanalacamara.com` (Ubicación: `public_html/api/`).
-    *   Código: `api-votes`.
+*   **Frontend (Admin):**
+    *   **Proyecto:** `app-votes`
+    *   **Tecnología:** PHP (Vistas) + Vanilla JS (Lógica).
+    *   **Autenticación:** JWT almacenado en `localStorage`.
+    *   **Núcleo JS:** `functions_admin.js` aloja los helpers globales:
+        *   `fetchData(url, method, body)`: Manejador central de peticiones con auto-inyección de Token y manejo de errores.
+        *   `lenguajeEspanol`: Configuración global para DataTables.
+*   **Backend (API):**
+    *   **Proyecto:** `api-votes`
+    *   **Tecnología:** PHP MVC.
+    *   **Seguridad:** Validación de Tokens JWT en encabezado `Authorization: Bearer ...`.
 
-## 2. Ajustes Recientes
-*   **[REFACTOR] Módulo Movimientos:**
-    *   Reconstrucción total siguiendo arquitectura estándar de Líderes.
-    *   Frontend desacoplado, manejo robusto de CORS y Tokens.
-    *   Backend con validaciones estrictas y constantes monetarias corregidas (`SMONEY`, `formatMoney`).
-*   **[NUEVO] Análisis E-14 (Auditoría):**
-    *   Reporte comparativo Mesa a Mesa.
-*   **[NUEVO] Informe de Electores:**
-    *   Reporte de bases de datos por Líder.
+---
+
+## 2. Cambios Recientes (Refactorización Masiva JS)
+Se ha completado la estandarización de **todos** los archivos JavaScript en `Assets/js`.
+
+### A. Estandarización de Código
+*   **Eliminación de Redundancia:** Se eliminaron definiciones locales repetidas de `fetchData` y `lenguajeEspanol` en todos los módulos (`functions_lideres.js`, `functions_candidatos.js`, `functions_electores.js`, `functions_movimientos.js`, etc.). Ahora todos consumen la definición global.
+*   **Modernización:** Reemplazo total de `XMLHttpRequest` por `async/await` y `fetch`.
+*   **Seguridad:** Garantía de envío del Token en todas las peticiones (AJAX DataTables y Fetch API).
+
+### B. Módulos Optimizados
+1.  **Líderes & Candidatos:** Código limpio, DataTables unificado.
+2.  **Electores:** Validación de duplicados optimizada y limpieza de formularios.
+3.  **Movimientos & Roles:** Corrección de conflictos por doble declaración de variables.
+4.  **Reporte Electoral Censo:** Implementación final de lógica de filtros encadenados.
+5.  **Análisis E-14:** 
+    *   Agregado de **Tarjetas de Resumen (Boxes)** idénticas al Monitor Día D.
+    *   Cálculo automático de % de Participación (Votos Reales / Potencial).
 
 ## 3. Estado de Módulos
 *   **Dashboard:**
-    *   **COMPLETADO:** Visualización gráfica implementada.
-*   **Contabilidad (Gestión):**
-    *   **COMPLETADO:** CRUDs de Terceros, Conceptos, Elementos, Entradas, Salidas.
-    *   **COMPLETADO / REFACTORIZADO:** Movimientos (Nueva Arquitectura).
-*   **Contabilidad (Reportes):**
-    *   **COMPLETADO:** Informe Elementos (Saldos/Kardex).
-    *   **PENDIENTE (Prioridad):** Informe de Ingresos y Gastos (`Infmovimientos`).
-*   **Electoral (Reportes/Análisis):**
-    *   **COMPLETADO:** Informe de Electores.
-    *   **COMPLETADO:** Monitor Día D (Tiempo Real).
-    *   **COMPLETADO:** Análisis E-14 (Auditoría Post-Electoral).
-    *   **EN PROCESO:** Reporte Electoral Censo.
+    *   [OK] Gráficas y Métricas.
+*   **Gestión Administrativa:**
+    *   [OK] Usuarios, Roles.
+    *   [OK] Terceros, Conceptos, Elementos.
+    *   [OK] Entradas, Salidas (Refactorizados).
+*   **Gestión Financiera:**
+    *   [OK] Movimientos (Nueva Arquitectura).
+    *   [OK] Informes Financieros (Saldos/Kardex).
+*   **Gestión Electoral:**
+    *   [OK] Líderes, Candidatos (Refactorizados).
+    *   [OK] Electores (Validación de cédulas optimizada).
+*   **Reportes y Análisis:**
+    *   [OK] Monitor Día D (Tiempo Real).
+    *   [OK] Análisis E-14 (Auditoría con Boxes de Resumen).
+    *   [OK] Reporte Electoral Censo (Filtros dinámicos).
 
-## 4. Notas para Despliegue (Hostinger)
-*   **Configuración:** Recordar cambiar `BASE_URL_API` en `app-votes/Config/Config.php` al dominio de producción.
-*   **Base de Datos:** Importar tablas nuevas si las hubo (Tablas actualizadas: sin cambios estructurales mayores, solo lógica).
+## 4. Notas Técnicas
+*   **Depuración:** Si aparece `SyntaxError: Identifier '...' has already been declared`, revisar si el módulo JS está importando una definición local que ya existe en `functions_admin.js`.
+*   **DataTables:** Todas las tablas usan `dataSrc` configurado para manejar respuestas vacías o errores sin romper la UI.
 
 ---
-*Guardado por Antigravity - 29 Dic 2025*
+*Bitácora Actualizada - Antigravity*

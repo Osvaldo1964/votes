@@ -1,14 +1,17 @@
-var tableSalidas;
+// functions_salidas.js
+// Optimizado para arquitectura API con JWT y Async/Await
+
+let tableSalidas;
 
 document.addEventListener('DOMContentLoaded', function () {
-    tableSalidas = $('#tableSalidas').dataTable({
-        "aProcessing": true,
-        "aServerSide": true,
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-        },
+    // 1. Inicialización de DataTables
+    tableSalidas = $('#tableSalidas').DataTable({
+        "processing": true,
+        "language": lenguajeEspanol, // Variable global en functions_admin.js
         "ajax": {
-            "url": " " + BASE_URL_API + "/Salidas/getSalidas",
+            "url": BASE_URL_API + "/Salidas/getSalidas",
+            "type": "GET",
+            "headers": { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` },
             "dataSrc": ""
         },
         "columns": [
@@ -20,103 +23,103 @@ document.addEventListener('DOMContentLoaded', function () {
             { "data": "estado_salida" },
             { "data": "options" }
         ],
-        "resonsive": true,
-        "bDestroy": true,
+        "responsive": true,
+        "destroy": true,
         "iDisplayLength": 10,
         "order": [[0, "desc"]]
     });
 
-    // Cargar Selects
+    // 2. Cargar Selects
     fntSelectLideres();
     fntSelectElementos();
 
-    // Submit Form
+    // 3. Submit Form
     if (document.querySelector("#formSalida")) {
-        var formSalida = document.querySelector("#formSalida");
-        formSalida.onsubmit = function (e) {
+        const formSalida = document.querySelector("#formSalida");
+        formSalida.onsubmit = async function (e) {
             e.preventDefault();
 
-            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = BASE_URL_API + '/Salidas/setSalida';
-            var formData = new FormData(formSalida);
-            request.open("POST", ajaxUrl, true);
-            request.send(formData);
-            request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-                    var objData = JSON.parse(request.responseText);
-                    if (objData.status) {
-                        $('#modalFormSalida').modal("hide");
-                        formSalida.reset();
-                        // Ocultar alerta
-                        document.querySelector('#divInfoLider').style.display = "none";
+            // Validaciones
+            const lider = document.querySelector("#listLider").value;
+            const elemento = document.querySelector("#listElemento").value;
+            const cantidad = document.querySelector("#txtCantidad").value;
 
-                        swal("Salidas", objData.msg, "success");
-                        tableSalidas.api().ajax.reload();
-                    } else {
-                        swal("Error", objData.msg, "error");
-                    }
-                }
+            if (lider == "" || elemento == "" || cantidad <= 0) {
+                swal("Atención", "Todos los campos obligatorios deben ser llenados y la cantidad positiva.", "error");
+                return;
             }
-        }
+
+            const formData = new FormData(formSalida);
+            // Usamos helper global con POST
+            const objData = await fetchData(BASE_URL_API + '/Salidas/setSalida', 'POST', formData);
+
+            if (objData?.status) {
+                $('#modalFormSalida').modal("hide");
+                formSalida.reset();
+                document.querySelector('#divInfoLider').style.display = "none";
+
+                swal("Salidas", objData.msg, "success");
+                tableSalidas.ajax.reload();
+            } else {
+                swal("Error", objData?.msg || "Error desconocido", "error");
+            }
+        };
+    }
+
+    // 4. Listener para cambio de líder (Mostrar info electores)
+    if (document.querySelector('#listLider')) {
+        document.querySelector('#listLider').addEventListener('change', fntInfoLider);
     }
 });
 
-// Funcion para cargar Lideres con atributo data-electores
-function fntSelectLideres() {
+// Función para cargar Lideres con atributo data-electores
+async function fntSelectLideres() {
     if (document.querySelector('#listLider')) {
-        var ajaxUrl = BASE_URL_API + '/Salidas/getSelectLideres';
-        var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        request.open("GET", ajaxUrl, true);
-        request.send();
-        request.onreadystatechange = function () {
-            if (request.readyState == 4 && request.status == 200) {
-                var objData = JSON.parse(request.responseText);
-                var options = '<option value="" data-electores="0">Seleccione...</option>';
-                objData.forEach(function (item) {
-                    // AQUI guardo el total_electores en un data-attribute
-                    options += '<option value="' + item.id_lider + '" data-electores="' + item.total_electores + '">' + item.nombre_lider + '</option>';
-                });
-                document.querySelector('#listLider').innerHTML = options;
-                $('#listLider').selectpicker('render');
-            }
+        const objData = await fetchData(BASE_URL_API + '/Salidas/getSelectLideres');
+        if (Array.isArray(objData)) {
+            let options = '<option value="" data-electores="0">Seleccione...</option>';
+            objData.forEach(function (item) {
+                // Guardamos el total_electores en un data-attribute para usarlo en la UI
+                options += `<option value="${item.id_lider}" data-electores="${item.total_electores}">${item.nombre_lider}</option>`;
+            });
+            document.querySelector('#listLider').innerHTML = options;
+            $('#listLider').selectpicker('refresh');
         }
     }
 }
 
-function fntSelectElementos() {
+async function fntSelectElementos() {
     if (document.querySelector('#listElemento')) {
-        var ajaxUrl = BASE_URL_API + '/Salidas/getSelectElementos';
-        var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        request.open("GET", ajaxUrl, true);
-        request.send();
-        request.onreadystatechange = function () {
-            if (request.readyState == 4 && request.status == 200) {
-                var objData = JSON.parse(request.responseText);
-                var options = '<option value="">Seleccione...</option>';
-                objData.forEach(function (item) {
-                    options += '<option value="' + item.id_elemento + '">' + item.nombre_elemento + '</option>';
-                });
-                document.querySelector('#listElemento').innerHTML = options;
-                $('#listElemento').selectpicker('render');
-            }
+        const objData = await fetchData(BASE_URL_API + '/Salidas/getSelectElementos');
+        if (Array.isArray(objData)) {
+            let options = '<option value="">Seleccione...</option>';
+            objData.forEach(function (item) {
+                options += `<option value="${item.id_elemento}">${item.nombre_elemento}</option>`;
+            });
+            document.querySelector('#listElemento').innerHTML = options;
+            $('#listElemento').selectpicker('refresh');
         }
     }
 }
 
-// LOGICA VISUAL: Mostrar cantidad de electores al cambiar líder
+// LÓGICA VISUAL: Mostrar cantidad de electores al cambiar líder
 function fntInfoLider() {
-    var select = document.querySelector('#listLider');
-    var selectedOption = select.options[select.selectedIndex];
-    var electores = selectedOption.getAttribute('data-electores');
+    const select = document.querySelector('#listLider');
+    // Para selects normales o bootstrap-select, tomamos la opción seleccionada
+    const selectedOption = select.options[select.selectedIndex];
 
-    var divInfo = document.querySelector('#divInfoLider');
-    var lblElectores = document.querySelector('#lblElectores');
+    // Validación por si no hay opción (reset)
+    if (!selectedOption) return;
+
+    const electores = selectedOption.getAttribute('data-electores') || 0;
+    const divInfo = document.querySelector('#divInfoLider');
+    const lblElectores = document.querySelector('#lblElectores');
 
     if (select.value != "") {
         lblElectores.innerHTML = electores;
         divInfo.style.display = "block";
 
-        // Cambio de color visual: Si tiene 0 electores, poner rojo para alertar mas
+        // Cambio de color visual: Si tiene 0 electores, poner warning
         if (electores == 0) {
             divInfo.classList.replace("alert-info", "alert-warning");
         } else {
@@ -137,47 +140,47 @@ function openModal() {
     document.querySelector('#divInfoLider').style.display = "none";
 
     // Resetear selects
-    $('#listLider').selectpicker('render');
-    $('#listElemento').selectpicker('render');
+    if (document.querySelector('#listLider')) {
+        document.querySelector('#listLider').value = "";
+        $('#listLider').selectpicker('refresh');
+    }
+    if (document.querySelector('#listElemento')) {
+        document.querySelector('#listElemento').value = "";
+        $('#listElemento').selectpicker('refresh');
+    }
 
     $('#modalFormSalida').modal('show');
 }
 
-function fntEditSalida(idsalida) {
+async function fntEditSalida(idsalida) {
     document.querySelector('#titleModal').innerHTML = "Actualizar Entrega";
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
     document.querySelector('#btnText').innerHTML = "Actualizar";
 
-    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl = BASE_URL_API + '/Salidas/getSalida/' + idsalida;
-    request.open("GET", ajaxUrl, true);
-    request.send();
-    request.onreadystatechange = function () {
+    // Petición Data
+    const objData = await fetchData(BASE_URL_API + '/Salidas/getSalida/' + idsalida);
 
-        if (request.readyState == 4 && request.status == 200) {
-            var objData = JSON.parse(request.responseText);
+    if (objData?.status) {
+        const data = objData.data;
+        document.querySelector("#idSalida").value = data.id_salida;
+        document.querySelector("#txtFecha").value = data.fecha_salida;
 
-            if (objData.status) {
-                var data = objData.data;
-                document.querySelector("#idSalida").value = data.id_salida;
-                document.querySelector("#txtFecha").value = data.fecha_salida;
+        // Set Lider y refrescar
+        document.querySelector("#listLider").value = data.lider_salida;
+        $('#listLider').selectpicker('refresh');
 
-                document.querySelector("#listLider").value = data.lider_salida;
-                $('#listLider').selectpicker('render');
-                // Disparar manualmente la info del lider al editar
-                fntInfoLider();
+        // Disparar manualmente la info del lider al editar para ver sus electores actuales
+        fntInfoLider();
 
-                document.querySelector("#listElemento").value = data.elemento_salida;
-                $('#listElemento').selectpicker('render');
+        document.querySelector("#listElemento").value = data.elemento_salida;
+        $('#listElemento').selectpicker('refresh');
 
-                document.querySelector("#txtCantidad").value = data.cantidad_salida;
+        document.querySelector("#txtCantidad").value = data.cantidad_salida;
 
-                $('#modalFormSalida').modal('show');
-            } else {
-                swal("Error", objData.msg, "error");
-            }
-        }
+        $('#modalFormSalida').modal('show');
+    } else {
+        swal("Error", objData?.msg || "No se encontró la salida", "error");
     }
 }
 
@@ -191,24 +194,20 @@ function fntDelSalida(idsalida) {
         cancelButtonText: "No, cancelar!",
         closeOnConfirm: false,
         closeOnCancel: true
-    }, function (isConfirm) {
+    }, async function (isConfirm) {
         if (isConfirm) {
-            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = BASE_URL_API + '/Salidas/delSalida';
-            var strData = "idSalida=" + idsalida;
-            request.open("POST", ajaxUrl, true);
-            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            request.send(strData);
-            request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-                    var objData = JSON.parse(request.responseText);
-                    if (objData.status) {
-                        swal("Anulada!", objData.msg, "success");
-                        tableSalidas.api().ajax.reload();
-                    } else {
-                        swal("Atención!", objData.msg, "error");
-                    }
-                }
+            // Nota API: Se usaba POST application/x-www-form-urlencoded
+            // Usamos FormData para compatibilidad máxima sin decodificar JSON en PHP legacy
+            let formData = new FormData();
+            formData.append("idSalida", idsalida);
+
+            const objData = await fetchData(BASE_URL_API + '/Salidas/delSalida', 'POST', formData);
+
+            if (objData?.status) {
+                swal("Anulada!", objData.msg, "success");
+                tableSalidas.ajax.reload();
+            } else {
+                swal("Atención!", objData?.msg || "Error al anular", "error");
             }
         }
     });

@@ -143,6 +143,8 @@ async function fntViewReporte() {
         let data = await response.json();
 
         if (data.status) {
+            renderSummary(data.resumen); // Mostrar Boxes
+
             let html = `
                 <div class="row mb-3">
                      <div class="col-12">${fntGetHeaderReporte()}</div>
@@ -203,6 +205,7 @@ async function fntViewReporte() {
             `;
             document.querySelector('#divReporte').innerHTML = html;
         } else {
+            document.getElementById('divSummaryContainer').style.display = 'none'; // Ocultar si hay error
             document.querySelector('#divReporte').innerHTML = `<div class="alert alert-danger">${data.msg}</div>`;
         }
 
@@ -210,4 +213,60 @@ async function fntViewReporte() {
         console.error(e);
         swal("Error", "Error de servidor", "error");
     }
+}
+
+function renderSummary(resumen) {
+    if (!resumen) return;
+
+    // Asegurar números
+    let tCenso = resumen.total_censo || 0;
+    let tPotencial = resumen.total_potencial || 0;
+    let tTestigos = resumen.total_testigos || 0;
+    let tE14 = resumen.total_e14 || 0;
+
+    // Calcular porcentajes simples para visualización (opcional)
+    // % Participación Real = Testigos / Potencial
+    let pctPart = 0;
+    let potNum = parseInt(tPotencial.toString().replace(/\./g, ''));
+    let tesNum = parseInt(tTestigos.toString().replace(/\./g, ''));
+    if (potNum > 0) pctPart = ((tesNum / potNum) * 100).toFixed(1);
+
+    let html = `
+        <div class="col-md-3">
+            <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+                <div class="info">
+                    <h4>CENSO</h4>
+                    <p><b>${tCenso}</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="widget-small info coloured-icon"><i class="icon fa fa-address-book fa-3x"></i>
+                <div class="info">
+                    <h4>MI POTENCIAL</h4>
+                    <p><b>${tPotencial}</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="widget-small warning coloured-icon"><i class="icon fa fa-check-square-o fa-3x"></i>
+                <div class="info">
+                    <h4>VOTOS REALES</h4>
+                    <p><b>${tTestigos}</b> <small>(${pctPart}%)</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="widget-small danger coloured-icon"><i class="icon fa fa-file-text-o fa-3x"></i>
+                <div class="info">
+                    <h4>E-14</h4>
+                    <p><b>${tE14}</b></p>
+                </div>
+            </div>
+        </div>
+    `;
+
+    let divSummary = document.getElementById('divSummaryContainer');
+    divSummary.innerHTML = html;
+    divSummary.style.display = 'flex';
 }

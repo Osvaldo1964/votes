@@ -10,7 +10,7 @@ const DB_USER = "root";
 const DB_PASSWORD = "";
 const DB_CHARSET = "utf8";
 
-const API_OAUTH_JWT = "http://oauth-jwt.com/oauthjwt/token";
+const API_OAUTH_JWT = "http://ovcauth-ovcsystems.com/oauthjwt/token";
 const API_AUTORIZATION = "http://api-votes.com/";
 
 // Scope Sistema ventas

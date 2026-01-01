@@ -97,6 +97,73 @@ function fntValidAddress() {
     });
 }
 
+// ----------------------------------------------------------------------------------
+// GLOBAL HELPERS (Optimización y Estandarización)
+// ----------------------------------------------------------------------------------
+
+const lenguajeEspanol = {
+    "processing": "Procesando...",
+    "lengthMenu": "Mostrar _MENU_ registros",
+    "zeroRecords": "No se encontraron resultados",
+    "emptyTable": "Ningún dato disponible en esta tabla",
+    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+    "search": "Buscar:",
+    "paginate": { "first": "Primero", "last": "Último", "next": "Siguiente", "previous": "Anterior" }
+};
+
+/**
+ * Helper global para peticiones fetch con manejo de errores y token
+ * @param {string} url - Endpoint completo
+ * @param {string} method - GET, POST, PUT, DELETE
+ * @param {object|FormData} body - Datos a enviar
+ * @returns {Promise<object|null>} - Respuesta JSON o null
+ */
+async function fetchData(url, method = 'GET', body = null) {
+    const options = {
+        method,
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+        }
+    };
+
+    // Si no es FormData, asumimos JSON y añadimos Content-Type
+    if (!(body instanceof FormData)) {
+        options.headers['Content-Type'] = 'application/json';
+        if (body && method !== 'GET') options.body = JSON.stringify(body);
+    } else {
+        // Si es FormData, fetch pone el Content-Type automáticamente (multipart/form-data)
+        if (body && method !== 'GET') options.body = body;
+    }
+
+    try {
+        const response = await fetch(url, options);
+
+        // Manejo básico de 401 (No autorizado)
+        if (response.status === 401) {
+            console.warn("Token expirado o inválido (401).");
+            // Opcional: Redirigir al login o limpiar sesión aquí
+            // localStorage.clear();
+            // window.location = BASE_URL + '/login';
+            return { status: false, msg: "Sesión expirada o no autorizada." };
+        }
+
+        const text = await response.text();
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error("Respuesta válida no es JSON:", text);
+            return { status: false, msg: "Error de servidor (respuesta no válida)" };
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+        return { status: false, msg: "Error de conexión con la API" };
+    }
+}
+
+// ----------------------------------------------------------------------------------
+
 function checkAuth() {
     const token = localStorage.getItem('userToken');
 

@@ -1,44 +1,8 @@
-const lenguajeEspanol = {
-    "processing": "Procesando...",
-    "lengthMenu": "Mostrar _MENU_ registros",
-    "zeroRecords": "No se encontraron resultados",
-    "emptyTable": "Ningún dato disponible en esta tabla",
-    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-    "search": "Buscar:",
-    "paginate": { "first": "Primero", "last": "Último", "next": "Siguiente", "previous": "Anterior" }
-};
+// functions_candidatos.js
+// Optimizado - Utiliza fetchData y lenguajeEspanol globales (functions_admin.js)
 
 let dataConfig = null;
 let tableCandidatos;
-
-// 1. HELPER DE PETICIONES (CON DEPURACIÓN)
-async function fetchData(url, method = 'GET', body = null) {
-    const options = {
-        method,
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
-            'Content-Type': 'application/json'
-        }
-    };
-    if (body && method !== 'GET') options.body = body instanceof FormData ? body : JSON.stringify(body);
-    if (body instanceof FormData) delete options.headers['Content-Type'];
-
-    try {
-        const response = await fetch(url, options);
-        const text = await response.text(); // Leemos como texto primero para evitar el error de JSON
-        try {
-            return JSON.parse(text);
-        } catch (e) {
-            console.error("Respuesta no válida del servidor:", text); // Aquí verás el error de PHP en la consola
-            return null;
-        }
-    } catch (error) {
-        console.error("Error de conexión:", error);
-        return null;
-    }
-}
 
 // 2. INICIO DEL DOCUMENTO
 document.addEventListener('DOMContentLoaded', async function () {
@@ -48,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // 2. INICIALIZAR TABLA
     tableCandidatos = $('#tableCandidatos').DataTable({
         "processing": true,
-        "language": lenguajeEspanol,
+        "language": lenguajeEspanol, // Variable global
         "ajax": {
             "url": `${BASE_URL_API}/candidatos/getCandidatos`,
             "type": "GET",

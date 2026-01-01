@@ -1,7 +1,7 @@
 <?php
 const BASE_URL = "http://app-votes.com/";
-const API_OAUTH_JWT = "http://oauth-jwt.com/oauthjwt/token";
-const API_VALID_JWT = "http://oauth-jwt.com/oauthjwt/tokenValidate/";
+const API_OAUTH_JWT = "http://ovcauth-ovcsystems.com/oauthjwt/token";
+const API_VALID_JWT = "http://ovcauth-ovcsystems.com/oauthjwt/tokenValidate/";
 const BASE_URL_API = "http://localhost/votes/api-votes/";
 
 //Zona horaria

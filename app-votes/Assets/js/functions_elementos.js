@@ -1,14 +1,17 @@
-var tableElementos;
+// functions_elementos.js
+// Optimizado para arquitectura API con JWT y Async/Await
+
+let tableElementos;
 
 document.addEventListener('DOMContentLoaded', function () {
-    tableElementos = $('#tableElementos').dataTable({
-        "aProcessing": true,
-        "aServerSide": true,
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
-        },
+    // 1. Inicialización de DataTables
+    tableElementos = $('#tableElementos').DataTable({
+        "processing": true,
+        "language": lenguajeEspanol, // Variable global en functions_admin.js
         "ajax": {
-            "url": " " + BASE_URL_API + "/Elementos/getElementos",
+            "url": BASE_URL_API + "/Elementos/getElementos",
+            "type": "GET",
+            "headers": { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` },
             "dataSrc": ""
         },
         "columns": [
@@ -16,43 +19,37 @@ document.addEventListener('DOMContentLoaded', function () {
             { "data": "estado_elemento" },
             { "data": "options" }
         ],
-        "resonsive": true,
-        "bDestroy": true,
+        "responsive": true,
+        "destroy": true,
         "iDisplayLength": 10,
         "order": [[0, "desc"]]
     });
 
-    // Submit Form
+    // 2. Submit Form
     if (document.querySelector("#formElemento")) {
-        var formElemento = document.querySelector("#formElemento");
-        formElemento.onsubmit = function (e) {
+        const formElemento = document.querySelector("#formElemento");
+        formElemento.onsubmit = async function (e) {
             e.preventDefault();
-            var strNombre = document.querySelector('#txtNombre').value;
+            const strNombre = document.querySelector('#txtNombre').value;
 
             if (strNombre == '') {
                 swal("Atención", "El nombre es obligatorio.", "error");
-                return false;
+                return;
             }
 
-            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = BASE_URL_API + '/Elementos/setElemento';
-            var formData = new FormData(formElemento);
-            request.open("POST", ajaxUrl, true);
-            request.send(formData);
-            request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-                    var objData = JSON.parse(request.responseText);
-                    if (objData.status) {
-                        $('#modalFormElemento').modal("hide");
-                        formElemento.reset();
-                        swal("Elementos", objData.msg, "success");
-                        tableElementos.api().ajax.reload();
-                    } else {
-                        swal("Error", objData.msg, "error");
-                    }
-                }
+            const formData = new FormData(formElemento);
+            // Uso de fetchData global
+            const objData = await fetchData(BASE_URL_API + '/Elementos/setElemento', 'POST', formData);
+
+            if (objData?.status) {
+                $('#modalFormElemento').modal("hide");
+                formElemento.reset();
+                swal("Elementos", objData.msg, "success");
+                tableElementos.ajax.reload();
+            } else {
+                swal("Error", objData?.msg || "Error desconocido", "error");
             }
-        }
+        };
     }
 });
 
@@ -66,29 +63,21 @@ function openModal() {
     $('#modalFormElemento').modal('show');
 }
 
-function fntEditElemento(idelemento) {
+async function fntEditElemento(idelemento) {
     document.querySelector('#titleModal').innerHTML = "Actualizar Elemento";
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
     document.querySelector('#btnText').innerHTML = "Actualizar";
 
-    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl = BASE_URL_API + '/Elementos/getElemento/' + idelemento;
-    request.open("GET", ajaxUrl, true);
-    request.send();
-    request.onreadystatechange = function () {
+    // Petición con fetchData global
+    const objData = await fetchData(BASE_URL_API + '/Elementos/getElemento/' + idelemento);
 
-        if (request.readyState == 4 && request.status == 200) {
-            var objData = JSON.parse(request.responseText);
-
-            if (objData.status) {
-                document.querySelector("#idElemento").value = objData.data.id_elemento;
-                document.querySelector("#txtNombre").value = objData.data.nombre_elemento;
-                $('#modalFormElemento').modal('show');
-            } else {
-                swal("Error", objData.msg, "error");
-            }
-        }
+    if (objData?.status) {
+        document.querySelector("#idElemento").value = objData.data.id_elemento;
+        document.querySelector("#txtNombre").value = objData.data.nombre_elemento;
+        $('#modalFormElemento').modal('show');
+    } else {
+        swal("Error", objData?.msg || "Datos no encontrados", "error");
     }
 }
 
@@ -102,24 +91,19 @@ function fntDelElemento(idelemento) {
         cancelButtonText: "No, cancelar!",
         closeOnConfirm: false,
         closeOnCancel: true
-    }, function (isConfirm) {
+    }, async function (isConfirm) {
         if (isConfirm) {
-            var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = BASE_URL_API + '/Elementos/delElemento';
-            var strData = "idElemento=" + idelemento;
-            request.open("POST", ajaxUrl, true);
-            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            request.send(strData);
-            request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
-                    var objData = JSON.parse(request.responseText);
-                    if (objData.status) {
-                        swal("Eliminar!", objData.msg, "success");
-                        tableElementos.api().ajax.reload();
-                    } else {
-                        swal("Atención!", objData.msg, "error");
-                    }
-                }
+            // Nota API legacy: Se usaba POST application/x-www-form-urlencoded
+            let formData = new FormData();
+            formData.append("idElemento", idelemento);
+
+            const objData = await fetchData(BASE_URL_API + '/Elementos/delElemento', 'POST', formData);
+
+            if (objData?.status) {
+                swal("Eliminado!", objData.msg, "success");
+                tableElementos.ajax.reload();
+            } else {
+                swal("Atención!", objData?.msg || "Error al eliminar", "error");
             }
         }
     });
