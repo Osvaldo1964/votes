@@ -208,7 +208,10 @@ class ElectoresModel extends Mysql
             return "not_found";
         }
 
-        if ($request['poll_elector'] == 1) {
+        // Validación robusta: Convertir a entero y verificar si es mayor o igual a 1
+        $estadoVoto = intval($request['poll_elector']);
+
+        if ($estadoVoto >= 1) {
             return "voted";
         }
 
@@ -223,7 +226,7 @@ class ElectoresModel extends Mysql
     public function selectElectorByIdent(string $identificacion)
     {
         $this->strCedula = $identificacion;
-        $sql = "SELECT id_elector FROM electores WHERE ident_elector = ? AND estado_elector != 0";
+        $sql = "SELECT id_elector, poll_elector FROM electores WHERE ident_elector = ? AND estado_elector != 0";
         $arrData = array($this->strCedula);
         $request = $this->select($sql, $arrData);
         return $request;

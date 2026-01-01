@@ -196,7 +196,8 @@ class Electores extends Controllers
                 'status' => true,
                 'msg' => 'Datos encontrados',
                 'data' => $requestPlace,
-                'is_registered' => $isRegistered
+                'is_registered' => $isRegistered,
+                'elector_data' => $checkDuplicate // Contiene poll_elector y id_elector
             );
         }
         jsonResponse($response, 200);
@@ -243,9 +244,9 @@ class Electores extends Controllers
             $strIdentificacion = strClean($_POST['identificacion']);
             $request = $this->model->updatePollElector($strIdentificacion);
 
-            if ($request == "voted") {
+            if ($request === "voted") {
                 jsonResponse(['status' => false, 'msg' => '¡Atención! Este elector YA registró su voto.'], 200);
-            } else if ($request == "not_found") {
+            } else if ($request === "not_found") {
                 jsonResponse(['status' => false, 'msg' => 'Elector no encontrado o inactivo.'], 200);
             } else if ($request) {
                 jsonResponse(['status' => true, 'msg' => 'Voto registrado correctamente.'], 200);

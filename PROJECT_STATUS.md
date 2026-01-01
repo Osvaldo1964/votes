@@ -35,6 +35,8 @@ Se ha completado la estandarización de **todos** los archivos JavaScript en `As
 5.  **Análisis E-14:** 
     *   Agregado de **Tarjetas de Resumen (Boxes)** idénticas al Monitor Día D.
     *   Cálculo automático de % de Participación (Votos Reales / Potencial).
+5.  **Correcciones Críticas:**
+    *   **Votación:** Implementada validación estricta (Frontend/Backend) para prevenir votos duplicados y corregido loop en UI al cancelar.
 
 ## 3. Estado de Módulos
 *   **Dashboard:**
