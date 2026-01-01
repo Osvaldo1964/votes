@@ -1,6 +1,5 @@
-# Estado del Proyecto - Campaña Chadan Rosado Taylor 2026
-**Fecha:** 01/01/2026
-**Última sesión:** Refactorización Integral Frontend & JavaScript Estándar.
+**Fecha:** 01/01/2026 (Tarde)
+**Última sesión:** Implementación de Informe de Movimientos & Correcciones Finales.
 
 ## 1. Arquitectura del Sistema (Estándar 2026)
 El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunicación vía JSON RESTful.
@@ -19,24 +18,18 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
 
 ---
 
-## 2. Cambios Recientes (Refactorización Masiva JS)
-Se ha completado la estandarización de **todos** los archivos JavaScript en `Assets/js`.
-
-### A. Estandarización de Código
-*   **Eliminación de Redundancia:** Se eliminaron definiciones locales repetidas de `fetchData` y `lenguajeEspanol` en todos los módulos (`functions_lideres.js`, `functions_candidatos.js`, `functions_electores.js`, `functions_movimientos.js`, etc.). Ahora todos consumen la definición global.
-*   **Modernización:** Reemplazo total de `XMLHttpRequest` por `async/await` y `fetch`.
-*   **Seguridad:** Garantía de envío del Token en todas las peticiones (AJAX DataTables y Fetch API).
-
-### B. Módulos Optimizados
-1.  **Líderes & Candidatos:** Código limpio, DataTables unificado.
-2.  **Electores:** Validación de duplicados optimizada y limpieza de formularios.
-3.  **Movimientos & Roles:** Corrección de conflictos por doble declaración de variables.
-4.  **Reporte Electoral Censo:** Implementación final de lógica de filtros encadenados.
-5.  **Análisis E-14:** 
+## 2. Cambios Recientes
+### A. Nuevas Funcionalidades
+1.  **[NUEVO] Informe de Ingresos y Gastos (`Infmovimientos`):**
+    *   Filtros por Rango de Fechas y Concepto.
+    *   Resumen Financiero (Ingresos vs Gastos = Balance) con indicadores visuales.
+    *   Optimización para impresión (diseño limpio y horizontal).
+2.  **Análisis E-14 (Auditoría):**
     *   Agregado de **Tarjetas de Resumen (Boxes)** idénticas al Monitor Día D.
-    *   Cálculo automático de % de Participación (Votos Reales / Potencial).
-5.  **Correcciones Críticas:**
-    *   **Votación:** Implementada validación estricta (Frontend/Backend) para prevenir votos duplicados y corregido loop en UI al cancelar.
+
+### B. Correcciones Críticas & Refactorización
+*   **Votación:** Implementada validación estricta (Frontend/Backend) para prevenir votos duplicados; corregido bucle infinito en la UI.
+*   **JavaScript Global:** Estandarización masiva completada, eliminando redundancias y mejorando el rendimiento de importaciones.
 
 ## 3. Estado de Módulos
 *   **Dashboard:**
@@ -44,21 +37,23 @@ Se ha completado la estandarización de **todos** los archivos JavaScript en `As
 *   **Gestión Administrativa:**
     *   [OK] Usuarios, Roles.
     *   [OK] Terceros, Conceptos, Elementos.
-    *   [OK] Entradas, Salidas (Refactorizados).
+    *   [OK] Entradas, Salidas.
 *   **Gestión Financiera:**
-    *   [OK] Movimientos (Nueva Arquitectura).
+    *   [OK] Movimientos (CRUD Completo).
     *   [OK] Informes Financieros (Saldos/Kardex).
+    *   [OK] Informe de Ingresos y Gastos.
 *   **Gestión Electoral:**
-    *   [OK] Líderes, Candidatos (Refactorizados).
-    *   [OK] Electores (Validación de cédulas optimizada).
+    *   [OK] Líderes, Candidatos.
+    *   [OK] Electores (Validación Documento).
+    *   [OK] Votación (Control de Duplicidad).
 *   **Reportes y Análisis:**
     *   [OK] Monitor Día D (Tiempo Real).
-    *   [OK] Análisis E-14 (Auditoría con Boxes de Resumen).
-    *   [OK] Reporte Electoral Censo (Filtros dinámicos).
+    *   [OK] Análisis E-14 (Auditoría).
+    *   [OK] Reporte Electoral Censo.
 
 ## 4. Notas Técnicas
 *   **Depuración:** Si aparece `SyntaxError: Identifier '...' has already been declared`, revisar si el módulo JS está importando una definición local que ya existe en `functions_admin.js`.
-*   **DataTables:** Todas las tablas usan `dataSrc` configurado para manejar respuestas vacías o errores sin romper la UI.
+*   **Impresión:** Los reportes ahora incluyen clases `d-print-none` y estilos `@media print` para asegurar una salida limpia en papel o PDF.
 
 ---
 *Bitácora Actualizada - Antigravity*
