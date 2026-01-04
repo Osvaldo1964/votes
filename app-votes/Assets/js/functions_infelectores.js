@@ -5,25 +5,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function fntLideres() {
     // Ahora consume de la API
-    // Asumimos que existe constante BASE_URL_API y token en localStorage (como en Infsaldos)
     if (document.querySelector('#listLideres')) {
         let ajaxUrl = BASE_URL_API + '/infelectores/getLideres';
         try {
-            const request = await fetch(ajaxUrl, {
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` } // Si API requiere autenticación
-            });
-            const objData = await request.json();
-
-            //var htmlOptions = '<option value="">Seleccione...</option>';
+            const objData = await fetchData(ajaxUrl);
             var htmlOptions = '<option value="todos">Todos</option>';
 
             // La API puede devolver array directo como en el anterior, o {status: true, data: []}
-            // En mi controlador API Infelectores::getLideres hice echo json_encode($arrData), que es array directo de select_all.
-            // Asi que objData es el array.
+            // fetchData devuelve el JSON parseado.
+            // Si objData es array, iterar. Si es objeto con .data, iterar .data.
+            let dataList = Array.isArray(objData) ? objData : (objData && objData.data ? objData.data : []);
 
-            if (objData.length > 0) {
-                for (var i = 0; i < objData.length; i++) {
-                    htmlOptions += '<option value="' + objData[i].id_lider + '">' + objData[i].nombre_lider + '</option>';
+            if (dataList.length > 0) {
+                for (var i = 0; i < dataList.length; i++) {
+                    htmlOptions += '<option value="' + dataList[i].id_lider + '">' + dataList[i].nombre_lider + '</option>';
                 }
             }
             document.querySelector('#listLideres').innerHTML = htmlOptions;
@@ -49,14 +44,7 @@ async function fntViewReporte() {
     formData.append('lider', lider);
 
     try {
-        const request = await fetch(ajaxUrl, {
-            method: 'POST',
-            body: formData,
-            // headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` } 
-            // Nota: Infsaldos usa token, lo incluyo por si acaso la API tiene middleware de auth global, 
-            // aunque en mi controlador API no validé token explícitamente, pero es buena práctica enviarlo.
-        });
-        const objData = await request.json();
+        const objData = await fetchData(ajaxUrl, 'POST', formData);
 
         var htmlReport = '';
 

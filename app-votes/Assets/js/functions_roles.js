@@ -10,14 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     tableRoles = $('#tableRoles').DataTable({
         "processing": true,
         "language": { "url": `${BASE_URL}/assets/json/spanish.json` },
-        "ajax": {
-            "url": `${BASE_URL_API}/roles/getRoles`,
-            "type": "GET",
-            "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
-            "data": d => { d.rolUser = localStorage.getItem('userRol'); },
-            "dataSrc": json => json.status ? json.data : [],
-            "error": xhr => fntHandleError(xhr)
-        },
+        "ajax": getDataTableFetchConfig('/roles/getRoles'),
         "columns": [
             { "data": "id_rol" },
             { "data": "nombre_rol" },

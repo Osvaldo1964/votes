@@ -36,12 +36,10 @@ function resetSelect(selectorID) {
 
 async function fntGetDepartamentos() {
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getDepartamentos', {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getDepartamentos');
+        // fetchData devuelve data parseada
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) data.data.forEach(d => options += `<option value="${d.id_department}">${d.name_department}</option>`);
+        if (data && data.status) data.data.forEach(d => options += `<option value="${d.id_department}">${d.name_department}</option>`);
         document.querySelector('#listDpto').innerHTML = options;
         $('.selectpicker').selectpicker('refresh');
     } catch (e) { console.error(e); }
@@ -50,12 +48,9 @@ async function fntGetDepartamentos() {
 async function fntGetMunicipios(id) {
     if (!id) return;
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getMunicipios/' + id, {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getMunicipios/' + id);
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) data.data.forEach(d => options += `<option value="${d.id_municipality}">${d.name_municipality}</option>`);
+        if (data && data.status) data.data.forEach(d => options += `<option value="${d.id_municipality}">${d.name_municipality}</option>`);
         let sel = document.querySelector('#listMuni');
         sel.innerHTML = options;
         sel.disabled = false;
@@ -66,12 +61,9 @@ async function fntGetMunicipios(id) {
 async function fntGetZonas(id) {
     if (!id) return;
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getZonas/' + id, {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getZonas/' + id);
         let options = '<option value="">Seleccione...</option><option value="todas">TODAS</option>';
-        if (data.status) data.data.forEach(d => options += `<option value="${d.id_zone}">${d.name_zone}</option>`);
+        if (data && data.status) data.data.forEach(d => options += `<option value="${d.id_zone}">${d.name_zone}</option>`);
         let sel = document.querySelector('#listZona');
         sel.innerHTML = options;
         sel.disabled = false;
@@ -82,12 +74,9 @@ async function fntGetZonas(id) {
 async function fntGetPuestos(id) {
     if (!id) return;
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getPuestos/' + id, {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getPuestos/' + id);
         let options = '<option value="">Seleccione...</option><option value="todos">TODOS</option>';
-        if (data.status) data.data.forEach(d => options += `<option value="${d.nameplace_place}">${d.nameplace_place}</option>`);
+        if (data && data.status) data.data.forEach(d => options += `<option value="${d.nameplace_place}">${d.nameplace_place}</option>`);
         let sel = document.querySelector('#listPuesto');
         sel.innerHTML = options;
         sel.disabled = false;
@@ -97,12 +86,9 @@ async function fntGetPuestos(id) {
 
 async function fntGetCandidatos() {
     try {
-        const response = await fetch(BASE_URL_API + '/analisis/getCandidatos', {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/analisis/getCandidatos');
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) {
+        if (data && data.status) {
             data.data.forEach(c => {
                 options += `<option value="${c.id_candidato}">${c.nombre}</option>`;
             });
@@ -135,12 +121,7 @@ async function fntViewReporte() {
     formData.append('idCandidato', idCandidato);
 
     try {
-        let response = await fetch(BASE_URL_API + '/analisis/getReporte', {
-            method: 'POST',
-            body: formData,
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        let data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/analisis/getReporte', 'POST', formData);
 
         if (data.status) {
             renderSummary(data.resumen); // Mostrar Boxes

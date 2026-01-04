@@ -8,12 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     tableSalidas = $('#tableSalidas').DataTable({
         "processing": true,
         "language": lenguajeEspanol, // Variable global en functions_admin.js
-        "ajax": {
-            "url": BASE_URL_API + "/Salidas/getSalidas",
-            "type": "GET",
-            "headers": { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` },
-            "dataSrc": ""
-        },
+        "ajax": getDataTableFetchConfig('/Salidas/getSalidas'),
         "columns": [
             { "data": "id_salida" },
             { "data": "fecha_salida" },

@@ -64,14 +64,14 @@ function fntSetRefresh() {
 
 // ----- AJAX Funciones de Carga (GET) -----
 
+// ----- AJAX Funciones de Carga (GET) -----
+
 async function fntGetDepartamentos() {
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getDepartamentos', {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getDepartamentos');
+        // fetchData ya devuelve el objeto JSON (data)
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) {
+        if (data && data.status) {
             data.data.forEach(dpto => {
                 options += `<option value="${dpto.id_department}">${dpto.name_department}</option>`;
             });
@@ -84,12 +84,9 @@ async function fntGetDepartamentos() {
 async function fntGetMunicipios(idDpto) {
     if (!idDpto) return;
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getMunicipios/' + idDpto, {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getMunicipios/' + idDpto);
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) {
+        if (data && data.status) {
             data.data.forEach(muni => {
                 options += `<option value="${muni.id_municipality}">${muni.name_municipality}</option>`;
             });
@@ -104,12 +101,9 @@ async function fntGetMunicipios(idDpto) {
 async function fntGetZonas(idMuni) {
     if (!idMuni) return;
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getZonas/' + idMuni, {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getZonas/' + idMuni);
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) {
+        if (data && data.status) {
             data.data.forEach(zona => {
                 options += `<option value="${zona.id_zone}">${zona.name_zone}</option>`;
             });
@@ -124,12 +118,9 @@ async function fntGetZonas(idMuni) {
 async function fntGetPuestos(idZona) {
     if (!idZona) return;
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getPuestos/' + idZona, {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getPuestos/' + idZona);
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) {
+        if (data && data.status) {
             data.data.forEach(puesto => {
                 options += `<option value="${puesto.nameplace_place}">${puesto.nameplace_place}</option>`;
             });
@@ -166,23 +157,16 @@ async function fntMonitorShow(silent = false) {
         formData.append('idZona', idZona);
         formData.append('puesto', puesto);
 
-        const response = await fetch(BASE_URL_API + '/monitor/getStats', {
-            method: 'POST',
-            body: formData,
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const data = await response.json();
+        // Usamos fetchData con método POST y el FormData
+        const data = await fetchData(BASE_URL_API + '/monitor/getStats', 'POST', formData);
 
-        if (data.status) {
+        if (data && data.status) {
             // Quitamos loading (si estaba)
             container.classList.remove('loading');
-            // Activamos grid en display (por si acaso estaba hidden)
-            // container.style.display = 'grid' !important (CSS)
 
             renderCards(data.data);
             renderSummary(data.data); // Nuevo: Renderizar Totales
 
-            // Si fue silencioso, quizás un pequeño indicador en consola o UI?
             if (silent) {
                 // Opcional: poner un "Actualizado: HH:mm:ss" en algún lado
             }
@@ -190,7 +174,7 @@ async function fntMonitorShow(silent = false) {
         } else {
             if (!silent) {
                 container.classList.add('loading');
-                container.innerHTML = `<div class="col-12 text-center text-muted"><h4>${data.msg}</h4></div>`;
+                container.innerHTML = `<div class="col-12 text-center text-muted"><h4>${data ? data.msg : 'Sin respuesta'}</h4></div>`;
                 document.getElementById('divSummaryContainer').style.display = 'none';
             }
         }

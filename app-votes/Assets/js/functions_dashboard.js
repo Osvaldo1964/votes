@@ -5,12 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function fntGetDashboard() {
     try {
-        const response = await fetch(BASE_URL_API + '/dashboard/getResumen', {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/dashboard/getResumen');
 
-        if (data.status) {
+        if (data && data.status) {
             let res = data.data;
 
             // Widgets
@@ -21,11 +18,6 @@ async function fntGetDashboard() {
 
             if (document.getElementById('lblPorcentajeMeta')) {
                 document.getElementById('lblPorcentajeMeta').innerText = res.porcentaje_meta + "%";
-                // Colorize meta widget based on progress
-                /*
-                let widgetMeta = document.getElementById('lblPorcentajeMeta').closest('.widget-small');
-                if(res.porcentaje_meta >= 100) widgetMeta.classList.add('success');
-                */
             }
 
             // --- Gráfico Top Líderes ---

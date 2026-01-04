@@ -48,12 +48,7 @@ async function fntViewReporte() {
     formData.append('concepto', concepto);
 
     try {
-        let response = await fetch(BASE_URL_API + '/Infmovimientos/getReporte', {
-            method: 'POST',
-            body: formData,
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        let info = await response.json();
+        let info = await fetchData(BASE_URL_API + '/Infmovimientos/getReporte', 'POST', formData);
 
         if (info.status) {
             // Render Table

@@ -13,17 +13,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     tableElectores = $('#tableElectores').DataTable({
         "processing": true,
         "language": lenguajeEspanol, // Variable global
-        "ajax": {
-            "url": `${BASE_URL_API}/electores/getElectores`,
-            "type": "GET",
-            "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
-            "data": d => { d.rolUser = localStorage.getItem('userRol'); },
-            // FORZAMOS que siempre devuelva un array, incluso si el servidor falla
-            "dataSrc": json => (json && json.status && Array.isArray(json.data)) ? json.data : [],
-            "error": function (xhr) {
-                console.error("Error en AJAX:", xhr);
-            }
-        },
+        "ajax": getDataTableFetchConfig('/electores/getElectores'),
 
         "columns": [
             { "data": "id_elector" },

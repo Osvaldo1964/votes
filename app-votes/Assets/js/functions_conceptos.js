@@ -8,12 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     tableConceptos = $('#tableConceptos').DataTable({
         "processing": true,
         "language": lenguajeEspanol, // Variable global en functions_admin.js
-        "ajax": {
-            "url": BASE_URL_API + "/Conceptos/getConceptos",
-            "type": "GET",
-            "headers": { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` },
-            "dataSrc": ""
-        },
+        "ajax": getDataTableFetchConfig('/Conceptos/getConceptos'),
         "columns": [
             { "data": "nombre_concepto" },
             { "data": "tipo_concepto" },

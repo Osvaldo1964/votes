@@ -52,10 +52,10 @@ document.addEventListener('DOMContentLoaded', function () {
 async function fntGetDepartamentos() {
     const selector = document.querySelector('#listDpto');
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getDepartamentos');
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getDepartamentos');
+        // fetchData devuelve data parseada
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) {
+        if (data && data.status) {
             data.data.forEach(dpto => {
                 options += `<option value="${dpto.id_department}">${dpto.name_department}</option>`;
             });
@@ -72,10 +72,9 @@ async function fntGetMunicipios() {
     if (!idDpto) return;
 
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getMunicipios/' + idDpto);
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getMunicipios/' + idDpto);
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) {
+        if (data && data.status) {
             data.data.forEach(muni => {
                 options += `<option value="${muni.id_municipality}">${muni.name_municipality}</option>`;
             });
@@ -94,10 +93,9 @@ async function fntGetZonas() {
     if (!idMuni) return;
 
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getZonas/' + idMuni);
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getZonas/' + idMuni);
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) {
+        if (data && data.status) {
             data.data.forEach(zona => {
                 options += `<option value="${zona.id_zone}">${zona.name_zone}</option>`;
             });
@@ -116,10 +114,9 @@ async function fntGetPuestos() {
     if (!idZona) return;
 
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getPuestos/' + idZona);
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/lugares/getPuestos/' + idZona);
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) {
+        if (data && data.status) {
             data.data.forEach(puesto => {
                 options += `<option value="${puesto.nameplace_place}">${puesto.nameplace_place}</option>`;
             });
@@ -145,13 +142,11 @@ async function fntGetMesas() {
     formData.append('nombrePuesto', nombrePuesto);
 
     try {
-        const response = await fetch(BASE_URL_API + '/lugares/getMesas', {
-            method: 'POST',
-            body: formData
-        });
-        const data = await response.json();
+        // fetchData para query de mesas
+        const data = await fetchData(BASE_URL_API + '/lugares/getMesas', 'POST', formData);
+
         let options = '<option value="">Seleccione...</option>';
-        if (data.status) {
+        if (data && data.status) {
             const mesas = Array.isArray(data.data) ? data.data : [data.data];
             mesas.forEach(mesa => {
                 // Debug temporal
@@ -176,20 +171,14 @@ async function fntCargarCandidatos() {
         return;
     }
 
-    // 1. VERIFICACIÓN PREVIA: Consultar si la mesa ya tiene reporte
+    // 1. VERIFICACIÓN PREVIA
     try {
         let formDataCheck = new FormData();
         formDataCheck.append('id_mesa', idMesa);
 
-        const respCheck = await fetch(BASE_URL_API + '/resultados/verificarMesa', {
-            method: 'POST',
-            body: formDataCheck,
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const dataCheck = await respCheck.json(); // Esperamos respuesta JSON
+        const dataCheck = await fetchData(BASE_URL_API + '/resultados/verificarMesa', 'POST', formDataCheck);
 
-        if (!dataCheck.status) {
-            // Ya existe -> Mostrar Alerta y abortar
+        if (dataCheck && !dataCheck.status) {
             swal("Atención", dataCheck.msg, "error");
 
             document.querySelector('#divResultados').style.display = 'none';
@@ -224,14 +213,9 @@ async function fntCargarCandidatos() {
     divResultados.innerHTML = '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Cargando Candidatos...</div>';
 
     try {
-        const response = await fetch(BASE_URL_API + '/candidatos/getSelectCandidatos', {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-            }
-        });
-        const data = await response.json();
+        const data = await fetchData(BASE_URL_API + '/candidatos/getSelectCandidatos');
 
-        if (data.status) {
+        if (data && data.status) {
             renderCandidatosForm(data.data);
         } else {
             divResultados.innerHTML = '<p class="text-danger">No se encontraron candidatos activos.</p>';
@@ -251,9 +235,8 @@ async function fntGetPotencial(idZona, nombrePuesto, nombreMesa) {
 
     const url = BASE_URL_API + '/lugares/getPotencialMesa';
     try {
-        const response = await fetch(url, { method: 'POST', body: formData });
-        const data = await response.json();
-        if (data.status) {
+        const data = await fetchData(url, 'POST', formData);
+        if (data && data.status) {
             // data.data debe traer { total: "XX" }
             const total = data.data.total || data.data[0].total; // Protección por si viene array
             document.querySelector('#lblTotalPotencial').innerHTML = total;

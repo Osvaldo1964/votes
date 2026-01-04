@@ -8,12 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     tableElementos = $('#tableElementos').DataTable({
         "processing": true,
         "language": lenguajeEspanol, // Variable global en functions_admin.js
-        "ajax": {
-            "url": BASE_URL_API + "/Elementos/getElementos",
-            "type": "GET",
-            "headers": { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` },
-            "dataSrc": ""
-        },
+        "ajax": getDataTableFetchConfig('/Elementos/getElementos'),
         "columns": [
             { "data": "nombre_elemento" },
             { "data": "estado_elemento" },

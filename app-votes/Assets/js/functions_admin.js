@@ -162,6 +162,43 @@ async function fetchData(url, method = 'GET', body = null) {
     }
 }
 
+/**
+ * Devuelve la configuración AJAX estándar para DataTables con Auth Headers
+ * @param {string} urlEndpoint - Endpoint de la API (ej: /usuario/getUsers)
+ * @param {object} additionalData - Datos extra para enviar (opcional)
+ */
+function getDataTableFetchConfig(urlEndpoint, additionalData = {}) {
+    return {
+        "url": BASE_URL_API + urlEndpoint,
+        "type": "GET",
+        "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
+        "data": function (d) {
+            d.rolUser = localStorage.getItem('userRol');
+            // Merge con datos adicionales si existen
+            Object.assign(d, additionalData);
+        },
+        "dataSrc": function (json) {
+            if (json && json.status && Array.isArray(json.data)) {
+                return json.data;
+            } else {
+                // Si el token expiró o hay error, manejamos silenciosamente o logueamos
+                if (json && json.status === false && json.msg) {
+                    console.warn("DataTable Error/Auth:", json.msg);
+                }
+                return [];
+            }
+        },
+        "error": function (xhr, error, thrown) {
+            console.error("Error en DataTable AJAX:", xhr);
+            if (xhr.status === 401) {
+                swal("Sesión Expirada", "Su sesión ha terminado", "warning");
+                // localStorage.removeItem('userToken'); 
+                // window.location = BASE_URL + '/login';
+            }
+        }
+    };
+}
+
 // ----------------------------------------------------------------------------------
 
 function checkAuth() {

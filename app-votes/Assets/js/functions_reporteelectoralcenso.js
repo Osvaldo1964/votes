@@ -70,17 +70,12 @@ document.addEventListener('DOMContentLoaded', async function () {
             // El controlador debe leer php://input (ver corrección abajo si es necesario)
             // ASUMIRÉ que el controlador getMesas lee POST form-data o ajustaré fetchData para mandar FormData.
 
-            // Ajustamos fetchData call para mandar simulando form
-            const params = new URLSearchParams();
+            // Ajustamos fetchData call para mandar msg FormData
+            const params = new FormData();
             params.append('idZona', idZona);
             params.append('nombrePuesto', nombrePuesto);
 
-            const response = await fetch(`${BASE_URL_API}/ReporteElectoralCenso/getMesas`, {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` },
-                body: params
-            });
-            const data = await response.json();
+            const data = await fetchData(`${BASE_URL_API}/ReporteElectoralCenso/getMesas`, 'POST', params);
 
             if (data && data.status) {
                 llenarSelect('#listMesa', data.data, 'mesa', 'mesa', 'Todas');

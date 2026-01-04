@@ -40,12 +40,7 @@ async function fntGenerarReporte() {
 
     try {
         let url = BASE_URL_API + '/infsaldos/getReporte';
-        const request = await fetch(url, {
-            method: 'POST',
-            body: formData,
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-        });
-        const objData = await request.json();
+        const objData = await fetchData(url, 'POST', formData);
 
         if (objData.status) {
             let html = fntGetHeaderReporte(); // Usar Helper Global

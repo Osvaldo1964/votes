@@ -3,13 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Referencia al div del calendario
     var calendarEl = document.getElementById('calendar');
 
-    // Helper para headers con token
-    const getAuthHeaders = () => {
-        return {
-            'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-            // No ponemos content-type aquí si vamos a enviar FormData, fetch lo pone solo
-        };
-    };
+    // Helper para headers con token (ELIMINADO - Usamos fetchData)
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -29,18 +23,25 @@ document.addEventListener('DOMContentLoaded', function () {
         editable: true,
         selectable: true,
 
-        // Cargar eventos (Función para incluir Token)
+        // Cargar eventos (Usando fetchData)
         events: async function (info, successCallback, failureCallback) {
             try {
-                const response = await fetch(`${BASE_URL_API}/Agenda/getAgenda`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await response.json();
-                successCallback(data);
+                // fetchData retorna directamente el JSON parseado o un objeto de error
+                const data = await fetchData(`${BASE_URL_API}/Agenda/getAgenda`);
+
+                // FullCalendar espera un array, si la API retorna array directamente o envuelta
+                // Según tu código anterior: successCallback(data)
+                // Usualmente es data directamente si es un array de eventos
+                if (Array.isArray(data)) {
+                    successCallback(data);
+                } else if (data && data.status && data.data) {
+                    // Si viene envuelto en { status: true, data: [...] }
+                    successCallback(data.data);
+                } else {
+                    // Si data es null o error
+                    console.warn("No se pudieron cargar eventos o lista vacía");
+                    successCallback([]);
+                }
             } catch (error) {
                 console.error("Error cargando eventos", error);
                 failureCallback(error);
@@ -94,27 +95,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         let formData = new FormData(formAgenda);
+        // Usamos fetchData, que maneja automáticamente el Content-Type para FormData
+        const response = await fetchData(`${BASE_URL_API}/Agenda/setEvento`, 'POST', formData);
 
-        try {
-            let request = await fetch(BASE_URL_API + '/Agenda/setEvento', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-                },
-                body: formData
-            });
-            let response = await request.json();
-
-            if (response.status) {
-                $('#modalAgenda').modal('hide');
-                swal("Agenda", response.msg, "success");
-                calendar.refetchEvents();
-            } else {
-                swal("Error", response.msg || "Error desconocido", "error");
-            }
-        } catch (error) {
-            console.error(error);
-            swal("Error", "Error de conexión", "error");
+        if (response && response.status) {
+            $('#modalAgenda').modal('hide');
+            swal("Agenda", response.msg, "success");
+            calendar.refetchEvents();
+        } else {
+            swal("Error", response?.msg || "Error desconocido", "error");
         }
     }
 
@@ -135,24 +124,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 let formData = new FormData();
                 formData.append('id', idEvento);
 
-                try {
-                    let request = await fetch(BASE_URL_API + '/Agenda/delEvento', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-                        },
-                        body: formData
-                    });
-                    let response = await request.json();
-                    if (response.status) {
-                        $('#modalAgenda').modal('hide');
-                        swal("Eliminado!", response.msg, "success");
-                        calendar.refetchEvents();
-                    } else {
-                        swal("Atención!", response.msg, "error");
-                    }
-                } catch (error) {
-                    swal("Error", "Error de conexión", "error");
+                const response = await fetchData(`${BASE_URL_API}/Agenda/delEvento`, 'POST', formData);
+
+                if (response && response.status) {
+                    $('#modalAgenda').modal('hide');
+                    swal("Eliminado!", response.msg, "success");
+                    calendar.refetchEvents();
+                } else {
+                    swal("Atención!", response?.msg || "No se pudo eliminar", "error");
                 }
             }
         });
@@ -180,19 +159,9 @@ async function actualizarFechaEvento(evento) {
     formData.append('start', moment(evento.start).format('YYYY-MM-DDTHH:mm'));
     if (evento.end) formData.append('end', moment(evento.end).format('YYYY-MM-DDTHH:mm'));
 
-    try {
-        let request = await fetch(BASE_URL_API + '/Agenda/setEvento', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-            },
-            body: formData
-        });
-        let response = await request.json();
-        if (!response.status) {
-            swal("Error", "No se pudo mover el evento", "error");
-        }
-    } catch (e) {
-        console.error(e);
+    const response = await fetchData(`${BASE_URL_API}/Agenda/setEvento`, 'POST', formData);
+
+    if (!response || !response.status) {
+        swal("Error", "No se pudo mover el evento", "error");
     }
 }

@@ -22,15 +22,12 @@ document.addEventListener('DOMContentLoaded', function () {
             btnSubmit.disabled = true;
 
             // 1. Consultar estado del elector
-            let responseInfo = await fetch(`${BASE_URL_API}/Electores/getValidaElector/${strIdentificacion}`, {
-                method: 'GET',
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` }
-            });
-            let info = await responseInfo.json();
+            // fetchData hace el json parse
+            let info = await fetchData(`${BASE_URL_API}/Electores/getValidaElector/${strIdentificacion}`);
 
             // CASO 1: No en Censo
-            if (!info.status) {
-                swal("Error", "El número de identificación no se encuentra en el Censo.", "error");
+            if (!info || !info.status) {
+                swal("Error", "El número de identificación no se encuentra en el Censo o hubo un error.", "error");
                 resetUI();
                 document.querySelector('#txtIdentificacion').value = "";
                 return;
@@ -102,21 +99,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         async function performVote(formData) {
             try {
-                let request = await fetch(`${BASE_URL_API}/Electores/setVoto`, {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem('userToken')}` },
-                    body: formData
-                });
-                let response = await request.json();
+                let response = await fetchData(`${BASE_URL_API}/Electores/setVoto`, 'POST', formData);
 
-                if (response.status) {
+                if (response && response.status) {
                     swal("¡Voto Registrado!", "El voto ha sido contabilizado.", "success");
                     formVoto.reset();
                     resetUI();
                     document.querySelector('#txtIdentificacion').focus();
                 } else {
-                    let tipo = response.msg.includes("YA") ? "warning" : "error";
-                    swal("Atención", response.msg, tipo);
+                    let msg = response ? response.msg : "Error desconocido";
+                    let tipo = msg.includes("YA") ? "warning" : "error";
+                    swal("Atención", msg, tipo);
                     resetUI(); // Asegurar reset en error también
                 }
             } catch (err) {

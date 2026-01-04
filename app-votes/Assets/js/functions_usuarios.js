@@ -10,15 +10,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     tableUsuarios = $('#tableUsuarios').DataTable({
         "processing": true,
         "language": lenguajeEspanol, // Variable global
-        "ajax": {
-            "url": `${BASE_URL_API}/usuario/getUsers`,
-            "type": "GET",
-            "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
-            "data": d => { d.rolUser = localStorage.getItem('userRol'); },
-            // Mantenemos la lógica de verificación de status
-            "dataSrc": json => (json && json.status && Array.isArray(json.data)) ? json.data : [],
-            "error": function (xhr) { console.error("Error DataTable Usuarios:", xhr); }
-        },
+        "ajax": getDataTableFetchConfig('/usuario/getUsers'),
         "columns": [
             { "data": "id_usuario" },
             { "data": "nombres_usuario" },

@@ -33,7 +33,12 @@ class Entradas extends Controllers
             $arrData[$i]['options'] = '<div class="text-center">' . $btnEdit . ' ' . $btnDelete . '</div>';
         }
 
-        echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
+        if (empty($arrData)) {
+            $arrResponse = array('status' => false, 'msg' => 'No hay datos para mostrar.');
+        } else {
+            $arrResponse = array('status' => true, 'data' => $arrData);
+        }
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         die();
     }
 

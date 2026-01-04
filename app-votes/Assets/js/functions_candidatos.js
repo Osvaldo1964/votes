@@ -13,19 +13,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     tableCandidatos = $('#tableCandidatos').DataTable({
         "processing": true,
         "language": lenguajeEspanol, // Variable global
-        "ajax": {
-            "url": `${BASE_URL_API}/candidatos/getCandidatos`,
-            "type": "GET",
-            "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
-            "data": d => { d.rolUser = localStorage.getItem('userRol'); },
-            // Mejoramos la validación del JSON recibido
-            "dataSrc": json => {
-                if (json && json.status && Array.isArray(json.data)) {
-                    return json.data;
-                }
-                return []; // Retorna array vacío si no hay datos o falla el status
-            }
-        },
+        "ajax": getDataTableFetchConfig('/candidatos/getCandidatos'),
         "columns": [
             { "data": "id_candidato" },
             { "data": "ident_candidato" },

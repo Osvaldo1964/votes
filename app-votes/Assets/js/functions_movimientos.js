@@ -14,16 +14,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     tableMovimientos = $('#tableMovimientos').DataTable({
         "processing": true,
         "language": lenguajeEspanol,
-        "ajax": {
-            "url": `${base_url_api}Movimientos/getMovimientos`, // Nótese: base_url_api ya trae slash final usualmente. Si no, ajustar.
-            "type": "GET",
-            "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
-            "data": d => { d.rolUser = localStorage.getItem('userRol'); },
-            "dataSrc": json => (json && json.status && Array.isArray(json.data)) ? json.data : [],
-            "error": function (xhr) {
-                console.error("Error en AJAX:", xhr);
-            }
-        },
+        "ajax": getDataTableFetchConfig('/Movimientos/getMovimientos'),
         "columns": [
             { "data": "id_movimiento" },
             { "data": "fecha_movimiento" },

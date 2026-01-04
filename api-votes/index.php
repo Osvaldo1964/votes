@@ -1,8 +1,15 @@
 <?php
+// Permitir acceso desde cualquier origen (Para producción, cambiar * por el dominio específico)
 header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, X-Auth-Token , Authorization ");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
-header("Allow: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, X-Auth-Token, Authorization");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Allow: GET, POST, PUT, DELETE, OPTIONS");
+
+// Manejo de peticiones OPTIONS (Preflight)
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 require_once("Config/Config.php");
 require_once("Helpers/Helpers.php");
@@ -27,4 +34,3 @@ if (!empty($arrUrl[2]) && $arrUrl[2] != "") {
 
 require_once("Libraries/Core/Autoload.php");
 require_once("Libraries/Core/Load.php");
-
