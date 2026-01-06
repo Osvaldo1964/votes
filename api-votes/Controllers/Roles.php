@@ -64,11 +64,6 @@ class Roles extends Controllers
                     $requestPermisos = getPermisos($rolUser);
 
                     for ($i = 0; $i < count($arrData); $i++) {
-                        // Formatear Badge de Estado
-                        $arrData[$i]['status_rol'] = ($arrData[$i]['status_rol'] == 1)
-                            ? '<span class="badge badge-success">Activo</span>'
-                            : '<span class="badge badge-danger">Inactivo</span>';
-
                         // Lógica de botones según permisos
                         $btnPerm = '';
                         $btnEdit = '';

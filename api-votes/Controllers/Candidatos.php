@@ -64,11 +64,6 @@ class Candidatos extends Controllers
                     $requestPermisos = getPermisos($rolUser);
 
                     for ($i = 0; $i < count($arrData); $i++) {
-                        // Formatear Badge de Estado
-                        $arrData[$i]['estado_candidato'] = ($arrData[$i]['estado_candidato'] == 1)
-                            ? '<span class="badge badge-success">Activo</span>'
-                            : '<span class="badge badge-danger">Inactivo</span>';
-
                         // Lógica de botones según permisos
                         $btnView = '';
                         $btnEdit = '';

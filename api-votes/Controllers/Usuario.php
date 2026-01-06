@@ -148,10 +148,10 @@ class Usuario extends Controllers
                             $btnDel = '<button class="btn btn-danger btn-sm btnDelUsuario" us="' . $arrData[$i]['id_usuario'] . '" title="Eliminar"><i class="fas fa-trash-alt"></i></button>';
                         }
 
-                        // Estado con Badge
-                        $arrData[$i]['estado_usuario'] = ($arrData[$i]['estado_usuario'] == 1)
-                            ? '<span class="badge badge-success">Activo</span>'
-                            : '<span class="badge badge-danger">Inactivo</span>';
+                        // Estado con Badge - SE REMUEVE PARA QUE LO MANEJE EL FRONTEND
+                        // $arrData[$i]['estado_usuario'] = ($arrData[$i]['estado_usuario'] == 1)
+                        //     ? '<span class="badge badge-success">Activo</span>'
+                        //     : '<span class="badge badge-danger">Inactivo</span>';
 
                         // Envolvemos en un div centrado para mejor visualización
                         $arrData[$i]['options'] = '<div class="text-center">' . $btnView . ' ' . $btnEdit . ' ' . $btnDel . '</div>';
