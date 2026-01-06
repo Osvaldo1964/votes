@@ -15,6 +15,7 @@ class ElectoresModel extends Mysql
     private $strDireccion;
     private $intLider;
     private $intEstado;
+    private $intInsc;
 
     public function __construct()
     {
@@ -25,7 +26,7 @@ class ElectoresModel extends Mysql
     {
         $this->intIdElector = $idelector;
         $sql = "SELECT c.id_elector,c.ident_elector,c.ape1_elector,c.ape2_elector,c.nom1_elector,c.nom2_elector,
-                        c.telefono_elector,c.email_elector,c.dpto_elector,c.muni_elector,c.direccion_elector, c.lider_elector,c.estado_elector,
+                        c.telefono_elector,c.email_elector,c.dpto_elector,c.muni_elector,c.direccion_elector, c.lider_elector,c.estado_elector, c.insc_elector,
                         l.nom1_lider, l.ape1_lider
                         FROM electores c
                         LEFT JOIN lideres l ON c.lider_elector = l.id_lider
@@ -34,6 +35,14 @@ class ElectoresModel extends Mysql
         $request = $this->select($sql, $arrData);
         return $request;
     }
+
+    // ... (skipping insertElector/updateElector in replacement block, focusing on selectElector first, then selectElectores but I need multiple chunks or one big update?)
+    // I'll do one big update or two chunks. Let's do two chunks for safety if they are far apart.
+    // Actually, selectElector is lines 24-36. selectElectores is lines 160-172. They are far.
+    // I will use multi_replace for this tool? Ah, the available tool is 'replace_file_content' (single block) or 'multi_replace...'.
+    // I should use multi_replace_file_content.
+
+
 
     public function insertElector(
         string $cedula,
@@ -47,7 +56,8 @@ class ElectoresModel extends Mysql
         int $muni,
         string $direccion,
         int $lider,
-        int $estado
+        int $estado,
+        int $insc
     ) {
         $this->strCedula = $cedula;
         $this->strApe1 = $ape1;
@@ -61,6 +71,7 @@ class ElectoresModel extends Mysql
         $this->strDireccion = $direccion;
         $this->intLider = $lider;
         $this->intEstado = $estado;
+        $this->intInsc = $insc;
         $return = 0;
 
         $sql = "SELECT ident_elector FROM electores WHERE ident_elector = ? AND estado_elector != 0";
@@ -70,8 +81,8 @@ class ElectoresModel extends Mysql
         if (empty($request)) {
             $sql_insert = "INSERT INTO electores(ident_elector, ape1_elector, ape2_elector, nom1_elector,
                                      nom2_elector, telefono_elector, email_elector, dpto_elector, muni_elector, direccion_elector, lider_elector,
-                                     estado_elector)
-                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                     estado_elector, insc_elector)
+                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $arrData = array(
                 $this->strCedula,
@@ -85,7 +96,8 @@ class ElectoresModel extends Mysql
                 $this->intMuni,
                 $this->strDireccion,
                 $this->intLider,
-                $this->intEstado
+                $this->intEstado,
+                $this->intInsc
             );
 
             $request_insert = $this->insert($sql_insert, $arrData);
@@ -109,7 +121,8 @@ class ElectoresModel extends Mysql
         int $muni,
         string $direccion,
         int $lider,
-        int $estado
+        int $estado,
+        int $insc
     ) {
         $this->intIdElector = $idelector;
         $this->strCedula = $cedula;
@@ -124,6 +137,7 @@ class ElectoresModel extends Mysql
         $this->strDireccion = $direccion;
         $this->intLider = $lider;
         $this->intEstado = $estado;
+        $this->intInsc = $insc;
 
         // 1. Validar si el email ya existe en OTRO usuario
         $sql = "SELECT * FROM electores WHERE email_elector = ? AND id_elector != ? AND estado_elector != 0";
@@ -132,7 +146,7 @@ class ElectoresModel extends Mysql
 
         if (empty($request)) {
             $sql = "UPDATE electores SET ident_elector = ?, ape1_elector = ?, ape2_elector = ?, nom1_elector = ?, nom2_elector = ?,
-                         telefono_elector = ?, email_elector = ?, dpto_elector = ?, muni_elector = ?, direccion_elector = ?, lider_elector = ?, estado_elector = ? 
+                         telefono_elector = ?, email_elector = ?, dpto_elector = ?, muni_elector = ?, direccion_elector = ?, lider_elector = ?, estado_elector = ?, insc_elector = ? 
                     WHERE id_elector = ?";
             $arrData = array(
                 $this->strCedula,
@@ -147,6 +161,7 @@ class ElectoresModel extends Mysql
                 $this->strDireccion,
                 $this->intLider,
                 $this->intEstado,
+                $this->intInsc,
                 $this->intIdElector
             );
 
@@ -162,11 +177,21 @@ class ElectoresModel extends Mysql
         $sql = "SELECT c.id_elector,c.ident_elector, c.ape1_elector, c.ape2_elector,
                             c.nom1_elector, c.nom2_elector,c.telefono_elector,
                             c.email_elector, c.dpto_elector, c.muni_elector, c.direccion_elector,
-                            c.lider_elector, c.estado_elector,
+                            c.lider_elector, c.estado_elector, c.insc_elector,
                             l.nom1_lider, l.ape1_lider 
 							FROM electores c
                             LEFT JOIN lideres l ON c.lider_elector = l.id_lider
                             WHERE c.estado_elector != 0 ORDER BY c.id_elector DESC ";
+        $request = $this->select_all($sql);
+        return $request;
+    }
+
+    public function selectElectoresSelect()
+    {
+        $sql = "SELECT id_elector, ident_elector, nom1_elector, nom2_elector, ape1_elector, ape2_elector
+                FROM electores 
+                WHERE estado_elector != 0
+                ORDER BY ape1_elector ASC, nom1_elector ASC";
         $request = $this->select_all($sql);
         return $request;
     }

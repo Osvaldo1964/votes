@@ -122,6 +122,7 @@ class Electores extends Controllers
                 $strDireccion = strtolower(strClean($_POST['direccion_elector']));
                 $intLider = intval($_POST['lider_elector']); // Capturar el Lider
                 $intEstado = intval($_POST['estado_elector']) == 0 ? 1 : intval($_POST['estado_elector']);
+                $intInsc = isset($_POST['insc_elector']) ? intval($_POST['insc_elector']) : 0;
 
                 if ($intIdElector == 0) {
                     $request_elector = $this->model->insertElector(
@@ -136,7 +137,8 @@ class Electores extends Controllers
                         $intMuni,
                         $strDireccion,
                         $intLider,
-                        $intEstado
+                        $intEstado,
+                        $intInsc
                     );
                     $option = 1;
                 } else {
@@ -153,7 +155,8 @@ class Electores extends Controllers
                         $intMuni,
                         $strDireccion,
                         $intLider,
-                        $intEstado
+                        $intEstado,
+                        $intInsc
                     );
                     $option = 2;
                 }
@@ -261,7 +264,7 @@ class Electores extends Controllers
     {
         try {
             if ($_SERVER['REQUEST_METHOD'] == "GET") {
-                $arrData = $this->model->selectElectores();
+                $arrData = $this->model->selectElectoresSelect();
                 if (count($arrData) > 0) {
                     jsonResponse(['status' => true, 'data' => $arrData], 200);
                 } else {

@@ -12,6 +12,7 @@ async function fntGetDashboard() {
 
             // Widgets
             if (document.getElementById('lblTotalElectores')) document.getElementById('lblTotalElectores').innerText = res.total_electores;
+            if (document.getElementById('lblTotalInscritos')) document.getElementById('lblTotalInscritos').innerText = res.total_inscritos; // NUEVO
             if (document.getElementById('lblTotalLideres')) document.getElementById('lblTotalLideres').innerText = res.total_lideres;
             if (document.getElementById('lblTotalVotos')) document.getElementById('lblTotalVotos').innerText = res.total_votos;
             if (document.getElementById('lblMetaGlobal')) document.getElementById('lblMetaGlobal').innerText = res.meta_global;

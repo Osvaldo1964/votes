@@ -11,6 +11,7 @@
             <div class="modal-body">
                 <form id="formElector" name="formElector" class="form-horizontal">
                     <input type="hidden" id="id_elector" name="id_elector" value="">
+                    <input type="hidden" id="insc_elector" name="insc_elector" value="1">
                     <p class="text-primary">Todos los campos son obligatorios.</p>
                     <hr>
                     <div class="form-row">

@@ -13,17 +13,19 @@ class Dashboard extends Controllers
             ob_start();
 
             $totalElectores = $this->model->selectTotalElectores();
+            $totalInscritos = $this->model->selectTotalInscritos(); // NUEVO: Conteo real inscritos
             $totalLideres = $this->model->selectTotalLideres();
             $totalVotos = $this->model->selectTotalVotos();
             $topLideres = $this->model->selectTopLideres();
             $distMunicipios = $this->model->selectDistribucionMunicipios();
             $meta = $this->model->selectMetaGlobal();
 
-            // Calculo Porcentaje Meta
-            $porcentajeMeta = ($meta > 0) ? round(($totalElectores / $meta) * 100, 1) : 0;
+            // Calculo Porcentaje Meta (Basado en INSCRITOS REALES, no el total sucio)
+            $porcentajeMeta = ($meta > 0) ? round(($totalInscritos / $meta) * 100, 1) : 0;
 
             $data = array(
-                'total_electores' => $totalElectores,
+                'total_electores' => $totalElectores, // Total Base (Mix)
+                'total_inscritos' => $totalInscritos, // Votos Potenciales Reales
                 'total_lideres' => $totalLideres,
                 'total_votos' => $totalVotos, // Votos marcados en Monitor (Día D)
                 'meta_global' => $meta,

@@ -13,17 +13,26 @@
 
   <!-- Widgets Superiores -->
   <div class="row">
-    <!-- Electores -->
-    <div class="col-md-6 col-lg-3">
+    <!-- Total Inscritos (Universo) -->
+    <div class="col-md-6 col-lg">
       <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
         <div class="info">
-          <h4>Electores</h4>
+          <h4>Total Inscritos</h4>
           <p><b id="lblTotalElectores">0</b></p>
         </div>
       </div>
     </div>
+    <!-- Potencial Electoral (Inscritos) -->
+    <div class="col-md-6 col-lg">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-check-circle fa-3x"></i>
+        <div class="info">
+          <h4>Potencial Votos</h4>
+          <p><b id="lblTotalInscritos">0</b></p>
+        </div>
+      </div>
+    </div>
     <!-- Meta -->
-    <div class="col-md-6 col-lg-3">
+    <div class="col-md-6 col-lg">
       <div class="widget-small info coloured-icon"><i class="icon fa fa-flag fa-3x"></i>
         <div class="info">
           <h4>Meta (<span id="lblPorcentajeMeta">0%</span>)</h4>
@@ -32,7 +41,7 @@
       </div>
     </div>
     <!-- Líderes -->
-    <div class="col-md-6 col-lg-3">
+    <div class="col-md-6 col-lg">
       <div class="widget-small warning coloured-icon"><i class="icon fa fa-briefcase fa-3x"></i>
         <div class="info">
           <h4>Líderes</h4>
@@ -41,7 +50,7 @@
       </div>
     </div>
     <!-- Votos (Dia D) -->
-    <div class="col-md-6 col-lg-3">
+    <div class="col-md-6 col-lg">
       <div class="widget-small danger coloured-icon"><i class="icon fa fa-check-square-o fa-3x"></i>
         <div class="info">
           <h4>Votos Monitor</h4>

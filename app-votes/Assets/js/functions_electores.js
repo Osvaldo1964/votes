@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         document.querySelector("#ape2_elector").value = "";
                         document.querySelector("#nom1_elector").value = "";
                         document.querySelector("#nom2_elector").value = "";
+                        document.querySelector("#insc_elector").value = "1"; // Default a 1, aunque irrelevante si duplicado
 
                         swal({
                             title: "Atención",
@@ -92,6 +93,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     // SÍ existe en places y NO está registrado
                     inputIdent.classList.remove("is-invalid");
                     inputIdent.classList.add("is-valid");
+                    document.querySelector("#insc_elector").value = "1"; // Es del padrón
 
                     // Poblamos los campos desactivados
                     document.querySelector("#txtZona").value = data.data.name_zone;
@@ -117,39 +119,27 @@ document.addEventListener('DOMContentLoaded', async function () {
                     document.querySelector("#telefono_elector").focus();
 
                 } else {
-                    // NO existe en places
-                    inputIdent.classList.remove("is-valid");
-                    inputIdent.classList.add("is-invalid");
+                    // NO existe en places -> DEJAMOS REGISTRAR MANUALMENTE
+                    inputIdent.classList.remove("is-invalid");
+                    inputIdent.classList.add("is-valid"); // Se acepta como válida para registro manual
+                    document.querySelector("#insc_elector").value = "0"; // Registro manual
 
-                    // Limpiamos los campos visuales
+                    // Limpiamos los campos visuales de puestos (porque no tiene)
                     document.querySelector("#txtZona").value = "";
                     document.querySelector("#txtPuesto").value = "";
                     document.querySelector("#txtMesa").value = "";
 
-                    document.querySelector("#ape1_elector").value = "";
-                    document.querySelector("#ape2_elector").value = "";
-                    document.querySelector("#nom1_elector").value = "";
-                    document.querySelector("#nom2_elector").value = "";
-
-                    // Opcional: Limpiar el campo o mostrar alerta
-                    swal({
-                        title: "Atención",
-                        text: data.msg,
-                        type: "warning",
-                        confirmButtonText: "Aceptar"
-                    }, function () {
-                        inputIdent.value = "";
-                        setTimeout(function () {
-                            // DESBLOQUEAR EDICIÓN POR SI ACASO Y LIMPIAR CLASES
-                            const camposNombres = ["#ape1_elector", "#ape2_elector", "#nom1_elector", "#nom2_elector"];
-                            camposNombres.forEach(id => {
-                                let el = document.querySelector(id);
-                                el.readOnly = false;
-                                el.classList.remove("is-valid", "is-invalid");
-                            });
-                            inputIdent.focus();
-                        }, 200);
+                    // Desbloqueamos nombres para que los escriba
+                    const camposNombres = ["#ape1_elector", "#ape2_elector", "#nom1_elector", "#nom2_elector"];
+                    camposNombres.forEach(id => {
+                        let el = document.querySelector(id);
+                        el.value = ""; // Limpiar
+                        el.readOnly = false; // Permitir escritura
+                        el.classList.remove("is-valid", "is-invalid");
                     });
+
+                    // Enfocar primer apellido
+                    document.querySelector("#ape1_elector").focus();
                 }
             } catch (error) {
                 console.error("Error validando elector:", error);
@@ -322,11 +312,15 @@ function openModal(isEdit = false, data = null) {
         $('#nom1_elector').val(data.nom1_elector);
         $('#nom2_elector').val(data.nom2_elector);
 
-        // Bloquear campos de nombres en edición
-        document.querySelector("#ape1_elector").readOnly = true;
-        document.querySelector("#ape2_elector").readOnly = true;
-        document.querySelector("#nom1_elector").readOnly = true;
-        document.querySelector("#nom2_elector").readOnly = true;
+        // Bloquear campos de nombres en edición SOLO si es inscrito (1)
+        // Si insc_elector es 0, permitir edición
+        let esInscrito = (data.insc_elector == 1);
+        $('#insc_elector').val(data.insc_elector);
+
+        const camposNombres = ["#ape1_elector", "#ape2_elector", "#nom1_elector", "#nom2_elector"];
+        camposNombres.forEach(id => {
+            document.querySelector(id).readOnly = esInscrito; // True si inscrito, False si manual
+        });
 
         $('#telefono_elector').val(data.telefono_elector);
         $('#email_elector').val(data.email_elector);
@@ -340,7 +334,7 @@ function openModal(isEdit = false, data = null) {
         $('#estado_elector').val(data.estado_elector);
 
         // --- NUEVO: Traer datos informativos de Puesto/Mesa (Places) ---
-        if (data.ident_elector) {
+        if (data.ident_elector && esInscrito) {
             fetchData(BASE_URL_API + '/Electores/getValidaElector/' + data.ident_elector)
                 .then(info => {
                     if (info && info.status && info.data) {
@@ -353,6 +347,7 @@ function openModal(isEdit = false, data = null) {
 
     } else {
         $('#titleModal').html("Nuevo Elector");
+        $('#insc_elector').val("1"); // Reset a 1 por defecto
 
         // Datos informativos limpios
         document.querySelector("#txtZona").value = "";

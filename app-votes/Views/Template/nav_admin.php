@@ -55,6 +55,7 @@
             !empty($_SESSION['permisos'][4]['r_permiso']) || !empty($_SESSION['permisos'][5]['r_permiso'])
             || !empty($_SESSION['permisos'][6]['r_permiso']) || !empty($_SESSION['permisos'][15]['r_permiso'])
             || !empty($_SESSION['permisos'][16]['r_permiso']) || !empty($_SESSION['permisos'][17]['r_permiso'])
+            || !empty($_SESSION['permisos'][18]['r_permiso'])
         ) { ?>
             <li class="treeview">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
@@ -74,6 +75,10 @@
                     <?php if (!empty($_SESSION['permisos'][6]['r_permiso'])) { ?>
                         <li><a class="treeview-item" href="<?= base_url(); ?>electores"><i class="icon fa fa-circle-o"></i>
                                 Electores</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][18]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>testigos"><i class="icon fa fa-circle-o"></i>
+                                Testigos Electorales</a></li>
                     <?php } ?>
                     <?php if (!empty($_SESSION['permisos'][15]['r_permiso'])) { ?>
                         <li><a class="treeview-item" href="<?= base_url(); ?>votacion"><i class="icon fa fa-circle-o"></i>

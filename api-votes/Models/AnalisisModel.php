@@ -45,7 +45,7 @@ class AnalisisModel extends Mysql
                     COALESCE(SUM(br.votos_bodyresultado), 0) as votos_e14
                 FROM places p
                 -- Join Electores (Left, porque puede haber mesas sin mis electores)
-                LEFT JOIN electores e ON p.ident_place = e.ident_elector AND e.estado_elector != 0
+                LEFT JOIN electores e ON p.ident_place = e.ident_elector AND e.estado_elector != 0 AND e.insc_elector = 1
                 -- Join Resultados (Left, porque puede no haber E-14 cargado aun)
                 LEFT JOIN headresultado hr ON hr.place_headresultado = p.id_place AND hr.estado_headresultado != 0
                 LEFT JOIN bodyresultado br ON br.head_bodyresultado = hr.id_headresultado 

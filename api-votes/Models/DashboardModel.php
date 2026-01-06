@@ -14,6 +14,13 @@ class DashboardModel extends Mysql
         return $request['total'];
     }
 
+    public function selectTotalInscritos()
+    {
+        $sql = "SELECT COUNT(*) as total FROM electores WHERE insc_elector = 1 AND estado_elector != 0";
+        $request = $this->select($sql, array());
+        return $request['total'];
+    }
+
     public function selectTotalLideres()
     {
         $sql = "SELECT COUNT(*) as total FROM lideres WHERE estado_lider != 0";

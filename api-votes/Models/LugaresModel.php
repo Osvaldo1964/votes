@@ -46,11 +46,12 @@ class LugaresModel extends Mysql
 
     public function getPuestos(int $idZona)
     {
-        // Los puestos son el 'nameplace_place' en la tabla places, agrupados.
-        // Se asume que 'places' es la tabla de MESAS.
-        $sql = "SELECT DISTINCT nameplace_place 
+        // Modificado: Agrupamos por nombre para obtener un ID representativo (el menor)
+        // Esto permite usar este ID como referencia al "Puesto" (lugar fisico) en tablas relacionadas
+        $sql = "SELECT MIN(id_place) as id_place, nameplace_place 
                 FROM places 
                 WHERE idzona_place = $idZona 
+                GROUP BY nameplace_place
                 ORDER BY nameplace_place";
         $request = $this->select_all($sql);
         return $request;
