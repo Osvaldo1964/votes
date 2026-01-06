@@ -10,7 +10,7 @@
   <link rel="shortcut icon" href="<?= media(); ?>/images/favicon.ico">
   <!-- Main CSS-->
   <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.css">
-  <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/style.css">
+  <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/style.css?v=<?= time(); ?>">
 
   <title><?= $data['page_tag']; ?></title>
 </head>
@@ -21,7 +21,8 @@
   </section>
   <section class="login-content">
     <div class="logo">
-      <h1><?= $data['page_title']; ?></h1>
+      <!-- <h1><?= $data['page_title']; ?></h1> -->
+      <img src="<?= media(); ?>/images/logo_chadan.jpg" alt="Logo" style="max-width: 50%; height: auto;">
     </div>
     <div class="login-box">
       <div id="divLoading">

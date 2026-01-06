@@ -30,7 +30,8 @@
         </a>
       </li>
       <li class="d-none" id="liInitEscrutinio">
-        <a class="app-nav__item" href="#" onclick="fntInicializarMesas(event)" title="Inicializar Escrutinio (Admin Only)">
+        <a class="app-nav__item" href="#" onclick="fntInicializarMesas(event)"
+          title="Inicializar Escrutinio (Admin Only)">
           <i class="fa fa-database fa-lg text-warning"></i>
         </a>
       </li>

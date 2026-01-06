@@ -58,3 +58,13 @@
 	font-size: 13pt;
 	font-weight: bold;
 }
+
+/* Estilo para el logo del header y contenido del login - Cambiar font-family aquí */
+.app-header__logo,
+.login-content h1 {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-content .logo {
+	text-align: center;
+}
