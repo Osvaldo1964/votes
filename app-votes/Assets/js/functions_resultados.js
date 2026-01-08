@@ -61,6 +61,7 @@ async function fntGetDepartamentos() {
             });
         }
         selector.innerHTML = options;
+        $('#listDpto').selectpicker('refresh');
     } catch (error) {
         console.error("Error cargando departamentos", error);
     }
@@ -81,7 +82,7 @@ async function fntGetMunicipios() {
         }
         selector.innerHTML = options;
         selector.disabled = false;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listMuni').selectpicker('refresh');
     } catch (error) {
         console.error("Error cargando municipios", error);
     }
@@ -102,7 +103,7 @@ async function fntGetZonas() {
         }
         selector.innerHTML = options;
         selector.disabled = false;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listZona').selectpicker('refresh');
     } catch (error) {
         console.error("Error cargando zonas", error);
     }
@@ -123,7 +124,7 @@ async function fntGetPuestos() {
         }
         selector.innerHTML = options;
         selector.disabled = false;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listPuesto').selectpicker('refresh');
     } catch (error) {
         console.error("Error cargando puestos", error);
     }
@@ -156,7 +157,7 @@ async function fntGetMesas() {
         }
         selector.innerHTML = options;
         selector.disabled = false;
-        $('.selectpicker').selectpicker('refresh'); // Si usas bootstrap-select
+        $('#listMesa').selectpicker('refresh'); // Si usas bootstrap-select
     } catch (error) {
         console.error("Error cargando mesas", error);
     }

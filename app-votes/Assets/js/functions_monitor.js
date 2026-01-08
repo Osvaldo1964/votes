@@ -30,7 +30,7 @@ function resetSelect(selectorID) {
     let select = document.querySelector(selectorID);
     select.innerHTML = '<option value="">Seleccione...</option>';
     select.disabled = true;
-    if ($('.selectpicker').length > 0) $('.selectpicker').selectpicker('refresh');
+    if ($('.selectpicker').length > 0) $(selectorID).selectpicker('refresh');
 }
 
 // ----- Control de Intervalo -----
@@ -76,8 +76,9 @@ async function fntGetDepartamentos() {
                 options += `<option value="${dpto.id_department}">${dpto.name_department}</option>`;
             });
         }
+
         document.querySelector('#listDpto').innerHTML = options;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listDpto').selectpicker('refresh');
     } catch (e) { console.error(e); }
 }
 
@@ -94,7 +95,7 @@ async function fntGetMunicipios(idDpto) {
         let sel = document.querySelector('#listMuni');
         sel.innerHTML = options;
         sel.disabled = false;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listMuni').selectpicker('refresh');
     } catch (e) { console.error(e); }
 }
 
@@ -111,7 +112,7 @@ async function fntGetZonas(idMuni) {
         let sel = document.querySelector('#listZona');
         sel.innerHTML = options;
         sel.disabled = false;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listZona').selectpicker('refresh');
     } catch (e) { console.error(e); }
 }
 
@@ -128,7 +129,7 @@ async function fntGetPuestos(idZona) {
         let sel = document.querySelector('#listPuesto');
         sel.innerHTML = options;
         sel.disabled = false;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listPuesto').selectpicker('refresh');
     } catch (e) { console.error(e); }
 }
 

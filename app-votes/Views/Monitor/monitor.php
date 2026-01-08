@@ -53,7 +53,7 @@ headerAdmin($data);
                             <div class="form-group col-md-2">
                                 <label for="listDpto">Departamento</label>
                                 <select class="form-control selectpicker" id="listDpto" name="listDpto"
-                                    data-live-search="true" required>
+                                    data-live-search="true" data-size="5" required>
                                     <option value="" selected>Seleccione...</option>
                                 </select>
                             </div>
@@ -61,7 +61,7 @@ headerAdmin($data);
                             <div class="form-group col-md-2">
                                 <label for="listMuni">Municipio</label>
                                 <select class="form-control selectpicker" id="listMuni" name="listMuni"
-                                    data-live-search="true" disabled required>
+                                    data-live-search="true" data-size="5" disabled required>
                                     <option value="" selected>Seleccione...</option>
                                 </select>
                             </div>
@@ -69,7 +69,7 @@ headerAdmin($data);
                             <div class="form-group col-md-2">
                                 <label for="listZona">Zona</label>
                                 <select class="form-control selectpicker" id="listZona" name="listZona"
-                                    data-live-search="true" disabled required>
+                                    data-live-search="true" data-size="5" disabled required>
                                     <option value="" selected>Seleccione...</option>
                                 </select>
                             </div>
@@ -77,7 +77,7 @@ headerAdmin($data);
                             <div class="form-group col-md-3">
                                 <label for="listPuesto">Puesto de Votación</label>
                                 <select class="form-control selectpicker" id="listPuesto" name="listPuesto"
-                                    data-live-search="true" disabled required>
+                                    data-live-search="true" data-size="5" disabled required>
                                     <option value="" selected>Seleccione...</option>
                                 </select>
                             </div>

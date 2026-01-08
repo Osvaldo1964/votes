@@ -17,7 +17,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="lider_elector">Seleccion un Lider</label>
-                            <select class="form-control selectpicker" id="lider_elector" name="lider_elector" required>
+                            <select class="form-control selectpicker" id="lider_elector" name="lider_elector"
+                                data-live-search="true" data-size="5" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
@@ -26,28 +27,28 @@
                     <div class="form-row">
                         <div class="form-group col-md-2">
                             <label for="ident_elector">Cédula</label>
-                            <input type="text" class="form-control valid validNumber" id="ident_elector" name="ident_elector"
-                                required="">
+                            <input type="text" class="form-control valid validNumber" id="ident_elector"
+                                name="ident_elector" required="">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="ape1_elector">Primer apellido</label>
-                            <input type="text" class="form-control valid validText" id="ape1_elector" name="ape1_elector"
-                                required="">
+                            <input type="text" class="form-control valid validText" id="ape1_elector"
+                                name="ape1_elector" required="">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="ape2_elector">Segundo apellido</label>
-                            <input type="text" class="form-control valid validText" id="ape2_elector" name="ape2_elector"
-                                required="">
+                            <input type="text" class="form-control valid validText" id="ape2_elector"
+                                name="ape2_elector" required="">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="nom1_elector">Primer nombre</label>
-                            <input type="text" class="form-control valid validText" id="nom1_elector" name="nom1_elector"
-                                required="">
+                            <input type="text" class="form-control valid validText" id="nom1_elector"
+                                name="nom1_elector" required="">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="nom2_elector">Segundo nombre</label>
-                            <input type="text" class="form-control valid validText" id="nom2_elector" name="nom2_elector"
-                                required="">
+                            <input type="text" class="form-control valid validText" id="nom2_elector"
+                                name="nom2_elector" required="">
                         </div>
                     </div>
                     <div class="form-row">
@@ -58,8 +59,8 @@
                         </div>
                         <div class="form-group col-md-5">
                             <label for="email_elector">Email</label>
-                            <input type="email" class="form-control valid validEmail" id="email_elector" name="email_elector"
-                                required="">
+                            <input type="email" class="form-control valid validEmail" id="email_elector"
+                                name="email_elector" required="">
                         </div>
                         <div class="form-group col-md-5">
                             <label for="direccion_elector">Dirección</label>
@@ -70,13 +71,15 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="dpto_elector">Departamento</label>
-                            <select class="form-control selectpicker" id="dpto_elector" name="dpto_elector" required>
+                            <select class="form-control selectpicker" id="dpto_elector" name="dpto_elector"
+                                data-live-search="true" data-size="5" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="muni_elector">Municipio</label>
-                            <select class="form-control selectpicker" id="muni_elector" name="muni_elector" required>
+                            <select class="form-control selectpicker" id="muni_elector" name="muni_elector"
+                                data-live-search="true" data-size="5" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
@@ -84,7 +87,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="estado_elector">Estado</label>
-                            <select class="form-control selectpicker" id="estado_elector" name="estado_elector" required>
+                            <select class="form-control selectpicker" id="estado_elector" name="estado_elector"
+                                data-size="5" required>
                                 <option value="1">Activo</option>
                                 <option value="2">Inactivo</option>
                             </select>
@@ -97,15 +101,18 @@
                         </div>
                         <div class="input-group mb-3 col-md-3">
                             <span class="input-group-text" id="basic-addon1">Zona</span>
-                            <input type="text" class="form-control" id="txtZona" aria-label="Zona" aria-describedby="basic-addon1" disabled />
+                            <input type="text" class="form-control" id="txtZona" aria-label="Zona"
+                                aria-describedby="basic-addon1" disabled />
                         </div>
                         <div class="input-group mb-3 col-md-4 ml-2">
                             <span class="input-group-text" id="basic-addon1">Puesto</span>
-                            <input type="text" class="form-control" id="txtPuesto" aria-label="Puesto" aria-describedby="basic-addon1" disabled />
+                            <input type="text" class="form-control" id="txtPuesto" aria-label="Puesto"
+                                aria-describedby="basic-addon1" disabled />
                         </div>
                         <div class="input-group mb-3 col-md-4 ml-2">
                             <span class="input-group-text" id="basic-addon1">Mesa</span>
-                            <input type="text" class="form-control" id="txtMesa" aria-label="Mesa" aria-describedby="basic-addon1" disabled />
+                            <input type="text" class="form-control" id="txtMesa" aria-label="Mesa"
+                                aria-describedby="basic-addon1" disabled />
                         </div>
 
                     </div>

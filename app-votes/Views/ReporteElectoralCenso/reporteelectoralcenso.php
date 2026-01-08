@@ -7,7 +7,8 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="<?= base_url(); ?>/reporteelectoralcenso"><?= $data['page_title'] ?></a></li>
+            <li class="breadcrumb-item"><a
+                    href="<?= base_url(); ?>/reporteelectoralcenso"><?= $data['page_title'] ?></a></li>
         </ul>
     </div>
 
@@ -21,7 +22,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="listDpto">Departamento</label>
-                                    <select class="form-control" id="listDpto" name="listDpto" required>
+                                    <select class="form-control selectpicker" id="listDpto" name="listDpto"
+                                        data-live-search="true" data-size="5" required>
                                         <option value="">Seleccione...</option>
                                     </select>
                                 </div>
@@ -29,7 +31,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="listMuni">Municipio</label>
-                                    <select class="form-control" id="listMuni" name="listMuni" required disabled>
+                                    <select class="form-control selectpicker" id="listMuni" name="listMuni"
+                                        data-live-search="true" data-size="5" required disabled>
                                         <option value="">Seleccione...</option>
                                     </select>
                                 </div>
@@ -37,7 +40,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="listZona">Zona</label>
-                                    <select class="form-control" id="listZona" name="listZona" disabled>
+                                    <select class="form-control selectpicker" id="listZona" name="listZona"
+                                        data-live-search="true" data-size="5" disabled>
                                         <option value="">Todas</option>
                                     </select>
                                 </div>
@@ -45,7 +49,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="listPuesto">Puesto</label>
-                                    <select class="form-control" id="listPuesto" name="listPuesto" disabled>
+                                    <select class="form-control selectpicker" id="listPuesto" name="listPuesto"
+                                        data-live-search="true" data-size="5" disabled>
                                         <option value="">Todos</option>
                                     </select>
                                 </div>
@@ -53,7 +58,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="listMesa">Mesa</label>
-                                    <select class="form-control" id="listMesa" name="listMesa" disabled>
+                                    <select class="form-control selectpicker" id="listMesa" name="listMesa"
+                                        data-live-search="true" data-size="5" disabled>
                                         <option value="">Todas</option>
                                     </select>
                                 </div>
@@ -63,13 +69,15 @@
                                     <label>Tipo de Reporte</label>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="tipoReporte" id="tipoDetallado" value="detallado" checked>
+                                            <input class="form-check-input" type="radio" name="tipoReporte"
+                                                id="tipoDetallado" value="detallado" checked>
                                             Detallado (Por Mesa)
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="tipoReporte" id="tipoResumido" value="resumido">
+                                            <input class="form-check-input" type="radio" name="tipoReporte"
+                                                id="tipoResumido" value="resumido">
                                             Resumido (Agrupado)
                                         </label>
                                     </div>
@@ -77,7 +85,8 @@
                             </div>
                             <div class="col-md-3 d-flex align-items-end">
                                 <div class="form-group w-100">
-                                    <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-file-text"></i> Generar Informe</button>
+                                    <button type="submit" class="btn btn-primary btn-block"><i
+                                            class="fa fa-file-text"></i> Generar Informe</button>
                                 </div>
                             </div>
                         </div>

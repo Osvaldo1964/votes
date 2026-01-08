@@ -16,28 +16,28 @@
                     <div class="form-row">
                         <div class="form-group col-md-2">
                             <label for="ident_candidato">Cédula</label>
-                            <input type="text" class="form-control valid validNumber" id="ident_candidato" name="ident_candidato"
-                                required="">
+                            <input type="text" class="form-control valid validNumber" id="ident_candidato"
+                                name="ident_candidato" required="">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="ape1_candidato">Primer Apellido</label>
-                            <input type="text" class="form-control valid validText" id="ape1_candidato" name="ape1_candidato"
-                                required="">
+                            <input type="text" class="form-control valid validText" id="ape1_candidato"
+                                name="ape1_candidato" required="">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="ape2_candidato">Segundo Apellido</label>
-                            <input type="text" class="form-control valid validText" id="ape2_candidato" name="ape2_candidato"
-                                required="">
+                            <input type="text" class="form-control valid validText" id="ape2_candidato"
+                                name="ape2_candidato" required="">
                         </div>
                         <div class="form-group col-md-">
                             <label for="nom1_candidato">Primer Nombre</label>
-                            <input type="text" class="form-control valid validText" id="nom1_candidato" name="nom1_candidato"
-                                required="">
+                            <input type="text" class="form-control valid validText" id="nom1_candidato"
+                                name="nom1_candidato" required="">
                         </div>
                         <div class="form-group col-md-">
                             <label for="nom2_candidato">Segundo Nombre</label>
-                            <input type="text" class="form-control valid validText" id="nom2_candidato" name="nom2_candidato"
-                                required="">
+                            <input type="text" class="form-control valid validText" id="nom2_candidato"
+                                name="nom2_candidato" required="">
                         </div>
                     </div>
                     <div class="form-row">
@@ -48,8 +48,8 @@
                         </div>
                         <div class="form-group col-md-5">
                             <label for="email_candidato">Email</label>
-                            <input type="email" class="form-control valid validEmail" id="email_candidato" name="email_candidato"
-                                required="">
+                            <input type="email" class="form-control valid validEmail" id="email_candidato"
+                                name="email_candidato" required="">
                         </div>
                         <div class="form-group col-md-5">
                             <label for="direccion_candidato">Dirección</label>
@@ -60,13 +60,15 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="dpto_candidato">Departamento</label>
-                            <select class="form-control selectpicker" id="dpto_candidato" name="dpto_candidato" required>
+                            <select class="form-control selectpicker" id="dpto_candidato" name="dpto_candidato"
+                                data-live-search="true" data-size="5" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="muni_candidato">Municipio</label>
-                            <select class="form-control selectpicker" id="muni_candidato" name="muni_candidato" required>
+                            <select class="form-control selectpicker" id="muni_candidato" name="muni_candidato"
+                                data-live-search="true" data-size="5" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
@@ -74,20 +76,23 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="curul_candidato">Curul</label>
-                            <select class="form-control selectpicker" id="curul_candidato" name="curul_candidato" required>
+                            <select class="form-control selectpicker" id="curul_candidato" name="curul_candidato"
+                                data-live-search="true" data-size="5" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label for="partido_candidato">Partido Político</label>
-                            <select class="form-control selectpicker" id="partido_candidato" name="partido_candidato" required>
+                            <select class="form-control selectpicker" id="partido_candidato" name="partido_candidato"
+                                data-live-search="true" data-size="5" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="estado_candidato">Estado</label>
-                            <select class="form-control selectpicker" id="estado_candidato" name="estado_candidato" required>
+                            <select class="form-control selectpicker" id="estado_candidato" name="estado_candidato"
+                                data-size="5" required>
                                 <option value="1">Activo</option>
                                 <option value="2">Inactivo</option>
                             </select>

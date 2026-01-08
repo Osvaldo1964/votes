@@ -41,7 +41,7 @@ async function fntGetDepartamentos() {
         let options = '<option value="">Seleccione...</option>';
         if (data && data.status) data.data.forEach(d => options += `<option value="${d.id_department}">${d.name_department}</option>`);
         document.querySelector('#listDpto').innerHTML = options;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listDpto').selectpicker('refresh');
     } catch (e) { console.error(e); }
 }
 
@@ -54,7 +54,7 @@ async function fntGetMunicipios(id) {
         let sel = document.querySelector('#listMuni');
         sel.innerHTML = options;
         sel.disabled = false;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listMuni').selectpicker('refresh');
     } catch (e) { console.error(e); }
 }
 
@@ -67,7 +67,7 @@ async function fntGetZonas(id) {
         let sel = document.querySelector('#listZona');
         sel.innerHTML = options;
         sel.disabled = false;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listZona').selectpicker('refresh');
     } catch (e) { console.error(e); }
 }
 
@@ -80,7 +80,7 @@ async function fntGetPuestos(id) {
         let sel = document.querySelector('#listPuesto');
         sel.innerHTML = options;
         sel.disabled = false;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listPuesto').selectpicker('refresh');
     } catch (e) { console.error(e); }
 }
 
@@ -94,7 +94,7 @@ async function fntGetCandidatos() {
             });
         }
         document.querySelector('#listCandidato').innerHTML = options;
-        $('.selectpicker').selectpicker('refresh');
+        $('#listCandidato').selectpicker('refresh');
     } catch (e) { console.error(e); }
 }
 
@@ -151,7 +151,9 @@ async function fntViewReporte() {
                     // Diferencia Style (Logic Inverted in API: E14 - Reales)
                     let dif = parseInt(row.diferencia);
                     // > 0 success, < 0 danger
-                    let classDif = dif > 0 ? 'text-success font-weight-bold' : (dif < 0 ? 'text-danger font-weight-bold' : 'text-primary');
+                    // Usamos estilos inline para asegurar el color correcto
+                    let styleDif = dif > 0 ? 'color: #28a745;' : (dif < 0 ? 'color: #dc3545;' : 'color: #333;');
+                    // let classDif = dif > 0 ? 'text-success font-weight-bold' : (dif < 0 ? 'text-danger font-weight-bold' : 'text-dark');
 
                     html += `
                         <tr>
@@ -160,7 +162,7 @@ async function fntViewReporte() {
                             <td>${row.mi_potencial}</td>
                             <td>${row.mis_testigos}</td>
                             <td class="table-warning font-weight-bold">${row.votos_e14}</td>
-                            <td class="${classDif}">${dif > 0 ? '+' : ''}${dif}</td>
+                            <td class="font-weight-bold" style="${styleDif}">${dif > 0 ? '+' : ''}${dif}</td>
                             <td>${row.estado}</td>
                         </tr>
                     `;

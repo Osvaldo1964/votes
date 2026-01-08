@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (idMuni) {
             const data = await fetchData(`${BASE_URL_API}/ReporteElectoralCenso/getZonas/${idMuni}`);
             if (data && data.status) {
-                llenarSelect('#listZona', data.data, 'id_zone', 'name_zone', 'Todas');
                 $('#listZona').prop('disabled', false);
+                llenarSelect('#listZona', data.data, 'id_zone', 'name_zone', 'Todas');
             }
         }
     });
@@ -47,10 +47,11 @@ document.addEventListener('DOMContentLoaded', async function () {
             if (data && data.status) {
                 // Ojo: getPuestos devuelve array de objetos { puesto: "Nombre" }
                 // Usamos 'puesto' como ID y como Valor
-                llenarSelect('#listPuesto', data.data, 'puesto', 'puesto', 'Todos');
                 $('#listPuesto').prop('disabled', false);
+                llenarSelect('#listPuesto', data.data, 'puesto', 'puesto', 'Todos');
             }
         }
+
     });
 
     // PUESTO -> MESA
@@ -78,8 +79,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             const data = await fetchData(`${BASE_URL_API}/ReporteElectoralCenso/getMesas`, 'POST', params);
 
             if (data && data.status) {
-                llenarSelect('#listMesa', data.data, 'mesa', 'mesa', 'Todas');
                 $('#listMesa').prop('disabled', false);
+                llenarSelect('#listMesa', data.data, 'mesa', 'mesa', 'Todas');
             }
         }
     });
@@ -121,6 +122,8 @@ async function cargarConfiguracionInicial() {
         dataConfig = res;
         // Llenar Dptos
         llenarSelect('#listDpto', res.dptos, 'iddpto', 'namedpto', 'Seleccione...');
+        // llenarSelect ya hace refresh, pero dataConfig se usa despues.
+        // todo bien.
     }
 }
 
@@ -137,8 +140,10 @@ function filtrarMunicipios(idDpto) {
             listMuni.appendChild(option);
         });
         $('#listMuni').prop('disabled', false);
+        $('#listMuni').selectpicker('refresh');
     } else {
         $('#listMuni').prop('disabled', true);
+        $('#listMuni').selectpicker('refresh');
     }
 }
 
@@ -147,6 +152,7 @@ function resetSelect(selector) {
     const defaultText = selector.includes('Zona') ? 'Todas' : (selector.includes('Mesa') ? 'Todas' : (selector.includes('Puesto') ? 'Todos' : 'Seleccione...'));
     el.innerHTML = `<option value="">${defaultText}</option>`;
     $(selector).prop('disabled', true);
+    $(selector).selectpicker('refresh');
 }
 
 function llenarSelect(selector, data, keyId, keyVal, defaultOption = null) {
@@ -161,6 +167,7 @@ function llenarSelect(selector, data, keyId, keyVal, defaultOption = null) {
         option.text = item[keyVal];
         el.appendChild(option);
     });
+    $(selector).selectpicker('refresh');
 }
 
 function mostrarResultados(data, resumen) {

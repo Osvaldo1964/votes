@@ -16,8 +16,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-2">
                             <label for="ident_lider">Cédula</label>
-                            <input type="text" class="form-control valid validNumber" id="ident_lider" name="ident_lider"
-                                required="">
+                            <input type="text" class="form-control valid validNumber" id="ident_lider"
+                                name="ident_lider" required="">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="ape1_lider">Primer apellido</label>
@@ -48,8 +48,8 @@
                         </div>
                         <div class="form-group col-md-5">
                             <label for="email_lider">Email</label>
-                            <input type="email" class="form-control valid validEmail" id="email_lider" name="email_lider"
-                                required="">
+                            <input type="email" class="form-control valid validEmail" id="email_lider"
+                                name="email_lider" required="">
                         </div>
                         <div class="form-group col-md-5">
                             <label for="direccion_lider">Dirección</label>
@@ -60,13 +60,15 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="dpto_lider">Departamento</label>
-                            <select class="form-control selectpicker" id="dpto_lider" name="dpto_lider" required>
+                            <select class="form-control selectpicker" id="dpto_lider" name="dpto_lider"
+                                data-live-search="true" data-size="5" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="muni_lider">Municipio</label>
-                            <select class="form-control selectpicker" id="muni_lider" name="muni_lider" required>
+                            <select class="form-control selectpicker" id="muni_lider" name="muni_lider"
+                                data-live-search="true" data-size="5" required>
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
@@ -74,7 +76,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="estado_lider">Estado</label>
-                            <select class="form-control selectpicker" id="estado_lider" name="estado_lider" required>
+                            <select class="form-control selectpicker" id="estado_lider" name="estado_lider"
+                                data-size="5" required>
                                 <option value="1">Activo</option>
                                 <option value="2">Inactivo</option>
                             </select>
