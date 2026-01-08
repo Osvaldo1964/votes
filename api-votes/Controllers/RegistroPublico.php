@@ -137,5 +137,19 @@ class RegistroPublico extends Controllers
         // Google devuelve score entre 0.0 y 1.0. 0.5 es un buen umbral.
         return $json->success && $json->score >= 0.5;
     }
+
+    public function getUbicaciones()
+    {
+        // Reutilizar el archivo JSON de configuración existente
+        $jsonPath = "Json/Config.json";
+
+        if (file_exists($jsonPath)) {
+            $jsonContent = file_get_contents($jsonPath);
+            jsonResponse(json_decode($jsonContent, true), 200);
+        } else {
+            jsonResponse(["status" => false, "msg" => "No se encontraron ubicaciones"], 404);
+        }
+        die();
+    }
 }
 ?>

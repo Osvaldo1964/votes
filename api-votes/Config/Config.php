@@ -29,3 +29,7 @@ const SMTP_PORT = 465;
 const SPD = ",";
 const SPM = ".";
 const SMONEY = "$";
+
+// RECAPTCHA V3
+const RECAPTCHA_SITE_KEY = "6Le2ikQsAAAAAJVqo_KpOrqhzdwpmLbM-vSTwjVh";
+const RECAPTCHA_SECRET_KEY = "6Le2ikQsAAAAAHPJkiMyCOQwhOGaEGKMdsNXMyMN"; // <--- CAMBIAR POR LA CLAVE SECRETA REAL
