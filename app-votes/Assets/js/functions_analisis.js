@@ -137,9 +137,10 @@ async function fntViewReporte() {
                                 <th>Mesa</th>
                                 <th>Censo Oficial</th>
                                 <th>Potencial (Mío)</th>
-                                <th>Testigos (Reales)</th>
+                                <th>Votos Reales</th>
                                 <th class="bg-warning text-dark">Escrutinio E-14</th>
                                 <th>Diferencia</th>
+                                <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -147,10 +148,10 @@ async function fntViewReporte() {
 
             if (data.data.length > 0) {
                 data.data.forEach(row => {
-                    // Diferencia Style
+                    // Diferencia Style (Logic Inverted in API: E14 - Reales)
                     let dif = parseInt(row.diferencia);
-                    let classDif = dif > 0 ? 'text-danger font-weight-bold' : (dif < 0 ? 'text-success' : 'text-muted');
-                    // dif > 0 means Testigos > E14 (Fuga)
+                    // > 0 success, < 0 danger
+                    let classDif = dif > 0 ? 'text-success font-weight-bold' : (dif < 0 ? 'text-danger font-weight-bold' : 'text-primary');
 
                     html += `
                         <tr>
@@ -159,7 +160,8 @@ async function fntViewReporte() {
                             <td>${row.mi_potencial}</td>
                             <td>${row.mis_testigos}</td>
                             <td class="table-warning font-weight-bold">${row.votos_e14}</td>
-                            <td class="${classDif}">${dif}</td>
+                            <td class="${classDif}">${dif > 0 ? '+' : ''}${dif}</td>
+                            <td>${row.estado}</td>
                         </tr>
                     `;
                 });
@@ -173,10 +175,11 @@ async function fntViewReporte() {
                             <td>${data.resumen.total_testigos}</td>
                             <td>${data.resumen.total_e14}</td>
                             <td>${data.resumen.total_diferencia}</td>
+                            <td>-</td>
                         </tr>
                 `;
             } else {
-                html += '<tr><td colspan="6">No se encontraron datos para estos filtros.</td></tr>';
+                html += '<tr><td colspan="7">No se encontraron datos para estos filtros.</td></tr>';
             }
 
             html += `
@@ -232,7 +235,7 @@ function renderSummary(resumen) {
         <div class="col-md-3">
             <div class="widget-small warning coloured-icon"><i class="icon fa fa-check-square-o fa-3x"></i>
                 <div class="info">
-                    <h4>VOTOS REALES</h4>
+                    <h4>REALES</h4>
                     <p><b>${tTestigos}</b> <small>(${pctPart}%)</small></p>
                 </div>
             </div>

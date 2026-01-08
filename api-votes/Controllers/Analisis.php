@@ -45,10 +45,18 @@ class Analisis extends Controllers
             $e14 = intval($row['votos_e14']);
             $testigos = intval($row['mis_testigos']);
 
-            // Diferencia: (Testigos - E14). 
-            // Positivo significa que reportaron más votos de testigos que los que aparecieron en el E-14 (Fuga/Fraude en contra)
-            // Negativo significa que aparecieron más votos en E-14 que los que reportaron los testigos (Sorpresa positiva o error de testigos).
-            $row['diferencia'] = $testigos - $e14;
+            // Diferencia: (E14 - Reales/Testigos). 
+            // Positivo: SUPERADO (Ganancia, más votos oficiales que los reportados).
+            // Negativo: FALTANTE (Pérdida, menos votos oficiales que los reportados).
+            $row['diferencia'] = $e14 - $testigos;
+
+            if ($row['diferencia'] > 0) {
+                $row['estado'] = '<span class="badge badge-success">SUPERADO</span>';
+            } elseif ($row['diferencia'] < 0) {
+                $row['estado'] = '<span class="badge badge-danger">FALTANTE</span>';
+            } else {
+                $row['estado'] = '<span class="badge badge-info">META</span>';
+            }
 
             $totCenso += intval($row['censo_mesa']);
             $totPotencial += intval($row['mi_potencial']);

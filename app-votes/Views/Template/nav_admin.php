@@ -177,6 +177,9 @@
                             <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso"
                                     style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Reporte Censo vs
                                     Real</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteTestigos"
+                                    style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Reporte de Testigos</a>
+                            </li>
                         </ul>
                     </li>
                     <!-- Nivel 2: Financieros -->
