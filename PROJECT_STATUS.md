@@ -41,8 +41,10 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
     *   Ajuste en `LugaresModel` para devolver `id_place` agrupado, permitiendo guardar la ubicación correctamente.
 2.  **Frontend (App):**
     *   Vista `testigos.php` con DataTable integrado y botones de acción dinámicos.
-    *   Modal `modalTestigos.php` con carga asíncrona de electores (búsqueda inteligente) y cascada de ubicación (Dpto -> Muni -> Zona -> Puesto).
-    *   Eliminación del campo "Mesa" específica para simplificar la asignación al Puesto.
+    *   Modal `modalTestigos.php` con carga asíncrona de electores y cascada de ubicación.
+    *   **Nuevo:** Selector múltiple de "Mesas de Votación" (`listMesas`) que permite asignar varias mesas de un Puesto a un solo testigo.
+    *   **Nuevo:** Lógica inteligente que muestra mesas "Libres" + "Asignadas al testigo actual", evitando conflictos.
+    *   Uso de `data-size` y `selected-text-format` para optimizar UX en selectores múltiples.
     *   Uso de `getModal` para inclusión correcta de templates.
 
 ### D. Documentación
@@ -63,7 +65,7 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
     *   [OK] Líderes, Candidatos.
     *   [OK] Electores (Validación Documento).
     *   [OK] Votación (Control de Duplicidad).
-    *   [OK] **Testigos Electorales** (Asignación y Gestión).
+    *   [OK] **Testigos Electorales** (Asignación Múltiple de Mesas, Gestión y UI Optimizada).
 *   **Reportes y Análisis:**
     *   [OK] Monitor Día D (Tiempo Real).
     *   [OK] Análisis E-14 (Auditoría).

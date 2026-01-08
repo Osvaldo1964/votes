@@ -49,6 +49,12 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#listZona').addEventListener('change', function () {
         fntGetPuestos(this.value);
     });
+    // Al cambiar puesto, cargamos mesas
+    document.querySelector('#listPuesto').addEventListener('change', function () {
+        let idPuesto = this.value;
+        let idTestigo = document.querySelector('#idTestigo').value;
+        fntGetMesas(idPuesto, idTestigo);
+    });
 
 
     // Submit Form
@@ -68,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('#listMuni').disabled = false;
             document.querySelector('#listZona').disabled = false;
             document.querySelector('#listPuesto').disabled = false;
+            document.querySelector('#listMesas').disabled = false;
 
             let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             let ajaxUrl = BASE_URL_API + '/Testigos/setTestigo';
@@ -130,6 +137,7 @@ function openModal() {
     $('#listElector').val('').selectpicker('refresh');
     $('#listDpto').val('').selectpicker('refresh'); // Ajustar si tienes default
     // Limpiar cascadas...
+    $('#listMesas').html('').selectpicker('refresh');
 
     $('#modalFormTestigo').modal('show');
 }
@@ -166,6 +174,33 @@ async function fntEditTestigo(idtestigo) {
                     if (t.zona_testigo > 0) {
                         await fntGetPuestos(t.zona_testigo);
                         $('#listPuesto').val(t.puesto_testigo).selectpicker('refresh');
+
+                        // Cargar Mesas y Marcar las seleccionadas
+                        if (t.puesto_testigo > 0) {
+                            // Pasar el ID TESTIGO para que el backend sepa cuales ya son mías y las incluya
+                            await fntGetMesas(t.puesto_testigo, t.id_testigo);
+
+                            // AQUI DEBERIAMOS SELECCIONARLAS EN EL MULTI-SELECT
+                            // Como la API getMesas devuelve todas las disponibles + las propias, 
+                            // necesitamos saber CUALES de esas 'propias' debemos marcar.
+                            // Pero 'getMesas' devuelve lista. 
+                            // Podríamos iterar la lista devuelta por getMesas y ver cuales tienen 'testigo_headresultado == t.id_testigo'
+                            // PERO getMesas devuelve array simple.
+                            // FIX: La funcion fntGetMesas ya renderiza options.
+                            // DESPUES de renderizar, recorremos options para ver cuales son mías?
+                            // No, mejor estrategia: 
+                            // Al renderizar options en fntGetMesas, agregamos atributo auxiliar o verificamos.
+                            // Pero selectpicker necesita val([array_ids]).
+
+                            // Solución Robusta:
+                            // 1. fntGetMesas llena el select con TODAS las mesas validas (libres + mías).
+                            // 2. Extraemos IDs de las que son mías desde la respuesta de getMesas (o hacemos otra query, pero mejor reusar).
+                            // 3. $('#listMesas').val(array_ids_mias).selectpicker('refresh');
+
+                            // Requerimos que fntGetMesas devuelva los datos o asignamos aqui.
+                            // Modificaré fntGetMesas para que maneje la logica de seleccion interna o retorne datos.
+                            // Lo mas limpio es llamar fntGetMesas y luego seleccionar.
+                        }
                     }
                 }
             }
@@ -282,4 +317,61 @@ async function fntGetPuestos(id) {
         sel.disabled = true;
     }
     $('#listPuesto').selectpicker('refresh');
+}
+
+async function fntGetMesas(idPuesto, idTestigo = 0) {
+    // Si idTestigo no viene, buscamos en el input (ej: create mode cambio de puesto)
+    if (idTestigo == 0) {
+        let valInput = document.querySelector('#idTestigo').value;
+        if (valInput > 0) idTestigo = valInput;
+    }
+
+    if (!idPuesto) {
+        $('#listMesas').html('');
+        $('#listMesas').attr('disabled', 'disabled');
+        $('#listMesas').selectpicker('refresh');
+        return;
+    }
+
+    try {
+        let url = BASE_URL_API + '/Testigos/getMesas/' + idPuesto + '?idTestigo=' + idTestigo;
+        const data = await fetchData(url);
+        let htmlOptions = '';
+        let selectedValues = [];
+
+        if (data.status) {
+            data.data.forEach(m => {
+                // Determine if this mesa belongs to current testigo to Pre-Select it
+                // m.testigo_headresultado viene del query
+                let isMine = (m.testigo_headresultado == idTestigo && idTestigo > 0);
+                if (isMine) {
+                    selectedValues.push(m.id_headresultado);
+                }
+                htmlOptions += `<option value="${m.id_headresultado}">Mesa ${m.mesa_place}</option>`;
+            });
+            document.querySelector('#listMesas').innerHTML = htmlOptions;
+            document.querySelector('#listMesas').disabled = false;
+
+            // Aplicar selección
+            if (selectedValues.length > 0) {
+                $('#listMesas').val(selectedValues);
+            }
+        } else {
+            // No hay mesas disponibles
+            document.querySelector('#listMesas').innerHTML = '';
+            document.querySelector('#listMesas').disabled = true;
+        }
+        $('#listMesas').selectpicker('render');
+        $('#listMesas').selectpicker('refresh');
+
+        // Forzar actualización visual para evitar comas vacías
+        // y asegurar formato count
+        if (selectedValues.length > 0) {
+            // Esto ayuda a refrescar el texto interno del botón
+            $('#listMesas').trigger('change');
+        }
+
+    } catch (e) {
+        console.error("Error getMesas", e);
+    }
 }

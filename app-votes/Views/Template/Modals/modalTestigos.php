@@ -52,6 +52,17 @@
                     </div>
 
                     <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <hr>
+                            <label for="listMesas">Mesas de Votación (Disponibles + Asignadas)</label>
+                            <select class="form-control selectpicker" data-live-search="true" multiple data-selected-text-format="count > 3" data-size="5" id="listMesas" name="listMesas[]" title="Seleccione las mesas..." disabled>
+                                <!-- Async Loaded -->
+                            </select>
+                            <small class="form-text text-muted">Aparecerán las mesas libres y las que ya tiene asignadas este testigo.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="listEstado">Estado <span class="text-danger">*</span></label>
                             <select class="form-control selectpicker" id="listEstado" name="listEstado" required>

@@ -104,6 +104,56 @@ class TestigosModel extends Mysql
         $sql = "UPDATE testigos SET estado_testigo = ? WHERE id_testigo = ?";
         $arrData = array(0, $this->intIdTestigo);
         $request = $this->update($sql, $arrData);
+        // También liberamos las mesas que tuviera
+        $sqlRelease = "UPDATE headresultado SET testigo_headresultado = 0 WHERE testigo_headresultado = ?";
+        $this->update($sqlRelease, array($this->intIdTestigo));
         return $request;
+    }
+
+    public function selectMesasPuesto(int $idPuesto, int $idTestigo = 0)
+    {
+        // 1. Obtener detalles del Puesto (agrupador)
+        $sqlPuesto = "SELECT idzona_place, nameplace_place FROM places WHERE id_place = $idPuesto";
+        $infoPuesto = $this->select($sqlPuesto, array());
+
+        if (empty($infoPuesto)) return [];
+
+        $zona = $infoPuesto['idzona_place'];
+        $nombre = $infoPuesto['nameplace_place'];
+        // Escapar comillas simple en el nombre para evitar error SQL
+        $nombre = str_replace("'", "\'", $nombre);
+
+        // 2. Buscar HeadResultados (Mesas) que coincidan con la ubicación
+        // Deben estar LIBRES (0 o NULL) O asignadas a ESTE testigo ($idTestigo)
+        $sql = "SELECT h.id_headresultado, p.mesa_place, h.testigo_headresultado
+                    FROM headresultado h
+                    INNER JOIN places p ON h.place_headresultado = p.id_place
+                    WHERE p.idzona_place = $zona 
+                    AND p.nameplace_place = '$nombre'
+                    AND (h.testigo_headresultado IS NULL OR h.testigo_headresultado = 0 OR h.testigo_headresultado = $idTestigo)
+                    ORDER BY CAST(p.mesa_place AS UNSIGNED) ASC";
+
+        $request = $this->select_all($sql);
+        return $request;
+    }
+
+    public function updateMesasTestigo(int $idTestigo, array $arrMesas)
+    {
+        // 1. Liberar mesas previamente asignadas a este testigo
+        // Esto cubre el caso de desmarcar mesas o cambiar de puesto (libera las del puesto anterior)
+        $sqlClean = "UPDATE headresultado SET testigo_headresultado = 0 WHERE testigo_headresultado = ?";
+        $this->update($sqlClean, array($idTestigo));
+
+        // 2. Asignar las nuevas mesas seleccionadas
+        if (!empty($arrMesas)) {
+            foreach ($arrMesas as $idHead) {
+                // Validar que el idHead sea numerico para evitar inyeccion
+                $idHead = intval($idHead);
+                if ($idHead > 0) {
+                    $sqlUpdate = "UPDATE headresultado SET testigo_headresultado = ? WHERE id_headresultado = ?";
+                    $this->update($sqlUpdate, array($idTestigo, $idHead));
+                }
+            }
+        }
     }
 }

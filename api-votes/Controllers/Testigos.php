@@ -133,6 +133,9 @@ class Testigos extends Controllers
                 $intPuesto = !empty($_POST['listPuesto']) ? intval($_POST['listPuesto']) : 0;
                 $intMesa = !empty($_POST['txtMesa']) ? intval($_POST['txtMesa']) : 0;
 
+                // Lista de Mesas (Array IDs de headresultado)
+                $arrMesas = !empty($_POST['listMesas']) ? $_POST['listMesas'] : [];
+
                 if ($idTestigo == 0) {
                     $request = $this->model->insertTestigo($intElector, $intDpto, $intMuni, $intZona, $intPuesto, $intMesa, $intEstado);
                     $option = 1;
@@ -141,7 +144,12 @@ class Testigos extends Controllers
                     $option = 2;
                 }
 
-                if ($request > 0) {
+                if ($request > 0 && $request !== 'exist') {
+                    // Si insertó o actualizó el testigo correctamente, asignamos las mesas
+                    // Si es nuevo, usamos el ID retornado ($request). Si es update, usamos $idTestigo.
+                    $idFinal = ($option == 1) ? $request : $idTestigo;
+                    $this->model->updateMesasTestigo($idFinal, $arrMesas);
+
                     $msg = $option == 1 ? 'Testigo registrado correctamente' : 'Testigo actualizado correctamente';
                     jsonResponse(['status' => true, 'msg' => $msg], 200);
                 } else if ($request == 'exist') {
@@ -167,5 +175,21 @@ class Testigos extends Controllers
                 jsonResponse(['status' => false, 'msg' => 'Error al eliminar'], 200);
             }
         }
+    }
+    public function getMesas($idPuesto)
+    {
+        // Obtener Id Testigo opcional (para edit mode)
+        $idTestigo = isset($_GET['idTestigo']) ? intval($_GET['idTestigo']) : 0;
+        $idPuesto = intval($idPuesto);
+
+        if ($idPuesto > 0) {
+            $arrData = $this->model->selectMesasPuesto($idPuesto, $idTestigo);
+            if (empty($arrData)) {
+                jsonResponse(['status' => false, 'msg' => 'No hay mesas disponibles'], 200);
+            } else {
+                jsonResponse(['status' => true, 'data' => $arrData], 200);
+            }
+        }
+        die();
     }
 }
