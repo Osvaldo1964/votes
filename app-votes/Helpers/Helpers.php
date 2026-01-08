@@ -538,6 +538,7 @@ function fntAuthorization(array $arrHeaders)
                 jsonResponse($arrResponse, 400);
                 die();
             }
+            return $arrPayload;
         }
     }
 }

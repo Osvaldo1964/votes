@@ -5,6 +5,8 @@ use Firebase\JWT\Key;
 
 class Usuario extends Controllers
 {
+    private $userData; // Propiedad para datos del usuario token
+
     public function __construct()
     {
         parent::__construct();
@@ -24,7 +26,7 @@ class Usuario extends Controllers
         if (!$isLoginAction) {
             try {
                 $arrHeaders = getallheaders();
-                fntAuthorization($arrHeaders);
+                $this->userData = fntAuthorization($arrHeaders); // Capturamos el payload
             } catch (\Throwable $e) {
                 $arrResponse = array('status' => false, 'msg' => 'Token inválido o expirado');
                 jsonResponse($arrResponse, 401);
@@ -126,6 +128,18 @@ class Usuario extends Controllers
                 $rolUser = isset($_GET['rolUser']) ? intval($_GET['rolUser']) : 0;
 
                 $arrData = $this->model->getUsuarios();
+
+                // SUPERUSER LOGIC: Solo ID 1 puede ver al usuario ID 1
+                $idUser = isset($this->userData->id_usuario) ? $this->userData->id_usuario : 0;
+
+                if ($idUser != 1) {
+                    foreach ($arrData as $i => $usr) {
+                        if ($usr['id_usuario'] == 1) {
+                            unset($arrData[$i]);
+                        }
+                    }
+                    $arrData = array_values($arrData); // Re-indexar
+                }
 
                 if (empty($arrData)) {
                     $response = array('status' => false, 'msg' => 'No hay datos para mostrar', 'data' => '');

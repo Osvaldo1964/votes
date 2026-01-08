@@ -2,6 +2,8 @@
 
 class Roles extends Controllers
 {
+    private $userData; // Propiedad para datos del usuario token
+
     public function __construct()
     {
         parent::__construct();
@@ -15,7 +17,7 @@ class Roles extends Controllers
         // 2. Validar token para todos los métodos de Roles
         try {
             $arrHeaders = getallheaders();
-            fntAuthorization($arrHeaders);
+            $this->userData = fntAuthorization($arrHeaders); // Capturamos el payload
         } catch (\Throwable $e) {
             $arrResponse = array('status' => false, 'msg' => 'Token inválido o expirado');
             jsonResponse($arrResponse, 401);
@@ -166,6 +168,19 @@ class Roles extends Controllers
         try {
             if ($_SERVER['REQUEST_METHOD'] == "GET") {
                 $arrData = $this->model->getRoles();
+
+                // SUPERUSER LOGIC: Solo ID 1 puede ver rol Administrador (ID 1)
+                $idUser = $this->userData->id_usuario;
+
+                if ($idUser != 1) {
+                    foreach ($arrData as $i => $rol) {
+                        if ($rol['id_rol'] == 1) {
+                            unset($arrData[$i]);
+                        }
+                    }
+                    $arrData = array_values($arrData); // Re-indexar
+                }
+
                 if (count($arrData) > 0) {
                     jsonResponse(['status' => true, 'data' => $arrData], 200);
                 } else {

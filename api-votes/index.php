@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Permitir acceso desde cualquier origen (Para producción, cambiar * por el dominio específico)
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, X-Auth-Token, Authorization");

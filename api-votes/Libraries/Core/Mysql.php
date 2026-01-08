@@ -57,14 +57,27 @@ class Mysql extends Conexion
             return $response;
         }
     }
-    public function select_all(string $query)
+    public function select_all(string $query, array $arrValues = [])
     {
         try {
             $this->strquery = $query;
-            $execute = $this->conexion->query($this->strquery);
-            $request = $execute->fetchall(PDO::FETCH_ASSOC); //ARRAY
-            $execute->closeCursor();
-            return $request;
+
+            // Si hay array de valores, usamos prepare (Seguro)
+            if (!empty($arrValues)) {
+                $execute = $this->conexion->prepare($this->strquery);
+                $execute->execute($arrValues);
+                $request = $execute->fetchall(PDO::FETCH_ASSOC);
+                $execute->closeCursor();
+                return $request;
+            }
+            // Si no, usamos query normal (Legacy)
+            else {
+                $execute = $this->conexion->query($this->strquery);
+                $request = $execute->fetchall(PDO::FETCH_ASSOC);
+                $execute->closeCursor();
+                return $request;
+            }
+
         } catch (Exception $e) {
             $response = "Error: " . $e->getMessage();
             return $response;

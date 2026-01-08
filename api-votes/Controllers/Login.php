@@ -24,38 +24,83 @@ class Login extends Controllers
                     die();
                 }
                 $strEmail = strClean($_POST['txtEmail']);
-                $strPassword = hash("SHA256", $_POST['txtPassword']);
-                $requestUser = $this->model->loginUser($strEmail, $strPassword);
+                $strPassword = $_POST['txtPassword']; // Password en texto plano para verificar
+
+                // 1. Buscamos usuario por email
+                $requestUser = $this->model->getLoginUser($strEmail);
+
                 if (empty($requestUser)) {
                     $response = array('status' => false, 'msg' => 'El usuario o la contraseña es incorrecto.');
                     $code = 400;
                 } else {
-                    $tokenRequest = getTokenApi();
+                    $authSuccess = false;
+                    $migrationNeeded = false;
 
-                    if ($tokenRequest['status']) {
-                        $arrAuth = $tokenRequest['data'];
-                        $arrAuth['id_usuario'] = $requestUser['id_usuario'];
-                        $arrAuth['nombre_usuario'] = $requestUser['nombres_usuario'] . ' ' . $requestUser['apellidos_usuario'];
-                        $arrAuth['email_usuario'] = $strEmail;
-                        $arrAuth['rol_usuario'] = $requestUser['rol_usuario'];
-                        $arrAuth['telefono_usuario'] = $requestUser['telefono_usuario'];
-                        $arrAuth['nombre_rol'] = $requestUser['nombre_rol'];
-                        $_SESSION['login'] = true;
-                        $requestPermisos = $this->model->permisosModulo($requestUser['rol_usuario']);
-                        $permisos = '';
-                        $permisosMod = '';
-
-                        if (count($requestPermisos) > 0) {
-                            $permisos = $requestPermisos;
-                            $permisosMod = isset($requestPermisos['id_modulo']) ? $requestPermisos['id_modulo'] : '';
+                    // 2. Verificar con password_verify (BCRYPT)
+                    if (password_verify($strPassword, $requestUser['password_usuario'])) {
+                        $authSuccess = true;
+                    }
+                    // 3. Si falla, verificar con SHA256 (LEGACY)
+                    else {
+                        $hashSHA256 = hash("SHA256", $strPassword);
+                        if ($hashSHA256 === $requestUser['password_usuario']) {
+                            $authSuccess = true;
+                            $migrationNeeded = true;
                         }
-                        $arrAuth['permisos'] = $permisos;
-                        $arrAuth['permisosMod'] = $permisosMod;
-                        $code = 200;
-                        $response = array('status' => true, 'msg' => '¡Bienvenido al sistema!', 'auth' => $arrAuth);
+                    }
+
+                    if ($authSuccess) {
+                        // 4. Migrar password si es necesario
+                        if ($migrationNeeded) {
+                            $newHash = password_hash($strPassword, PASSWORD_DEFAULT);
+                            $this->model->updatePassword($requestUser['id_usuario'], $newHash);
+                        }
+
+                        $tokenRequest = getTokenApi();
+
+                        if ($tokenRequest['status']) {
+
+                            // ESTRATEGIA TOKEN LOCAL:
+                            // Ignoramos el token externo para la sesión y generamos uno propio
+                            // que incluya el ID del usuario local para validaciones.
+                            $arrAuth = [];
+                            $token_payload = array(
+                                'id_usuario' => $requestUser['id_usuario'],
+                                'scope' => 'Sistema Voting',
+                                'iat' => time(),
+                                'exp' => time() + (60 * 60 * 24) // 24 Horas
+                            );
+                            $token_custom = JWT::encode($token_payload, KEY_SECRET, 'HS512');
+
+                            $arrAuth['access_token'] = $token_custom; // Enviamos NUESTRO token
+                            $arrAuth['id_usuario'] = $requestUser['id_usuario'];
+                            $arrAuth['nombre_usuario'] = $requestUser['nombres_usuario'] . ' ' . $requestUser['apellidos_usuario'];
+                            $arrAuth['email_usuario'] = $strEmail;
+                            $arrAuth['rol_usuario'] = $requestUser['rol_usuario'];
+                            $arrAuth['telefono_usuario'] = $requestUser['telefono_usuario'];
+                            $arrAuth['nombre_rol'] = $requestUser['nombre_rol'];
+                            $_SESSION['login'] = true;
+                            $_SESSION['userData'] = $arrAuth; // GUARDAMOS DATOS DEL USUARIO EN SESION
+
+                            $requestPermisos = $this->model->permisosModulo($requestUser['rol_usuario']);
+                            $permisos = '';
+                            $permisosMod = '';
+
+                            if (count($requestPermisos) > 0) {
+                                $permisos = $requestPermisos;
+                                $permisosMod = isset($requestPermisos['id_modulo']) ? $requestPermisos['id_modulo'] : '';
+                            }
+                            $arrAuth['permisos'] = $permisos;
+                            $arrAuth['permisosMod'] = $permisosMod;
+                            $code = 200;
+                            $response = array('status' => true, 'msg' => '¡Bienvenido al sistema!', 'auth' => $arrAuth);
+                        } else {
+                            $response = array('status' => false, 'msg' => 'Error de autenticación');
+                            $code = 200;
+                        }
                     } else {
-                        $response = array('status' => false, 'msg' => 'Error de autenticación');
-                        $code = 200;
+                        $response = array('status' => false, 'msg' => 'El usuario o la contraseña es incorrecto.');
+                        $code = 400;
                     }
                 }
                 jsonResponse($response, $code);
