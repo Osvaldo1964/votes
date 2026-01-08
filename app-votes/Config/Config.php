@@ -26,3 +26,7 @@ const SPM = ","; //Separador millar
 
 //Simbolo de moneda
 const SMONEY = "$";
+
+// ReCAPTCHA v3 Keys
+const RECAPTCHA_SITE_KEY = "6Le2ikQsAAAAAJVqo_KpOrqhzdwpmLbM-vSTwjVh"; // Pega aquí tu Site Key
+const RECAPTCHA_SECRET_KEY = "6Le2ikQsAAAAAHPJkiMyCOQwhOGaEGKMdsNXMyMN"; // Pega aquí tu Secret Key
