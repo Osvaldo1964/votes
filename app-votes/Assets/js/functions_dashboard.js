@@ -56,23 +56,78 @@ async function fntGetDashboard() {
             let muniCant = [];
             if (res.dist_municipios) {
                 muniNombres = res.dist_municipios.map(m => m.municipio);
-                muniCant = res.dist_municipios.map(m => m.cantidad);
+                muniCant = res.dist_municipios.map(m => parseInt(m.cantidad));
             }
+
+            // Calcular Total para Porcentajes
+            let totalMuni = muniCant.reduce((a, b) => a + b, 0);
 
             if (document.getElementById('chartMunicipios')) {
                 var ctxMuni = document.getElementById('chartMunicipios').getContext('2d');
                 new Chart(ctxMuni, {
-                    type: 'doughnut',
+                    type: 'horizontalBar',
                     data: {
                         labels: muniNombres,
                         datasets: [{
+                            label: 'Electores',
                             data: muniCant,
-                            // Paleta Rosa Batalla
-                            backgroundColor: ['#E91E63', '#880E4F', '#C2185B', '#F48FB1', '#AD1457', '#FF4081']
+                            backgroundColor: [
+                                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                                '#FF9F40', '#C9CBCF', '#FF6384', '#36A2EB', '#FFCE56',
+                                '#00A65A', '#DC3545', '#6C757D', '#17A2B8', '#F012BE'
+                            ],
+                            borderColor: [
+                                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                                '#FF9F40', '#C9CBCF', '#FF6384', '#36A2EB', '#FFCE56',
+                                '#00A65A', '#DC3545', '#6C757D', '#17A2B8', '#F012BE'
+                            ],
+                            borderWidth: 1
                         }]
                     },
                     options: {
-                        legend: { position: 'right' }
+                        scales: {
+                            xAxes: [{
+                                ticks: { beginAtZero: true }
+                            }]
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: function (tooltipItem, data) {
+                                    let value = data.datasets[0].data[tooltipItem.index];
+                                    let percentage = totalMuni > 0 ? ((value / totalMuni) * 100).toFixed(1) + '%' : '0%';
+                                    return data.labels[tooltipItem.index] + ': ' + value + ' (' + percentage + ')';
+                                }
+                            }
+                        },
+                        animation: {
+                            onComplete: function () {
+                                var chartInstance = this.chart,
+                                    ctx = chartInstance.ctx;
+
+                                ctx.font = Chart.helpers.fontString(10, 'bold', Chart.defaults.global.defaultFontFamily);
+                                ctx.textAlign = 'left';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillStyle = '#000';
+
+                                this.data.datasets.forEach(function (dataset, i) {
+                                    var meta = chartInstance.controller.getDatasetMeta(i);
+                                    meta.data.forEach(function (bar, index) {
+                                        var data = dataset.data[index];
+                                        // Calcular porcentaje
+                                        var percentage = totalMuni > 0 ? ((data / totalMuni) * 100).toFixed(1) + '%' : '0%';
+                                        var labelText = data + " (" + percentage + ")";
+
+                                        // Posicion: bar._model.x es el final de la barra
+                                        ctx.fillText(labelText, bar._model.x + 5, bar._model.y);
+                                    });
+                                });
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                right: 60 // Espacio para etiquetas
+                            }
+                        }
                     }
                 });
             }

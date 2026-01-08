@@ -180,6 +180,10 @@
                             <li><a class="treeview-item" href="<?= base_url(); ?>ReporteTestigos"
                                     style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Reporte de Testigos</a>
                             </li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteImpugnaciones"
+                                    style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Reporte
+                                    Impugnaciones</a>
+                            </li>
                         </ul>
                     </li>
                     <!-- Nivel 2: Financieros -->
