@@ -24,6 +24,18 @@ class AgendaModel extends Mysql
         return $request;
     }
 
+    public function selectAgendaReport(string $inicio, string $fin)
+    {
+        // Lógica de superposición: (StartA <= EndB) and (EndA >= StartB)
+        $sql = "SELECT title, start, end, description 
+                FROM agenda 
+                WHERE status != 0 
+                AND (start <= '$fin' AND (end >= '$inicio' OR end IS NULL OR end = '0000-00-00 00:00:00')) 
+                ORDER BY start ASC";
+        $request = $this->select_all($sql);
+        return $request;
+    }
+
     public function selectEvento(int $id)
     {
         $this->intIdAgenda = $id;

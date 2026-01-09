@@ -37,8 +37,10 @@
 <script type="text/javascript" language="javascript"
   src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 
-<?php if ($data['page_name'] == "agenda") { ?>
+<?php if ($data['page_name'] == "agenda" || $data['page_name'] == "programa_agenda") { ?>
   <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+<?php } ?>
+<?php if ($data['page_name'] == "agenda") { ?>
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 <?php } ?>
 <script src="<?= media(); ?>/js/<?= $data['page_functions_js'] ?>"></script>

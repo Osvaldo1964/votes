@@ -156,10 +156,10 @@
                         </a>
                         <ul class="treeview-menu">
                             <!-- Nivel 3 -->
-                            <li><a class="treeview-item" href="<?= base_url(); ?>infelectores"
-                                    style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
-                            <li><a class="treeview-item" href="<?= base_url(); ?>ReporteElectoralCenso"
-                                    style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Informe ...</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>ProgramaAgenda"
+                                    style="padding-left: 40px;"><i class="icon fa fa-circle-o"></i> Programa Agenda</a></li>
+                            <li><a class="treeview-item" href="<?= base_url(); ?>otros" style="padding-left: 40px;"><i
+                                        class="icon fa fa-circle-o"></i> Otros......</a></li>
                         </ul>
                     </li>
                     <!-- Nivel 2: Electorales -->

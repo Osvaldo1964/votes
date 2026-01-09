@@ -49,26 +49,26 @@ class Agenda extends Controllers
     {
         if ($_POST) {
             if (empty($_POST['title']) || empty($_POST['start'])) {
-                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
+                $arrResponse = array('status' => false, 'msg' => 'Datos incorrectos.');
             } else {
                 $idEvento = intval($_POST['id']);
                 $strTitulo = strClean($_POST['title']);
                 $strDescripcion = strClean($_POST['description']);
                 $strColor = strClean($_POST['color']);
-                $strInicio = $_POST['start']; // FullCalendar envía string ISO
-                $strFin = !empty($_POST['end']) ? $_POST['end'] : $strInicio;
+                $strFechaInicio = strClean($_POST['start']);
+                $strFechaFin = !empty($_POST['end']) ? strClean($_POST['end']) : $strFechaInicio;
 
                 if ($idEvento == 0) {
-                    $request_evento = $this->model->insertEvento($strTitulo, $strInicio, $strFin, $strDescripcion, $strColor);
                     $option = 1;
+                    $request_agenda = $this->model->insertEvento($strTitulo, $strFechaInicio, $strFechaFin, $strDescripcion, $strColor);
                 } else {
-                    $request_evento = $this->model->updateEvento($idEvento, $strTitulo, $strInicio, $strFin, $strDescripcion, $strColor);
                     $option = 2;
+                    $request_agenda = $this->model->updateEvento($idEvento, $strTitulo, $strFechaInicio, $strFechaFin, $strDescripcion, $strColor);
                 }
 
-                if ($request_evento > 0) {
+                if ($request_agenda > 0) {
                     if ($option == 1) {
-                        $arrResponse = array('status' => true, 'msg' => 'Evento guardado correctamente.', 'id' => $request_evento);
+                        $arrResponse = array('status' => true, 'msg' => 'Evento guardado correctamente.');
                     } else {
                         $arrResponse = array('status' => true, 'msg' => 'Evento actualizado correctamente.');
                     }
@@ -76,7 +76,33 @@ class Agenda extends Controllers
                     $arrResponse = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
                 }
             }
-            jsonResponse($arrResponse, 200);
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
+    public function getAgendaReport()
+    {
+        if ($_POST) {
+            if (empty($_POST['fechaInicio']) || empty($_POST['fechaFin'])) {
+                $arrResponse = array('status' => false, 'msg' => 'Fechas incorrectas.');
+            } else {
+                $strFechaInicio = strClean($_POST['fechaInicio']);
+                $strFechaFin = strClean($_POST['fechaFin']); // . ' 23:59:59' si quieres incluir todo el día
+
+                // Si viene solo fecha YYYY-MM-DD, para comparar correctamente,
+                // aseguramos que Fin cubra el final del día si es necesario, 
+                // pero como es string comparison YYYY-MM-DDTHH:mm, depende del input.
+                // Asumiremos que el frontend manda YYYY-MM-DD o timestamp compatible.
+
+                $arrData = $this->model->selectAgendaReport($strFechaInicio, $strFechaFin);
+                if (empty($arrData)) {
+                    $arrResponse = array('status' => false, 'msg' => 'No hay eventos en este rango.');
+                } else {
+                    $arrResponse = array('status' => true, 'data' => $arrData);
+                }
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
         die();
     }
