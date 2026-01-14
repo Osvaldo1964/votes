@@ -11,13 +11,9 @@ class Home extends Controllers
 
     public function home()
     {
-        // Si no esta logueado -> Login
-        if (empty($_SESSION['login'])) {
-            header('Location: ' . base_url() . '/login');
-        } else {
-            // Si esta logueado -> Dashboard
-            header('Location: ' . base_url() . '/dashboard');
-        }
-        die();
+        $data['page_tag'] = "Inicio - Campaña Chadan Rosado";
+        $data['page_title'] = "Inicio";
+        $data['page_name'] = "home";
+        $this->views->getView($this, "home", $data);
     }
 }

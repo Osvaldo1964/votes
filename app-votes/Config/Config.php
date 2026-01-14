@@ -1,8 +1,8 @@
 <?php
-const BASE_URL = "http://app-votes.com/";
+const BASE_URL = "https://chadanalacamara.com/";
 const API_OAUTH_JWT = "http://ovcauth-ovcsystems.com/oauthjwt/token";
 const API_VALID_JWT = "http://ovcauth-ovcsystems.com/oauthjwt/tokenValidate/";
-const BASE_URL_API = "http://localhost/votes/api-votes/";
+const BASE_URL_API = "https://api.chadanalacamara.com/";
 
 //Zona horaria
 date_default_timezone_set("America/Bogota");

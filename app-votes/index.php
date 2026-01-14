@@ -4,9 +4,34 @@ header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Conte
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Allow: GET, POST, PUT, DELETE");
 
-require_once("Config/Config.php");
-require_once("Helpers/Helpers.php");
-$url = !empty($_GET['url']) ? $_GET['url'] : "home/home";
+$configFile = "Config/Config.php";
+if (file_exists("Config/Config.php")) {
+    $configFile = "Config/Config.php";
+} elseif (file_exists("config/Config.php")) {
+    $configFile = "config/Config.php";
+} elseif (file_exists("config/config.php")) {
+    $configFile = "config/config.php";
+}
+require_once($configFile);
+$helpersFile = "Helpers/Helpers.php";
+if (file_exists("Helpers/Helpers.php")) {
+    $helpersFile = "Helpers/Helpers.php";
+} elseif (file_exists("helpers/Helpers.php")) {
+    $helpersFile = "helpers/Helpers.php";
+} elseif (file_exists("helpers/helpers.php")) {
+    $helpersFile = "helpers/helpers.php";
+}
+require_once($helpersFile);
+$currentHost = $_SERVER['HTTP_HOST'];
+$isSubdomainAdmin = (strpos($currentHost, 'admin.') !== false);
+
+// Default route logic
+$defaultRoute = "home/home";
+if ($isSubdomainAdmin) {
+    $defaultRoute = "login/login";
+}
+
+$url = !empty($_GET['url']) ? $_GET['url'] : $defaultRoute;
 $arrUrl = explode("/", $url);
 $controller = $arrUrl[0];
 $method = $arrUrl[0];

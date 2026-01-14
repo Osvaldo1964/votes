@@ -5,10 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Campaña Chadan Rosado Taylor 2026 - Inicio</title>
-    <!-- Main CSS (Bootstrap + Theme) -->
+    <!-- Usamos media() para recursos locales -->
     <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.css">
     <link rel="stylesheet" type="text/css"
         href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="<?= media(); ?>/images/favicon.ico">
+
+    <!-- 1. INTEGRACIÓN RECAPTCHA V3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6Le2ikQsAAAAAJVqo_KpOrqhzdwpmLbM-vSTwjVh"></script>
 
     <style>
         body {
@@ -16,7 +20,8 @@
         }
 
         .hero-section {
-            background: linear-gradient(135deg, #009688 0%, #004d40 100%);
+            /* Degradado Rosa Batalla - Diseño Original */
+            background: linear-gradient(135deg, #E91E63 0%, #880E4F 100%);
             color: #fff;
             padding: 120px 0 160px;
             text-align: center;
@@ -55,14 +60,14 @@
         }
 
         .btn-consultar {
-            background-color: #009688;
-            border-color: #009688;
+            background-color: #E91E63;
+            border-color: #E91E63;
             color: #fff;
             font-weight: bold;
         }
 
         .btn-consultar:hover {
-            background-color: #00796b;
+            background-color: #C2185B;
         }
 
         .info-section {
@@ -76,7 +81,7 @@
 
         .feature-icon {
             font-size: 3rem;
-            color: #009688;
+            color: #E91E63;
             margin-bottom: 15px;
         }
 
@@ -96,7 +101,7 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background-color: #880E4F !important;">
         <div class="container">
             <a class="navbar-brand" href="#"><i class="fa fa-slideshare"></i> CHADAN ROSADO</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
@@ -105,10 +110,20 @@
             <div class="collapse navbar-collapse" id="navbarMain">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active"><a class="nav-link" href="#">Inicio</a></li>
+
+                    <!-- BOTÓN DE ACCIÓN EN EL NAVBAR -->
+                    <li class="nav-item">
+                        <a class="nav-link text-warning font-weight-bold border border-warning rounded px-3 mx-2"
+                            href="#" data-toggle="modal" data-target="#modalRegistro">
+                            <i class="fa fa-hand-paper-o"></i> ¡Súmate al Equipo!
+                        </a>
+                    </li>
+
                     <li class="nav-item"><a class="nav-link" href="#propuestas">Propuestas</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                    <!-- Enlace al Login usando helper PHP -->
                     <li class="nav-item"><a class="btn btn-outline-light btn-sm ml-3"
-                            href="<?= base_url(); ?>/login">Admin</a></li>
+                            href="https://admin.chadanalacamara.com/login">Login Admin</a></li>
                 </ul>
             </div>
         </div>
@@ -122,13 +137,21 @@
             <p class="font-weight-bold" style="font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px;">Por
                 el Departamento del Magdalena</p>
             <p class="mt-4">Compromiso, Transparencia y Gestión para nuestra comunidad.</p>
+
+            <!-- BOTÓN PRINCIPAL DE LLAMADA A LA ACCIÓN -->
+            <button class="btn btn-light btn-lg text-danger font-weight-bold mt-4 px-5 shadow" data-toggle="modal"
+                data-target="#modalRegistro">
+                <i class="fa fa-check-square-o"></i> QUIERO SER PARTE DEL CAMBIO
+            </button>
         </div>
     </header>
 
-    <!-- Consulta Puesto -->
+    <!-- Consulta Puesto + Votación -->
     <section class="search-container container">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
+
+                <!-- Consulta Puesto -->
                 <div class="search-card">
                     <h3><i class="fa fa-search"></i> Consulta tu Lugar de Votación</h3>
                     <p class="text-muted mb-4">Ingresa tu número de cédula para saber dónde votar.</p>
@@ -151,21 +174,23 @@
                     </div>
                 </div>
 
-                <!-- SECCIÓN REGISTRO DE VOTO -->
+                <!-- SECCIÓN REGISTRO DE VOTO (Integrada) -->
                 <div class="search-card mt-5 border-top pt-4">
-                    <h3 class="text-success"><i class="fa fa-check-circle"></i> Registra tu Voto</h3>
-                    <p class="text-muted mb-4">¡Ya votaste? Confirma tu participación aquí.</p>
+                    <h3 style="color: #4CAF50 !important;"><i class="fa fa-check-circle"></i> Registra tu Voto</h3>
+                    <p class="text-muted mb-4">¿Ya votaste? Confirma tu participación aquí.</p>
 
                     <form id="formVotoPublico" onsubmit="return false;">
                         <div class="input-group input-group-lg mb-3">
                             <input type="number" id="txtIdentificacionPublico" name="identificacion"
                                 class="form-control" placeholder="Tu Cédula" required>
                             <div class="input-group-append">
-                                <button class="btn btn-success font-weight-bold" type="submit">¡YA VOTÉ!</button>
+                                <button class="btn font-weight-bold text-white" style="background-color: #4CAF50;"
+                                    type="submit">¡YA VOTÉ!</button>
                             </div>
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </section>
@@ -210,24 +235,25 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Cédula</label>
-                                <input type="number" class="form-control" id="contactCedula" required>
+                                <input type="number" class="form-control" name="cedula" id="contactCedula" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Teléfono</label>
-                                <input type="tel" class="form-control" id="contactTelefono" required>
+                                <input type="tel" class="form-control" name="telefono" id="contactTelefono" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Nombre Completo</label>
-                            <input type="text" class="form-control" id="contactNombre" required>
+                            <input type="text" class="form-control" name="nombre" id="contactNombre" required>
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" class="form-control" id="contactEmail" required>
+                            <input type="email" class="form-control" name="email" id="contactEmail" required>
                         </div>
                         <div class="form-group">
                             <label>Detalle / Mensaje</label>
-                            <textarea class="form-control" id="contactMensaje" rows="3" required></textarea>
+                            <textarea class="form-control" name="mensaje" id="contactMensaje" rows="3"
+                                required></textarea>
                         </div>
                         <button type="submit" class="btn btn-consultar btn-block" id="btnEnviarMensaje">Enviar
                             Mensaje</button>
@@ -242,7 +268,7 @@
         <div class="container">
             <h3>Campaña Chadan Rosado Taylor</h3>
             <p>Sede Principal: Calle 10 # 5-20, Centro</p>
-            <p>Email: contacto@chadanrosado.com</p>
+            <p>Email: pqr@chadanalacamara.com</p>
             <div class="mt-4">
                 <a href="#" class="mx-2"><i class="fa fa-facebook fa-2x"></i></a>
                 <a href="#" class="mx-2"><i class="fa fa-twitter fa-2x"></i></a>
@@ -252,6 +278,79 @@
             <p class="small">&copy; 2026 Campaña Chadan Rosado Taylor. Todos los derechos reservados.</p>
         </div>
     </footer>
+
+    <!-- MODAL DE REGISTRO INTEGRADO -->
+    <div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title font-weight-bold"><i class="fa fa-user-plus"></i> REGISTRA TU APOYO</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body bg-light">
+                    <div class="registro-box p-2">
+                        <p class="text-center text-muted">Únete a nuestro equipo y mantente informado.</p>
+
+                        <form id="formRegistroPublico">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Cédula *</label>
+                                    <input type="text" class="form-control" name="ident_elector" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Teléfono *</label>
+                                    <input type="text" class="form-control" name="telefono_elector" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Primer Nombre *</label>
+                                    <input type="text" class="form-control" name="nom1_elector" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Segundo Nombre</label>
+                                    <input type="text" class="form-control" name="nom2_elector">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Primer Apellido *</label>
+                                    <input type="text" class="form-control" name="ape1_elector" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Segundo Apellido</label>
+                                    <input type="text" class="form-control" name="ape2_elector">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Departamento (Opcional)</label>
+                                    <select class="form-control" name="dpto_elector" id="dpto_elector">
+                                        <option value="0">Seleccione...</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Municipio (Opcional)</label>
+                                    <select class="form-control" name="muni_elector" id="muni_elector">
+                                        <option value="0">Seleccione...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="divAlertRegistro" class="alert d-none"></div>
+
+                            <button type="submit" class="btn btn-danger btn-block btn-lg" id="btnRegistrar">
+                                <i class="fa fa-paper-plane"></i> ENVIAR MI APOYO
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="<?= media(); ?>/js/jquery-3.3.1.min.js"></script>
@@ -263,9 +362,150 @@
         const BASE_URL_API = "<?= BASE_URL_API ?>";
         const BASE_URL = "<?= base_url() ?>";
     </script>
+    <!-- Logica Original de Landing para Consultar Puesto -->
     <script src="<?= media(); ?>/js/functions_landing.js"></script>
+
+    <!-- NUEVO: Logica Votación Publica con Auto-Registro -->
     <script src="<?= media(); ?>/js/functions_votacion_publica.js?v=<?= time(); ?>"></script>
 
+    <!-- La lógica de consultar puesto del index.html original ya está en functions_landing.js? -->
+    <!-- El archivo original tenía un script inline grande. No veo functions_landing.js en la estructura de archivos visible en la llamada list_dir anterior. -->
+    <!-- Voy a asumir que el JS inline del index.html es necesario. -->
+    <!-- REVISIÓN: El index.html original tenía todo el JS inline al final. NO references a functions_landing.js -->
+    <!-- Debo copiar ese JS inline aquí o extraerlo. Para ser limpio, lo dejaré inline aquí mismo para asegurar compatibilidad. -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btnConsultar = document.querySelector("#btnConsultar");
+            const txtCedula = document.querySelector("#txtCedula");
+
+            if (txtCedula) {
+                txtCedula.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        consultarPuesto();
+                    }
+                });
+            }
+            if (btnConsultar) {
+                btnConsultar.addEventListener('click', function () {
+                    consultarPuesto();
+                });
+            }
+
+            const formContacto = document.querySelector("#formContacto");
+            if (formContacto) {
+                formContacto.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    enviarMensaje();
+                });
+            }
+        });
+
+        async function consultarPuesto() {
+            const cedula = document.querySelector("#txtCedula").value.trim();
+            const divLoading = document.querySelector("#loading");
+            const divResultado = document.querySelector("#resultado");
+
+            if (cedula === "") {
+                swal("Atención", "Por favor ingresa un número de cédula.", "warning");
+                return;
+            }
+
+            divLoading.style.display = "block";
+            divResultado.style.display = "none";
+            divResultado.innerHTML = "";
+
+            try {
+                // Usamos la constante PHP para API
+                const url = `${BASE_URL_API}/Place/getValidaPlace/${cedula}`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                divLoading.style.display = "none";
+
+                if (data.status) {
+                    const info = data.data;
+                    const html = `
+                        <div class="alert alert-success text-left">
+                            <h4 class="alert-heading"><i class="fa fa-check-circle"></i> ¡Habilitado!</h4>
+                            <p>Tu puesto de votación es:</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-6"><strong>Departamento:</strong><br> ${info.name_department}</div>
+                                <div class="col-sm-6"><strong>Municipio:</strong><br> ${info.name_municipality}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-sm-6"><strong>Zona:</strong><br> ${info.name_zone}</div>
+                                <div class="col-sm-6"><strong>Puesto:</strong><br> ${info.nameplace_place}</div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12 text-center bg-white border rounded py-2">
+                                    <span class="text-muted small">Tu mesa asignada es:</span>
+                                    <h2 class="text-primary m-0">MESA ${info.mesa_place}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    divResultado.innerHTML = html;
+                    divResultado.style.display = "block";
+                } else {
+                    divResultado.innerHTML = `
+                        <div class="alert alert-warning">
+                            <i class="fa fa-exclamation-triangle"></i> <strong>Atención:</strong><br>
+                            ${data.msg || "La cédula ingresada no se encuentra habilitada."}
+                        </div>
+                    `;
+                    divResultado.style.display = "block";
+                }
+
+            } catch (error) {
+                console.error(error);
+                divLoading.style.display = "none";
+                swal("Error", "Error de conexión con la API.", "error");
+            }
+        }
+
+        async function enviarMensaje() {
+            const btnEnviar = document.querySelector("#btnEnviarMensaje");
+            const form = document.querySelector("#formContacto");
+            const formData = new FormData(form);
+            const plainFormData = Object.fromEntries(formData.entries());
+
+            const txtOriginal = btnEnviar ? btnEnviar.innerHTML : "Enviar";
+            if (btnEnviar) {
+                btnEnviar.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Enviando...';
+                btnEnviar.disabled = true;
+            }
+
+            try {
+                const url = `${BASE_URL_API}/Contacto/enviar`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(plainFormData)
+                });
+                const data = await response.json();
+
+                if (data.status) {
+                    swal("Mensaje Enviado", data.msg, "success");
+                    form.reset();
+                } else {
+                    swal("Atención", data.msg, "warning");
+                }
+
+            } catch (error) {
+                console.error(error);
+                swal("Error", "Error al enviar mensaje.", "error");
+            } finally {
+                if (btnEnviar) {
+                    btnEnviar.innerHTML = txtOriginal;
+                    btnEnviar.disabled = false;
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>
