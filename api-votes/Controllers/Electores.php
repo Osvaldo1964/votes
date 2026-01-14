@@ -194,12 +194,15 @@ class Electores extends Controllers
         if (empty($requestPlace)) {
             $response = array('status' => false, 'msg' => 'Datos no encontrados en el censo');
         } else {
-            // Retornamos los datos del censo y la bandera de si ya está registrado
+            // Retornamos los datos del censo
+            // Ahora is_registered NO debe bloquear.
+            // Enviamos un flag 'allow_vote' = true siempre que esté en el censo.
             $response = array(
                 'status' => true,
                 'msg' => 'Datos encontrados',
                 'data' => $requestPlace,
-                'is_registered' => $isRegistered,
+                'is_registered' => $isRegistered, // Mantenemos para info visual si se requiere
+                'allow_vote' => true, // Nueva bandera explicita
                 'elector_data' => $checkDuplicate // Contiene poll_elector y id_elector
             );
         }

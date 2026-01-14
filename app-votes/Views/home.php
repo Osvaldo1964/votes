@@ -7,7 +7,8 @@
     <title>Campaña Chadan Rosado Taylor 2026 - Inicio</title>
     <!-- Main CSS (Bootstrap + Theme) -->
     <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.css">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
         body {
@@ -106,7 +107,8 @@
                     <li class="nav-item active"><a class="nav-link" href="#">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="#propuestas">Propuestas</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
-                    <li class="nav-item"><a class="btn btn-outline-light btn-sm ml-3" href="<?= base_url(); ?>/login">Admin</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-light btn-sm ml-3"
+                            href="<?= base_url(); ?>/login">Admin</a></li>
                 </ul>
             </div>
         </div>
@@ -117,7 +119,8 @@
         <div class="container">
             <h1>Chadan Rosado Taylor</h1>
             <h3 class="mb-3" style="font-weight: 300;">Candidato a la Cámara de Representantes de Colombia</h3>
-            <p class="font-weight-bold" style="font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px;">Por el Departamento del Magdalena</p>
+            <p class="font-weight-bold" style="font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px;">Por
+                el Departamento del Magdalena</p>
             <p class="mt-4">Compromiso, Transparencia y Gestión para nuestra comunidad.</p>
         </div>
     </header>
@@ -132,7 +135,8 @@
 
                     <form id="formConsulta" onsubmit="return false;">
                         <div class="input-group input-group-lg mb-3">
-                            <input type="number" id="txtCedula" class="form-control" placeholder="Ej: 12345678" required>
+                            <input type="number" id="txtCedula" class="form-control" placeholder="Ej: 12345678"
+                                required>
                             <div class="input-group-append">
                                 <button class="btn btn-consultar" type="button" id="btnConsultar">Consultar</button>
                             </div>
@@ -145,6 +149,22 @@
 
                     <div id="resultado" class="mt-4" style="display:none;">
                     </div>
+                </div>
+
+                <!-- SECCIÓN REGISTRO DE VOTO -->
+                <div class="search-card mt-5 border-top pt-4">
+                    <h3 class="text-success"><i class="fa fa-check-circle"></i> Registra tu Voto</h3>
+                    <p class="text-muted mb-4">¡Ya votaste? Confirma tu participación aquí.</p>
+
+                    <form id="formVotoPublico" onsubmit="return false;">
+                        <div class="input-group input-group-lg mb-3">
+                            <input type="number" id="txtIdentificacionPublico" name="identificacion"
+                                class="form-control" placeholder="Tu Cédula" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-success font-weight-bold" type="submit">¡YA VOTÉ!</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -209,7 +229,8 @@
                             <label>Detalle / Mensaje</label>
                             <textarea class="form-control" id="contactMensaje" rows="3" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-consultar btn-block" id="btnEnviarMensaje">Enviar Mensaje</button>
+                        <button type="submit" class="btn btn-consultar btn-block" id="btnEnviarMensaje">Enviar
+                            Mensaje</button>
                     </form>
                 </div>
             </div>
@@ -243,6 +264,7 @@
         const BASE_URL = "<?= base_url() ?>";
     </script>
     <script src="<?= media(); ?>/js/functions_landing.js"></script>
+    <script src="<?= media(); ?>/js/functions_votacion_publica.js?v=<?= time(); ?>"></script>
 
 </body>
 

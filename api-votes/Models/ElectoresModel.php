@@ -224,28 +224,81 @@ class ElectoresModel extends Mysql
     {
         $this->strCedula = $identificacion;
 
-        // 1. Buscar elector y verificar estado actual del voto
+        // 1. Verificar si existe en ELECTORES
         $sql = "SELECT id_elector, poll_elector FROM electores WHERE ident_elector = ? AND estado_elector != 0";
         $arrData = array($this->strCedula);
         $request = $this->select($sql, $arrData);
 
-        if (empty($request)) {
-            return "not_found";
+        if (!empty($request)) {
+            // A. YA EXISTE EN ELECTORES
+            $estadoVoto = intval($request['poll_elector']);
+            if ($estadoVoto >= 1) {
+                return "voted";
+            }
+            // Actualizar Voto
+            $sql_update = "UPDATE electores SET poll_elector = ? WHERE id_elector = ?";
+            $arrUpdate = array(1, $request['id_elector']);
+            $request_update = $this->update($sql_update, $arrUpdate);
+            return $request_update;
+        } else {
+            // B. NO EXISTE EN ELECTORES -> BUSCAR EN CENSO (PLACES)
+            // Usamos selectPlace que ya hace el JOIN correcto
+            $placeData = $this->selectPlace($this->strCedula);
+
+            if (empty($placeData)) {
+                return "not_found"; // No está ni en electores ni en censo
+            }
+
+            // C. AUTO-REGISTRO
+            // Insertamos en electores usando los datos del Censo
+            // Mapeo de datos: places -> electores
+            
+            // Asignamos valores por defecto para lo que no tiene el censo
+            $telefono = "";
+            $email = "";
+            $direccion = "";
+            $lider = 0; // Sin lider asignado (o un ID por defecto para "Voto Publico")
+            $estado = 1; // Activo
+            $insc = 0;
+            
+            // Extraer IDs de ubicacion. 
+            // IMPORTANTE: selectPlace devuelve NOMBRES (JOINED), necesitamos IDs para insertar?
+            // Re-check selectPlace: devuelve name_department, no id.
+            // Necesitamos los IDs. Haremos query simple a places para sacar los IDs crudos.
+            
+            $sqlPlaceRaw = "SELECT * FROM places WHERE ident_place = ?";
+            $arrPlaceRaw = $this->select($sqlPlaceRaw, array($this->strCedula));
+            
+            if(empty($arrPlaceRaw)) return "not_found"; // Redundante pero seguro
+
+            $dpto = $arrPlaceRaw['iddpto_place'];
+            $muni = $arrPlaceRaw['idmuni_place'];
+            // $zona = $arrPlaceRaw['idzona_place']; // Electores no guarda zona/puesto/mesa explícitamente en campos separados usualmente, o usa dpto/muni. 
+            // ElectoresModel::insertElector usa dpto, muni.
+
+            $nom1 = $arrPlaceRaw['nom1_place'];
+            $nom2 = $arrPlaceRaw['nom2_place'];
+            $ape1 = $arrPlaceRaw['ape1_place'];
+            $ape2 = $arrPlaceRaw['ape2_place'];
+
+            $insert = $this->insertElector(
+                $this->strCedula, 
+                $ape1, $ape2, $nom1, $nom2, 
+                $telefono, $email, 
+                $dpto, $muni, $direccion, 
+                $lider, $estado, $insc
+            );
+
+            if($insert > 0 && $insert != 'exist') {
+                 // D. MARCAR VOTO AL RECIEN CREADO
+                 $sql_update = "UPDATE electores SET poll_elector = ? WHERE id_elector = ?";
+                 $arrUpdate = array(1, $insert); // $insert es el ID nuevo
+                 $request_update = $this->update($sql_update, $arrUpdate);
+                 return $request_update;
+            } else {
+                return false; 
+            }
         }
-
-        // Validación robusta: Convertir a entero y verificar si es mayor o igual a 1
-        $estadoVoto = intval($request['poll_elector']);
-
-        if ($estadoVoto >= 1) {
-            return "voted";
-        }
-
-        // 2. Registrar el voto (cambiar a 1)
-        $sql_update = "UPDATE electores SET poll_elector = ? WHERE id_elector = ?";
-        $arrUpdate = array(1, $request['id_elector']);
-        $request_update = $this->update($sql_update, $arrUpdate);
-
-        return $request_update;
     }
 
     public function selectElectorByIdent(string $identificacion)

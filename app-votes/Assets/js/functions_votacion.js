@@ -33,11 +33,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // CASO 2: No registrado en Electores
+            // CASO 2: No registrado en Electores -> Se permite AUTO-REGISTRO
+            // if (!info.is_registered) { ... } -> ELIMINADO BLOQUEO
             if (!info.is_registered) {
-                swal("Atención", "Este elector NO está registrado en la base de datos de Electores. Debe registrarlo primero.", "warning");
-                resetUI();
-                return;
+                // Opcional: Mostrar un aviso no bloqueante o cambiar el texto de confirmación
+                // Por ahora permitimos pasar calladamente, el backend lo creará.
             }
 
             // CASO 3: YA VOTÓ (Validación Previa)
