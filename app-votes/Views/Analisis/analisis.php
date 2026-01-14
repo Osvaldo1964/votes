@@ -49,14 +49,7 @@ headerAdmin($data);
                                 </select>
                             </div>
 
-                            <!-- Filtro Candidato (Vital) -->
-                            <div class="form-group col-md-3">
-                                <label for="listCandidato" class="text-danger">Candidato a Auditar</label>
-                                <select class="form-control selectpicker" id="listCandidato" name="listCandidato"
-                                    data-live-search="true" data-size="5" required>
-                                    <option value="" selected>Seleccione...</option>
-                                </select>
-                            </div>
+
                         </div>
                         <div class="form-row text-center">
                             <div class="col-md-12">

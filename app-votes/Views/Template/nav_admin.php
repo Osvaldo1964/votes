@@ -24,15 +24,23 @@
         <?php if (!empty($_SESSION['permisos'][2]['r_permiso'])) { ?>
             <li class="treeview">
                 <a class="app-menu__item" href="#" data-toggle="treeview">
-                    <i class="app-menu__icon fa fa-id-card" aria-hidden="true"></i>
-                    <span class="app-menu__label">Usuarios</span>
+                    <i class="app-menu__icon fa fa-cogs" aria-hidden="true"></i>
+                    <span class="app-menu__label">Configuración</span>
                     <i class="treeview-indicator fa fa-angle-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a class="treeview-item" href="<?= base_url(); ?>usuarios"><i class="icon fa fa-circle-o"></i>
-                            Usuarios</a></li>
+                    <?php if ($_SESSION['userData']['id_usuario'] == 1) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>parametros"><i class="icon fa fa-circle-o"></i>
+                                Parámetros</a></li>
+                    <?php } ?>
+                    <?php if (!empty($_SESSION['permisos'][19]['r_permiso'])) { ?>
+                        <li><a class="treeview-item" href="<?= base_url(); ?>modulos"><i class="icon fa fa-circle-o"></i>
+                                Módulos</a></li>
+                    <?php } ?>
                     <li><a class="treeview-item" href="<?= base_url(); ?>roles"><i class="icon fa fa-circle-o"></i>
                             Roles</a></li>
+                    <li><a class="treeview-item" href="<?= base_url(); ?>usuarios"><i class="icon fa fa-circle-o"></i>
+                            Usuarios</a></li>
                 </ul>
             </li>
         <?php } ?>

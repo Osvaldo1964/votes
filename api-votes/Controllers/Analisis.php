@@ -6,17 +6,7 @@ class Analisis extends Controllers
         parent::__construct();
     }
 
-    public function getCandidatos()
-    {
-        $arrData = $this->model->selectCandidatos();
-        if (empty($arrData)) {
-            $arrResponse = array("status" => false, "msg" => 'No hay candidatos activos');
-        } else {
-            $arrResponse = array("status" => true, "data" => $arrData);
-        }
-        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-        die();
-    }
+
 
     public function getReporte()
     {
@@ -24,15 +14,14 @@ class Analisis extends Controllers
         $muni = $_POST['muni'] ?? '';
         $zona = $_POST['zona'] ?? '';
         $puesto = $_POST['puesto'] ?? '';
-        $idCandidato = $_POST['idCandidato'] ?? '';
 
-        if (empty($dpto) || empty($muni) || empty($idCandidato)) {
-            $arrResponse = array("status" => false, "msg" => 'Faltan datos obligatorios (Ubicación o Candidato)');
+        if (empty($dpto) || empty($muni)) {
+            $arrResponse = array("status" => false, "msg" => 'Faltan datos obligatorios (Ubicación)');
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             die();
         }
 
-        $arrData = $this->model->selectReporteAnalisis($dpto, $muni, $zona, $puesto, $idCandidato);
+        $arrData = $this->model->selectReporteAnalisis($dpto, $muni, $zona, $puesto);
 
         // Calcular Totales
         $totCenso = 0;

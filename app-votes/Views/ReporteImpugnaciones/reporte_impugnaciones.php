@@ -60,15 +60,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="listCandidato">Candidato a Analizar (vs E-14)</label>
-                                    <select class="form-control selectpicker" id="listCandidato" name="listCandidato"
-                                        data-live-search="true" data-size="5" required>
-                                        <option value="">Seleccione...</option>
-                                    </select>
-                                </div>
-                            </div>
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="txtPorcentaje">Porcentaje Esperado (%)</label>

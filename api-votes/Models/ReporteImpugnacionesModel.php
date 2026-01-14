@@ -17,7 +17,7 @@ class ReporteImpugnacionesModel extends Mysql
         return $request;
     }
 
-    public function selectReporteImpugnaciones($dpto, $muni, $zona, $puesto, $idCandidato, $porcentaje)
+    public function selectReporteImpugnaciones($dpto, $muni, $zona, $puesto, $porcentaje)
     {
         $wherePlaces = " WHERE p.iddpto_place = $dpto AND p.idmuni_place = $muni ";
 
@@ -26,6 +26,15 @@ class ReporteImpugnacionesModel extends Mysql
         }
         if ($puesto != "" && $puesto != "todos") {
             $wherePlaces .= " AND p.nameplace_place = '$puesto' ";
+        }
+
+        // Obtener ID Candidato Oficial
+        $sqlParam = "SELECT canditado as id_candidato FROM parametros LIMIT 1";
+        $requestParam = $this->select($sqlParam, array());
+
+        $idCandidato = 0;
+        if (!empty($requestParam) && !empty($requestParam['id_candidato'])) {
+            $idCandidato = $requestParam['id_candidato'];
         }
 
         /*

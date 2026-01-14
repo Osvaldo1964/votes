@@ -17,10 +17,23 @@ class AnalisisModel extends Mysql
         return $request;
     }
 
-    public function selectReporteAnalisis($dpto, $muni, $zona, $puesto, $idCandidato)
+    public function selectReporteAnalisis($dpto, $muni, $zona, $puesto)
     {
-        $wherePlaces = " WHERE p.iddpto_place = $dpto AND p.idmuni_place = $muni ";
+        // Obtener el ID del Candidato Oficial desde Parámetros
+        // New Schema: canditado holds the ID.
+        $sqlParam = "SELECT canditado as id_candidato FROM parametros LIMIT 1";
+        $requestParam = $this->select($sqlParam, array());
 
+        if (empty($requestParam) || empty($requestParam['id_candidato'])) {
+            // Si no hay parámetro configurado, retornamos vacío o error controlado en Controller.
+            // Retornamos array vacio para que no rompa, pero idealmente el controller valida.
+            return [];
+        }
+
+        $idCandidato = $requestParam['id_candidato'];
+
+        $wherePlaces = " WHERE p.iddpto_place = $dpto AND p.idmuni_place = $muni ";
+        // ... (rest of filtering logic)
         if ($zona != "" && $zona != "todas") {
             $wherePlaces .= " AND p.idzona_place = $zona ";
         }
@@ -28,15 +41,7 @@ class AnalisisModel extends Mysql
             $wherePlaces .= " AND p.nameplace_place = '$puesto' ";
         }
 
-        /*
-            LOGICA ANALISIS (AUDITORIA E-14):
-            Col 1: Mesa
-            Col 2: Censo Mesa (COUNT places)
-            Col 3: Mi Potencial (COUNT electores)
-            Col 4: Mis Testigos (COUNT poll=1)
-            Col 5: E-14 (SUM bodyresultado.votos) para el candidato seleccionado
-        */
-
+        // Logic remains the same, just using $idCandidato variable
         $sql = "SELECT 
                     p.mesa_place as mesa,
                     COUNT(DISTINCT p.id_place) as censo_mesa,
@@ -44,9 +49,7 @@ class AnalisisModel extends Mysql
                     SUM(CASE WHEN e.poll_elector = 1 THEN 1 ELSE 0 END) as mis_testigos,
                     COALESCE(SUM(br.votos_bodyresultado), 0) as votos_e14
                 FROM places p
-                -- Join Electores (Left, porque puede haber mesas sin mis electores)
                 LEFT JOIN electores e ON p.ident_place = e.ident_elector AND e.estado_elector != 0 AND e.insc_elector = 1
-                -- Join Resultados (Left, porque puede no haber E-14 cargado aun)
                 LEFT JOIN headresultado hr ON hr.place_headresultado = p.id_place AND hr.estado_headresultado != 0
                 LEFT JOIN bodyresultado br ON br.head_bodyresultado = hr.id_headresultado 
                                            AND br.candidato_bodyresultado = $idCandidato 

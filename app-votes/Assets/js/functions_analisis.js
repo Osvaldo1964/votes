@@ -1,7 +1,7 @@
 
+
 document.addEventListener('DOMContentLoaded', function () {
     fntGetDepartamentos();
-    fntGetCandidatos(); // Cargar candidatos al inicio
 
     // Listeners Cascadas Location
     document.querySelector('#listDpto').addEventListener('change', function () {
@@ -84,29 +84,16 @@ async function fntGetPuestos(id) {
     } catch (e) { console.error(e); }
 }
 
-async function fntGetCandidatos() {
-    try {
-        const data = await fetchData(BASE_URL_API + '/analisis/getCandidatos');
-        let options = '<option value="">Seleccione...</option>';
-        if (data && data.status) {
-            data.data.forEach(c => {
-                options += `<option value="${c.id_candidato}">${c.nombre}</option>`;
-            });
-        }
-        document.querySelector('#listCandidato').innerHTML = options;
-        $('#listCandidato').selectpicker('refresh');
-    } catch (e) { console.error(e); }
-}
+
 
 async function fntViewReporte() {
     let dpto = document.querySelector('#listDpto').value;
     let muni = document.querySelector('#listMuni').value;
     let zona = document.querySelector('#listZona').value;
     let puesto = document.querySelector('#listPuesto').value;
-    let idCandidato = document.querySelector('#listCandidato').value;
 
-    if (!dpto || !muni || !idCandidato) {
-        swal("Atención", "Debe seleccionar Dpto, Municipio y Candidato.", "warning");
+    if (!dpto || !muni) {
+        swal("Atención", "Debe seleccionar Dpto y Municipio.", "warning");
         return;
     }
 
@@ -118,7 +105,6 @@ async function fntViewReporte() {
     formData.append('muni', muni);
     formData.append('zona', zona);
     formData.append('puesto', puesto);
-    formData.append('idCandidato', idCandidato);
 
     try {
         const data = await fetchData(BASE_URL_API + '/analisis/getReporte', 'POST', formData);

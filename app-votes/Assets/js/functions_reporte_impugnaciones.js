@@ -1,7 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     fntGetDepartamentos();
-    fntGetCandidatosSelect();
+
 
     // Listeners for Cascade Dropdowns
     document.querySelector('#listDpto').addEventListener('change', function () {
@@ -125,39 +125,16 @@ async function fntGetPuestos() {
     }
 }
 
-async function fntGetCandidatosSelect() {
-    const selector = document.querySelector('#listCandidato');
-    try {
-        const data = await fetchData(BASE_URL_API + '/candidatos/getSelectCandidatos');
-        let options = '<option value="">Seleccione...</option>';
-        if (data && data.status) {
-            data.data.forEach(c => {
-                let nombreCompleto = `${c.nom1_candidato} ${c.ape1_candidato}`;
-                // La API getSelectCandidatos devuelve estructura de candidatos table, ajustamos si es necesario
-                // Pero AnalisisModel usaba una query custom.
-                // Revolvamos a usar un endpoint que devuelve 'nombre'. 
-                // Si usamos el generico de candidatos:
-                if (c.nombre) nombreCompleto = c.nombre; // Si viene concatenado
 
-                options += `<option value="${c.id_candidato}">${nombreCompleto}</option>`;
-            });
-        }
-        selector.innerHTML = options;
-        $('#listCandidato').selectpicker('refresh');
-    } catch (error) {
-        console.error("Error cargando candidatos", error);
-    }
-}
 
 async function fntGetReporte() {
     const dpto = document.querySelector('#listDpto').value;
     const muni = document.querySelector('#listMuni').value;
     const zona = document.querySelector('#listZona').value || 'todas';
     const puesto = document.querySelector('#listPuesto').value || 'todos';
-    const candidato = document.querySelector('#listCandidato').value;
     const porcentaje = document.querySelector('#txtPorcentaje').value;
 
-    if (!dpto || !muni || !candidato || !porcentaje) {
+    if (!dpto || !muni || !porcentaje) {
         swal("Atención", "Todos los campos obligatorios deben ser diligenciados.", "error");
         return;
     }
@@ -167,7 +144,6 @@ async function fntGetReporte() {
     formData.append('muni', muni);
     formData.append('zona', zona);
     formData.append('puesto', puesto);
-    formData.append('candidato', candidato);
     formData.append('porcentaje', porcentaje);
 
     document.querySelector('#divResultados').style.display = 'block';
@@ -256,7 +232,7 @@ function fntViewReporte(data) {
 
 function fntImprimir() {
     const contenido = document.getElementById('divTableReporte').innerHTML;
-    const candidatoName = document.querySelector('#listCandidato option:checked').text;
+    // const candidatoName = document.querySelector('#listCandidato option:checked').text; // Ya no existe
     const porcentaje = document.querySelector('#txtPorcentaje').value;
 
     // Obtener header
@@ -272,7 +248,9 @@ function fntImprimir() {
 
     ventanaPro.document.write('<div class="container-fluid mt-4">');
     ventanaPro.document.write('<h4 class="text-center">REPORTE DE IMPUGNACIONES</h4>');
-    ventanaPro.document.write('<h5 class="text-center">Candidato: ' + candidatoName + '</h5>');
+    // ventanaPro.document.write('<h5 class="text-center">Candidato: ' + candidatoName + '</h5>'); // Podríamos traerlo del backend después, o quitarlo por ahora.
+    // Dejémoslo genérico o "Candidato Oficial"
+    ventanaPro.document.write('<h5 class="text-center">Candidato Oficial (Sistema)</h5>');
     ventanaPro.document.write('<h6 class="text-center">Criterio: Mesas con < ' + porcentaje + '% de fidelidad del potencial</h6>');
     ventanaPro.document.write('<hr>');
     ventanaPro.document.write(contenido);

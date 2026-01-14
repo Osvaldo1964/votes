@@ -4,6 +4,7 @@
   // Alias for legacy support or stylistic preference in JS files
   const BASE_URL = base_url;
   const BASE_URL_API = base_url_api;
+  const media = "<?= media(); ?>";
 </script>
 <!-- Essential javascripts for application to work-->
 <script src="<?= media(); ?>/js/jquery-3.3.1.min.js"></script>
@@ -43,7 +44,7 @@
 <?php if ($data['page_name'] == "agenda") { ?>
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 <?php } ?>
-<script src="<?= media(); ?>/js/<?= $data['page_functions_js'] ?>"></script>
+<script src="<?= media(); ?>/js/<?= $data['page_functions_js'] ?>?v=<?= time(); ?>"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     verificarExpiracionToken();
