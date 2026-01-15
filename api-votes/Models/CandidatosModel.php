@@ -72,7 +72,7 @@ class CandidatosModel extends Mysql
             $sql_insert = "INSERT INTO candidatos(ident_candidato, ape1_candidato, ape2_candidato, nom1_candidato,
                                      nom2_candidato, telefono_candidato, email_candidato, dpto_candidato, muni_candidato, direccion_candidato,
                                      curul_candidato, partido_candidato, estado_candidato)
-                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $arrData = array(
                 $this->strCedula,

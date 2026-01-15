@@ -16,19 +16,35 @@
     "partidos": [
         {
             "id": "1",
-            "nombre": "PARTIDO LIBERAL"
+            "nombre": "PARTIDO LIBERAL COLOMBIANO"
         },
         {
             "id": "2",
-            "nombre": "PARTIDO CONSERVADOR"
+            "nombre": "PARTIDO CONSERVADOR COLOMBIANO"
         },
         {
             "id": "3",
-            "nombre": "CENTRO DEMOCRÁTICO"
+            "nombre": "PARTIDO CENTRO DEMOCRÁTICO"
         },
         {
             "id": "4",
-            "nombre": "PARTIDO VERDE"
+            "nombre": "COALICION DEMOCRATA AMPLIA POR LA PAZ"
+        },
+        {
+            "id": "5",
+            "nombre": "COALICION SUMA"
+        },
+        {
+            "id": "6",
+            "nombre": "COALICION FUERZA CIUDADANA"
+        },
+        {
+            "id": "7",
+            "nombre": "PACTO HISTORICO MAGDALENA"
+        },
+        {
+            "id": "8",
+            "nombre": "PART. POLITICO ESPERANZA DEMOCRATICA"
         }
     ],
     "dptos": [
