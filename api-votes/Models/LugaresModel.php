@@ -29,8 +29,7 @@ class LugaresModel extends Mysql
 
         $sql = "SELECT DISTINCT z.id_zone, z.name_zone 
                 FROM zones z 
-                INNER JOIN puestos p ON p.idzona_puesto = z.id_zone
-                WHERE z.id_municipality_zone = $idMuni 
+                WHERE z.muni_zone = $idMuni 
                 ORDER BY z.name_zone";
 
         // Fallback si falla SQL por columna inexistente (comentar si es necesario):

@@ -22,13 +22,13 @@ class TestigosModel extends Mysql
         // Join con lugares para traer nombres de ubicación de TRABAJO (si están definidos)
         $sql = "SELECT t.id_testigo, t.elector_testigo, t.dpto_testigo, t.muni_testigo, t.zona_testigo, t.puesto_testigo, t.mesa_testigo, t.estado_testigo,
                        e.ident_elector, e.nom1_elector, e.nom2_elector, e.ape1_elector, e.ape2_elector, e.telefono_elector,
-                       d.name_department, m.name_municipality, z.name_zone, p.nameplace_place
+                       d.name_department, m.name_municipality, z.name_zone, p.nombre_puesto as nameplace_place
                 FROM testigos t
                 INNER JOIN electores e ON t.elector_testigo = e.id_elector
                 LEFT JOIN departments d ON t.dpto_testigo = d.id_department
                 LEFT JOIN municipalities m ON t.muni_testigo = m.id_municipality
                 LEFT JOIN zones z ON t.zona_testigo = z.id_zone
-                LEFT JOIN places p ON t.puesto_testigo = p.id_place
+                LEFT JOIN puestos p ON t.puesto_testigo = p.id_puesto
                 WHERE t.estado_testigo != 0
                 ORDER BY t.id_testigo DESC";
         $request = $this->select_all($sql);
