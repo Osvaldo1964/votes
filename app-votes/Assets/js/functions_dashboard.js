@@ -39,7 +39,7 @@ async function fntGetDashboard() {
                     data: {
                         labels: lideresNombres,
                         datasets: [{
-                            label: 'Electores Vinculados',
+                            label: 'Electores Registrados',
                             data: lideresCant,
                             backgroundColor: [
                                 '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
@@ -55,6 +55,11 @@ async function fntGetDashboard() {
                         }]
                     },
                     options: {
+                        legend: {
+                            labels: {
+                                boxWidth: 0 // Ocultar el cuadro de color de la leyenda
+                            }
+                        },
                         scales: {
                             xAxes: [{ ticks: { beginAtZero: true } }]
                         },
@@ -63,7 +68,7 @@ async function fntGetDashboard() {
                                 label: function (tooltipItem, data) {
                                     let value = data.datasets[0].data[tooltipItem.index];
                                     let percentage = totalLideres > 0 ? ((value / totalLideres) * 100).toFixed(1) + '%' : '0%';
-                                    return data.labels[tooltipItem.index] + ': ' + value + ' (' + percentage + ')';
+                                    return 'Electores: ' + value + ' (' + percentage + ')';
                                 }
                             }
                         },
@@ -89,12 +94,12 @@ async function fntGetDashboard() {
                                         var barWidth = bar._model.x;
 
                                         if (barWidth > (textWidth + padding + 10)) {
-                                            // Texto ADENTRO (Alineado a la derecha de la barra)
-                                            ctx.fillStyle = '#000'; // Negro para mejor contraste en la mayoría de colores pasteles
+                                            // Texto ADENTRO
+                                            ctx.fillStyle = '#fff'; // Blanco para contraste con Teal
                                             ctx.textAlign = 'right';
                                             ctx.fillText(labelText, bar._model.x - padding, bar._model.y);
                                         } else {
-                                            // Texto AFUERA (Si la barra es muy pequeña)
+                                            // Texto AFUERA
                                             ctx.fillStyle = '#000';
                                             ctx.textAlign = 'left';
                                             ctx.fillText(labelText, bar._model.x + padding, bar._model.y);
@@ -105,7 +110,7 @@ async function fntGetDashboard() {
                         },
                         layout: {
                             padding: {
-                                right: 60 // Espacio extra para etiquetas externas si son necesarias
+                                right: 60
                             }
                         }
                     }
@@ -130,7 +135,7 @@ async function fntGetDashboard() {
                     data: {
                         labels: muniNombres,
                         datasets: [{
-                            label: 'Electores',
+                            label: 'Electores Registrados',
                             data: muniCant,
                             backgroundColor: [
                                 '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
@@ -146,6 +151,11 @@ async function fntGetDashboard() {
                         }]
                     },
                     options: {
+                        legend: {
+                            labels: {
+                                boxWidth: 0 // Ocultar el cuadro de color
+                            }
+                        },
                         scales: {
                             xAxes: [{
                                 ticks: { beginAtZero: true }
