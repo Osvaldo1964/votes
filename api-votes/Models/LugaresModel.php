@@ -95,4 +95,15 @@ class LugaresModel extends Mysql
         $request = $this->select($sql, array());
         return $request;
     }
+    public function getMisVotos(int $idMesa)
+    {
+        // Contar electores registrados (tabla electores) que votan en esta mesa (join places)
+        // Se asume match por cedula (ident) ya que electores no tiene id_mesa directo
+        $sql = "SELECT COUNT(e.id_elector) as total
+                FROM electores e
+                INNER JOIN places p ON e.ident_elector = p.ident_place
+                WHERE p.id_mesa_new = $idMesa AND e.estado_elector != 0";
+        $request = $this->select($sql, array());
+        return $request;
+    }
 }

@@ -234,18 +234,46 @@ async function fntGetPotencial(idZona, nombrePuesto, nombreMesa) {
     formData.append('nombrePuesto', nombrePuesto);
     formData.append('nombreMesa', nombreMesa);
 
-    const url = BASE_URL_API + '/lugares/getPotencialMesa';
+    // 1. Obtener Potencial (Censo)
+    let potencial = 0;
     try {
+        const url = BASE_URL_API + '/lugares/getPotencialMesa';
         const data = await fetchData(url, 'POST', formData);
         if (data && data.status) {
-            // data.data debe traer { total: "XX" }
-            const total = data.data.total || data.data[0].total; // Protección por si viene array
-            document.querySelector('#lblTotalPotencial').innerHTML = total;
+            potencial = data.data.total || data.data[0].total;
+            document.querySelector('#lblTotalPotencial').innerHTML = potencial;
         } else {
             document.querySelector('#lblTotalPotencial').innerHTML = "0";
         }
     } catch (error) {
         console.error("Error obteniendo potencial", error);
+    }
+
+    // 2. Obtener Mis Votos (Electores Registrados)
+    // Usamos el ID de la mesa directamente del selector
+    const idMesa = document.querySelector('#listMesa').value;
+    let misVotos = 0;
+    if (idMesa) {
+        try {
+            const urlVotos = BASE_URL_API + '/lugares/getMisVotos/' + idMesa;
+            const dataVotos = await fetchData(urlVotos);
+            if (dataVotos && dataVotos.status) {
+                misVotos = dataVotos.data.total;
+                document.querySelector('#lblMisVotos').innerHTML = misVotos;
+            } else {
+                document.querySelector('#lblMisVotos').innerHTML = "0";
+            }
+        } catch (error) {
+            console.error("Error obteniendo mis votos", error);
+        }
+    }
+
+    // 3. Calcular Porcentaje
+    if (potencial > 0) {
+        const porcentaje = ((misVotos / potencial) * 100).toFixed(1);
+        document.querySelector('#lblPorcentaje').innerHTML = porcentaje + '%';
+    } else {
+        document.querySelector('#lblPorcentaje').innerHTML = "0%";
     }
 }
 

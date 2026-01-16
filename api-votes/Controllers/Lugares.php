@@ -125,4 +125,18 @@ class Lugares extends Controllers
         }
         die();
     }
+    public function getMisVotos($idMesa)
+    {
+        $idMesa = intval($idMesa);
+        if ($idMesa > 0) {
+            $arrData = $this->model->getMisVotos($idMesa);
+            if (empty($arrData)) {
+                $arrResponse = array('status' => false, 'data' => ['total' => 0]);
+            } else {
+                $arrResponse = array('status' => true, 'data' => $arrData);
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
 }
