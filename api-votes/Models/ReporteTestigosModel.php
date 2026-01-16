@@ -60,17 +60,25 @@ class ReporteTestigosModel extends Mysql
 
         // 2. Construcción dinámica de filtros optimizada
         if ($puesto != "" && $puesto != "todos") {
-            $where .= " AND p.id_place = $puesto ";
+            // CORRECCIÓN CRÍTICA:
+            // El $puesto es un id_place de UNA sola mesa. Si filtramos por ese ID, solo revisamos esa mesa.
+            // Queremos revisar TODAS las mesas de ese PUESTO FÍSICO.
+            // Solución: Filtrar por las mesas que tengan el MISMO NOMBRE y ZONA que la mesa/puesto seleccionado.
+
+            // Subconsulta para igualar nombre y zona
+            $where .= " AND p.nameplace_place = (SELECT nameplace_place FROM places WHERE id_place = $puesto) ";
+            $where .= " AND p.idzona_place = (SELECT idzona_place FROM places WHERE id_place = $puesto) ";
+            $where .= " AND p.idmuni_place = (SELECT idmuni_place FROM places WHERE id_place = $puesto) ";
         } else {
-            // Si NO hay puesto específico, validamos Zona -> Muni -> Dpto
+            // Si NO hay puesto específico, validamos por jerarquía
             if ($zona != "" && $zona != "todas") {
                 $where .= " AND p.idzona_place = $zona ";
             }
 
             if ($muni != "") {
-                $where .= " AND p.municipality_place = $muni ";
+                $where .= " AND p.idmuni_place = $muni ";
             } else if ($dpto != "") {
-                $where .= " AND m.department_municipality = $dpto ";
+                $where .= " AND p.iddpto_place = $dpto ";
             }
         }
 
@@ -81,9 +89,8 @@ class ReporteTestigosModel extends Mysql
                     GROUP_CONCAT(p.mesa_place ORDER BY CAST(p.mesa_place AS UNSIGNED) SEPARATOR ', ') as mesas_asignadas
                 FROM headresultado hr
                 INNER JOIN places p ON hr.place_headresultado = p.id_place
-                LEFT JOIN municipalities m ON p.municipality_place = m.id_municipality
                 $where
-                GROUP BY p.id_place
+                GROUP BY p.nameplace_place, p.idzona_place, p.idmuni_place
                 ORDER BY p.nameplace_place ASC";
 
         $request = $this->select_all($sql);
