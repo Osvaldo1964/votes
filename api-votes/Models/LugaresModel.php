@@ -23,50 +23,53 @@ class LugaresModel extends Mysql
 
     public function getZonas(int $idMuni)
     {
-        // Asumiendo que las zonas están relacionadas o se obtienen de places. 
-        // Si existe tabla zones, la usamos. PlaceModel hacia join con zones z.
-        $sql = "SELECT DISTINCT z.id_zone, z.name_zone 
-                FROM zones z
-                INNER JOIN places p ON p.idzona_place = z.id_zone
-                WHERE p.idmuni_place = $idMuni
-                ORDER BY z.name_zone";
-        // Si zones tiene id_muni directo mejor, pero por seguridad uso el join con places que parece ser la tabla central
-        // Revisando PlaceModel: INNER JOIN zones z ON p.idzona_place = z.id_zone
-        // Consulto zones directamente si es posible, pero no sé si tiene FK a municipio. 
-        // Haré un distinct desde places para asegurar que hay mesas ahí.
+        // Consultamos las zonas A TRAVES de la tabla puestos para asegurar que existen y pertenecen al municipio
+        // Como Puestos (no tiene muni explicito), dependemos de la tabla Zones si tuviera muni, o de la relacion Puesto->Zona.
+        // Fallback seguro: Listar zonas vinculadas a puestos activos.
 
         $sql = "SELECT DISTINCT z.id_zone, z.name_zone 
                 FROM zones z 
-                INNER JOIN places p ON p.idzona_place = z.id_zone
-                WHERE p.idmuni_place = $idMuni 
+                INNER JOIN puestos p ON p.idzona_puesto = z.id_zone
+                WHERE z.id_municipality_zone = $idMuni 
                 ORDER BY z.name_zone";
+
+        // Fallback si falla SQL por columna inexistente (comentar si es necesario):
+        // $sql = "SELECT DISTINCT z.id_zone, z.name_zone FROM zones z ORDER BY z.name_zone";
+
         $request = $this->select_all($sql);
         return $request;
     }
 
     public function getPuestos(int $idZona)
     {
-        // Modificado: Agrupamos por nombre para obtener un ID representativo (el menor)
-        // Esto permite usar este ID como referencia al "Puesto" (lugar fisico) en tablas relacionadas
-        $sql = "SELECT MIN(id_place) as id_place, nameplace_place 
-                FROM places 
-                WHERE idzona_place = $idZona 
-                GROUP BY nameplace_place
-                ORDER BY nameplace_place";
+        // Consultamos la nueva tabla puestos
+        $sql = "SELECT id_puesto as id_place, nombre_puesto as nameplace_place, num_puesto 
+                FROM puestos 
+                WHERE idzona_puesto = $idZona 
+                ORDER BY nombre_puesto";
         $request = $this->select_all($sql);
         return $request;
     }
 
     public function getMesas(int $idZona, string $nombrePuesto)
     {
-        // Retornamos el ID de la tabla places (que representa una mesa única) y el número de mesa
-        $nombrePuesto =  strClean($nombrePuesto); // Sanear
-        // Nota: nameplace_place es string.
-        $sql = "SELECT MAX(id_place) as id_mesa, mesa_place as nombre_mesa
-                FROM places 
-                WHERE idzona_place = $idZona AND nameplace_place = '$nombrePuesto' 
-                GROUP BY mesa_place
-                ORDER BY CAST(mesa_place AS UNSIGNED)";
+        $nombrePuesto = strClean($nombrePuesto);
+
+        // 1. Obtener ID del Puesto basado en nombre y zona
+        $sqlPuesto = "SELECT id_puesto FROM puestos WHERE idzona_puesto = $idZona AND nombre_puesto = '$nombrePuesto'";
+        $requestPuesto = $this->select($sqlPuesto, array());
+
+        if (empty($requestPuesto))
+            return array();
+
+        $idPuesto = $requestPuesto['id_puesto'];
+
+        // 2. Traer Mesas
+        $sql = "SELECT id_mesa, numero_mesa as nombre_mesa
+                FROM mesas 
+                WHERE id_puesto_mesa = $idPuesto 
+                ORDER BY CAST(numero_mesa AS UNSIGNED)";
+
         $request = $this->select_all($sql);
         return $request;
     }
@@ -76,12 +79,20 @@ class LugaresModel extends Mysql
         $nombrePuesto = strClean($nombrePuesto);
         $nombreMesa = strClean($nombreMesa);
 
-        // Contamos cuántos registros existen con esa combinación exacta
-        $sql = "SELECT COUNT(*) as total
-                FROM places 
-                WHERE idzona_place = $idZona 
-                AND nameplace_place = '$nombrePuesto' 
-                AND mesa_place = '$nombreMesa'";
+        // 1. Obtener ID Mesa
+        $sqlMesa = "SELECT m.id_mesa FROM mesas m
+                    INNER JOIN puestos p ON m.id_puesto_mesa = p.id_puesto
+                    WHERE p.idzona_puesto = $idZona 
+                    AND p.nombre_puesto = '$nombrePuesto'
+                    AND m.numero_mesa = '$nombreMesa'";
+        $requestMesa = $this->select($sqlMesa, array());
+
+        if (empty($requestMesa))
+            return array('total' => 0);
+        $idMesa = $requestMesa['id_mesa'];
+
+        // 2. Contar en places usando id_mesa_new
+        $sql = "SELECT COUNT(*) as total FROM places WHERE id_mesa_new = $idMesa";
         $request = $this->select($sql, array());
         return $request;
     }

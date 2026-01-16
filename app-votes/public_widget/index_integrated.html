@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Campaña Chadan Rosado Taylor 2026 - Inicio</title>
-    <link rel="shortcut icon" href="https://admin.chadanalacamara.com/Assets/images/favicon.ico">
+    <link rel="shortcut icon" href="http://app-votes.com/Assets/images/favicon.ico">
 
     <!-- CSS cargado desde el subdominio admin para no duplicar archivos -->
-    <link rel="stylesheet" type="text/css" href="https://admin.chadanalacamara.com/Assets/css/main.css">
+    <link rel="stylesheet" type="text/css" href="http://app-votes.com/Assets/css/main.css">
     <link rel="stylesheet" type="text/css"
         href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -129,7 +129,7 @@
                     <li class="nav-item"><a class="nav-link" href="#propuestas">Propuestas</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
                     <li class="nav-item"><a class="btn btn-outline-light btn-sm ml-3"
-                            href="https://admin.chadanalacamara.com/login">Login Admin</a></li>
+                            href="http://app-votes.com/login">Login Admin</a></li>
                 </ul>
             </div>
         </div>
@@ -339,13 +339,13 @@
     </div>
 
     <!-- Scripts desde Admin (Rutas Absolutas) -->
-    <script src="https://admin.chadanalacamara.com/Assets/js/jquery-3.3.1.min.js"></script>
-    <script src="https://admin.chadanalacamara.com/Assets/js/popper.min.js"></script>
-    <script src="https://admin.chadanalacamara.com/Assets/js/bootstrap.min.js"></script>
+    <script src="http://app-votes.com/Assets/js/jquery-3.3.1.min.js"></script>
+    <script src="http://app-votes.com/Assets/js/popper.min.js"></script>
+    <script src="http://app-votes.com/Assets/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
-        const BASE_URL_API = "https://api.chadanalacamara.com"; // Usamos la misma URL que tu config
+        const BASE_URL_API = "http://api-votes.com"; // Usamos la misma URL que tu config
         let dataUbicaciones = null;
     </script>
 
@@ -412,7 +412,7 @@
                             object['recaptcha_token'] = token;
 
                             // URL API REGISTRO
-                            let urlAPI = "https://api.chadanalacamara.com/RegistroPublico/registrar";
+                            let urlAPI = "http://api-votes.com/RegistroPublico/registrar";
 
                             fetch(urlAPI, {
                                 method: 'POST',

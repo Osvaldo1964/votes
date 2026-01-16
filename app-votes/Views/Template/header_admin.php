@@ -25,7 +25,7 @@
     <ul class="app-nav">
       <!-- Ver Sitio Web -->
       <li>
-        <a class="app-nav__item" href="https://chadanalacamara.com" target="_blank" title="Ir al Sitio Web">
+        <a class="app-nav__item" href="http://app-votes.com" target="_blank" title="Ir al Sitio Web">
           <i class="fa fa-globe fa-lg"></i>
         </a>
       </li>

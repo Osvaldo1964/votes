@@ -123,7 +123,7 @@
                     <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
                     <!-- Enlace al Login usando helper PHP -->
                     <li class="nav-item"><a class="btn btn-outline-light btn-sm ml-3"
-                            href="https://admin.chadanalacamara.com/login">Login Admin</a></li>
+                            href="http://app-votes.com/login">Login Admin</a></li>
                 </ul>
             </div>
         </div>

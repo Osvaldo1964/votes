@@ -207,19 +207,23 @@ class ElectoresModel extends Mysql
 
     public function selectPlace(string $id_elector)
     {
-        // CAST a ambos lados para asegurar comparación numérica estricta
-        // query optimizada copiada de PlaceModel para traer nombres de zona
-        $sql = "SELECT d.name_department, m.name_municipality, z.name_zone, p.nameplace_place, p.ape1_place, p.ape2_place, p.nom1_place, p.nom2_place, p.mesa_place, p.ident_place 
+        $sql = "SELECT d.name_department, m.name_municipality, z.name_zone, 
+                       pu.nombre_puesto as nameplace_place, 
+                       me.numero_mesa as mesa_place,
+                       p.ape1_place, p.ape2_place, p.nom1_place, p.nom2_place, p.ident_place 
                 FROM places p
-                INNER JOIN departments d ON p.iddpto_place = d.id_department
-                INNER JOIN municipalities m ON p.idmuni_place = m.id_municipality
-                INNER JOIN zones z ON p.idzona_place = z.id_zone
+                INNER JOIN mesas me ON p.id_mesa_new = me.id_mesa
+                INNER JOIN puestos pu ON me.id_puesto_mesa = pu.id_puesto
+                INNER JOIN zones z ON pu.idzona_puesto = z.id_zone
+                LEFT JOIN municipalities m ON z.id_municipality_zone = m.id_municipality
+                LEFT JOIN departments d ON m.id_department_municipality = d.id_department
                 WHERE CAST(p.ident_place AS UNSIGNED) = ?";
 
-        $arrData = array((int)$id_elector);
+        $arrData = array((int) $id_elector);
         $request = $this->select($sql, $arrData);
         return $request;
     }
+
     public function updatePollElector(string $identificacion)
     {
         $this->strCedula = $identificacion;
@@ -242,61 +246,66 @@ class ElectoresModel extends Mysql
             return $request_update;
         } else {
             // B. NO EXISTE EN ELECTORES -> BUSCAR EN CENSO (PLACES)
-            // Usamos selectPlace que ya hace el JOIN correcto
-            $placeData = $this->selectPlace($this->strCedula);
+            // Necesitamos los IDs (dpto, muni) para insertar en electores.
+            // Hacemos el JOIN completo para obtener esos IDs desde la jerarquia nueva.
 
-            if (empty($placeData)) {
-                return "not_found"; // No está ni en electores ni en censo
+            $sqlPlaceRaw = "SELECT p.ape1_place, p.ape2_place, p.nom1_place, p.nom2_place,
+                                   d.id_department, m.id_municipality
+                            FROM places p
+                            INNER JOIN mesas me ON p.id_mesa_new = me.id_mesa
+                            INNER JOIN puestos pu ON me.id_puesto_mesa = pu.id_puesto
+                            INNER JOIN zones z ON pu.idzona_puesto = z.id_zone
+                            LEFT JOIN municipalities m ON z.id_municipality_zone = m.id_municipality
+                            LEFT JOIN departments d ON m.id_department_municipality = d.id_department
+                            WHERE p.ident_place = ?";
+
+            $arrPlaceRaw = $this->select($sqlPlaceRaw, array($this->strCedula));
+
+            if (empty($arrPlaceRaw)) {
+                return "not_found";
             }
 
-            // C. AUTO-REGISTRO
-            // Insertamos en electores usando los datos del Censo
-            // Mapeo de datos: places -> electores
-            
-            // Asignamos valores por defecto para lo que no tiene el censo
-            $telefono = "";
-            $email = "";
-            $direccion = "";
-            $lider = 0; // Sin lider asignado (o un ID por defecto para "Voto Publico")
-            $estado = 1; // Activo
-            $insc = 0;
-            
-            // Extraer IDs de ubicacion. 
-            // IMPORTANTE: selectPlace devuelve NOMBRES (JOINED), necesitamos IDs para insertar?
-            // Re-check selectPlace: devuelve name_department, no id.
-            // Necesitamos los IDs. Haremos query simple a places para sacar los IDs crudos.
-            
-            $sqlPlaceRaw = "SELECT * FROM places WHERE ident_place = ?";
-            $arrPlaceRaw = $this->select($sqlPlaceRaw, array($this->strCedula));
-            
-            if(empty($arrPlaceRaw)) return "not_found"; // Redundante pero seguro
-
-            $dpto = $arrPlaceRaw['iddpto_place'];
-            $muni = $arrPlaceRaw['idmuni_place'];
-            // $zona = $arrPlaceRaw['idzona_place']; // Electores no guarda zona/puesto/mesa explícitamente en campos separados usualmente, o usa dpto/muni. 
-            // ElectoresModel::insertElector usa dpto, muni.
+            // Mapeo de datos
+            $dpto = !empty($arrPlaceRaw['id_department']) ? $arrPlaceRaw['id_department'] : 0; // Fallback 0
+            $muni = !empty($arrPlaceRaw['id_municipality']) ? $arrPlaceRaw['id_municipality'] : 0;
 
             $nom1 = $arrPlaceRaw['nom1_place'];
             $nom2 = $arrPlaceRaw['nom2_place'];
             $ape1 = $arrPlaceRaw['ape1_place'];
             $ape2 = $arrPlaceRaw['ape2_place'];
 
+            $telefono = "";
+            $email = "";
+            $direccion = "";
+            $lider = 0;
+            $estado = 1;
+            $insc = 0;
+
+
             $insert = $this->insertElector(
-                $this->strCedula, 
-                $ape1, $ape2, $nom1, $nom2, 
-                $telefono, $email, 
-                $dpto, $muni, $direccion, 
-                $lider, $estado, $insc
+                $this->strCedula,
+                $ape1,
+                $ape2,
+                $nom1,
+                $nom2,
+                $telefono,
+                $email,
+                $dpto,
+                $muni,
+                $direccion,
+                $lider,
+                $estado,
+                $insc
             );
 
-            if($insert > 0 && $insert != 'exist') {
-                 // D. MARCAR VOTO AL RECIEN CREADO
-                 $sql_update = "UPDATE electores SET poll_elector = ? WHERE id_elector = ?";
-                 $arrUpdate = array(1, $insert); // $insert es el ID nuevo
-                 $request_update = $this->update($sql_update, $arrUpdate);
-                 return $request_update;
+            if ($insert > 0 && $insert != 'exist') {
+                // D. MARCAR VOTO AL RECIEN CREADO
+                $sql_update = "UPDATE electores SET poll_elector = ? WHERE id_elector = ?";
+                $arrUpdate = array(1, $insert); // $insert es el ID nuevo
+                $request_update = $this->update($sql_update, $arrUpdate);
+                return $request_update;
             } else {
-                return false; 
+                return false;
             }
         }
     }

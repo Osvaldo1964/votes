@@ -112,26 +112,19 @@ class TestigosModel extends Mysql
 
     public function selectMesasPuesto(int $idPuesto, int $idTestigo = 0)
     {
-        // 1. Obtener detalles del Puesto (agrupador)
-        $sqlPuesto = "SELECT idzona_place, nameplace_place FROM places WHERE id_place = $idPuesto";
-        $infoPuesto = $this->select($sqlPuesto, array());
+        // 1. Obtener nombre del Puesto (solo para debug/display si fuera necesario, o validacion)
+        // Pero ahora `idPuesto` es el ID REAL de la tabla `puestos`? 
+        // OJO: El frontend antiguo mandaba `id_place` (Censo).
+        // Si el frontend NO ha cambiado, `idPuesto` aqui podria ser un ID de `places`.
+        // PERO, en `Testigos` el selector de puestos probablemente viene de `LugaresModel::getPuestos`.
+        // `LugaresModel::getPuestos` ahora retorna `id_puesto` de la tabla nueva.
+        // ASI QUE SI, `idPuesto` es el ID de la tabla nueva.
 
-        if (empty($infoPuesto)) return [];
-
-        $zona = $infoPuesto['idzona_place'];
-        $nombre = $infoPuesto['nameplace_place'];
-        // Escapar comillas simple en el nombre para evitar error SQL
-        $nombre = str_replace("'", "\'", $nombre);
-
-        // 2. Buscar HeadResultados (Mesas) que coincidan con la ubicación
-        // Deben estar LIBRES (0 o NULL) O asignadas a ESTE testigo ($idTestigo)
-        $sql = "SELECT h.id_headresultado, p.mesa_place, h.testigo_headresultado
-                    FROM headresultado h
-                    INNER JOIN places p ON h.place_headresultado = p.id_place
-                    WHERE p.idzona_place = $zona 
-                    AND p.nameplace_place = '$nombre'
-                    AND (h.testigo_headresultado IS NULL OR h.testigo_headresultado = 0 OR h.testigo_headresultado = $idTestigo)
-                    ORDER BY CAST(p.mesa_place AS UNSIGNED) ASC";
+        $sql = "SELECT id_mesa as id_headresultado, numero_mesa as mesa_place, id_testigo_mesa as testigo_headresultado
+                FROM mesas 
+                WHERE id_puesto_mesa = $idPuesto 
+                AND (id_testigo_mesa IS NULL OR id_testigo_mesa = 0 OR id_testigo_mesa = $idTestigo)
+                ORDER BY CAST(numero_mesa AS UNSIGNED) ASC";
 
         $request = $this->select_all($sql);
         return $request;
@@ -140,18 +133,16 @@ class TestigosModel extends Mysql
     public function updateMesasTestigo(int $idTestigo, array $arrMesas)
     {
         // 1. Liberar mesas previamente asignadas a este testigo
-        // Esto cubre el caso de desmarcar mesas o cambiar de puesto (libera las del puesto anterior)
-        $sqlClean = "UPDATE headresultado SET testigo_headresultado = 0 WHERE testigo_headresultado = ?";
+        $sqlClean = "UPDATE mesas SET id_testigo_mesa = 0 WHERE id_testigo_mesa = ?";
         $this->update($sqlClean, array($idTestigo));
 
         // 2. Asignar las nuevas mesas seleccionadas
         if (!empty($arrMesas)) {
-            foreach ($arrMesas as $idHead) {
-                // Validar que el idHead sea numerico para evitar inyeccion
-                $idHead = intval($idHead);
-                if ($idHead > 0) {
-                    $sqlUpdate = "UPDATE headresultado SET testigo_headresultado = ? WHERE id_headresultado = ?";
-                    $this->update($sqlUpdate, array($idTestigo, $idHead));
+            foreach ($arrMesas as $idMesa) {
+                $idMesa = intval($idMesa);
+                if ($idMesa > 0) {
+                    $sqlUpdate = "UPDATE mesas SET id_testigo_mesa = ? WHERE id_mesa = ?";
+                    $this->update($sqlUpdate, array($idTestigo, $idMesa));
                 }
             }
         }
