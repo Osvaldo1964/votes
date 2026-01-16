@@ -53,4 +53,40 @@ class ReporteTestigosModel extends Mysql
         $request = $this->select_all($sql);
         return $request;
     }
+    public function selectMesasSinAsignar($dpto, $muni, $zona, $puesto)
+    {
+        // 1. Base WHERE: Mesas libres
+        $where = " WHERE (hr.testigo_headresultado IS NULL OR hr.testigo_headresultado = 0) ";
+
+        // 2. Construcción dinámica de filtros optimizada
+        if ($puesto != "" && $puesto != "todos") {
+            $where .= " AND p.id_place = $puesto ";
+        } else {
+            // Si NO hay puesto específico, validamos Zona -> Muni -> Dpto
+            if ($zona != "" && $zona != "todas") {
+                $where .= " AND p.idzona_place = $zona ";
+            }
+
+            if ($muni != "") {
+                $where .= " AND p.municipality_place = $muni ";
+            } else if ($dpto != "") {
+                $where .= " AND m.department_municipality = $dpto ";
+            }
+        }
+
+        $sql = "SELECT 
+                    'MESAS SIN ASIGNAR' as nombre_completo,
+                    '---' as telefono_elector,
+                    p.nameplace_place as puesto_asignado,
+                    GROUP_CONCAT(p.mesa_place ORDER BY CAST(p.mesa_place AS UNSIGNED) SEPARATOR ', ') as mesas_asignadas
+                FROM headresultado hr
+                INNER JOIN places p ON hr.place_headresultado = p.id_place
+                LEFT JOIN municipalities m ON p.municipality_place = m.id_municipality
+                $where
+                GROUP BY p.id_place
+                ORDER BY p.nameplace_place ASC";
+
+        $request = $this->select_all($sql);
+        return $request;
+    }
 }

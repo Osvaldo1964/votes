@@ -20,9 +20,21 @@ class ReporteTestigos extends Controllers
         }
 
         $arrData = $this->model->selectReporteTestigos($dpto, $muni, $zona, $puesto);
+        if (!is_array($arrData)) $arrData = [];
+
+        $arrSinAsignar = $this->model->selectMesasSinAsignar($dpto, $muni, $zona, $puesto);
+        if (!is_array($arrSinAsignar)) $arrSinAsignar = [];
+
+        // Si hay mesas sin asignar, las agregamos al final del array principal
+        if (!empty($arrSinAsignar)) {
+            foreach ($arrSinAsignar as $key => $value) {
+                $arrSinAsignar[$key]['is_unassigned'] = true;
+            }
+            $arrData = array_merge($arrData, $arrSinAsignar);
+        }
 
         if (empty($arrData)) {
-            $arrResponse = array("status" => false, "msg" => 'No se encontraron testigos con los filtros seleccionados.');
+            $arrResponse = array("status" => false, "msg" => 'No se encontraron datos con los filtros seleccionados.');
         } else {
             $arrResponse = array("status" => true, "data" => $arrData);
         }

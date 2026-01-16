@@ -129,9 +129,12 @@ async function fntViewReporte() {
 
             if (data.data.length > 0) {
                 data.data.forEach(row => {
+                    let cssClass = row.is_unassigned ? 'table-danger font-weight-bold' : '';
+                    let icon = row.is_unassigned ? '<i class="fa fa-exclamation-triangle text-danger"></i> ' : '';
+
                     html += `
-                        <tr>
-                            <td class="text-left" style="text-transform: capitalize;">${row.nombre_completo.toLowerCase()}</td>
+                        <tr class="${cssClass}">
+                            <td class="text-left" style="text-transform: capitalize;">${icon}${row.nombre_completo.toLowerCase()}</td>
                             <td>${row.telefono_elector}</td>
                             <td class="text-left">${row.puesto_asignado}</td>
                             <td class="text-left font-weight-bold">${row.mesas_asignadas ? row.mesas_asignadas : '<span class="text-danger">Sin Asignación</span>'}</td>

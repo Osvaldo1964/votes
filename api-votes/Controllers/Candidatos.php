@@ -179,20 +179,20 @@ class Candidatos extends Controllers
         try {
             if ($_SERVER['REQUEST_METHOD'] == "PUT") {
                 $data = json_decode(file_get_contents("php://input"), true);
-                $idrol = isset($data['idrol']) ? intval($data['idrol']) : 0;
+                $idCandidato = isset($data['idcandidato']) ? intval($data['idcandidato']) : 0;
 
-                if ($idrol <= 0) {
+                if ($idCandidato <= 0) {
                     jsonResponse(['status' => false, 'msg' => 'Error en los parámetros'], 400);
                     die();
                 }
 
-                $buscar_rol = $this->model->selectCandidato($idrol);
-                if (empty($buscar_rol)) {
+                $buscar_candidato = $this->model->selectCandidato($idCandidato);
+                if (empty($buscar_candidato)) {
                     jsonResponse(['status' => false, 'msg' => 'El candidato no existe'], 400);
                     die();
                 }
 
-                $requestDelete = $this->model->deleteCandidato($idrol);
+                $requestDelete = $this->model->deleteCandidato($idCandidato);
                 if ($requestDelete == "ok") {
                     jsonResponse(['status' => true, 'msg' => 'Registro eliminado'], 200);
                 } else {

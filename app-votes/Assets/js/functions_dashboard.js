@@ -29,23 +29,84 @@ async function fntGetDashboard() {
                 lideresCant = res.top_lideres.map(l => l.cantidad);
             }
 
+            // Calcular Total de Líderes para Porcentajes
+            let totalLideres = lideresCant.reduce((a, b) => parseInt(a) + parseInt(b), 0);
+
             if (document.getElementById('chartLideres')) {
                 var ctxLideres = document.getElementById('chartLideres').getContext('2d');
                 new Chart(ctxLideres, {
-                    type: 'horizontalBar', // Requiere Chart.js v2.x
+                    type: 'horizontalBar',
                     data: {
                         labels: lideresNombres,
                         datasets: [{
                             label: 'Electores Vinculados',
                             data: lideresCant,
-                            backgroundColor: '#E91E63', // Rosa Batalla
-                            borderColor: '#880E4F',
+                            backgroundColor: [
+                                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                                '#FF9F40', '#C9CBCF', '#FF6384', '#36A2EB', '#FFCE56',
+                                '#00A65A', '#DC3545', '#6C757D', '#17A2B8', '#F012BE'
+                            ],
+                            borderColor: [
+                                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                                '#FF9F40', '#C9CBCF', '#FF6384', '#36A2EB', '#FFCE56',
+                                '#00A65A', '#DC3545', '#6C757D', '#17A2B8', '#F012BE'
+                            ],
                             borderWidth: 1
                         }]
                     },
                     options: {
                         scales: {
                             xAxes: [{ ticks: { beginAtZero: true } }]
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: function (tooltipItem, data) {
+                                    let value = data.datasets[0].data[tooltipItem.index];
+                                    let percentage = totalLideres > 0 ? ((value / totalLideres) * 100).toFixed(1) + '%' : '0%';
+                                    return data.labels[tooltipItem.index] + ': ' + value + ' (' + percentage + ')';
+                                }
+                            }
+                        },
+                        animation: {
+                            onComplete: function () {
+                                var chartInstance = this.chart,
+                                    ctx = chartInstance.ctx;
+
+                                ctx.font = Chart.helpers.fontString(11, 'bold', Chart.defaults.global.defaultFontFamily);
+                                ctx.textBaseline = 'middle';
+
+                                this.data.datasets.forEach(function (dataset, i) {
+                                    var meta = chartInstance.controller.getDatasetMeta(i);
+                                    meta.data.forEach(function (bar, index) {
+                                        var data = dataset.data[index];
+                                        // Calcular porcentaje
+                                        var percentage = totalLideres > 0 ? ((data / totalLideres) * 100).toFixed(1) + '%' : '0%';
+                                        var labelText = data + " (" + percentage + ")";
+
+                                        // Determinar si el texto cabe dentro de la barra
+                                        var textWidth = ctx.measureText(labelText).width;
+                                        var padding = 5;
+                                        var barWidth = bar._model.x;
+
+                                        if (barWidth > (textWidth + padding + 10)) {
+                                            // Texto ADENTRO (Alineado a la derecha de la barra)
+                                            ctx.fillStyle = '#000'; // Negro para mejor contraste en la mayoría de colores pasteles
+                                            ctx.textAlign = 'right';
+                                            ctx.fillText(labelText, bar._model.x - padding, bar._model.y);
+                                        } else {
+                                            // Texto AFUERA (Si la barra es muy pequeña)
+                                            ctx.fillStyle = '#000';
+                                            ctx.textAlign = 'left';
+                                            ctx.fillText(labelText, bar._model.x + padding, bar._model.y);
+                                        }
+                                    });
+                                });
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                right: 60 // Espacio extra para etiquetas externas si son necesarias
+                            }
                         }
                     }
                 });
