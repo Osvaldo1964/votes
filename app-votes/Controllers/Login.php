@@ -6,7 +6,11 @@ class Login extends Controllers
 	{
 		session_start();
 		if (isset($_SESSION['login'])) {
-			header('Location: ' . base_url() . '/dashboard');
+			// Si intenta crear sesión (desde app móvil) permitimos pasar
+			// de lo contrario redirigimos al dashboard si ya está logueado
+			if (!isset($_GET['url']) || strpos($_GET['url'], 'crearSesion') === false) {
+				header('Location: ' . base_url() . '/dashboard');
+			}
 		}
 		parent::__construct();
 	}
