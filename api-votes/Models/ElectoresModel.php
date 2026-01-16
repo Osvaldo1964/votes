@@ -215,7 +215,7 @@ class ElectoresModel extends Mysql
                 INNER JOIN mesas me ON p.id_mesa_new = me.id_mesa
                 INNER JOIN puestos pu ON me.id_puesto_mesa = pu.id_puesto
                 INNER JOIN zones z ON pu.idzona_puesto = z.id_zone
-                LEFT JOIN municipalities m ON z.id_municipality_zone = m.id_municipality
+                LEFT JOIN municipalities m ON z.muni_zone = m.id_municipality
                 LEFT JOIN departments d ON m.id_department_municipality = d.id_department
                 WHERE CAST(p.ident_place AS UNSIGNED) = ?";
 
@@ -255,7 +255,7 @@ class ElectoresModel extends Mysql
                             INNER JOIN mesas me ON p.id_mesa_new = me.id_mesa
                             INNER JOIN puestos pu ON me.id_puesto_mesa = pu.id_puesto
                             INNER JOIN zones z ON pu.idzona_puesto = z.id_zone
-                            LEFT JOIN municipalities m ON z.id_municipality_zone = m.id_municipality
+                            LEFT JOIN municipalities m ON z.muni_zone = m.id_municipality
                             LEFT JOIN departments d ON m.id_department_municipality = d.id_department
                             WHERE p.ident_place = ?";
 
