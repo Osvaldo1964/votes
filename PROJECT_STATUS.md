@@ -47,12 +47,21 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
     *   Uso de `data-size` y `selected-text-format` para optimizar UX en selectores múltiples.
     *   Uso de `getModal` para inclusión correcta de templates.
 
-### D. Documentación
-*   Creado flujo de trabajo `.agent/workflows/js_standards.md` detallando los nuevos estándares de desarrollo JS.
+### E. Optimizaciones y Correcciones (Enero 2026)
+1.  **Dashboard:**
+    *   **Gráfico Top Líderes:** Actualizado con paleta de colores dinámica y etiquetas inteligentes (cantidad + porcentaje) dentro/fuera de las barras según el espacio disponible.
+    *   **Cálculos:** Implementado cálculo correcto de porcentajes basado en el total desplegado.
+2.  **Módulo Candidatos:**
+    *   **Corrección Bug:** Solucionado error en eliminación de candidatos (`idrol` vs `idcandidato` en API).
+3.  **Reporte Testigos Electorales:**
+    *   **Nueva Funcionalidad:** Detección automática de **"Mesas Sin Asignar"** (Huérfanas).
+    *   **Lógica:** Al generar un reporte por Puesto, el sistema escanea `headresultado` y `places` para identificar mesas que no tienen testigo asignado en esa ubicación.
+    *   **Visualización:** Se agrega una fila final resaltada (rojo) con el listado de todas las mesas pendientes por cubrir.
+    *   **Corrección SQL:** Ajuste en el Modelo para filtrar correctamente por Nombre de Puesto, Zona y Municipio, resolviendo el problema de agrupación de mesas.
 
 ## 3. Estado de Módulos
 *   **Dashboard:**
-    *   [OK] Gráficas y Métricas.
+    *   [OK] Gráficas y Métricas (Optimizado).
 *   **Gestión Administrativa:**
     *   [OK] Usuarios, Roles.
     *   [OK] Terceros, Conceptos, Elementos.
@@ -62,10 +71,10 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
     *   [OK] Informes Financieros (Saldos/Kardex).
     *   [OK] Informe de Ingresos y Gastos.
 *   **Gestión Electoral:**
-    *   [OK] Líderes, Candidatos.
+    *   [OK] Líderes, Candidatos (Corregido).
     *   [OK] Electores (Validación Documento).
     *   [OK] Votación (Control de Duplicidad).
-    *   [OK] **Testigos Electorales** (Asignación Múltiple de Mesas, Gestión y UI Optimizada).
+    *   [OK] **Testigos Electorales** (Asignación Múltiple, Reporte con Auditoría de Vacíos).
 *   **Reportes y Análisis:**
     *   [OK] Monitor Día D (Tiempo Real).
     *   [OK] Análisis E-14 (Auditoría).
@@ -75,7 +84,28 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
 *   **DataTables:** Siempre usar `"ajax": getDataTableFetchConfig('/endpoint')`. No usar spread operator `...` directamente en la raíz de la configuración.
 *   **API Response:** Cualquier nuevo endpoint de listado debe retornar `{ "status": true, "data": [] }` para ser consumido correctamente por el frontend.
 *   **Impresión:** Los reportes ahora incluyen clases `d-print-none` y estilos `@media print` para asegurar una salida limpia en papel o PDF.
-*   **Lugares/Puestos:** La tabla `places` contiene mesas individuales. Para seleccionar un "Puesto" (Lugar físico), se debe agrupar por nombre y tomar un ID representativo (ej: `MIN(id_place)`).
+*   **Lugares/Puestos - Lógica Crítica:**
+    *   La tabla `places` representa el **Censo Electoral** (1 fila = 1 elector en una mesa).
+    *   La tabla `headresultado` representa las **Mesas Únicas** (1 fila = 1 mesa física).
+    *   Para buscar mesas, SIEMPRE consultar `headresultado` y hacer JOIN con `places` para obtener metadatos.
+    *   Para agrupar mesas de un puesto, usar `p.nameplace_place` + `p.idzona_place` + `p.idmuni_place`, **NUNCA** `id_place` (ya que este varía por elector).
+
+## 5. Próximos Pasos (Roadmap)
+*   **URGENTE - Mañana:** **Refactorización Estructural Crítica (Normalización BD)**
+    *   **Contexto:** La tabla `places` (Censo) está desnormalizada. Contiene datos repetidos de ubicación para cada elector.
+    *   **Meta:** Extraer las 783 mesas únicas identificadas a una tabla maestra (probablemente adecuada en `headresultado` o nueva `mesas`), dejando `places` solo para electores vinculados por ID.
+    *   **Impacto:** Reducción de 265k+ registros repetidos a 783 únicos para consultas de ubicación. Preparación para carga masiva de 800k electores.
+    *   **Procedimiento (Producción):**
+        1.  Backup completo.
+        2.  Script de migración SQL (`INSERT INTO maestras SELECT DISTINCT...`).
+        3.  Actualización de esquema (`ALTER TABLE places`).
+        4.  Refactorización masiva de Modelos PHP (`JOIN` en lugar de lectura directa).
+        5.  Deploy rápido (Ventana de mantenimiento).
+
+*   **App Móvil (React Native/Expo):**
+    *   Objetivo: Crear aplicación para Android/iOS reutilizando la API `api-votes`.
+    *   Alcance inicial: 3 Módulos clave (por definir).
+    *   Complejidad estimada: Media-Baja (Reutilización del 70% de lógica Backend).
 
 ---
 *Bitácora Actualizada - Antigravity*
