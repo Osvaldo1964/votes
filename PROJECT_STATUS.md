@@ -61,6 +61,19 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
 4.  **Backend (API):**
     *   Ajuste en `ResultadosModel.php` y `Resultados.php` para manejar respuestas simplificadas y evitar errores de debug al guardar E-14.
 
+### G. Unificación de Landing Page y Admin (17/01/2026)
+1.  **Consolidación de Arquitectura:**
+    *   Se eliminó la carpeta `landing` y la duplicidad de archivos en la raíz del servidor.
+    *   Todo el sistema (Public y Admin) ahora se sirve desde una **única base de código** ubicada en la carpeta `admin` (en local `app-votes`).
+2.  **Estrategia de Enrutamiento (.htaccess):**
+    *   Implementación de reglas de reescritura en la raíz `public_html` que redirigen el tráfico de `chadanalacamara.com` internamente hacia la carpeta `admin` sin cambiar la URL visible.
+3.  **Configuración Dinámica (`Config.php`):**
+    *   La constante `BASE_URL` ahora detecta automáticamente el protocolo y el dominio de origen (`HTTP_HOST`), permitiendo que la misma app sirva correctamente los recursos tanto para el dominio principal como para el subdominio admin.
+4.  **Correcciones Frontend Público:**
+    *   **`functions_votacion_publica.js`:** Se independizó la función `fetchData` para permitir peticiones públicas sin requerir Token JWT ni cargar `functions_admin.js`.
+    *   **`functions_landing.js`:** Corrección de errores de sintaxis y limpieza de código duplicado.
+    *   **Recursos:** Corrección de rutas de librerías (SweetAlert) en `home.php`.
+
 ## 3. Estado de Módulos
 *   **App Móvil (Android):**
     *   [OK] Generación APK (Debug).

@@ -1,6 +1,39 @@
 // functions_votacion_publica.js
 // Lógica idéntica a functions_votacion se adapta para uso público sin auth headers
 
+// Definición local de fetchData para uso público (sin token requerido)
+async function fetchData(url, method = 'GET', body = null) {
+    const options = {
+        method,
+        headers: {}
+    };
+
+    // Si no es FormData, asumimos JSON y añadimos Content-Type
+    if (!(body instanceof FormData)) {
+        options.headers['Content-Type'] = 'application/json';
+        if (body && method !== 'GET') options.body = JSON.stringify(body);
+    } else {
+        // Si es FormData, fetch pone el Content-Type automáticamente (multipart/form-data)
+        if (body && method !== 'GET') options.body = body;
+    }
+
+    try {
+        const response = await fetch(url, options);
+        // No validamos 401 porque es público
+        
+        const text = await response.text();
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error("Respuesta válida no es JSON:", text);
+            return { status: false, msg: "Error de servidor (respuesta no válida)" };
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+        return { status: false, msg: "Error de conexión con la API" };
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
     let formVoto = document.querySelector("#formVotoPublico");

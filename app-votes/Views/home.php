@@ -356,7 +356,7 @@
     <script src="<?= media(); ?>/js/jquery-3.3.1.min.js"></script>
     <script src="<?= media(); ?>/js/popper.min.js"></script>
     <script src="<?= media(); ?>/js/bootstrap.min.js"></script>
-    <script src="<?= media(); ?>/js/sweetalert.min.js"></script>
+    <script src="<?= media(); ?>/js/plugins/sweetalert.min.js"></script>
 
     <script>
         const BASE_URL_API = "<?= BASE_URL_API ?>";
