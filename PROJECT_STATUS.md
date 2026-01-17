@@ -47,19 +47,25 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
     *   Uso de `data-size` y `selected-text-format` para optimizar UX en selectores múltiples.
     *   Uso de `getModal` para inclusión correcta de templates.
 
-### E. Optimizaciones y Correcciones (Enero 2026)
-1.  **Dashboard:**
-    *   **Gráfico Top Líderes:** Actualizado con paleta de colores dinámica y etiquetas inteligentes (cantidad + porcentaje) dentro/fuera de las barras según el espacio disponible.
-    *   **Cálculos:** Implementado cálculo correcto de porcentajes basado en el total desplegado.
-2.  **Módulo Candidatos:**
-    *   **Corrección Bug:** Solucionado error en eliminación de candidatos (`idrol` vs `idcandidato` en API).
-3.  **Reporte Testigos Electorales:**
-    *   **Nueva Funcionalidad:** Detección automática de **"Mesas Sin Asignar"** (Huérfanas).
-    *   **Lógica:** Al generar un reporte por Puesto, el sistema escanea `headresultado` y `places` para identificar mesas que no tienen testigo asignado en esa ubicación.
-    *   **Visualización:** Se agrega una fila final resaltada (rojo) con el listado de todas las mesas pendientes por cubrir.
-    *   **Corrección SQL:** Ajuste en el Modelo para filtrar correctamente por Nombre de Puesto, Zona y Municipio, resolviendo el problema de agrupación de mesas.
+### D. Implementación App Móvil (Híbrida)
+1.  **Tecnología:** HTML5 + Vanilla JS + Capacitor (Android).
+    *   No React Native (Decisión de simplicidad y rapidez).
+2.  **Funcionalidades:**
+    *   **Consulta Puesto (Público):** Consulta de lugar de votación por cédula conectada al Censo.
+    *   **Registro Voto (Público):** Marcación rápida de "Ya Voté".
+    *   **Módulo E-14 (Testigos):** Autenticación JWT, Flujo de Selección (Dpto -> Muni -> Zona -> Puesto -> Mesa) y Formulario de Digitación de Votos.
+3.  **Ajustes Recientes (17/01/2026):**
+    *   **Identidad Visual:** Cambio total de paleta a Rosado Institucional (#e91e63) e incorporación de Logo de Candidato.
+    *   **UX/Lógica:** Inputs de votos E-14 ahora permiten valores vacíos (convertidos a 0 automáticamente) para agilizar digitación.
+    *   **Infraestructura:** Corrección de problemas CORS y despliegue exitoso de APK conectada a API Producción (`api.chadanalacamara.com`).
+4.  **Backend (API):**
+    *   Ajuste en `ResultadosModel.php` y `Resultados.php` para manejar respuestas simplificadas y evitar errores de debug al guardar E-14.
 
 ## 3. Estado de Módulos
+*   **App Móvil (Android):**
+    *   [OK] Generación APK (Debug).
+    *   [OK] Conexión API Producción.
+    *   [OK] Módulos Publico y Testigo (E-14) funcionales.
 *   **Dashboard:**
     *   [OK] Gráficas y Métricas (Optimizado).
 *   **Gestión Administrativa:**
@@ -89,6 +95,9 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
     *   La tabla `headresultado` representa las **Mesas Únicas** (1 fila = 1 mesa física).
     *   Para buscar mesas, SIEMPRE consultar `headresultado` y hacer JOIN con `places` para obtener metadatos.
     *   Para agrupar mesas de un puesto, usar `p.nameplace_place` + `p.idzona_place` + `p.idmuni_place`, **NUNCA** `id_place` (ya que este varía por elector).
+*   **App Móvil:**
+    *   La APP usa `app-movil/www/js/config.js` para definir la URL de la API.
+    *   En Producción SIEMPRE asegurar que `ResultadosModel.php` en el servidor coincida con la versión optimizada (sin referencias a debug legacy).
 
 ## 5. Próximos Pasos (Roadmap)
 *   **URGENTE - Mañana:** **Refactorización Estructural Crítica (Normalización BD)**
@@ -102,10 +111,9 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
         4.  Refactorización masiva de Modelos PHP (`JOIN` en lugar de lectura directa).
         5.  Deploy rápido (Ventana de mantenimiento).
 
-*   **App Móvil (React Native/Expo):**
-    *   Objetivo: Crear aplicación para Android/iOS reutilizando la API `api-votes`.
-    *   Alcance inicial: 3 Módulos clave (por definir).
-    *   Complejidad estimada: Media-Baja (Reutilización del 70% de lógica Backend).
+*   **App Móvil (Fase 2):**
+    *   Implementar Cache Local (SQLite) para funcionamiento Offline.
+    *   Notificaciones Push (Firebase).
 
 ---
 *Bitácora Actualizada - Antigravity*

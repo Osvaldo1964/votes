@@ -206,10 +206,17 @@ const app = {
                 localStorage.setItem('userEmail', data.auth.email_usuario);
 
                 // NATIVE REDIRECT
+                console.log("Login exitoso, redirigiendo...");
                 this.navTo('resultados');
 
-                // Initialize E-14 Module
-                appE14.init();
+                // Initialize E-14 Module con delay para asegurar transición visual
+                setTimeout(() => {
+                    try {
+                        appE14.init();
+                    } catch (e) {
+                        console.error("Error inicializando E14:", e);
+                    }
+                }, 100);
 
             } else {
                 Swal.fire('Error', data.msg || 'Datos incorrectos', 'error');
@@ -372,11 +379,22 @@ const appE14 = {
     },
 
     loadPotencial: async function (idMesa) {
-        // UI Update logic for Potencial (Optional but good)
-        // Skipping deep implementation for brevity, setting defaults
-        document.getElementById('lblTotalPotencial').textContent = '-';
-        document.getElementById('lblMisVotos').textContent = '-';
-        document.getElementById('lblPorcentaje').textContent = '-';
+        // Consultar estadísticas de la mesa
+        // Se asume backend retorna: { potencial: 350, votos: 120 }
+
+        // Como no tenemos el endpoint especifico aun, simulamos o intentamos leer info de la mesa
+        // Si tienes un endpoint real, cambialo aqui. Por ahora dejamos la estructura lista.
+
+        // EJEMPLO: const data = await this.fetchData(`mesas/getEstadisticas/${idMesa}`);
+        const potencial = 0; // data.potencial
+        const votos = 0; // data.votos
+
+        document.getElementById('lblTotalPotencial').textContent = potencial > 0 ? potencial : '-';
+        document.getElementById('lblMisVotos').textContent = votos > 0 ? votos : '-';
+
+        let porcentaje = 0;
+        if (potencial > 0) porcentaje = ((votos / potencial) * 100).toFixed(1);
+        document.getElementById('lblPorcentaje').textContent = porcentaje + '%';
     },
 
     loadCandidatos: async function (idMesa) {
@@ -411,7 +429,7 @@ const appE14 = {
                     <small class="text-muted">Partido ${c.partido_candidato}</small>
                 </div>
                 <input type="number" class="form-control" style="width: 100px; text-align: center; font-size: 1.2rem;" 
-                       name="votos[${c.id_candidato}]" placeholder="0" min="0" required>
+                       name="votos[${c.id_candidato}]" placeholder="0" min="0">
              </div>
              `;
         });

@@ -1,5 +1,4 @@
 <?php
-
 class Resultados extends Controllers
 {
     public function __construct()
@@ -45,38 +44,32 @@ class Resultados extends Controllers
             // Intentar guardar Cabecera
             $requestHead = $this->model->insertHeadResultado($idMesa, $strFormulario, $idUsuario);
 
-            // Manejo de Respuesta: Array = Duplicado o Éxito con Debug
+            // Manejo de Respuesta
             if (is_array($requestHead)) {
 
-                // CASO 1: Éxito (Inserted o Updated)
-                if (isset($requestHead['status'])) {
+                // CASO 1: Éxito (Inserted)
+                if (isset($requestHead['status']) && $requestHead['status'] == 'inserted') {
                     $idHead = $requestHead['id'];
-                    $debugInfo = "Debug BD: Z=" . $requestHead['debug_zona'] . " P=" . $requestHead['debug_puesto'] . " M=" . $requestHead['debug_mesa'] .
-                        " | Similares en BD: " . ($requestHead['debug_similar'] ?? "N/A");
 
-                    $countVotos = 0;
                     if (is_array($arrVotos)) {
                         foreach ($arrVotos as $idCandidato => $votos) {
-                            $votosFinal = intval($votos) >= 0 ? intval($votos) : 0;
+                            // Convertir vacíos a 0
+                            $votosFinal = (trim($votos) === '') ? 0 : intval($votos);
                             $this->model->insertBodyResultado($idHead, $idCandidato, $votosFinal, $idUsuario);
-                            $countVotos++;
                         }
                     }
 
-                    if ($countVotos > 0) {
-                        jsonResponse(['status' => true, 'msg' => "Resultados guardados correctamente. ($debugInfo)"], 200);
-                    } else {
-                        jsonResponse(['status' => true, 'msg' => "Cabecera guardada, pero sin votos. ($debugInfo)"], 200);
-                    }
-                } else {
-                    // CASO 2: Duplicado Real (Array de BD sin 'status')
-                    $formExistente = $requestHead['formulario_headresultado'];
+                    jsonResponse(['status' => true, 'msg' => "Resultados guardados correctamente."], 200);
+                } elseif (isset($requestHead['status']) && $requestHead['status'] == 'duplicate') {
+                    // CASO 2: Duplicado Real
+                    $formExistente = $requestHead['formulario'] ?? 'Desconocido';
                     jsonResponse(['status' => false, 'msg' => "¡Alerta! Esta mesa ya tiene un reporte registrado bajo el formulario: $formExistente."], 400);
-                    die();
+                } else {
+                    jsonResponse(['status' => false, 'msg' => 'Estado desconocido al guardar.'], 500);
                 }
             } else {
-                // Caso legado o error (si retorna 0)
-                jsonResponse(['status' => false, 'msg' => 'No se pudo guardar. Error desconocido.'], 500);
+                // Caso error (si retorna 0)
+                jsonResponse(['status' => false, 'msg' => 'No se pudo guardar la mesa (Mesa inválida o no encontrada).'], 500);
             }
         } catch (Exception $e) {
             jsonResponse(['status' => false, 'msg' => 'Error del servidor: ' . $e->getMessage()], 500);
@@ -101,7 +94,7 @@ class Resultados extends Controllers
 
         if ($estado !== 0 && is_array($estado)) {
             // Ya existe
-            $form = $estado['formulario_headresultado'];
+            $form = $estado['formulario_mesa'];
             jsonResponse(['status' => false, 'msg' => "¡Atención! Ya existe un reporte registrado para esta mesa (Formulario $form)."], 200);
         } else {
             // Libre
