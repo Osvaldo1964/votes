@@ -115,5 +115,13 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
     *   Implementar Cache Local (SQLite) para funcionamiento Offline.
     *   Notificaciones Push (Firebase).
 
+### F. Setup en Nuevo Entorno (Oficina/Otro PC)
+Si clonas el proyecto en otro equipo, la carpeta `app-movil/node_modules` y carpetas de build no estarán (por eficiencia). Para retomar el trabajo:
+1.  Bajar cambios: `git pull`
+2.  Entrar a carpeta: `cd app-movil`
+3.  Reinstalar librerías: `npm install`
+4.  Reconstruir entorno nativo: `npx cap sync`
+5.  Abrir Android Studio: `npx cap open android`
+
 ---
 *Bitácora Actualizada - Antigravity*
