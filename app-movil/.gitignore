@@ -1,6 +1,12 @@
 node_modules/
-android/
-ios/
 dist/
 .DS_Store
 *.log
+
+# Android exclusions (Standard Capacitor)
+android/app/build/
+android/.gradle/
+android/local.properties
+android/*.iml
+android/.idea/
+android/captures/
