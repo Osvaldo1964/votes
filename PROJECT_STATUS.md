@@ -93,11 +93,23 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
     *   **Frontend:** Uso de `navigator.geolocation` con timeout de 5s y alta precisión.
     *   **Backend:** Actualización de Controladores (`Electores`, `Publico`) para procesar las nuevas variables opcionales.
 
+### J. Certificado de Votación PDF (19/01/2026)
+1.  **Funcionalidad:**
+    *   Generación de PDF oficial "Certificado de Votación" tras el registro exitoso del voto en App o Web Pública.
+    *   Incluye nombre del elector, lugar de votación, mesa y **QR de Verificación**.
+2.  **Implementación Técnica:**
+    *   **Backend:** Nueva librería `FPDF` + `PHPQRCode`. Controlador `Publico::getCertificado()`.
+    *   **Logo:** Se implementó incrustación directa en **Base64** (`LogoData.php`) para evitar problemas de rutas relativas/absolutas en servidores estrictos (Hostinger).
+    *   **Compatibilidad Móvil:**
+        *   **Android:** Descarga vía `window.open(url, '_system')`.
+        *   **iOS (iPhone):** Solución específica usando `window.location.assign()` y encabezado PHP `Content-Disposition: attachment` para forzar la descarga y saltar bloqueadores de pop-ups de Safari.
+
 ## 3. Estado de Módulos
-*   **App Móvil (Android):**
+*   **App Móvil (Android/Web):**
     *   [OK] Generación APK (Debug).
     *   [OK] Conexión API Producción.
     *   [OK] Módulos Publico y Testigo (E-14) funcionales.
+    *   [OK] **Voto Público:** Geolocalización + Descarga de Certificado (Dual iOS/Android).
 *   **Dashboard:**
     *   [OK] Gráficas y Métricas (Optimizado).
 *   **Gestión Administrativa:**

@@ -123,29 +123,27 @@ class Publico extends Controllers
         $pdf->SetLineWidth(1);
         $pdf->Rect(5, 5, 90, 150);
 
-        // LOGO
-        // En producción (Linux/cPanel), la estructura de carpetas a veces es estricta.
-        // Opción 1: Ruta relativa desde index.php (que carga el controlador)
-        $logoPath = 'Assets/images/logo_chadan.jpg';
-
-        // Opción 2: Ruta relativa subiendo directorios (como estaba)
-        if (!file_exists($logoPath)) {
-            $logoPath = '../app-votes/Assets/images/logo_chadan.jpg';
-        }
-
-        // Opción 3: Ruta absoluta del sistema (Document Root)
-        if (!file_exists($logoPath)) {
-            $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/app-votes/Assets/images/logo_chadan.jpg';
-        }
-
-        if (file_exists($logoPath)) {
-            $pdf->Image($logoPath, 35, 10, 30);
-            $pdf->Ln(25);
+        // LOGO EMBEBIDO (Solución definitiva para producción)
+        // Intentamos cargar desde archivo generado o fallback
+        $logoDataFile = 'Libraries/LogoData.php';
+        if (file_exists($logoDataFile)) {
+            require_once $logoDataFile;
+            if (isset($logoB64)) {
+                $logoData = base64_decode($logoB64);
+                $tempLogo = $tempDir . '/logo_chadan_temp.jpg';
+                file_put_contents($tempLogo, $logoData);
+                $pdf->Image($tempLogo, 35, 10, 30);
+                // Limpieza opcional inmediata o por cron
+                // unlink($tempLogo);
+            }
         } else {
-            // Debug o Fallback
-            // $pdf->Cell(0, 5, 'Logo no encontrado: ' . $logoPath, 0, 1, 'C'); 
-            $pdf->Ln(10);
+            // Fallback local
+            $logoPath = '../app-votes/Assets/images/logo_chadan.jpg';
+            if (file_exists($logoPath)) {
+                $pdf->Image($logoPath, 35, 10, 30);
+            }
         }
+        $pdf->Ln(25);
 
         // Título
         $pdf->SetFont('Arial', 'B', 12);
@@ -187,7 +185,8 @@ class Publico extends Controllers
         $pdf->Cell(0, 5, utf8_decode('Sistema de Votación 2026'), 0, 1, 'C');
 
         // Output
-        $pdf->Output('I', 'certificado_' . $strCedula . '.pdf');
+        // 'D' fuerza la descarga, lo cual suele disparar la pregunta "¿Desea descargar?" en móviles.
+        $pdf->Output('D', 'certificado_' . $strCedula . '.pdf');
 
         // Clean
         unlink($qrFile);

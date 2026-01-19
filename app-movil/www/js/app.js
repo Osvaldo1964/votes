@@ -182,9 +182,18 @@ const app = {
                     cancelButtonText: 'Cerrar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Open PDF in system browser
+                        // iOS/Android compatible Open
                         const url = `${CONFIG.API_URL}Publico/getCertificado/${cedula}`;
-                        window.open(url, '_system');
+
+                        // Detect iOS (Broad detection including iPadOS 13+)
+                        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+                        if (isIOS) {
+                            // Force navigation in current tab to avoid popup blockers
+                            window.location.assign(url);
+                        } else {
+                            window.open(url, '_system');
+                        }
                     }
                 });
 
