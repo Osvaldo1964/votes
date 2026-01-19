@@ -1,5 +1,5 @@
-**Fecha:** 05/01/2026 (Noche)
-**Última sesión:** Implementación Módulo Testigos Electorales.
+**Fecha:** 19/01/2026 (Mañana)
+**Última sesión:** Verificación de Refactorización Crítica (Normalización BD).
 
 ## 1. Arquitectura del Sistema (Estándar 2026)
 El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunicación vía JSON RESTful.
@@ -74,6 +74,25 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
     *   **`functions_landing.js`:** Corrección de errores de sintaxis y limpieza de código duplicado.
     *   **Recursos:** Corrección de rutas de librerías (SweetAlert) en `home.php`.
 
+### H. Optimización Estructural Base de Datos (19/01/2026)
+1.  **Normalización Completa:**
+    *   **Tablas Maestras:** Se crearon/poblaron las tablas `zones`, `puestos` y `mesas` para manejar la infraestructura física independientemente de los electores.
+    *   **Reducción de `places`:** La tabla `places` (Censo) se redujo dramáticamente, eliminando columnas redundantes de texto (dpto, muni, puesto). Ahora se vincula a la mesa vía `id_mesa_new`.
+2.  **Impacto:**
+    *   Consultas de ubicación (Puestos/Mesas) ahora son instantáneas (búsqueda sobre ~800 registros en lugar de ~265k).
+    *   Preparado para soportar carga masiva de nuevos electores sin duplicar metadata de ubicación.
+3.  **Refactorización Backend:**
+    *   `LugaresModel` y `PlaceModel` actualizados para consumir las nuevas tablas (`FROM puestos`, `FROM mesas`).
+    *   Lógica de "Mesas Huérfanas" y reportes ajustada al nuevo esquema relacional.
+
+### I. Geolocalización de Votos (19/01/2026)
+1.  **Funcionalidad:**
+    *   Se captura la latitud y longitud del dispositivo al momento de registrar el voto (Web Admin y App Móvil).
+    *   Datos guardados en columnas `lati_elector` y `long_elector` de la tabla `electores`.
+2.  **Implementación:**
+    *   **Frontend:** Uso de `navigator.geolocation` con timeout de 5s y alta precisión.
+    *   **Backend:** Actualización de Controladores (`Electores`, `Publico`) para procesar las nuevas variables opcionales.
+
 ## 3. Estado de Módulos
 *   **App Móvil (Android):**
     *   [OK] Generación APK (Debug).
@@ -92,7 +111,7 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
 *   **Gestión Electoral:**
     *   [OK] Líderes, Candidatos (Corregido).
     *   [OK] Electores (Validación Documento).
-    *   [OK] Votación (Control de Duplicidad).
+    *   [OK] Votación (Control de Duplicidad + **Geolocalización GPS**).
     *   [OK] **Testigos Electorales** (Asignación Múltiple, Reporte con Auditoría de Vacíos).
 *   **Reportes y Análisis:**
     *   [OK] Monitor Día D (Tiempo Real).
@@ -103,26 +122,18 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
 *   **DataTables:** Siempre usar `"ajax": getDataTableFetchConfig('/endpoint')`. No usar spread operator `...` directamente en la raíz de la configuración.
 *   **API Response:** Cualquier nuevo endpoint de listado debe retornar `{ "status": true, "data": [] }` para ser consumido correctamente por el frontend.
 *   **Impresión:** Los reportes ahora incluyen clases `d-print-none` y estilos `@media print` para asegurar una salida limpia en papel o PDF.
-*   **Lugares/Puestos - Lógica Crítica:**
-    *   La tabla `places` representa el **Censo Electoral** (1 fila = 1 elector en una mesa).
-    *   La tabla `headresultado` representa las **Mesas Únicas** (1 fila = 1 mesa física).
-    *   Para buscar mesas, SIEMPRE consultar `headresultado` y hacer JOIN con `places` para obtener metadatos.
-    *   Para agrupar mesas de un puesto, usar `p.nameplace_place` + `p.idzona_place` + `p.idmuni_place`, **NUNCA** `id_place` (ya que este varía por elector).
+*   **Lugares/Puestos - Nueva Lógica (Post-Refactor):**
+    *   **`mesas`**: Tabla única de mesas físicas. Llave primaria `id_mesa`.
+    *   **`puestos`**: Tabla única de puestos de votación. Contiene `idzona_puesto`.
+    *   **`places`**: Tabla de **ELECTORES**. Ya no contiene string de ubicación. Se une a `mesas` vía `id_mesa_new` (FK).
+    *   **Consultas:** Para listar infraestructura, SIEMPRE usar `puestos` y `mesas`. Solo unir con `places` si se necesita contar votos/personas.
 *   **App Móvil:**
     *   La APP usa `app-movil/www/js/config.js` para definir la URL de la API.
     *   En Producción SIEMPRE asegurar que `ResultadosModel.php` en el servidor coincida con la versión optimizada (sin referencias a debug legacy).
 
 ## 5. Próximos Pasos (Roadmap)
-*   **URGENTE - Mañana:** **Refactorización Estructural Crítica (Normalización BD)**
-    *   **Contexto:** La tabla `places` (Censo) está desnormalizada. Contiene datos repetidos de ubicación para cada elector.
-    *   **Meta:** Extraer las 783 mesas únicas identificadas a una tabla maestra (probablemente adecuada en `headresultado` o nueva `mesas`), dejando `places` solo para electores vinculados por ID.
-    *   **Impacto:** Reducción de 265k+ registros repetidos a 783 únicos para consultas de ubicación. Preparación para carga masiva de 800k electores.
-    *   **Procedimiento (Producción):**
-        1.  Backup completo.
-        2.  Script de migración SQL (`INSERT INTO maestras SELECT DISTINCT...`).
-        3.  Actualización de esquema (`ALTER TABLE places`).
-        4.  Refactorización masiva de Modelos PHP (`JOIN` en lugar de lectura directa).
-        5.  Deploy rápido (Ventana de mantenimiento).
+*   **URGENTE:** **Refactorización Estructural (Completada 19/01)**
+    *   *(Tarea de normalización BD finalizada exitosamente. Ver sección H).*
 
 *   **App Móvil (Fase 2):**
     *   Implementar Cache Local (SQLite) para funcionamiento Offline.

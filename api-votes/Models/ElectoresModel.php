@@ -224,9 +224,11 @@ class ElectoresModel extends Mysql
         return $request;
     }
 
-    public function updatePollElector(string $identificacion)
+    public function updatePollElector(string $identificacion, string $lat = "", string $lon = "")
     {
         $this->strCedula = $identificacion;
+        $lat = !empty($lat) ? $lat : NULL;
+        $lon = !empty($lon) ? $lon : NULL;
 
         // 1. Verificar si existe en ELECTORES
         $sql = "SELECT id_elector, poll_elector FROM electores WHERE ident_elector = ? AND estado_elector != 0";
@@ -239,9 +241,9 @@ class ElectoresModel extends Mysql
             if ($estadoVoto >= 1) {
                 return "voted";
             }
-            // Actualizar Voto
-            $sql_update = "UPDATE electores SET poll_elector = ? WHERE id_elector = ?";
-            $arrUpdate = array(1, $request['id_elector']);
+            // Actualizar Voto + Coordenadas
+            $sql_update = "UPDATE electores SET poll_elector = ?, lati_elector = ?, long_elector = ? WHERE id_elector = ?";
+            $arrUpdate = array(1, $lat, $lon, $request['id_elector']);
             $request_update = $this->update($sql_update, $arrUpdate);
             return $request_update;
         } else {
@@ -300,8 +302,9 @@ class ElectoresModel extends Mysql
 
             if ($insert > 0 && $insert != 'exist') {
                 // D. MARCAR VOTO AL RECIEN CREADO
-                $sql_update = "UPDATE electores SET poll_elector = ? WHERE id_elector = ?";
-                $arrUpdate = array(1, $insert); // $insert es el ID nuevo
+                // Tambien actualizamos coordenadas aqui
+                $sql_update = "UPDATE electores SET poll_elector = ?, lati_elector = ?, long_elector = ? WHERE id_elector = ?";
+                $arrUpdate = array(1, $lat, $lon, $insert); // $insert es el ID nuevo
                 $request_update = $this->update($sql_update, $arrUpdate);
                 return $request_update;
             } else {

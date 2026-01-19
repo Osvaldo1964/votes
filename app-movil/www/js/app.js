@@ -141,25 +141,53 @@ const app = {
         if (!confirm.isConfirmed) return;
 
         this.setLoading(true);
+
+        // Geolocation Logic
+        let coords = { lat: '', lon: '' };
+        try {
+            const pos = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
+            });
+            coords.lat = pos.coords.latitude;
+            coords.lon = pos.coords.longitude;
+        } catch (e) {
+            console.warn("Geo falló:", e);
+            // Seguimos sin coordenadas
+        }
+
         try {
             const response = await fetch(`${CONFIG.API_URL}Publico/registrarVoto`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ cedula: cedula })
+                body: JSON.stringify({
+                    cedula: cedula,
+                    lat: coords.lat,
+                    lon: coords.lon
+                })
             });
             const data = await response.json();
 
             this.setLoading(false);
 
             if (data.status) {
+                // Success
                 await Swal.fire({
                     icon: 'success',
                     title: '¡Registrado!',
                     text: data.msg,
-                    confirmButtonText: 'Aceptar'
+                    confirmButtonText: 'Descargar Certificado',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cerrar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Open PDF in system browser
+                        const url = `${CONFIG.API_URL}Publico/getCertificado/${cedula}`;
+                        window.open(url, '_system');
+                    }
                 });
+
                 this.navTo('home');
             } else {
                 Swal.fire({

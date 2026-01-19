@@ -248,7 +248,12 @@ class Electores extends Controllers
                 jsonResponse(['status' => false, 'msg' => 'Identificación obligatoria'], 200);
             }
             $strIdentificacion = strClean($_POST['identificacion']);
-            $request = $this->model->updatePollElector($strIdentificacion);
+
+            // Nuevos parámetros de Geolocalización
+            $lat = isset($_POST['lat']) ? strClean($_POST['lat']) : "";
+            $lon = isset($_POST['lon']) ? strClean($_POST['lon']) : "";
+
+            $request = $this->model->updatePollElector($strIdentificacion, $lat, $lon);
 
             if ($request === "voted") {
                 jsonResponse(['status' => false, 'msg' => '¡Atención! Este elector YA registró su voto.'], 200);

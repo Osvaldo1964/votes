@@ -74,8 +74,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 closeOnConfirm: false
             }, function (isConfirm) {
                 if (isConfirm) {
-                    // 3. REGISTRAR EL VOTO
-                    performVote(new FormData(formVoto));
+                    // 3. CAPTURAR GEOLOCALIZACIÓN Y REGISTRAR
+                    if (navigator.geolocation) {
+                        // Mensaje de carga para UX
+                        btnSubmit.innerHTML = '<i class="fa fa-map-marker fa-spin"></i> Ubicando...';
+                        
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                // Éxito Geo
+                                let formData = new FormData(formVoto);
+                                formData.append('lat', position.coords.latitude);
+                                formData.append('lon', position.coords.longitude);
+                                performVote(formData);
+                            },
+                            (error) => {
+                                // Error Geo (Permiso denegado o timeout) -> Enviamos SIN coordenadas
+                                console.warn("Geo error:", error);
+                                swal("Aviso", "No se pudo obtener la ubicación. Se registrará sin georeferencia.", "info");
+                                performVote(new FormData(formVoto));
+                            },
+                            { timeout: 5000, enableHighAccuracy: true }
+                        );
+                    } else {
+                        // No soporta Geo
+                        performVote(new FormData(formVoto));
+                    }
+
                 } else {
                     // Cancelado
                     swal.close();

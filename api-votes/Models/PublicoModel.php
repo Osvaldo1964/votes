@@ -32,8 +32,11 @@ class PublicoModel extends Mysql
         return $request;
     }
 
-    public function updateVotoPublico(string $cedula)
+    public function updateVotoPublico(string $cedula, string $lat = "", string $lon = "")
     {
+        $lat = !empty($lat) ? $lat : NULL;
+        $lon = !empty($lon) ? $lon : NULL;
+
         // 1. Verificar si existe en 'electores' (Base de datos propia)
         $sqlCheck = "SELECT id_elector, poll_elector FROM electores WHERE ident_elector = '$cedula'";
         $requestCheck = $this->select($sqlCheck, []);
@@ -43,9 +46,10 @@ class PublicoModel extends Mysql
             if ($requestCheck['poll_elector'] == 1) {
                 return "already_voted";
             }
-            // Marcar voto
-            $sql = "UPDATE electores SET poll_elector = 1 WHERE ident_elector = '$cedula'";
-            $request = $this->update($sql, array());
+            // Marcar voto y coordenadas
+            $sql = "UPDATE electores SET poll_elector = 1, lati_elector = ?, long_elector = ? WHERE ident_elector = ?";
+            $arrData = array($lat, $lon, $cedula);
+            $request = $this->update($sql, $arrData);
             return $request ? "ok" : "error";
         }
 
@@ -82,9 +86,9 @@ class PublicoModel extends Mysql
         $poll = 1; // Ya votó
         $estado = 1;
 
-        $insert = "INSERT INTO electores (ident_elector, ape1_elector, ape2_elector, nom1_elector, nom2_elector, sexo_elector, telefono_elector, email_elector, direccion_elector, lider_elector, dpto_elector, muni_elector, zona_elector, barrio_elector, poll_elector, estado_elector) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $insert = "INSERT INTO electores (ident_elector, ape1_elector, ape2_elector, nom1_elector, nom2_elector, sexo_elector, telefono_elector, email_elector, direccion_elector, lider_elector, dpto_elector, muni_elector, zona_elector, barrio_elector, poll_elector, estado_elector, lati_elector, long_elector) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        $arrData = array($identificacion, $ape1, $ape2, $nombres, $nom2, $sexo, $telefono, $email, $direccion, $lider, $dpto, $muni, $zona, $barrio, $poll, $estado);
+        $arrData = array($identificacion, $ape1, $ape2, $nombres, $nom2, $sexo, $telefono, $email, $direccion, $lider, $dpto, $muni, $zona, $barrio, $poll, $estado, $lat, $lon);
         $requestInsert = $this->insert($insert, $arrData);
 
         return $requestInsert ? "ok" : "error";
