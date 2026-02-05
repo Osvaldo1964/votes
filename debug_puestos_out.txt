@@ -1,0 +1,9 @@
+=== CHECKING DUPLICATE PUESTO NAMES ===
+No duplicate Puesto names within the same Zone found.
+
+=== CHECKING SPECIFIC PUESTO (FROM CEDULA 73111404) ===
+Mesa 459 belongs to Puesto ID: 26
+Puesto Name: I.E.D.HUGO J. BERMUDEZ
+Zona ID: 4
+Puestos with this name in this zone:
+ - ID: 26 Name: I.E.D.HUGO J. BERMUDEZ

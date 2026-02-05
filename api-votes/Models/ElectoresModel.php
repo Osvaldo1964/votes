@@ -216,7 +216,7 @@ class ElectoresModel extends Mysql
     public function selectPlace(string $id_elector)
     {
         $sql = "SELECT p.ident_place, p.ape1_place, p.ape2_place, p.nom1_place, p.nom2_place, p.id_mesa_new,
-                       me.id_puesto_mesa, pu.idzona_puesto, z.muni_zone, m.id_department_municipality as dpto_zone
+                       me.id_puesto_mesa, pu.nombre_puesto, pu.idzona_puesto, z.muni_zone, m.id_department_municipality as dpto_zone
                 FROM places p
                 LEFT JOIN mesas me ON p.id_mesa_new = me.id_mesa
                 LEFT JOIN puestos pu ON me.id_puesto_mesa = pu.id_puesto

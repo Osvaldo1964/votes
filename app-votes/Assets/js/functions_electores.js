@@ -182,7 +182,7 @@ async function fntGetPuestos(idZona, idSel = null) {
         let options = '<option value="">Seleccione...</option>';
         if (data?.status && Array.isArray(data.data)) {
             data.data.forEach(p => {
-                options += `<option value="${p.nameplace_place}">${p.nameplace_place}</option>`;
+                options += `<option value="${p.id_place}">${p.nameplace_place}</option>`;
             });
         }
         const sel = document.querySelector('#id_puesto');
@@ -195,11 +195,11 @@ async function fntGetPuestos(idZona, idSel = null) {
     } catch (e) { console.error(e); }
 }
 
-async function fntGetMesas(nombrePuesto, idSel = null) {
+async function fntGetMesas(idPuesto, idSel = null) {
     const idZona = document.querySelector('#id_zone').value;
     const formData = new FormData();
     formData.append('idZona', idZona);
-    formData.append('nombrePuesto', nombrePuesto);
+    formData.append('idPuesto', idPuesto);
 
     try {
         const data = await fetchData(BASE_URL_API + '/lugares/getMesas', 'POST', formData);
@@ -211,8 +211,10 @@ async function fntGetMesas(nombrePuesto, idSel = null) {
         }
         const sel = document.querySelector('#id_mesa');
         sel.innerHTML = options;
-        if (idSel) $(sel).val(idSel);
-        $('.selectpicker').selectpicker('refresh');
+        $('.selectpicker').selectpicker('refresh'); // Rebuild options first
+        if (idSel) {
+            $(sel).selectpicker('val', idSel); // Then select
+        }
     } catch (e) { console.error(e); }
 }
 

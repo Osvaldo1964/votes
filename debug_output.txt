@@ -1,0 +1,29 @@
+=== CHECKING SCHEMA ===
+Table places columns: id_place, ident_place, ape1_place, ape2_place, nom1_place, nom2_place, id_mesa_new
+Table mesas columns: id_mesa, id_puesto_mesa, numero_mesa, formulario_mesa, usuario_mesa, fecha_mesa, estado_mesa, id_testigo_mesa
+Table puestos columns: id_puesto, idzona_puesto, num_puesto, nombre_puesto, estado_puesto
+
+=== CHECKING TOTALS ===
+Count places: 276745
+Count zones: 61
+Count puestos: 291
+Count mesas: 2740
+
+=== CHECKING RELATIONSHIPS ===
+Places with id_mesa_new assigned: 276745
+Places with VALID mesa (INNER JOIN): 276745
+Places with INVALID mesa reference (orphan FK): 0
+
+=== CHECKING MESAS -> PUESTOS ===
+Mesas with INVALID puesto reference (orphan FK): 0
+
+=== CHECKING DUPLICATES ===
+Found duplicate cedulas (showing first 5):
+Cedula: 1134332031 Count: 2
+Cedula: 1140821869 Count: 2
+Cedula: 1140831892 Count: 2
+Cedula: 1140836983 Count: 2
+Cedula: 1140839086 Count: 2
+
+=== CHECKING FORMAT ===
+Sample ident_place values: 391, 2670, 3603, 3874, 3972, 4661, 5143, 6611, 10164, 10717

@@ -50,20 +50,16 @@ class LugaresModel extends Mysql
         return $request;
     }
 
-    public function getMesas(int $idZona, string $nombrePuesto)
+    public function getMesas(int $idZona, $idPuesto)
     {
-        $nombrePuesto = strClean($nombrePuesto);
+        // $idPuesto ahora es el ID (int), ya no el nombre string.
+        $idPuesto = intval($idPuesto);
 
-        // 1. Obtener ID del Puesto basado en nombre y zona
-        $sqlPuesto = "SELECT id_puesto FROM puestos WHERE idzona_puesto = $idZona AND nombre_puesto = '$nombrePuesto'";
-        $requestPuesto = $this->select($sqlPuesto, array());
-
-        if (empty($requestPuesto))
+        if ($idPuesto <= 0) {
             return array();
+        }
 
-        $idPuesto = $requestPuesto['id_puesto'];
-
-        // 2. Traer Mesas
+        // 2. Traer Mesas directamente por ID de puesto
         $sql = "SELECT id_mesa, numero_mesa as nombre_mesa
                 FROM mesas 
                 WHERE id_puesto_mesa = $idPuesto 

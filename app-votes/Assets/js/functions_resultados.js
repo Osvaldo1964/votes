@@ -119,7 +119,7 @@ async function fntGetPuestos() {
         let options = '<option value="">Seleccione...</option>';
         if (data && data.status && Array.isArray(data.data)) {
             data.data.forEach(puesto => {
-                options += `<option value="${puesto.nameplace_place}">${puesto.nameplace_place}</option>`;
+                options += `<option value="${puesto.id_place}">${puesto.nameplace_place}</option>`;
             });
         }
         selector.innerHTML = options;
@@ -132,15 +132,15 @@ async function fntGetPuestos() {
 
 async function fntGetMesas() {
     const idZona = document.querySelector('#listZona').value;
-    const nombrePuesto = document.querySelector('#listPuesto').value;
+    const idPuesto = document.querySelector('#listPuesto').value;
     const selector = document.querySelector('#listMesa');
 
-    if (!idZona || !nombrePuesto) return;
+    if (!idZona || !idPuesto) return;
 
     // Usamos POST porque nombres pueden tener espacios/caracteres
     const formData = new FormData();
     formData.append('idZona', idZona);
-    formData.append('nombrePuesto', nombrePuesto);
+    formData.append('idPuesto', idPuesto);
 
     try {
         // fetchData para query de mesas
@@ -204,7 +204,10 @@ async function fntCargarCandidatos() {
 
     // Cargar Potencial
     const idZona = document.querySelector('#listZona').value;
-    const nombrePuesto = document.querySelector('#listPuesto').value;
+    // Puesto es ahora ID, obtenemos el texto
+    const selectorPuesto = document.querySelector('#listPuesto');
+    const nombrePuesto = selectorPuesto.options[selectorPuesto.selectedIndex].text;
+
     fntGetPotencial(idZona, nombrePuesto, nombreMesa);
 
     // Mostrar sección de resultados

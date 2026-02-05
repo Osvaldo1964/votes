@@ -81,15 +81,16 @@ class Lugares extends Controllers
         // Vamos a esperar POST
         if ($_POST) {
             $idZona = intval($_POST['idZona']);
-            $nombrePuesto = $_POST['nombrePuesto'];
+            $idPuesto = isset($_POST['idPuesto']) ? intval($_POST['idPuesto']) : 0;
 
-            if (empty($idZona) || empty($nombrePuesto)) {
-                $arrResponse = array("status" => false, "msg" => "Datos incorrectos");
+            if (empty($idPuesto)) {
+                $arrResponse = array("status" => false, "msg" => "Id Puesto requerido");
                 echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
                 die();
             }
 
-            $arrData = $this->model->getMesas($idZona, $nombrePuesto);
+            // idZona is optional now since we query by idPuesto
+            $arrData = $this->model->getMesas($idZona, $idPuesto);
             if (empty($arrData) || is_string($arrData)) {
                 $arrResponse = array('status' => false, 'msg' => is_string($arrData) ? $arrData : 'Datos no encontrados');
             } else {
