@@ -68,6 +68,8 @@
                                 name="direccion_elector" required="">
                         </div>
                     </div>
+                    <hr>
+                    <p class="text-primary">Lugar de Votación</p>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="dpto_elector">Departamento</label>
@@ -83,6 +85,29 @@
                                 <option value="">Seleccione</option>
                             </select>
                         </div>
+                        <div class="form-group col-md-4">
+                            <label for="id_zone">Zona</label>
+                            <select class="form-control selectpicker" id="id_zone" name="id_zone"
+                                data-live-search="true" data-size="5" required>
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label for="id_puesto">Puesto de Votación</label>
+                            <select class="form-control selectpicker" id="id_puesto" name="id_puesto"
+                                data-live-search="true" data-size="5" required>
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="id_mesa">Mesa</label>
+                            <select class="form-control selectpicker" id="id_mesa" name="id_mesa"
+                                data-live-search="true" data-size="5" required>
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
@@ -93,28 +118,6 @@
                                 <option value="2">Inactivo</option>
                             </select>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="col-md-12">
-                            <p>Lugar de Votación</p>
-                        </div>
-                        <div class="input-group mb-3 col-md-3">
-                            <span class="input-group-text" id="basic-addon1">Zona</span>
-                            <input type="text" class="form-control" id="txtZona" aria-label="Zona"
-                                aria-describedby="basic-addon1" disabled />
-                        </div>
-                        <div class="input-group mb-3 col-md-4 ml-2">
-                            <span class="input-group-text" id="basic-addon1">Puesto</span>
-                            <input type="text" class="form-control" id="txtPuesto" aria-label="Puesto"
-                                aria-describedby="basic-addon1" disabled />
-                        </div>
-                        <div class="input-group mb-3 col-md-4 ml-2">
-                            <span class="input-group-text" id="basic-addon1">Mesa</span>
-                            <input type="text" class="form-control" id="txtMesa" aria-label="Mesa"
-                                aria-describedby="basic-addon1" disabled />
-                        </div>
-
                     </div>
                     <hr>
                     <div class="tile-footer">

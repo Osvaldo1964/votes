@@ -55,7 +55,7 @@ async function fntGetDepartamentos() {
         const data = await fetchData(BASE_URL_API + '/lugares/getDepartamentos');
         // fetchData devuelve data parseada
         let options = '<option value="">Seleccione...</option>';
-        if (data && data.status) {
+        if (data && data.status && Array.isArray(data.data)) {
             data.data.forEach(dpto => {
                 options += `<option value="${dpto.id_department}">${dpto.name_department}</option>`;
             });
@@ -75,7 +75,7 @@ async function fntGetMunicipios() {
     try {
         const data = await fetchData(BASE_URL_API + '/lugares/getMunicipios/' + idDpto);
         let options = '<option value="">Seleccione...</option>';
-        if (data && data.status) {
+        if (data && data.status && Array.isArray(data.data)) {
             data.data.forEach(muni => {
                 options += `<option value="${muni.id_municipality}">${muni.name_municipality}</option>`;
             });
@@ -96,7 +96,7 @@ async function fntGetZonas() {
     try {
         const data = await fetchData(BASE_URL_API + '/lugares/getZonas/' + idMuni);
         let options = '<option value="">Seleccione...</option>';
-        if (data && data.status) {
+        if (data && data.status && Array.isArray(data.data)) {
             data.data.forEach(zona => {
                 options += `<option value="${zona.id_zone}">${zona.name_zone}</option>`;
             });
@@ -117,7 +117,7 @@ async function fntGetPuestos() {
     try {
         const data = await fetchData(BASE_URL_API + '/lugares/getPuestos/' + idZona);
         let options = '<option value="">Seleccione...</option>';
-        if (data && data.status) {
+        if (data && data.status && Array.isArray(data.data)) {
             data.data.forEach(puesto => {
                 options += `<option value="${puesto.nameplace_place}">${puesto.nameplace_place}</option>`;
             });
@@ -302,20 +302,22 @@ function renderCandidatosForm(candidatos) {
                 <tbody>
     `;
 
-    candidatos.forEach(c => {
-        const nombrePartido = PARTIDOS[c.partido_candidato] || "OTRO";
-        html += `
-            <tr>
-                <td>${c.nom1_candidato} ${c.ape1_candidato}</td>
-                <td>${nombrePartido}</td>
-                <td>
-                    <input type="number" class="form-control input-voto" 
-                        name="votos[${c.id_candidato}]" 
-                        min="0" placeholder="0" required>
-                </td>
-            </tr>
-        `;
-    });
+    if (Array.isArray(candidatos)) {
+        candidatos.forEach(c => {
+            const nombrePartido = PARTIDOS[c.partido_candidato] || "OTRO";
+            html += `
+                <tr>
+                    <td>${c.nom1_candidato} ${c.ape1_candidato}</td>
+                    <td>${nombrePartido}</td>
+                    <td>
+                        <input type="number" class="form-control input-voto" 
+                            name="votos[${c.id_candidato}]" 
+                            min="0" placeholder="0" required>
+                    </td>
+                </tr>
+            `;
+        });
+    }
 
     html += `
                 </tbody>

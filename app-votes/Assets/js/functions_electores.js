@@ -1,20 +1,18 @@
 // functions_electores.js
-// Optimizado - Utiliza fetchData y lenguajeEspanol globales (functions_admin.js)
+// Optimizado para manejar cascada nacional de Dpto -> Muni -> Zona -> Puesto -> Mesa
 
 let dataConfig = null;
 let tableElectores;
 
-// 2. INICIO DEL DOCUMENTO
 document.addEventListener('DOMContentLoaded', async function () {
-    // 1. CARGAR CONFIGURACIÓN PRIMERO
-    await cargarJson();
+    // 1. CARGAR DEPARTAMENTOS INICIALES
+    await fntGetDepartamentos();
 
     // 2. INICIALIZAR TABLA
     tableElectores = $('#tableElectores').DataTable({
         "processing": true,
-        "language": lenguajeEspanol, // Variable global
+        "language": lenguajeEspanol,
         "ajax": getDataTableFetchConfig('/electores/getElectores'),
-
         "columns": [
             { "data": "id_elector" },
             { "data": "ident_elector" },
@@ -22,123 +20,60 @@ document.addEventListener('DOMContentLoaded', async function () {
             { "render": (d, t, row) => `${row.ape1_elector} ${row.ape2_elector || ""}` },
             { "data": "telefono_elector" },
             { "data": "email_elector" },
-            { "data": "dpto_elector", "render": d => getNombreById('dptos', d) },
-            { "data": "muni_elector", "render": d => getNombreById('munis', d) },
+            { "data": "name_department" },
+            { "data": "name_municipality" },
             { "data": "estado_elector" },
-            // COLUMNA CRÍTICA: Definida para que nunca sea undefined
             {
                 "data": "options",
                 "defaultContent": "",
                 "orderable": false
             }
         ],
-        "columnDefs": [
-            { "defaultContent": "-", "targets": "_all" } // Si falta cualquier dato, pone un guion
-        ],
         "responsive": true,
         "destroy": true
     });
 
+    // 3. EVENTO BÚSQUEDA CÉDULA
     let inputIdent = document.querySelector("#ident_elector");
     inputIdent.addEventListener('blur', async function () {
         let ident = this.value;
-        if (ident.length > 5) { // Validación básica de longitud
+        if (ident.length > 5) {
             try {
-                // Ahora apuntamos al controlador Electores que tiene la validación de duplicados
                 let data = await fetchData(BASE_URL_API + '/Electores/getValidaElector/' + ident);
 
-
                 if (data && data.status) {
-                    // VERIFICACIÓN DE DUPLICADOS
                     if (data.is_registered) {
-                        inputIdent.classList.remove("is-valid");
-                        // inputIdent.classList.add("is-invalid"); // REMOVIDO: Evita marcar rojo antes de tiempo
-
-                        // Limpiar campos visuales
-                        document.querySelector("#txtZona").value = "";
-                        document.querySelector("#txtPuesto").value = "";
-                        document.querySelector("#txtMesa").value = "";
-                        document.querySelector("#ape1_elector").value = "";
-                        document.querySelector("#ape2_elector").value = "";
-                        document.querySelector("#nom1_elector").value = "";
-                        document.querySelector("#nom2_elector").value = "";
-                        document.querySelector("#insc_elector").value = "1"; // Default a 1, aunque irrelevante si duplicado
-
                         swal({
                             title: "Atención",
                             text: "El elector ya se encuentra registrado.",
                             type: "warning",
                             confirmButtonText: "Aceptar"
                         }, function () {
-                            // Al aceptar, limpiamos el campo y quitamos cualquier rastro de error visual
                             inputIdent.value = "";
-                            inputIdent.classList.remove("is-invalid", "is-valid");
-
-                            // NUEVO: Limpiar validaciones de los otros campos también
-                            const camposLimpiar = ["#ape1_elector", "#ape2_elector", "#nom1_elector", "#nom2_elector", "#email_elector"];
-                            camposLimpiar.forEach(id => {
-                                let el = document.querySelector(id);
-                                if (el) {
-                                    el.value = "";
-                                    el.classList.remove("is-invalid", "is-valid");
-                                }
-                            });
-
-                            // Opcional: enfocar de nuevo
-                            setTimeout(() => inputIdent.focus(), 200);
+                            limpiarCampos();
                         });
-                        return; // Detener ejecución
+                        return;
                     }
 
-                    // SÍ existe en places y NO está registrado
-                    inputIdent.classList.remove("is-invalid");
-                    inputIdent.classList.add("is-valid");
-                    document.querySelector("#insc_elector").value = "1"; // Es del padrón
-
-                    // Poblamos los campos desactivados
-                    document.querySelector("#txtZona").value = data.data.name_zone;
-                    document.querySelector("#txtPuesto").value = data.data.nameplace_place;
-                    document.querySelector("#txtMesa").value = data.data.mesa_place;
-
-                    // AUTO-COMPLETAR NOMBRES Y APELLIDOS
+                    // POBLAR DATOS DE CENSO
                     document.querySelector("#ape1_elector").value = data.data.ape1_place || "";
                     document.querySelector("#ape2_elector").value = data.data.ape2_place || "";
                     document.querySelector("#nom1_elector").value = data.data.nom1_place || "";
                     document.querySelector("#nom2_elector").value = data.data.nom2_place || "";
+                    document.querySelector("#insc_elector").value = "1";
 
-                    // BLOQUEAR EDICIÓN DE NOMBRES Y MARCAR COMO VÁLIDOS
-                    const camposNombres = ["#ape1_elector", "#ape2_elector", "#nom1_elector", "#nom2_elector"];
-                    camposNombres.forEach(id => {
-                        let el = document.querySelector(id);
-                        el.readOnly = true;
-                        el.classList.remove("is-invalid"); // Quita rojo
-                        el.classList.add("is-valid");    // Pone verde (opcional, o déjalo neutro)
-                    });
+                    // SELECCIONAR UBICACIÓN EN CASCADA
+                    if (data.ids) {
+                        await setUbicacionCascada(data.ids);
+                    }
 
-                    // SALTAR FOCO A TELÉFONO
                     document.querySelector("#telefono_elector").focus();
 
                 } else {
-                    // NO existe en places -> DEJAMOS REGISTRAR MANUALMENTE
-                    inputIdent.classList.remove("is-invalid");
-                    inputIdent.classList.add("is-valid"); // Se acepta como válida para registro manual
-                    document.querySelector("#insc_elector").value = "0"; // Registro manual
-
-                    // Limpiamos los campos visuales de puestos (porque no tiene)
-                    document.querySelector("#txtZona").value = "";
-                    document.querySelector("#txtPuesto").value = "";
-                    document.querySelector("#txtMesa").value = "";
-
-                    // Desbloqueamos nombres para que los escriba
-                    const camposNombres = ["#ape1_elector", "#ape2_elector", "#nom1_elector", "#nom2_elector"];
-                    camposNombres.forEach(id => {
-                        let el = document.querySelector(id);
-                        el.value = ""; // Limpiar
-                        el.readOnly = false; // Permitir escritura
-                        el.classList.remove("is-valid", "is-invalid");
-                    });
-
-                    // Enfocar primer apellido
+                    // CÉDULA NO ENCONTRADA - REGISTRO MANUAL
+                    document.querySelector("#insc_elector").value = "0";
+                    // No limpiamos todo, dejamos que el usuario escriba
+                    swal("Info", "La cédula no se encuentra en el censo. Por favor ingrese los datos manualmente.", "info");
                     document.querySelector("#ape1_elector").focus();
                 }
             } catch (error) {
@@ -147,161 +82,181 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     });
 
+    // 4. EVENTOS DE CASCADA
+    $('#dpto_elector').on('change', function () { fntGetMunicipios(this.value); });
+    $('#muni_elector').on('change', function () { fntGetZonas(this.value); });
+    $('#id_zone').on('change', function () { fntGetPuestos(this.value); });
+    $('#id_puesto').on('change', function () { fntGetMesas(this.value); });
+
+    // 5. SUBMIT FORM
     const formElector = document.querySelector("#formElector");
     if (formElector) {
         formElector.onsubmit = async function (e) {
             e.preventDefault();
-
-            // 1. Validaciones mínimas
-            const strCedula = document.querySelector('#ident_elector').value;
-            const strNombre = document.querySelector('#nom1_elector').value;
-            const intMuni = document.querySelector('#muni_elector').value;
-
-            if (strCedula == "" || strNombre == "" || intMuni == "") {
-                swal("Atención", "Todos los campos con (*) son obligatorios.", "error");
-                return false;
-            }
-
-            // 2. Captura de datos (FormData detectará todos los 'name' del HTML)
             const formData = new FormData(formElector);
-
-            // 3. Envío al controlador corregido
             const objData = await fetchData(`${BASE_URL_API}/electores/setElector`, 'POST', formData);
 
             if (objData?.status) {
-                // Si es un registro NUEVO (id_elector vacío), mantenemos modal abierto para seguir registrando
-                // Si es EDICIÓN (id_elector tiene valor), cerramos modal
                 let isNew = document.querySelector("#id_elector").value == "";
-                let currentLider = document.querySelector("#lider_elector").value;
-
                 if (isNew) {
-                    // Modo "Creación Masiva"
+                    let currentLider = document.querySelector("#lider_elector").value;
                     formElector.reset();
-                    document.querySelector("#lider_elector").value = currentLider; // Restaurar líder
-                    $('.selectpicker').selectpicker('refresh'); // Refrescar select visual
-
-                    // Limpiar clases de validación y estados
-                    document.querySelectorAll(".form-control").forEach(i => {
-                        i.classList.remove("is-valid", "is-invalid");
-                        if (i.id.includes("ape") || i.id.includes("nom")) i.readOnly = false; // Desbloquear nombres
-                    });
-
-                    // Asegurar que el ID esté limpio
-                    document.querySelector("#id_elector").value = "";
-
-                    swal({
-                        title: "Guardado",
-                        text: "Elector guardado. Puede registrar el siguiente.",
-                        type: "success",
-                        confirmButtonText: "Continuar"
-                    }, function () {
-                        // Al cerrar el alert, ponemos el foco
-                        setTimeout(() => {
-                            document.querySelector("#ident_elector").focus();
-                        }, 200);
-                    });
+                    document.querySelector("#lider_elector").value = currentLider;
+                    limpiarCampos();
+                    swal("Guardado", "Elector registrado correctamente", "success");
                 } else {
-                    // Modo Edición Normal
                     $('#modalFormElector').modal("hide");
-                    formElector.reset();
-                    swal("Electores", objData.msg, "success");
+                    swal("Actualizado", objData.msg, "success");
                 }
                 tableElectores.ajax.reload();
-            } else if (objData) {
-                // Error controlado (ej: candidato ya existe)
-                swal("Error", objData.msg, "error");
             } else {
-                // Error de servidor (lo que veíamos antes como <br><b>)
-                swal("Error", "Error interno del servidor al procesar la solicitud", "error");
+                swal("Error", objData?.msg || "Error al procesar", "error");
             }
         };
     }
 
-    // Evento para el cambio de departamento
-    $('#dpto_elector').on('change', function () {
-        filtrarMunicipios(this.value);
-    });
-
-    // Eventos de botones
-    document.addEventListener('click', function (e) {
-        const target = e.target.closest('.btnView, .btnEdit, .btnDel, #btnNuevoElector');
-        if (!target) return;
-        const id = target.getAttribute('can');
-        if (target.id === 'btnNuevoElector') openModal();
-        if (target.classList.contains('btnView')) fntViewElector(id);
-        if (target.classList.contains('btnEdit')) fntEditElector(id);
-        if (target.classList.contains('btnDel')) fntDelElector(id);
-    });
+    // CARGAR LÍDERES
+    await fntGetLideres();
 });
 
-// 3. FUNCIONES LÓGICAS
-async function cargarJson() {
-    const res = await fetchData(`${BASE_URL_API}/electores/getJsons`);
-    if (res) {
-        dataConfig = res;
-        const llenarSelect = (selectorId, datos, llaveId, llaveNombre, llaveNombre2 = null) => {
-            const el = document.querySelector(selectorId);
-            if (el && datos) {
-                el.length = 1;
-                datos.forEach(item => {
-                    let nombre = item[llaveNombre];
-                    if (llaveNombre2) nombre += " " + item[llaveNombre2];
-                    el.add(new Option(nombre, item[llaveId]))
-                });
-            }
-        };
-        llenarSelect('#dpto_elector', res.dptos, 'iddpto', 'namedpto');
-        $('.selectpicker').selectpicker('refresh');
-    }
+// --- FUNCIONES DE CASCADA ---
 
-    // 2. CARGAR LÍDERES (Endpoint dedicado)
+async function fntGetDepartamentos() {
     try {
-        const resLideres = await fetchData(`${BASE_URL_API}/Lideres/getSelectLideres`);
-        if (resLideres && resLideres.status) {
-            const agLideres = document.querySelector("#lider_elector");
-            if (agLideres) {
-                agLideres.length = 1;
-                resLideres.data.forEach(l => {
-                    agLideres.add(new Option(`${l.nom1_lider} ${l.ape1_lider}`, l.id_lider));
-                });
-                $('.selectpicker').selectpicker('refresh');
+        const data = await fetchData(BASE_URL_API + '/lugares/getDepartamentos');
+        let options = '<option value="">Seleccione...</option>';
+        if (data?.status && Array.isArray(data.data)) {
+            data.data.forEach(d => {
+                options += `<option value="${d.id_department}">${d.name_department}</option>`;
+            });
+        }
+        document.querySelector('#dpto_elector').innerHTML = options;
+        $('.selectpicker').selectpicker('refresh');
+    } catch (e) { console.error(e); }
+}
+
+async function fntGetMunicipios(idDpto, idSel = null) {
+    if (!idDpto) return;
+    try {
+        const data = await fetchData(BASE_URL_API + '/lugares/getMunicipios/' + idDpto);
+        let options = '<option value="">Seleccione...</option>';
+        if (data?.status && Array.isArray(data.data)) {
+            data.data.forEach(m => {
+                options += `<option value="${m.id_municipality}">${m.name_municipality}</option>`;
+            });
+        }
+        const sel = document.querySelector('#muni_elector');
+        sel.innerHTML = options;
+        if (idSel) $(sel).val(idSel);
+        $('.selectpicker').selectpicker('refresh');
+        if (!idSel) {
+            resetSelects(['#id_zone', '#id_puesto', '#id_mesa']);
+        }
+    } catch (e) { console.error(e); }
+}
+
+async function fntGetZonas(idMuni, idSel = null) {
+    if (!idMuni) return;
+    try {
+        const data = await fetchData(BASE_URL_API + '/lugares/getZonas/' + idMuni);
+        let options = '<option value="">Seleccione...</option>';
+        if (data?.status && Array.isArray(data.data)) {
+            data.data.forEach(z => {
+                options += `<option value="${z.id_zone}">${z.name_zone}</option>`;
+            });
+        }
+        const sel = document.querySelector('#id_zone');
+        sel.innerHTML = options;
+        if (idSel) $(sel).val(idSel);
+        $('.selectpicker').selectpicker('refresh');
+        if (!idSel) {
+            resetSelects(['#id_puesto', '#id_mesa']);
+        }
+    } catch (e) { console.error(e); }
+}
+
+async function fntGetPuestos(idZona, idSel = null) {
+    if (!idZona) return;
+    try {
+        const data = await fetchData(BASE_URL_API + '/lugares/getPuestos/' + idZona);
+        let options = '<option value="">Seleccione...</option>';
+        if (data?.status && Array.isArray(data.data)) {
+            data.data.forEach(p => {
+                options += `<option value="${p.nameplace_place}">${p.nameplace_place}</option>`;
+            });
+        }
+        const sel = document.querySelector('#id_puesto');
+        sel.innerHTML = options;
+        if (idSel) $(sel).val(idSel);
+        $('.selectpicker').selectpicker('refresh');
+        if (!idSel) {
+            resetSelects(['#id_mesa']);
+        }
+    } catch (e) { console.error(e); }
+}
+
+async function fntGetMesas(nombrePuesto, idSel = null) {
+    const idZona = document.querySelector('#id_zone').value;
+    const formData = new FormData();
+    formData.append('idZona', idZona);
+    formData.append('nombrePuesto', nombrePuesto);
+
+    try {
+        const data = await fetchData(BASE_URL_API + '/lugares/getMesas', 'POST', formData);
+        let options = '<option value="">Seleccione...</option>';
+        if (data?.status && Array.isArray(data.data)) {
+            data.data.forEach(m => {
+                options += `<option value="${m.id_mesa}">${m.nombre_mesa}</option>`;
+            });
+        }
+        const sel = document.querySelector('#id_mesa');
+        sel.innerHTML = options;
+        if (idSel) $(sel).val(idSel);
+        $('.selectpicker').selectpicker('refresh');
+    } catch (e) { console.error(e); }
+}
+
+function resetSelects(selectors) {
+    selectors.forEach(s => {
+        document.querySelector(s).innerHTML = '<option value="">Seleccione...</option>';
+    });
+    $('.selectpicker').selectpicker('refresh');
+}
+
+async function setUbicacionCascada(ids) {
+    // ids: { dpto, muni, zone, puesto, mesa }
+    if (ids.dpto) {
+        $('#dpto_elector').val(ids.dpto).selectpicker('refresh');
+        await fntGetMunicipios(ids.dpto, ids.muni);
+        if (ids.muni) {
+            await fntGetZonas(ids.muni, ids.zone);
+            if (ids.zone) {
+                await fntGetPuestos(ids.zone, ids.puesto);
+                if (ids.puesto) {
+                    await fntGetMesas(ids.puesto, ids.mesa);
+                }
             }
         }
-    } catch (e) {
-        console.error("Error cargando líderes:", e);
     }
 }
 
-function filtrarMunicipios(idDpto, idMuniSeleccionado = null) {
-    if (!dataConfig || !dataConfig.munis) return;
-    const listMuni = document.querySelector('#muni_elector');
-    listMuni.length = 1;
-    if (idDpto) {
-        const filtrados = dataConfig.munis.filter(m => m.dptomuni == idDpto);
-        filtrados.forEach(item => listMuni.add(new Option(item.namemuni, item.idmuni)));
+async function fntGetLideres() {
+    const res = await fetchData(`${BASE_URL_API}/Lideres/getSelectLideres`);
+    if (res?.status) {
+        let options = '<option value="">Seleccione</option>';
+        res.data.forEach(l => {
+            options += `<option value="${l.id_lider}">${l.nom1_lider} ${l.ape1_lider}</option>`;
+        });
+        document.querySelector("#lider_elector").innerHTML = options;
+        $('.selectpicker').selectpicker('refresh');
     }
-    if (idMuniSeleccionado) $(listMuni).val(idMuniSeleccionado);
-    $(listMuni).selectpicker('refresh');
 }
 
-function getNombreById(tipo, id) {
-    if (!dataConfig || !dataConfig[tipo]) return id;
-    const campos = {
-        'curules': { id: 'id', nombre: 'nombre' },
-        'partidos': { id: 'id', nombre: 'nombre' },
-        'dptos': { id: 'iddpto', nombre: 'namedpto' },
-        'munis': { id: 'idmuni', nombre: 'namemuni' }
-    };
-    const config = campos[tipo];
-    const item = dataConfig[tipo].find(x => x[config.id] == id);
-    return item ? item[config.nombre] : id;
-}
-
-// 4. ACCIONES MODAL
 function openModal(isEdit = false, data = null) {
     const form = document.querySelector("#formElector");
     form.reset();
     $('#id_elector').val("");
+    limpiarCampos();
 
     if (isEdit && data) {
         $('#titleModal').html("Actualizar Elector");
@@ -311,128 +266,88 @@ function openModal(isEdit = false, data = null) {
         $('#ape2_elector').val(data.ape2_elector);
         $('#nom1_elector').val(data.nom1_elector);
         $('#nom2_elector').val(data.nom2_elector);
-
-        // Bloquear campos de nombres en edición SOLO si es inscrito (1)
-        // Si insc_elector es 0, permitir edición
-        let esInscrito = (data.insc_elector == 1);
-        $('#insc_elector').val(data.insc_elector);
-
-        const camposNombres = ["#ape1_elector", "#ape2_elector", "#nom1_elector", "#nom2_elector"];
-        camposNombres.forEach(id => {
-            document.querySelector(id).readOnly = esInscrito; // True si inscrito, False si manual
-        });
-
         $('#telefono_elector').val(data.telefono_elector);
         $('#email_elector').val(data.email_elector);
         $('#direccion_elector').val(data.direccion_elector);
-
-        $('#dpto_elector').val(data.dpto_elector);
-        filtrarMunicipios(data.dpto_elector, data.muni_elector);
-
-        $('#lider_elector').val(data.lider_elector); // Seleccionar Líder
-
+        $('#lider_elector').val(data.lider_elector);
         $('#estado_elector').val(data.estado_elector);
+        $('#insc_elector').val(data.insc_elector);
 
-        // --- NUEVO: Traer datos informativos de Puesto/Mesa (Places) ---
-        if (data.ident_elector && esInscrito) {
-            fetchData(BASE_URL_API + '/Electores/getValidaElector/' + data.ident_elector)
-                .then(info => {
-                    if (info && info.status && info.data) {
-                        document.querySelector("#txtZona").value = info.data.name_zone || "";
-                        document.querySelector("#txtPuesto").value = info.data.nameplace_place || "";
-                        document.querySelector("#txtMesa").value = info.data.mesa_place || "";
-                    }
+        // Cargar ubicación si tiene mesa asignada
+        if (data.id_mesa_new) {
+            fetchData(BASE_URL_API + '/Electores/getUbicacionMesa/' + data.id_mesa_new)
+                .then(res => {
+                    if (res.status) setUbicacionCascada(res.ids);
                 });
         }
-
     } else {
         $('#titleModal').html("Nuevo Elector");
-        $('#insc_elector').val("1"); // Reset a 1 por defecto
-
-        // Datos informativos limpios
-        document.querySelector("#txtZona").value = "";
-        document.querySelector("#txtPuesto").value = "";
-        document.querySelector("#txtMesa").value = "";
-
-        // Desbloquear campos en modo nuevo
-        document.querySelector("#ape1_elector").readOnly = false;
-        document.querySelector("#ape2_elector").readOnly = false;
-        document.querySelector("#nom1_elector").readOnly = false;
-        document.querySelector("#nom2_elector").readOnly = false;
-
-        filtrarMunicipios(""); // Limpia municipios
-        $('#lider_elector').val(""); // Limpia líder
+        $('#insc_elector').val("1");
     }
     $('.selectpicker').selectpicker('refresh');
     $('#modalFormElector').modal('show');
 }
 
-// 4. ACCIONES (VIEW, EDIT, DELETE)
+function limpiarCampos() {
+    document.querySelectorAll(".form-control").forEach(i => {
+        i.classList.remove("is-valid", "is-invalid");
+    });
+    // No reseteamos el líder si estamos en registro masivo (manejado en submit)
+}
+
+// Botones de acción
+document.addEventListener('click', function (e) {
+    const target = e.target.closest('.btnView, .btnEdit, .btnDel, #btnNuevoElector');
+    if (!target) return;
+    const id = target.getAttribute('can');
+    if (target.id === 'btnNuevoElector') openModal();
+    if (target.classList.contains('btnEdit')) fntEditElector(id);
+    if (target.classList.contains('btnDel')) fntDelElector(id);
+    if (target.classList.contains('btnView')) fntViewElector(id);
+});
+
+async function fntEditElector(id) {
+    const res = await fetchData(`${BASE_URL_API}/electores/getElector/${id}`);
+    if (res?.status) openModal(true, res.data);
+}
 
 async function fntViewElector(id) {
     const res = await fetchData(`${BASE_URL_API}/electores/getElector/${id}`);
     if (res?.status) {
         const d = res.data;
-        // Función auxiliar para actualizar el HTML de los campos del modal de vista
         const setHtml = (selector, val) => {
             const el = document.querySelector(selector);
             if (el) el.innerHTML = val || "---";
         };
-
-        let nombreLider = d.nom1_lider ? `${d.nom1_lider} ${d.ape1_lider || ""}` : "---";
-        setHtml('#celLider', nombreLider);
+        setHtml('#celLider', `${d.nom1_lider} ${d.ape1_lider || ""}`);
         setHtml('#celIdent', d.ident_elector);
         setHtml('#celNombre', `${d.nom1_elector} ${d.nom2_elector || ""}`);
         setHtml('#celApellido', `${d.ape1_elector} ${d.ape2_elector || ""}`);
         setHtml('#celTelefono', d.telefono_elector);
         setHtml('#celEmail', d.email_elector);
         setHtml('#celDireccion', d.direccion_elector);
-
-        // Traducimos IDs a Nombres usando dataConfig
-        setHtml('#celDpto', getNombreById('dptos', d.dpto_elector));
-        setHtml('#celMuni', getNombreById('munis', d.muni_elector));
-
-
-        setHtml('#celEstado', d.estado_elector == 1
-            ? '<span class="badge badge-success">Activo</span>'
-            : '<span class="badge badge-danger">Inactivo</span>');
-
+        setHtml('#celDpto', d.name_department);
+        setHtml('#celMuni', d.name_municipality);
+        setHtml('#celEstado', d.estado_elector == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>');
         $('#modalViewElector').modal('show');
-    } else {
-        swal("Error", "No se pudo obtener la información del elector", "error");
     }
 }
 
-async function fntEditElector(idElector) {
-    const res = await fetchData(`${BASE_URL_API}/electores/getElector/${idElector}`);
-    if (res?.status) {
-        // Llamamos a openModal en modo edición pasando los datos
-        openModal(true, res.data);
-    } else {
-        swal("Error", "No se pudieron obtener los datos para editar", "error");
-    }
-}
-
-function fntDelElector(id) {
+async function fntDelElector(id) {
     swal({
         title: "Eliminar Elector",
         text: "¿Realmente quiere eliminar este registro?",
         type: "warning",
         showCancelButton: true,
         confirmButtonText: "Sí, eliminar",
-        cancelButtonText: "Cancelar",
         closeOnConfirm: false
     }, async (isConfirm) => {
         if (isConfirm) {
-            // Usamos PUT o DELETE según tu API, aquí mantengo PUT según tu código original
-            const res = await fetchData(`${BASE_URL_API}/electores/delElector/`, 'PUT', { idelector: id });
+            const res = await fetchData(`${BASE_URL_API}/electores/delElector/`, 'PUT', { id_elector: id });
             if (res?.status) {
                 swal("Eliminado", res.msg, "success");
                 tableElectores.ajax.reload();
-            } else {
-                swal("Error", res?.msg || "No se pudo eliminar", "error");
             }
         }
     });
 }
-// Mantenemos tus funciones fntViewCandidato, fntEditCandidato, fntDelCandidato igual...

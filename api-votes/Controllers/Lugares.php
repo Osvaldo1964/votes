@@ -10,8 +10,8 @@ class Lugares extends Controllers
     public function getDepartamentos()
     {
         $arrData = $this->model->getDepartamentos();
-        if (empty($arrData)) {
-            $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados');
+        if (empty($arrData) || is_string($arrData)) {
+            $arrResponse = array('status' => false, 'msg' => is_string($arrData) ? $arrData : 'Datos no encontrados');
         } else {
             $arrResponse = array('status' => true, 'data' => $arrData);
         }
@@ -27,8 +27,8 @@ class Lugares extends Controllers
             die();
         }
         $arrData = $this->model->getMunicipios($idDpto);
-        if (empty($arrData)) {
-            $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados');
+        if (empty($arrData) || is_string($arrData)) {
+            $arrResponse = array('status' => false, 'msg' => is_string($arrData) ? $arrData : 'Datos no encontrados');
         } else {
             $arrResponse = array('status' => true, 'data' => $arrData);
         }
@@ -44,8 +44,8 @@ class Lugares extends Controllers
             die();
         }
         $arrData = $this->model->getZonas($idMuni);
-        if (empty($arrData)) {
-            $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados');
+        if (empty($arrData) || is_string($arrData)) {
+            $arrResponse = array('status' => false, 'msg' => is_string($arrData) ? $arrData : 'Datos no encontrados');
         } else {
             $arrResponse = array('status' => true, 'data' => $arrData);
         }
@@ -61,8 +61,8 @@ class Lugares extends Controllers
             die();
         }
         $arrData = $this->model->getPuestos($idZona);
-        if (empty($arrData)) {
-            $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados');
+        if (empty($arrData) || is_string($arrData)) {
+            $arrResponse = array('status' => false, 'msg' => is_string($arrData) ? $arrData : 'Datos no encontrados');
         } else {
             $arrResponse = array('status' => true, 'data' => $arrData);
         }
@@ -90,8 +90,8 @@ class Lugares extends Controllers
             }
 
             $arrData = $this->model->getMesas($idZona, $nombrePuesto);
-            if (empty($arrData)) {
-                $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados');
+            if (empty($arrData) || is_string($arrData)) {
+                $arrResponse = array('status' => false, 'msg' => is_string($arrData) ? $arrData : 'Datos no encontrados');
             } else {
                 $arrResponse = array('status' => true, 'data' => $arrData);
             }

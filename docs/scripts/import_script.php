@@ -89,21 +89,17 @@ while (($col = fgetcsv($handle, 1000, ";")) !== FALSE) {
     $muniID = $muniData['id'];
     $dptoID = $muniData['dpto'];
 
-    // Gestionar Zona
-    if (empty($comunaName)) {
-        $comunaName = "ZONA " . trim($col[2]);
-    }
-
-    $zoneKey = $muniID . "_" . $comunaName;
+    $zoneCode = trim($col[2]);
+    $zoneKey = $muniID . "_" . $zoneCode;
 
     if (isset($zonesCache[$zoneKey])) {
         $zoneID = $zonesCache[$zoneKey];
     } else {
-        $stmtZone = $pdo->prepare("SELECT `id_zone` FROM `zones` WHERE `name_zone` = ? AND `muni_zone` = ?");
+        $stmtZone = $pdo->prepare("SELECT `id_zone` FROM `zones` WHERE `codigo_zona` = ? AND `muni_zone` = ?");
         try {
-            $stmtZone->execute([$comunaName, $muniID]);
+            $stmtZone->execute([$zoneCode, $muniID]);
         } catch (PDOException $e) {
-            echo "Error SELECT Zone: " . $e->getMessage() . " Params: $comunaName, $muniID\n";
+            echo "Error SELECT Zone: " . $e->getMessage() . " Params: $zoneCode, $muniID\n";
             exit;
         }
         $zoneRow = $stmtZone->fetch(PDO::FETCH_ASSOC);
@@ -111,11 +107,11 @@ while (($col = fgetcsv($handle, 1000, ";")) !== FALSE) {
         if ($zoneRow) {
             $zoneID = $zoneRow['id_zone'];
         } else {
+            $fullZoneName = !empty($comunaName) ? "ZONA $zoneCode - $comunaName" : "ZONA $zoneCode";
             $stmtInsertZone = $pdo->prepare("INSERT INTO zones (name_zone, muni_zone, dpto_zone, codigo_zona, status_zone, created_zone) VALUES (?, ?, ?, ?, ?, NOW())");
-            $defaultCodigo = ""; // No tenemos codigo en CSV
             $defaultStatus = 1;
             try {
-                $stmtInsertZone->execute([$comunaName, $muniID, $dptoID, $defaultCodigo, $defaultStatus]);
+                $stmtInsertZone->execute([$fullZoneName, $muniID, $dptoID, $zoneCode, $defaultStatus]);
                 $zoneID = $pdo->lastInsertId();
                 $newZones++;
             } catch (PDOException $e) {
@@ -174,4 +170,3 @@ echo "Filas Procesadas: $rowNum\n";
 echo "Zonas Creadas: $newZones\n";
 echo "Puestos Creados: $newPuestos\n";
 echo "Mesas Creadas: $newMesas\n";
-?>

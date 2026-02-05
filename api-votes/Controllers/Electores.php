@@ -124,6 +124,8 @@ class Electores extends Controllers
                 $intEstado = intval($_POST['estado_elector']) == 0 ? 1 : intval($_POST['estado_elector']);
                 $intInsc = isset($_POST['insc_elector']) ? intval($_POST['insc_elector']) : 0;
 
+                $intMesa = isset($_POST['id_mesa']) ? intval($_POST['id_mesa']) : 0;
+
                 if ($intIdElector == 0) {
                     $request_elector = $this->model->insertElector(
                         $strCedula,
@@ -160,7 +162,12 @@ class Electores extends Controllers
                     );
                     $option = 2;
                 }
+
                 if ($request_elector > 0) {
+                    // Sincronizar con la tabla PLACES (Censo)
+                    if ($intMesa > 0) {
+                        $this->model->insertOrUpdatePlace($strCedula, $strApe1, $strApe2, $strNom1, $strNom2, $intMesa);
+                    }
                     $msg = ($option == 1) ? 'Datos guardados correctamente' : 'Datos actualizados correctamente.';
                     jsonResponse(['status' => true, 'msg' => $msg], 200);
                 } else if ($request_elector == 'exist') {
@@ -194,19 +201,35 @@ class Electores extends Controllers
         if (empty($requestPlace)) {
             $response = array('status' => false, 'msg' => 'Datos no encontrados en el censo');
         } else {
-            // Retornamos los datos del censo
-            // Ahora is_registered NO debe bloquear.
-            // Enviamos un flag 'allow_vote' = true siempre que esté en el censo.
+            // Preparamos los IDs para la cascada en JS
+            $ids = [
+                'dpto' => $requestPlace['dpto_zone'],
+                'muni' => $requestPlace['muni_zone'],
+                'zone' => $requestPlace['idzona_puesto'],
+                'puesto' => $requestPlace['id_puesto_mesa'],
+                'mesa' => $requestPlace['id_mesa_new']
+            ];
+
             $response = array(
                 'status' => true,
                 'msg' => 'Datos encontrados',
                 'data' => $requestPlace,
-                'is_registered' => $isRegistered, // Mantenemos para info visual si se requiere
-                'allow_vote' => true, // Nueva bandera explicita
-                'elector_data' => $checkDuplicate // Contiene poll_elector y id_elector
+                'ids' => $ids,
+                'is_registered' => $isRegistered
             );
         }
         jsonResponse($response, 200);
+        die();
+    }
+
+    public function getUbicacionMesa($idMesa)
+    {
+        if (empty($idMesa)) {
+            jsonResponse(['status' => false], 200);
+            die();
+        }
+        $data = $this->model->getUbicacionByMesa(intval($idMesa));
+        jsonResponse($data, 200);
         die();
     }
 

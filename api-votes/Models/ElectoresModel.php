@@ -25,11 +25,16 @@ class ElectoresModel extends Mysql
     public function selectElector(int $idelector)
     {
         $this->intIdElector = $idelector;
-        $sql = "SELECT c.id_elector,c.ident_elector,c.ape1_elector,c.ape2_elector,c.nom1_elector,c.nom2_elector,
-                        c.telefono_elector,c.email_elector,c.dpto_elector,c.muni_elector,c.direccion_elector, c.lider_elector,c.estado_elector, c.insc_elector,
-                        l.nom1_lider, l.ape1_lider
+        $sql = "SELECT c.id_elector, c.ident_elector, c.ape1_elector, c.ape2_elector, c.nom1_elector, c.nom2_elector,
+                        c.telefono_elector, c.email_elector, c.dpto_elector, c.muni_elector, c.direccion_elector, c.lider_elector, c.estado_elector, c.insc_elector,
+                        l.nom1_lider, l.ape1_lider,
+                        p.id_mesa_new,
+                        d.name_department, m.name_municipality
                         FROM electores c
                         LEFT JOIN lideres l ON c.lider_elector = l.id_lider
+                        LEFT JOIN places p ON c.ident_elector = p.ident_place
+                        LEFT JOIN departments d ON c.dpto_elector = d.id_department
+                        LEFT JOIN municipalities m ON c.muni_elector = m.id_municipality
                         WHERE c.id_elector = ? AND c.estado_elector != ? ";
         $arrData = array($this->intIdElector, 0);
         $request = $this->select($sql, $arrData);
@@ -174,13 +179,16 @@ class ElectoresModel extends Mysql
 
     public function selectElectores()
     {
-        $sql = "SELECT c.id_elector,c.ident_elector, c.ape1_elector, c.ape2_elector,
-                            c.nom1_elector, c.nom2_elector,c.telefono_elector,
+        $sql = "SELECT c.id_elector, c.ident_elector, c.ape1_elector, c.ape2_elector,
+                            c.nom1_elector, c.nom2_elector, c.telefono_elector,
                             c.email_elector, c.dpto_elector, c.muni_elector, c.direccion_elector,
                             c.lider_elector, c.estado_elector, c.insc_elector,
-                            l.nom1_lider, l.ape1_lider 
+                            l.nom1_lider, l.ape1_lider,
+                            d.name_department, m.name_municipality
 							FROM electores c
                             LEFT JOIN lideres l ON c.lider_elector = l.id_lider
+                            LEFT JOIN departments d ON c.dpto_elector = d.id_department
+                            LEFT JOIN municipalities m ON c.muni_elector = m.id_municipality
                             WHERE c.estado_elector != 0 ORDER BY c.id_elector DESC ";
         $request = $this->select_all($sql);
         return $request;
@@ -207,21 +215,56 @@ class ElectoresModel extends Mysql
 
     public function selectPlace(string $id_elector)
     {
-        $sql = "SELECT d.name_department, m.name_municipality, z.name_zone, 
-                       pu.nombre_puesto as nameplace_place, 
-                       me.numero_mesa as mesa_place,
-                       p.ape1_place, p.ape2_place, p.nom1_place, p.nom2_place, p.ident_place 
+        $sql = "SELECT p.ident_place, p.ape1_place, p.ape2_place, p.nom1_place, p.nom2_place, p.id_mesa_new,
+                       me.id_puesto_mesa, pu.idzona_puesto, z.muni_zone, m.id_department_municipality as dpto_zone
                 FROM places p
-                INNER JOIN mesas me ON p.id_mesa_new = me.id_mesa
-                INNER JOIN puestos pu ON me.id_puesto_mesa = pu.id_puesto
-                INNER JOIN zones z ON pu.idzona_puesto = z.id_zone
+                LEFT JOIN mesas me ON p.id_mesa_new = me.id_mesa
+                LEFT JOIN puestos pu ON me.id_puesto_mesa = pu.id_puesto
+                LEFT JOIN zones z ON pu.idzona_puesto = z.id_zone
                 LEFT JOIN municipalities m ON z.muni_zone = m.id_municipality
-                LEFT JOIN departments d ON m.id_department_municipality = d.id_department
-                WHERE CAST(p.ident_place AS UNSIGNED) = ?";
+                WHERE p.ident_place = ?";
 
-        $arrData = array((int) $id_elector);
+        $arrData = array($id_elector);
         $request = $this->select($sql, $arrData);
         return $request;
+    }
+
+    public function getUbicacionByMesa(int $idMesa)
+    {
+        $sql = "SELECT me.id_mesa, me.id_puesto_mesa, pu.nombre_puesto, pu.idzona_puesto, z.muni_zone, m.id_department_municipality as dpto_zone
+                FROM mesas me
+                INNER JOIN puestos pu ON me.id_puesto_mesa = pu.id_puesto
+                INNER JOIN zones z ON pu.idzona_puesto = z.id_zone
+                INNER JOIN municipalities m ON z.muni_zone = m.id_municipality
+                WHERE me.id_mesa = ?";
+        $res = $this->select($sql, array($idMesa));
+        if ($res) {
+            return [
+                'status' => true,
+                'ids' => [
+                    'dpto' => $res['dpto_zone'],
+                    'muni' => $res['muni_zone'],
+                    'zone' => $res['idzona_puesto'],
+                    'puesto' => $res['nombre_puesto'],
+                    'mesa' => $res['id_mesa']
+                ]
+            ];
+        }
+        return ['status' => false];
+    }
+
+    public function insertOrUpdatePlace(string $ident, string $ape1, string $ape2, string $nom1, string $nom2, int $idMesa)
+    {
+        $sql = "SELECT id_place FROM places WHERE ident_place = ?";
+        $exists = $this->select($sql, array($ident));
+
+        if ($exists) {
+            $sql_upd = "UPDATE places SET ape1_place=?, ape2_place=?, nom1_place=?, nom2_place=?, id_mesa_new=? WHERE id_place=?";
+            $this->update($sql_upd, array($ape1, $ape2, $nom1, $nom2, $idMesa, $exists['id_place']));
+        } else {
+            $sql_ins = "INSERT INTO places (ident_place, ape1_place, ape2_place, nom1_place, nom2_place, id_mesa_new) VALUES (?,?,?,?,?,?)";
+            $this->insert($sql_ins, array($ident, $ape1, $ape2, $nom1, $nom2, $idMesa));
+        }
     }
 
     public function updatePollElector(string $identificacion, string $lat = "", string $lon = "")

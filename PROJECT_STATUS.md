@@ -104,6 +104,21 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
         *   **Android:** Descarga vía `window.open(url, '_system')`.
         *   **iOS (iPhone):** Solución específica usando `window.location.assign()` y encabezado PHP `Content-Disposition: attachment` para forzar la descarga y saltar bloqueadores de pop-ups de Safari.
 
+### K. Modernización del Módulo de Electores y Carga Masiva (04/02/2026)
+1.  **Electores - Cascada Geográfica Nacional:**
+    *   Se eliminaron los campos de texto estáticos y se implementó un sistema de 5 selectores dinámicos: **Departamento > Municipio > Zona > Puesto > Mesa**.
+    *   Integración total con la infraestructura física real de la base de datos (tablas `zones`, `puestos`, `mesas`).
+2.  **Sincronización Automática con el Censo (`places`):**
+    *   **Registro Inteligente:** Al registrar un elector, el sistema verifica su existencia en el censo. Si no existe, crea el registro en `places` vinculándolo a la mesa seleccionada.
+    *   **Autocompletado:** La búsqueda por cédula ahora puebla automáticamente los 5 niveles de ubicación si el ciudadano ya pertenece al censo.
+3.  **Importación Masiva de Infraestructura (Santa Marta):**
+    *   Se utilizó un script robusto (`docs/scripts/import_script.php`) para cargar la infraestructura completa de Santa Marta desde CSV oficial.
+    *   Resultado: 11 Zonas, decenas de Puestos y 513 Mesas cargadas y vinculadas correctamente.
+    *   Corrección de identificación de zonas por código oficial (ZZ) para evitar duplicidad por nombre de comuna.
+4.  **Robustez en Módulo de Resultados:**
+    *   Implementación de validaciones en JS para evitar fallos por datos no-array.
+    *   Ajuste en controladores de `Lugares` para manejar estados de error SQL de forma controlada.
+
 ## 3. Estado de Módulos
 *   **App Móvil (Android/Web):**
     *   [OK] Generación APK (Debug).
@@ -122,7 +137,7 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
     *   [OK] Informe de Ingresos y Gastos.
 *   **Gestión Electoral:**
     *   [OK] Líderes, Candidatos (Corregido).
-    *   [OK] Electores (Validación Documento).
+    *   [OK] **Electores:** Ubicación dinámica (Dpto-Mesa) + Sincronización automática con Censo.
     *   [OK] Votación (Control de Duplicidad + **Geolocalización GPS**).
     *   [OK] **Testigos Electorales** (Asignación Múltiple, Reporte con Auditoría de Vacíos).
 *   **Reportes y Análisis:**

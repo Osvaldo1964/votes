@@ -18,7 +18,7 @@ class ResultadosModel extends Mysql
         $infoPlace = $this->select($sqlInfo, array());
 
         if (empty($infoPlace) || empty($infoPlace['id_mesa_new'])) {
-            return 0; 
+            return 0;
         }
 
         $idMesa = $infoPlace['id_mesa_new'];
@@ -54,16 +54,16 @@ class ResultadosModel extends Mysql
         $arrData = array($this->intIdHead, $this->intCandidato, $this->intVotos, 1, $this->intUsuario);
         return $this->insert($sql_insert, $arrData);
     }
-    
+
     public function consultarEstadoMesa(int $place)
     {
         $sqlInfo = "SELECT id_mesa_new FROM places WHERE id_place = $place";
         $infoPlace = $this->select($sqlInfo, array());
         if (empty($infoPlace) || empty($infoPlace['id_mesa_new'])) return 0;
-        
+
         $idMesa = $infoPlace['id_mesa_new'];
         $sql = "SELECT id_mesa, formulario_mesa, estado_mesa FROM mesas WHERE id_mesa = $idMesa AND estado_mesa = 2";
-        $request = $this->select($sql); 
+        $request = $this->select($sql, array());
         return !empty($request) ? $request : 0;
     }
 
@@ -72,4 +72,3 @@ class ResultadosModel extends Mysql
         return true;
     }
 }
-?>
