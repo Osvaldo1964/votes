@@ -1,5 +1,5 @@
-**Fecha:** 19/01/2026 (Mañana)
-**Última sesión:** Verificación de Refactorización Crítica (Normalización BD).
+**Fecha:** 05/02/2026
+**Última sesión:** Solución de carga de Mesas en Resultados y Script de Migración Hostinger.
 
 ## 1. Arquitectura del Sistema (Estándar 2026)
 El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunicación vía JSON RESTful.
@@ -118,6 +118,13 @@ El sistema opera bajo una arquitectura desacoplada Frontend-Backend con comunica
 4.  **Robustez en Módulo de Resultados:**
     *   Implementación de validaciones en JS para evitar fallos por datos no-array.
     *   Ajuste en controladores de `Lugares` para manejar estados de error SQL de forma controlada.
+    *   **Corregido (05/02/2026):** Solucionado error donde las mesas no cargaban en el módulo de Resultados. Se ajustó `functions_resultados.js` para enviar `idPuesto` en lugar del nombre.
+
+### L. Migración y Despliegue (05/02/2026)
+1.  **Script de Migración (`generate_migration_sql.php`):**
+    *   Script automatizado para exportar tablas `puestos` y `mesas` desde local a SQL compatible con Hostinger.
+    *   Incluye `SET FOREIGN_KEY_CHECKS = 0` para evitar errores de integridad referencial al reemplazar tablas maestras en producción.
+
 
 ## 3. Estado de Módulos
 *   **App Móvil (Android/Web):**
