@@ -582,7 +582,7 @@
         },
         {
             "idmuni": "61",
-            "namemuni": "JERICÓ",
+            "namemuni": "JERIC?",
             "codemuni": "5368",
             "dptomuni": "1"
         },
@@ -654,7 +654,7 @@
         },
         {
             "idmuni": "73",
-            "namemuni": "NECOCLÍ",
+            "namemuni": "NECOCL?",
             "codemuni": "549",
             "dptomuni": "1"
         },
@@ -762,7 +762,7 @@
         },
         {
             "idmuni": "91",
-            "namemuni": "SAN JERÓNIMO",
+            "namemuni": "SAN JER?NIMO",
             "codemuni": "5656",
             "dptomuni": "1"
         },
@@ -930,7 +930,7 @@
         },
         {
             "idmuni": "119",
-            "namemuni": "YOLOMBÓ",
+            "namemuni": "YOLOMB?",
             "codemuni": "589",
             "dptomuni": "1"
         },
@@ -1500,7 +1500,7 @@
         },
         {
             "idmuni": "214",
-            "namemuni": "JERICÓ",
+            "namemuni": "JERIC?",
             "codemuni": "15368",
             "dptomuni": "5"
         },
@@ -1572,7 +1572,7 @@
         },
         {
             "idmuni": "226",
-            "namemuni": "NUEVO COLÓN",
+            "namemuni": "NUEVO COL?N",
             "codemuni": "15494",
             "dptomuni": "5"
         },
@@ -1668,7 +1668,7 @@
         },
         {
             "idmuni": "242",
-            "namemuni": "RONDÓN",
+            "namemuni": "ROND?N",
             "codemuni": "15621",
             "dptomuni": "5"
         },
@@ -1716,7 +1716,7 @@
         },
         {
             "idmuni": "250",
-            "namemuni": "SANTA SOFÍA",
+            "namemuni": "SANTA SOF?A",
             "codemuni": "15696",
             "dptomuni": "5"
         },
@@ -1854,7 +1854,7 @@
         },
         {
             "idmuni": "273",
-            "namemuni": "TURMEQUÉ",
+            "namemuni": "TURMEQU?",
             "codemuni": "15835",
             "dptomuni": "5"
         },
@@ -2034,7 +2034,7 @@
         },
         {
             "idmuni": "303",
-            "namemuni": "VILLAMARÍA",
+            "namemuni": "VILLAMAR?A",
             "codemuni": "17873",
             "dptomuni": "6"
         },
@@ -2268,7 +2268,7 @@
         },
         {
             "idmuni": "342",
-            "namemuni": "PURACÉ",
+            "namemuni": "PURAC?",
             "codemuni": "19585",
             "dptomuni": "8"
         },
@@ -2298,7 +2298,7 @@
         },
         {
             "idmuni": "347",
-            "namemuni": "SUÁREZ",
+            "namemuni": "SU?REZ",
             "codemuni": "1978",
             "dptomuni": "8"
         },
@@ -2748,7 +2748,7 @@
         },
         {
             "idmuni": "422",
-            "namemuni": "FÚQUENE",
+            "namemuni": "F?QUENE",
             "codemuni": "25288",
             "dptomuni": "11"
         },
@@ -2820,13 +2820,13 @@
         },
         {
             "idmuni": "434",
-            "namemuni": "GUTIÉRREZ",
+            "namemuni": "GUTI?RREZ",
             "codemuni": "25339",
             "dptomuni": "11"
         },
         {
             "idmuni": "435",
-            "namemuni": "JERUSALÉN",
+            "namemuni": "JERUSAL?N",
             "codemuni": "25368",
             "dptomuni": "11"
         },
@@ -2856,7 +2856,7 @@
         },
         {
             "idmuni": "440",
-            "namemuni": "LA PEÑA",
+            "namemuni": "LA PE?A",
             "codemuni": "25398",
             "dptomuni": "11"
         },
@@ -3036,7 +3036,7 @@
         },
         {
             "idmuni": "470",
-            "namemuni": "SIBATÉ",
+            "namemuni": "SIBAT?",
             "codemuni": "2574",
             "dptomuni": "11"
         },
@@ -3132,7 +3132,7 @@
         },
         {
             "idmuni": "486",
-            "namemuni": "TOCANCIPÁ",
+            "namemuni": "TOCANCIP?",
             "codemuni": "25817",
             "dptomuni": "11"
         },
@@ -3174,13 +3174,13 @@
         },
         {
             "idmuni": "493",
-            "namemuni": "VILLAGÓMEZ",
+            "namemuni": "VILLAG?MEZ",
             "codemuni": "25871",
             "dptomuni": "11"
         },
         {
             "idmuni": "494",
-            "namemuni": "VILLAPINZÓN",
+            "namemuni": "VILLAPINZ?N",
             "codemuni": "25873",
             "dptomuni": "11"
         },
@@ -3282,7 +3282,7 @@
         },
         {
             "idmuni": "511",
-            "namemuni": "MEDIO BAUDÓ",
+            "namemuni": "MEDIO BAUD?",
             "codemuni": "2743",
             "dptomuni": "12"
         },
@@ -3498,7 +3498,7 @@
         },
         {
             "idmuni": "547",
-            "namemuni": "SANTA MARÍA",
+            "namemuni": "SANTA MAR?A",
             "codemuni": "41676",
             "dptomuni": "13"
         },
@@ -3648,13 +3648,13 @@
         },
         {
             "idmuni": "572",
-            "namemuni": "ARIGUANI (EL DIFICIL)",
+            "namemuni": "ARIGUANÍ",
             "codemuni": "47058",
             "dptomuni": "15"
         },
         {
             "idmuni": "573",
-            "namemuni": "CERRO DE SAN ANTONIO",
+            "namemuni": "CERRO SAN ANTONIO",
             "codemuni": "47161",
             "dptomuni": "15"
         },
@@ -3684,7 +3684,7 @@
         },
         {
             "idmuni": "578",
-            "namemuni": "EL RETEN",
+            "namemuni": "EL RETÉN",
             "codemuni": "47268",
             "dptomuni": "15"
         },
@@ -3720,7 +3720,7 @@
         },
         {
             "idmuni": "584",
-            "namemuni": "PIJIÑO DEL CARMEN",
+            "namemuni": "PLATO",
             "codemuni": "47555",
             "dptomuni": "15"
         },
@@ -3732,13 +3732,13 @@
         },
         {
             "idmuni": "586",
-            "namemuni": "PUEBLOVIEJO",
+            "namemuni": "SALAMINA",
             "codemuni": "47675",
             "dptomuni": "15"
         },
         {
             "idmuni": "587",
-            "namemuni": "SAN ZENON",
+            "namemuni": "SAN ZENÓN",
             "codemuni": "47703",
             "dptomuni": "15"
         },
@@ -3762,13 +3762,13 @@
         },
         {
             "idmuni": "591",
-            "namemuni": "ZAPAYAN",
+            "namemuni": "ZAPAYÁN",
             "codemuni": "4796",
             "dptomuni": "15"
         },
         {
             "idmuni": "592",
-            "namemuni": "ZONA BANANERA (SEVILLA)",
+            "namemuni": "ZONA BANANERA",
             "codemuni": "4798",
             "dptomuni": "15"
         },
@@ -3834,7 +3834,7 @@
         },
         {
             "idmuni": "603",
-            "namemuni": "MAPIRIPÁN",
+            "namemuni": "MAPIRIP?N",
             "codemuni": "50325",
             "dptomuni": "16"
         },
@@ -3852,7 +3852,7 @@
         },
         {
             "idmuni": "606",
-            "namemuni": "LEJANÍAS",
+            "namemuni": "LEJAN?AS",
             "codemuni": "504",
             "dptomuni": "16"
         },
@@ -3990,7 +3990,7 @@
         },
         {
             "idmuni": "629",
-            "namemuni": "EL PEÑOL",
+            "namemuni": "EL PE?OL",
             "codemuni": "52254",
             "dptomuni": "17"
         },
@@ -4116,7 +4116,7 @@
         },
         {
             "idmuni": "650",
-            "namemuni": "NARIÑO",
+            "namemuni": "NARI?O",
             "codemuni": "5248",
             "dptomuni": "17"
         },
@@ -4602,7 +4602,7 @@
         },
         {
             "idmuni": "731",
-            "namemuni": "JESÚS MARÍA",
+            "namemuni": "JES?S MAR?A",
             "codemuni": "68368",
             "dptomuni": "21"
         },
@@ -4632,7 +4632,7 @@
         },
         {
             "idmuni": "736",
-            "namemuni": "LEBRÍJA",
+            "namemuni": "LEBR?JA",
             "codemuni": "68406",
             "dptomuni": "21"
         },
@@ -4650,7 +4650,7 @@
         },
         {
             "idmuni": "739",
-            "namemuni": "MÁLAGA",
+            "namemuni": "M?LAGA",
             "codemuni": "68432",
             "dptomuni": "21"
         },
@@ -5184,7 +5184,7 @@
         },
         {
             "idmuni": "828",
-            "namemuni": "PUERTO RONDÓN",
+            "namemuni": "PUERTO ROND?N",
             "codemuni": "81591",
             "dptomuni": "25"
         },
@@ -5382,7 +5382,7 @@
         },
         {
             "idmuni": "861",
-            "namemuni": "PUERTO NARIÑO",
+            "namemuni": "PUERTO NARI?O",
             "codemuni": "9154",
             "dptomuni": "29"
         },
@@ -5400,7 +5400,7 @@
         },
         {
             "idmuni": "864",
-            "namemuni": "INÍRIDA",
+            "namemuni": "IN?RIDA",
             "codemuni": "94001",
             "dptomuni": "30"
         },
@@ -5514,7 +5514,7 @@
         },
         {
             "idmuni": "883",
-            "namemuni": "SAN JOSÉ DEL FRAGUA",
+            "namemuni": "SAN JOS? DEL FRAGUA",
             "codemuni": "1861",
             "dptomuni": "7"
         },
@@ -5532,7 +5532,7 @@
         },
         {
             "idmuni": "886",
-            "namemuni": "SAN JUAN DE RÍO SECO",
+            "namemuni": "SAN JUAN DE R?O SECO",
             "codemuni": "25662",
             "dptomuni": "11"
         },
@@ -5640,7 +5640,7 @@
         },
         {
             "idmuni": "904",
-            "namemuni": "SAN JOSÉ DEL GUAVIARE",
+            "namemuni": "SAN JOS? DEL GUAVIARE",
             "codemuni": "95001",
             "dptomuni": "31"
         },
@@ -5664,7 +5664,7 @@
         },
         {
             "idmuni": "908",
-            "namemuni": "SANTAFÉ DE ANTIOQUIA",
+            "namemuni": "SANTAF? DE ANTIOQUIA",
             "codemuni": "5042",
             "dptomuni": "1"
         },
@@ -5688,7 +5688,7 @@
         },
         {
             "idmuni": "912",
-            "namemuni": "SAN ANDRÉS DE CUERQUÍA",
+            "namemuni": "SAN ANDR?S DE CUERQU?A",
             "codemuni": "5647",
             "dptomuni": "1"
         },
@@ -5700,7 +5700,7 @@
         },
         {
             "idmuni": "914",
-            "namemuni": "SAN VICENTE DE CHUCURI",
+            "namemuni": "SAN VICENTE DE CHUCUR?",
             "codemuni": "68689",
             "dptomuni": "21"
         },
@@ -5802,7 +5802,7 @@
         },
         {
             "idmuni": "931",
-            "namemuni": "VIGÍA DEL FUERTE",
+            "namemuni": "VIG?A DEL FUERTE",
             "codemuni": "5873",
             "dptomuni": "1"
         },
@@ -5880,7 +5880,7 @@
         },
         {
             "idmuni": "944",
-            "namemuni": "SAN JOSÉ DEL PALMAR",
+            "namemuni": "SAN JOS? DEL PALMAR",
             "codemuni": "2766",
             "dptomuni": "12"
         },
@@ -5958,7 +5958,7 @@
         },
         {
             "idmuni": "957",
-            "namemuni": "SAN JUAN DE URABÁ",
+            "namemuni": "SAN JUAN DE URAB?",
             "codemuni": "5659",
             "dptomuni": "1"
         },
@@ -6036,7 +6036,7 @@
         },
         {
             "idmuni": "970",
-            "namemuni": "PUERTO ALEGRÍA",
+            "namemuni": "PUERTO ALEGR?A",
             "codemuni": "9153",
             "dptomuni": "29"
         },
@@ -6054,7 +6054,7 @@
         },
         {
             "idmuni": "973",
-            "namemuni": "SAN SEBASTIÁN",
+            "namemuni": "SAN SEBASTI?N",
             "codemuni": "19693",
             "dptomuni": "8"
         },
@@ -6402,7 +6402,7 @@
         },
         {
             "idmuni": "1031",
-            "namemuni": "OCAÑA",
+            "namemuni": "OCA?A",
             "codemuni": "54498",
             "dptomuni": "18"
         },
@@ -6684,7 +6684,7 @@
         },
         {
             "idmuni": "1078",
-            "namemuni": "IBAGUÉ",
+            "namemuni": "IBAGU?",
             "codemuni": "73001",
             "dptomuni": "23"
         },
@@ -6768,7 +6768,7 @@
         },
         {
             "idmuni": "1092",
-            "namemuni": "SAN VICENTE DEL CAGUÁN",
+            "namemuni": "SAN VICENTE DEL CAGU?N",
             "codemuni": "18753",
             "dptomuni": "7"
         },
@@ -6780,13 +6780,13 @@
         },
         {
             "idmuni": "1094",
-            "namemuni": "JARDÍN",
+            "namemuni": "JARD?N",
             "codemuni": "5364",
             "dptomuni": "1"
         },
         {
             "idmuni": "1095",
-            "namemuni": "JAMUNDÍ",
+            "namemuni": "JAMUND?",
             "codemuni": "76364",
             "dptomuni": "24"
         },
@@ -6822,7 +6822,7 @@
         },
         {
             "idmuni": "1101",
-            "namemuni": "SONSÓN",
+            "namemuni": "SONS?N",
             "codemuni": "5756",
             "dptomuni": "1"
         },
@@ -6834,7 +6834,7 @@
         },
         {
             "idmuni": "1103",
-            "namemuni": "LÉRIDA",
+            "namemuni": "L?RIDA",
             "codemuni": "73408",
             "dptomuni": "23"
         },
@@ -6876,13 +6876,13 @@
         },
         {
             "idmuni": "1110",
-            "namemuni": "GÉNOVA",
+            "namemuni": "G?NOVA",
             "codemuni": "63302",
             "dptomuni": "19"
         },
         {
             "idmuni": "1111",
-            "namemuni": "SUÁREZ",
+            "namemuni": "SU?REZ",
             "codemuni": "7377",
             "dptomuni": "23"
         },
@@ -6912,7 +6912,7 @@
         },
         {
             "idmuni": "1116",
-            "namemuni": "VILLAGARZÓN",
+            "namemuni": "VILLAGARZ?N",
             "codemuni": "86885",
             "dptomuni": "27"
         },

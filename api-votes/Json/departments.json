@@ -1,0 +1,240 @@
+[
+    {
+        "id_department": 1,
+        "name_department": "ANTIOQUIA",
+        "code_department": "05",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 2,
+        "name_department": "ATLANTICO",
+        "code_department": "08",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 3,
+        "name_department": "BOGOTA",
+        "code_department": "11",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 4,
+        "name_department": "BOLIVAR",
+        "code_department": "13",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 5,
+        "name_department": "BOYACA",
+        "code_department": "15",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 6,
+        "name_department": "CALDAS",
+        "code_department": "17",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 7,
+        "name_department": "CAQUETA",
+        "code_department": "18",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 8,
+        "name_department": "CAUCA",
+        "code_department": "19",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 9,
+        "name_department": "CESAR",
+        "code_department": "20",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 10,
+        "name_department": "CORDOBA",
+        "code_department": "23",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 11,
+        "name_department": "CUNDINAMARCA",
+        "code_department": "25",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 12,
+        "name_department": "CHOCO",
+        "code_department": "27",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 13,
+        "name_department": "HUILA",
+        "code_department": "41",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 14,
+        "name_department": "LA GUAJIRA",
+        "code_department": "44",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 15,
+        "name_department": "MAGDALENA",
+        "code_department": "47",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 16,
+        "name_department": "META",
+        "code_department": "50",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 17,
+        "name_department": "NARI\u00d1O",
+        "code_department": "52",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 18,
+        "name_department": "N. DE SANTANDER",
+        "code_department": "54",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 19,
+        "name_department": "QUINDIO",
+        "code_department": "63",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 20,
+        "name_department": "RISARALDA",
+        "code_department": "66",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 21,
+        "name_department": "SANTANDER",
+        "code_department": "68",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 22,
+        "name_department": "SUCRE",
+        "code_department": "70",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 23,
+        "name_department": "TOLIMA",
+        "code_department": "73",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 24,
+        "name_department": "VALLE DEL CAUCA",
+        "code_department": "76",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 25,
+        "name_department": "ARAUCA",
+        "code_department": "81",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 26,
+        "name_department": "CASANARE",
+        "code_department": "85",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 27,
+        "name_department": "PUTUMAYO",
+        "code_department": "86",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 28,
+        "name_department": "SAN ANDRES",
+        "code_department": "88",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 29,
+        "name_department": "AMAZONAS",
+        "code_department": "91",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 30,
+        "name_department": "GUAINIA",
+        "code_department": "94",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 31,
+        "name_department": "GUAVIARE",
+        "code_department": "95",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 32,
+        "name_department": "VAUPES",
+        "code_department": "97",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 33,
+        "name_department": "VICHADA",
+        "code_department": "99",
+        "date_created_department": "2024-09-09",
+        "date_updated_department": "2024-09-09 14:13:55"
+    },
+    {
+        "id_department": 34,
+        "name_department": "VENEZUELA",
+        "code_department": "55",
+        "date_created_department": "2025-05-13",
+        "date_updated_department": "2025-05-13 07:50:05"
+    }
+]
