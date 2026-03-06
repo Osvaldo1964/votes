@@ -72,8 +72,9 @@ async function fntViewReporte() {
                     count = 1;
 
                     htmlReport += '<h4>Líder: ' + currentLider + '</h4>';
+                    htmlReport += '<div class="table-responsive">';
                     htmlReport += '<table class="table table-bordered table-striped table-sm">';
-                    htmlReport += '<thead><tr><th>#</th><th>Identificación</th><th>Nombre</th><th>Teléfono</th><th>Dirección</th></tr></thead>';
+                    htmlReport += '<thead><tr><th>#</th><th>Identificación</th><th>Nombre</th><th>Teléfono</th><th>Dirección</th><th>Dpto</th><th>Muni</th><th>Zona</th><th>Puesto</th><th>Mesa</th></tr></thead>';
                     htmlReport += '<tbody>';
                 }
 
@@ -82,7 +83,12 @@ async function fntViewReporte() {
                 htmlReport += '<td>' + objData[i].ident_elector + '</td>';
                 htmlReport += '<td>' + objData[i].nombre_elector + '</td>';
                 htmlReport += '<td>' + objData[i].telefono_elector + '</td>';
-                htmlReport += '<td>' + objData[i].direccion_elector + '</td>';
+                htmlReport += '<td>' + (objData[i].direccion_elector || '') + '</td>';
+                htmlReport += '<td>' + (objData[i].dpto || '') + '</td>';
+                htmlReport += '<td>' + (objData[i].muni || '') + '</td>';
+                htmlReport += '<td>' + (objData[i].zona || '') + '</td>';
+                htmlReport += '<td>' + (objData[i].puesto || '') + '</td>';
+                htmlReport += '<td>' + (objData[i].mesa || '') + '</td>';
                 htmlReport += '</tr>';
 
                 subtotal++;
@@ -90,7 +96,7 @@ async function fntViewReporte() {
                 count++;
             }
 
-            htmlReport += '</tbody></table>';
+            htmlReport += '</tbody></table></div>';
             htmlReport += '<div class="text-right"><strong>Subtotal ' + currentLider + ': ' + subtotal + '</strong></div><hr>';
             htmlReport += '<div class="text-right"><h3>Total General: ' + grandTotal + '</h3></div>';
 
@@ -104,4 +110,49 @@ async function fntViewReporte() {
         console.error(error);
         divReporte.innerHTML = `<div class="alert alert-danger">Error de conexión con la API.</div>`;
     }
+}
+
+function fntImprimir() {
+    let divReporte = document.querySelector('#divReporte');
+    if (divReporte.innerHTML.trim() == "" || divReporte.innerHTML.includes('fa-spinner')) {
+        swal("Atención", "Primero debe generar el reporte para poder imprimir.", "warning");
+        return;
+    }
+
+    let ventana = window.open('', 'PRINT', 'height=600,width=800');
+    ventana.document.write('<html><head><title>Informe de Electores</title>');
+    ventana.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">');
+    ventana.document.write('<style>body { font-size: 12px; padding: 20px; } .table { width: 100%; margin-bottom: 1rem; color: #212529; } .table-bordered { border: 1px solid #dee2e6; } .thead-dark th { color: #fff; background-color: #343a40; border-color: #454d55; } hr { border-top: 1px solid #000; } </style>');
+    ventana.document.write('</head><body>');
+    ventana.document.write(divReporte.innerHTML);
+    ventana.document.write('</body></html>');
+    ventana.document.close();
+    ventana.focus();
+    setTimeout(() => {
+        ventana.print();
+        ventana.close();
+    }, 1000);
+}
+
+function fntExportExcel() {
+    let divReporte = document.querySelector('#divReporte');
+    if (divReporte.innerHTML.trim() == "" || divReporte.innerHTML.includes('fa-spinner')) {
+        swal("Atención", "Primero debe generar el reporte para poder exportar a Excel.", "warning");
+        return;
+    }
+
+    let html = divReporte.innerHTML;
+    // Eliminar clases de bootstrap que no son necesarias en Excel o que pueden estorbar
+    html = html.replace(/<hr[^>]*>/g, '<br>');
+
+    let uri = 'data:application/vnd.ms-excel;base64,';
+    let template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"></head><body><table>{table}</table></body></html>';
+    let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))); };
+    let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
+
+    let ctx = { worksheet: 'Informe de Electores', table: html };
+    let link = document.createElement("a");
+    link.download = "Informe_Electores.xls";
+    link.href = uri + base64(format(template, ctx));
+    link.click();
 }

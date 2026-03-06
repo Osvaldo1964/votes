@@ -21,9 +21,13 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4 align-self-end">
+                        <div class="col-md-8 align-self-end text-right">
                             <button class="btn btn-primary" type="button" onclick="fntViewReporte()"><i
                                     class="fa fa-file-text"></i> Generar</button>
+                            <button class="btn btn-secondary" type="button" onclick="fntImprimir()"><i
+                                    class="fa fa-print"></i> Imprimir</button>
+                            <button class="btn btn-success" type="button" onclick="fntExportExcel()"><i
+                                    class="fa fa-file-excel-o"></i> Excel</button>
                         </div>
                     </div>
                     <hr class="noprint">
