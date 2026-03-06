@@ -9,10 +9,35 @@ document.addEventListener('DOMContentLoaded', async function () {
     await fntGetDepartamentos();
 
     // 2. INICIALIZAR TABLA
+    let filterMesaObj = document.querySelector("#filterMesa");
+
     tableElectores = $('#tableElectores').DataTable({
         "processing": true,
         "language": lenguajeEspanol,
-        "ajax": getDataTableFetchConfig('/electores/getElectores'),
+        "ajax": {
+            "url": BASE_URL_API + 'electores/getElectores', // Sin barra inicial para evitar error 301 doble-slash
+            "type": "GET",
+            "headers": { "Authorization": `Bearer ${localStorage.getItem('userToken')}` },
+            "data": function (d) {
+                d.rolUser = localStorage.getItem('userRol');
+                let currentFilter = document.querySelector("#filterMesa");
+                d.filterMesa = currentFilter ? currentFilter.value : 'all';
+            },
+            "dataSrc": function (json) {
+                if (json && json.status && Array.isArray(json.data)) {
+                    return json.data;
+                } else {
+                    if (json && json.msg) console.warn("DataTable Error/Auth:", json.msg);
+                    return [];
+                }
+            },
+            "error": function (xhr, error, thrown) {
+                console.error("Error en DataTable AJAX:", xhr);
+                if (xhr.status === 401) {
+                    swal("Sesión Expirada", "Su sesión ha terminado", "warning");
+                }
+            }
+        },
         "columns": [
             { "data": "id_elector" },
             { "data": "ident_elector" },
@@ -32,6 +57,13 @@ document.addEventListener('DOMContentLoaded', async function () {
         "responsive": true,
         "destroy": true
     });
+
+    // 2.1 Evento de filtro
+    if (filterMesaObj) {
+        filterMesaObj.addEventListener('change', function () {
+            tableElectores.ajax.reload();
+        });
+    }
 
     // 3. EVENTO BÚSQUEDA CÉDULA
     let inputIdent = document.querySelector("#ident_elector");

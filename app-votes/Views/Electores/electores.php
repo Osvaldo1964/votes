@@ -3,14 +3,20 @@
     <?php
     getModal('modalElectores', $data);
     if (empty($_SESSION['permisosMod']['r_permiso'])) {
-    ?>
+        ?>
         <p>No tienes permisos para ver esta página</p>
     <?php } else {
 
-    ?>
+        ?>
         <div class="app-title">
             <div>
                 <h1><i class="fas fa-user-tag"></i> <?= $data['page_title'] ?>
+                    <select class="form-control form-control-sm mr-2" id="filterMesa"
+                        style="width:auto; display:inline-block; vertical-align: middle;">
+                        <option value="all">Todos los Electores</option>
+                        <option value="without">Sin Mesa Asignada</option>
+                        <option value="with">Con Mesa Asignada</option>
+                    </select>
                     <?php if (!empty($_SESSION['permisosMod']['w_permiso'])) { ?>
                         <button class="btn btn-primary" id="btnNuevoElector" type="button"><i class="fas fa-plus-circle"></i>
                             Nuevo</button>

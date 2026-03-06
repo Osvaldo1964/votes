@@ -52,8 +52,9 @@ class Electores extends Controllers
             if ($_SERVER['REQUEST_METHOD'] == "GET") {
                 // Obtener ID del usuario para validar botones de permisos r, u, d
                 $rolUser = isset($_GET['rolUser']) ? intval($_GET['rolUser']) : 0;
+                $filterMesa = isset($_GET['filterMesa']) ? strClean($_GET['filterMesa']) : 'all';
 
-                $arrData = $this->model->selectElectores();
+                $arrData = $this->model->selectElectores($filterMesa);
 
                 if (empty($arrData)) {
                     $response = array('status' => false, 'msg' => 'No hay datos para mostrar', 'data' => "");

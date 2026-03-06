@@ -177,19 +177,28 @@ class ElectoresModel extends Mysql
         }
     }
 
-    public function selectElectores()
+    public function selectElectores($filterMesa = 'all')
     {
+        $whereExtra = "";
+        // Usamos EXISTS/NOT EXISTS con subconsultas para evitar el colapso (CORS pending) provocado por el LEFT JOIN en la nube.
+        if ($filterMesa === 'without') {
+            $whereExtra = " AND NOT EXISTS (SELECT 1 FROM places p WHERE p.ident_place = c.ident_elector AND p.id_mesa_new IS NOT NULL) ";
+        } else if ($filterMesa === 'with') {
+            $whereExtra = " AND EXISTS (SELECT 1 FROM places p WHERE p.ident_place = c.ident_elector AND p.id_mesa_new IS NOT NULL) ";
+        }
+
         $sql = "SELECT c.id_elector, c.ident_elector, c.ape1_elector, c.ape2_elector,
                             c.nom1_elector, c.nom2_elector, c.telefono_elector,
                             c.email_elector, c.dpto_elector, c.muni_elector, c.direccion_elector,
                             c.lider_elector, c.estado_elector, c.insc_elector,
                             l.nom1_lider, l.ape1_lider,
                             d.name_department, m.name_municipality
-							FROM electores c
+                            FROM electores c
                             LEFT JOIN lideres l ON c.lider_elector = l.id_lider
                             LEFT JOIN departments d ON c.dpto_elector = d.id_department
                             LEFT JOIN municipalities m ON c.muni_elector = m.id_municipality
-                            WHERE c.estado_elector != 0 ORDER BY c.id_elector DESC ";
+                            WHERE c.estado_elector != 0 {$whereExtra} 
+                            ORDER BY c.id_elector DESC ";
         $request = $this->select_all($sql);
         return $request;
     }
