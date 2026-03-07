@@ -44,5 +44,19 @@ Archivo: `api-votes/Controllers/Electores.php` y `api-votes/Models/ElectoresMode
 *   `insertOrUpdatePlace(...)`: Método crítico que mantiene la integridad entre la tabla de gestión (`electores`) y la tabla de censo (`places`).
 *   `getUbicacionMesa($idMesa)`: Helper que permite reconstruir la ruta geográfica de un elector basándose únicamente en su ID de mesa (utilizado en el modo edición).
 
-## 5. Escalabilidad
+## 5. Mejoras Recientes (Marzo 2026)
+
+### Visualización Extendida
+El reporte de electores ha sido potenciado para mostrar la ubicación física completa sin sacrificar datos logísticos:
+*   **Ubicación Electoral**: Se añadieron columnas para Dpto, Muni, Zona, Puesto y Mesa (Mesa corregida para mostrar el número real, no el ID).
+*   **Logística de Transporte**: Se restauró la columna **Dirección** para facilitar la organización del transporte el día de las elecciones.
+*   **Estado de Inscripción**: Se añadió la columna **Inscrito** para diferenciar entre electores cargados por censo y registros manuales.
+
+### Gestión de Inscritos (`insc_elector`)
+Para garantizar la consistencia con el módulo **Monitor** (que solo cuenta potenciales inscritos):
+*   El script de carga masiva (`SubirElectores.php`) fue actualizado para marcar por defecto `insc_elector = 1`.
+*   Se proporcionó un procedimiento de actualización masiva vía SQL para regularizar registros previos:
+    `UPDATE electores SET insc_elector = 1 WHERE estado_elector != 0;`
+
+## 6. Escalabilidad
 Este módulo ya está preparado para ser **Nacional**. Al no depender de archivos JSON estáticos para la ubicación, sino de consultas dinámicas a las tablas maestras, puede manejar cualquier cantidad de departamentos y municipios sin degradar el rendimiento o la experiencia de usuario.

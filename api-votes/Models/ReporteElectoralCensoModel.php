@@ -121,7 +121,7 @@ class ReporteElectoralCensoModel extends Mysql
         $sql = "SELECT 
                     $selectCols,
                     COUNT(p.id_place) as potencial,
-                    COUNT(IF(e.estado_elector != 0 AND e.insc_elector = 1, 1, NULL)) as mis_votos
+                    COUNT(IF(e.estado_elector != 0, 1, NULL)) as mis_votos
                 FROM places p
                 INNER JOIN mesas m ON p.id_mesa_new = m.id_mesa
                 INNER JOIN puestos pu ON m.id_puesto_mesa = pu.id_puesto
