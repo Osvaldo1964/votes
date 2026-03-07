@@ -25,7 +25,7 @@ class InfelectoresModel extends Mysql
 
         $sql = "SELECT e.id_elector, e.ident_elector, 
                        CONCAT(e.nom1_elector, ' ', e.nom2_elector, ' ', e.ape1_elector, ' ', e.ape2_elector) as nombre_elector,
-                       e.telefono_elector, e.email_elector, e.direccion_elector,
+                       e.telefono_elector, e.email_elector, e.direccion_elector, e.insc_elector,
                        l.id_lider, CONCAT(l.nom1_lider, ' ', l.nom2_lider, ' ', l.ape1_lider, ' ', l.ape2_lider) as nombre_lider,
                        d.name_department as dpto, m.name_municipality as muni, z.name_zone as zona, p.nombre_puesto as puesto, me.numero_mesa as mesa
                 FROM electores e

@@ -70,9 +70,7 @@ class DashboardModel extends Mysql
 
     public function selectMetaGlobal()
     {
-        // Si no hay tabla de metas, retornamos un valor fijo o calculado. 
-        // Supongamos una meta de ejemplo o la suma de metas de líderes si existiera.
-        // Por ahora devolveré 0 y lo manejamos como 'No definida' o hardcodeamos una meta de campaña.
-        return 5000; // Ejemplo Meta Global
+        // Meta Global de Campaña (Mínimo para la victoria)
+        return 35000;
     }
 }

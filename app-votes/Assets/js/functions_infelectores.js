@@ -74,9 +74,13 @@ async function fntViewReporte() {
                     htmlReport += '<h4>Líder: ' + currentLider + '</h4>';
                     htmlReport += '<div class="table-responsive">';
                     htmlReport += '<table class="table table-bordered table-striped table-sm">';
-                    htmlReport += '<thead><tr><th>#</th><th>Identificación</th><th>Nombre</th><th>Teléfono</th><th>Dirección</th><th>Dpto</th><th>Muni</th><th>Zona</th><th>Puesto</th><th>Mesa</th></tr></thead>';
+                    htmlReport += '<thead><tr><th>#</th><th>Identificación</th><th>Nombre</th><th>Teléfono</th><th>Dirección</th><th>Dpto</th><th>Muni</th><th>Zona</th><th>Puesto</th><th>Mesa</th><th>Inscrito</th></tr></thead>';
                     htmlReport += '<tbody>';
                 }
+
+                let badgeInsc = objData[i].insc_elector == 1
+                    ? '<span class="badge badge-success">Sí</span>'
+                    : '<span class="badge badge-danger">No</span>';
 
                 htmlReport += '<tr>';
                 htmlReport += '<td>' + count + '</td>';
@@ -89,6 +93,7 @@ async function fntViewReporte() {
                 htmlReport += '<td>' + (objData[i].zona || '') + '</td>';
                 htmlReport += '<td>' + (objData[i].puesto || '') + '</td>';
                 htmlReport += '<td>' + (objData[i].mesa || '') + '</td>';
+                htmlReport += '<td>' + badgeInsc + '</td>';
                 htmlReport += '</tr>';
 
                 subtotal++;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SubirElectores.php
  * Importación masiva de Líderes y Electores desde CSV
@@ -76,7 +77,7 @@ $stmtInsElector = $pdo->prepare("
          sexo_elector, telefono_elector, email_elector, direccion_elector,
          lider_elector, dpto_elector, muni_elector, zona_elector, barrio_elector,
          insc_elector, poll_elector, long_elector, lati_elector, estado_elector)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 0, 0, 1)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 1, 0, 0, 0, 1)
 ");
 
 // Buscar id_mesa dado num_puesto y numero_mesa
@@ -252,7 +253,6 @@ while (($row = fgetcsv($handle, 0, $sep)) !== false) {
                 }
             }
         }
-
     } catch (Exception $e) {
         $stats['errores'][] = "Fila {$stats['filas_leidas']}: " . $e->getMessage();
     }
